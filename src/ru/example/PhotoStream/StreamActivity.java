@@ -9,7 +9,7 @@ public class StreamActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.streamactivity);
     }
 
     @Override
