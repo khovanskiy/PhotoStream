@@ -1,18 +1,21 @@
 package ru.example.PhotoStream;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkTokenRequestListener;
 import ru.ok.android.sdk.util.OkScope;
 
 public class AuthActivity extends Activity implements OkTokenRequestListener {
 
-    private Odnoklassniki mOdnoklassniki;
+    private Odnoklassniki mOdnoklassniki= null;
 
     private final String APP_ID = "409574400";
-    private final String APP_SECRET_KEY = "CBANJKGJBBABABABA";
-    private final String APP_PUBLIC_KEY = "9C9616F58E44F35643492983";
+    private final String APP_SECRET_KEY = "9C9616F58E44F35643492983";
+    private final String APP_PUBLIC_KEY = "CBANJKGJBBABABABA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,7 +26,6 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
         Console.print("Auth Activity");
         mOdnoklassniki = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
 
-//определяем callback на операции с получением токена
         mOdnoklassniki.setTokenRequestListener(this);
         mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
     }
@@ -35,24 +37,19 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
     }
 
     @Override
-    protected void onResume()
-    {
-        super.onResume();
-
-    }
-
-    @Override
     public void onSuccess(String token) {
         Console.print("Your token: " + token);
+        startActivity(new Intent(AuthActivity.this, StreamActivity.class));
+        finish();
     }
 
     @Override
     public void onError() {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     @Override
     public void onCancel() {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 }
