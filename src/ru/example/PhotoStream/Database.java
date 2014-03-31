@@ -18,17 +18,20 @@ public class Database implements IEventDispatcher, IEventHadler
     }
 
     @Override
-    public void addEventListener(IEventHadler listener) {
+    public void addEventListener(IEventHadler listener)
+    {
         event_pull.addEventListener(listener);
     }
 
     @Override
-    public void removeEventListener(IEventHadler listener) {
+    public void removeEventListener(IEventHadler listener)
+    {
         event_pull.removeEventListener(listener);
     }
 
     @Override
-    public void dispatchEvent(Event e) {
+    public void dispatchEvent(Event e)
+    {
         event_pull.dispatchEvent(e);
     }
 

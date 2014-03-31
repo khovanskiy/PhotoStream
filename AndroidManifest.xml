@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:debuggable="true">
         <activity android:name=".AuthActivity"
                   android:label="@string/app_name">
             <intent-filter>
@@ -26,7 +26,8 @@
 
                 <data
                         android:scheme="okauth"
-                        android:host="ok409574400" />
+                        android:host="ok1085131264"
+                        />
             </intent-filter>
         </activity>
 
