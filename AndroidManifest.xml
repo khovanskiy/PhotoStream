@@ -26,7 +26,7 @@
 
                 <data
                         android:scheme="okauth"
-                        android:host="ok1085131264"
+                        android:host="ok409574400"
                         />
             </intent-filter>
         </activity>

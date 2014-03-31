@@ -14,14 +14,9 @@ public class AuthActivity extends Activity implements OkTokenRequestListener
 {
     private Odnoklassniki mOdnoklassniki = null;
 
-    //private final String APP_ID = "409574400";
-    //private final String APP_SECRET_KEY = "9C9616F58E44F35643492983";
-    //private final String APP_PUBLIC_KEY = "CBANJKGJBBABABABA";
-
-    private final String APP_ID = "1085131264";
-    private final String APP_SECRET_KEY = "4E4B1B5A2FE9C48ADE329CE8";
-    private final String APP_PUBLIC_KEY = "CBALMOKBEBABABABA";
-
+    private final String APP_ID = "409574400";
+    private final String APP_SECRET_KEY = "9C9616F58E44F35643492983";
+    private final String APP_PUBLIC_KEY = "CBANJKGJBBABABABA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
