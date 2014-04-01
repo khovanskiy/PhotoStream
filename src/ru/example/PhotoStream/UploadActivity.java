@@ -5,18 +5,15 @@ import android.os.Bundle;
 
 //import ru.
 
-public class UploadActivity extends Activity
-{
+public class UploadActivity extends Activity {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadactivity);
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
 
     }

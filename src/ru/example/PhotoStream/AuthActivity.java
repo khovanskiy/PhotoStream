@@ -2,16 +2,13 @@ package ru.example.PhotoStream;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkTokenRequestListener;
 import ru.ok.android.sdk.util.OkScope;
 
-public class AuthActivity extends Activity implements OkTokenRequestListener
-{
+public class AuthActivity extends Activity implements OkTokenRequestListener {
     private Odnoklassniki mOdnoklassniki = null;
 
     private final String APP_ID = "409574400";
@@ -19,15 +16,13 @@ public class AuthActivity extends Activity implements OkTokenRequestListener
     private final String APP_PUBLIC_KEY = "CBANJKGJBBABABABA";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authactivity);
         Console.print("Auth Activity");
     }
 
-    public void onLoginClick(View view)
-    {
+    public void onLoginClick(View view) {
         mOdnoklassniki = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
         mOdnoklassniki.setTokenRequestListener(this);
         Console.print("Token created");
@@ -36,41 +31,34 @@ public class AuthActivity extends Activity implements OkTokenRequestListener
     }
 
     @Override
-    protected void onDestroy()
-    {
-        if (mOdnoklassniki != null)
-        {
+    protected void onDestroy() {
+        if (mOdnoklassniki != null) {
             mOdnoklassniki.removeTokenRequestListener();
         }
         super.onDestroy();
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
     }
 
     @Override
-    public void onSuccess(String token)
-    {
+    public void onSuccess(String token) {
         Console.print("Your token: " + token);
-        TokenHolder.token = mOdnoklassniki;
         Intent intent = new Intent(this, StreamActivity.class);
         startActivity(intent);
     }
 
     @Override
-    public void onError()
-    {
+    public void onError() {
         Console.print("Error");
         mOdnoklassniki.removeTokenRequestListener();
         finish();
     }
 
     @Override
-    public void onCancel()
-    {
+    public void onCancel() {
         Console.print("Cancel");
         mOdnoklassniki.removeTokenRequestListener();
         finish();

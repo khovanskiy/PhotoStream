@@ -2,145 +2,248 @@ package ru.example.PhotoStream;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import ru.ok.android.sdk.Odnoklassniki;
 
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StreamActivity extends Activity
-{
-    private class FriendListAdapter extends BaseAdapter
-    {
+public class StreamActivity extends Activity {
+    private class PhotoListAdapter extends BaseAdapter {
         private Context context;
 
-        private class FriendInfo
-        {
-            String first_name, last_name;
-            String user_id;
-            View view;
+        private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+            ImageView bmImage;
 
-            public FriendInfo(String user_id, String first_name, String last_name)
-            {
-                this.user_id = user_id;
-                this.first_name = first_name;
-                this.last_name = last_name;
-                TextView textView = new TextView(context);
-                textView.setText(last_name + " " + first_name);
-                textView.setTextSize(20);
-                this.view = textView;
+            public DownloadImageTask(ImageView bmImage) {
+                this.bmImage = bmImage;
+            }
+
+            protected Bitmap doInBackground(String... urls) {
+                String urldisplay = urls[0];
+                Bitmap mIcon11 = null;
+                try {
+                    InputStream in = new java.net.URL(urldisplay).openStream();
+                    mIcon11 = BitmapFactory.decodeStream(in);
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                    e.printStackTrace();
+                }
+                return mIcon11;
+            }
+
+            protected void onPostExecute(Bitmap result) {
+                bmImage.setImageBitmap(result);
             }
         }
 
-        private List<FriendInfo> friendInfos;
+        private class PhotoInfo {
+            String url;
+            String source_id;
+            View view;
 
-        public FriendListAdapter(Context context)
-        {
+            public PhotoInfo(String url, String source_id) {
+                this.url = url;
+                this.source_id = source_id;
+                this.view = new ImageView(context);
+                new DownloadImageTask((ImageView) view).execute(URLEncoder.encode(url));
+            }
+        }
+
+        private List<PhotoInfo> photoInfos;
+
+        public PhotoListAdapter(Context context) {
             this.context = context;
-            this.friendInfos = new ArrayList<FriendInfo>();
+            this.photoInfos = new ArrayList<PhotoInfo>();
         }
 
-        public void addFriend(String user_id, String first_name, String last_name)
-        {
-            this.friendInfos.add(new FriendInfo(user_id, first_name, last_name));
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount()
-        {
-            return friendInfos.size();
+        public void addPhoto(String url, String source_id) {
+            this.photoInfos.add(new PhotoInfo(url, source_id));
         }
 
         @Override
-        public Object getItem(int position)
-        {
-            return friendInfos.get(position).view;
+        public int getCount() {
+            return photoInfos.size();
         }
 
         @Override
-        public long getItemId(int position)
-        {
+        public Object getItem(int position) {
+            return photoInfos.get(position).view;
+        }
+
+        @Override
+        public long getItemId(int position) {
             return position;
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-            return friendInfos.get(position).view;
+        public View getView(int position, View convertView, ViewGroup parent) {
+            return photoInfos.get(position).view;
         }
     }
 
-    private class FriendInfoLoader extends AsyncTask<Void, Void, Void>
-    {
+    private class PhotoInfoLoader extends AsyncTask<Void, Void, Void> {
+
+        private List<String> getFriendIDs() {
+            List<String> result = new ArrayList<String>();
+            try {
+                JSONArray friendIDs = new JSONArray(mOdnoklassniki.request("friends.get", null, "get"));
+                for (int i = 0; i < friendIDs.length(); i++) {
+                    result.add(friendIDs.getString(i));
+                }
+            } catch (Exception ignored) {
+            }
+            return result;
+        }
+
+        private List<JSONObject> getAllGroups() {
+            Map<String, String> requestParams = new HashMap<String, String>();
+            requestParams.put("fields", "group.*");
+            List<JSONObject> result = new ArrayList<JSONObject>();
+            boolean hasMore = true;
+            while (hasMore) {
+                try {
+                    JSONObject groupsObject = new JSONObject(mOdnoklassniki.request("group.getUserGroupsV2", requestParams, "get"));
+                    JSONArray groups = groupsObject.getJSONArray("groups");
+                    for (int i = 0; i < groups.length(); i++) {
+                        result.add(groups.getJSONObject(i));
+                    }
+                    hasMore = groupsObject.getBoolean("hasMore");
+                    requestParams.put("anchor", groupsObject.getString("anchor"));
+                } catch (Exception e) {
+                    hasMore = false;
+                }
+            }
+            return result;
+        }
+
+        private List<JSONObject> getAllAlbums(String fid, String gid) {
+            Map<String, String> requestParams = new HashMap<String, String>();
+            requestParams.put("fields", "album.*");
+            if (fid != null) {
+                requestParams.put("fid", fid);
+            }
+            if (gid != null) {
+                requestParams.put("gid", gid);
+            }
+            List<JSONObject> result = new ArrayList<JSONObject>();
+            boolean hasMore = true;
+            while (hasMore) {
+                try {
+                    JSONObject albumsObject = new JSONObject(mOdnoklassniki.request("photos.getAlbums", requestParams, "get"));
+                    JSONArray albums = albumsObject.getJSONArray("albums");
+                    for (int i = 0; i < albums.length(); i++) {
+                        result.add(albums.getJSONObject(i));
+                    }
+                    hasMore = albumsObject.getBoolean("hasMore");
+                    requestParams.put("anchor", albumsObject.getString("pagingAnchor"));
+                } catch (Exception e) {
+                    hasMore = false;
+                }
+            }
+            return result;
+        }
+
+        private List<JSONObject> getAllPhotos(String fid, String aid) {
+            Map<String, String> requestParams = new HashMap<String, String>();
+            if (fid != null) {
+                requestParams.put("fid", fid);
+            }
+            if (aid != null) {
+                requestParams.put("aid", aid);
+            }
+            requestParams.put("fields", "photo.*");
+            List<JSONObject> result = new ArrayList<JSONObject>();
+            boolean hasMore = true;
+            while (hasMore) {
+                try {
+                    JSONObject photosObject = new JSONObject(mOdnoklassniki.request("photos.getPhotos", requestParams, "get"));
+                    JSONArray photos = photosObject.getJSONArray("photos");
+                    for (int i = 0; i < photos.length(); i++) {
+                        result.add(photos.getJSONObject(i));
+                    }
+                    hasMore = photosObject.getBoolean("hasMore");
+                    requestParams.put("anchor", photosObject.getString("anchor"));
+                } catch (Exception e) {
+                    hasMore = false;
+                }
+            }
+            return result;
+        }
+
         @Override
         protected Void doInBackground(Void... params) {
-            try
-            {
-                JSONArray friendIDs = new JSONArray(TokenHolder.token.request("friends.get", null, "get"));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < friendIDs.length(); i++)
-                {
-                    builder.append(',').append(friendIDs.getString(i));
-                }
-                Map<String, String> requestParams = new HashMap<String, String>();
-                Console.print(builder.substring(1));
-                requestParams.put("uids", builder.substring(1));
-                requestParams.put("fields", "last_name, first_name");
-                JSONArray friendInfos = new JSONArray(TokenHolder.token.request("users.getInfo", requestParams, "get"));
-                Console.print(friendInfos.toString());
-                JSONObject friend;
-                for (int i = 0; i < friendIDs.length(); i++)
-                {
-                    friend = friendInfos.getJSONObject(i);
-                    friendListAdapter.addFriend(friendIDs.getString(i), friend.getString("first_name"), friend.getString("last_name"));
+            List<JSONObject> albums = getAllAlbums(null, null); // User own albums.
+            List<JSONObject> photos = getAllPhotos(null, null); //User own photos in private album.
+            List<String> friendIDs = getFriendIDs();
+            for (int i = 0; i < friendIDs.size(); i++) {
+                albums.addAll(getAllAlbums(friendIDs.get(i), null));
+                photos.addAll(getAllPhotos(friendIDs.get(i), null));
+            }
+            List<JSONObject> groups = getAllGroups();
+            for (int i = 0; i < groups.size(); i++) {
+                try {
+                    albums.addAll(getAllAlbums(null, groups.get(i).getString("gid")));
+                } catch (Exception ignored) {
                 }
             }
-            catch (Exception ignored)
-            {
+            for (int i = 0; i < albums.size(); i++) {
+                try {
+                    photos.addAll(getAllPhotos(null, albums.get(i).getString("aid")));
+                } catch (Exception ignored) {
+                }
             }
+
+
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            photoListAdapter.notifyDataSetChanged();
         }
     }
 
-    private ListView friendList;
-    private FriendListAdapter friendListAdapter;
+    private ListView photoList;
+    private PhotoListAdapter photoListAdapter;
+    private Odnoklassniki mOdnoklassniki;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streamactivity);
-        friendList = (ListView) findViewById(R.id.authactivity_friendlist);
+        photoList = (ListView) findViewById(R.id.authactivity_photolist);
+        mOdnoklassniki = Odnoklassniki.getInstance(getApplicationContext());
     }
 
-    private void update()
-    {
-        friendListAdapter = new FriendListAdapter(this);
-        friendList.setAdapter(friendListAdapter);
-        new FriendInfoLoader().execute();
+    private void update() {
+        photoListAdapter = new PhotoListAdapter(this);
+        photoList.setAdapter(photoListAdapter);
+        new PhotoInfoLoader().execute();
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         super.onResume();
         update();
     }
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
-
     }
 }

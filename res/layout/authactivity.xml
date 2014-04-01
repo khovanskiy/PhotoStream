@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent" android:background="@android:color/white">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -11,11 +11,15 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
+        <Space
+                android:layout_width="20px"
+                android:layout_height="50px"
+                />
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Login"
                 android:id="@+id/authactivity_button" android:layout_gravity="center_horizontal"
-                android:onClick="onLoginClick"/>
+                android:onClick="onLoginClick" android:background="@android:color/holo_orange_dark"/>
     </LinearLayout>
 </LinearLayout>
