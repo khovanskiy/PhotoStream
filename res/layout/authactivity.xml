@@ -20,6 +20,7 @@
                 android:layout_height="wrap_content"
                 android:text="Login"
                 android:id="@+id/authactivity_button" android:layout_gravity="center_horizontal"
-                android:onClick="onLoginClick" android:background="@android:color/holo_orange_dark"/>
+                android:onClick="onLoginClick" android:background="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white"/>
     </LinearLayout>
 </LinearLayout>

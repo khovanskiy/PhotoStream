@@ -33,7 +33,8 @@
                     android:layout_height="wrap_content"
                     android:text="Мои альбомы"
                     android:id="@+id/streamactivity_myalbums" android:layout_weight="1"
-                    android:background="@android:color/holo_orange_dark"/>
+                    android:background="@android:color/holo_orange_dark" android:onClick="onMyAlbumsClick"
+                    android:textColor="@android:color/white"/>
             <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -43,7 +44,8 @@
                     android:layout_height="wrap_content"
                     android:text="Альбомы друзей"
                     android:id="@+id/streamactivity_friendalbums" android:layout_weight="1"
-                    android:background="@android:color/holo_orange_dark"/>
+                    android:background="@android:color/holo_orange_dark" android:onClick="onFriendAlbumsClick"
+                    android:textColor="@android:color/white"/>
             <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -53,7 +55,8 @@
                     android:layout_height="wrap_content"
                     android:text="Альбомы групп"
                     android:id="@+id/streamactivity_groupalbums" android:layout_weight="1"
-                    android:background="@android:color/holo_orange_dark"/>
+                    android:background="@android:color/holo_orange_dark" android:onClick="onGroupAlbumsClick"
+                    android:textColor="@android:color/white"/>
             <Space
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

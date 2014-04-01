@@ -2,6 +2,7 @@ package ru.example.PhotoStream;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -96,7 +97,7 @@ public class StreamActivity extends Activity {
         }
     }
 
-    private class PhotoInfoLoader extends AsyncTask<Void, Void, Void> {
+    private class InfoLoader extends AsyncTask<Void, Void, Void> {
 
         private List<String> getFriendIDs() {
             List<String> result = new ArrayList<String>();
@@ -105,33 +106,37 @@ public class StreamActivity extends Activity {
                 for (int i = 0; i < friendIDs.length(); i++) {
                     result.add(friendIDs.getString(i));
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                Console.print(e.getMessage());
             }
             return result;
         }
 
-        private List<JSONObject> getAllGroups() {
+        private List<String> getGroupIds() {
             Map<String, String> requestParams = new HashMap<String, String>();
-            requestParams.put("fields", "group.*");
-            List<JSONObject> result = new ArrayList<JSONObject>();
+            List<String> result = new ArrayList<String>();
             boolean hasMore = true;
             while (hasMore) {
                 try {
                     JSONObject groupsObject = new JSONObject(mOdnoklassniki.request("group.getUserGroupsV2", requestParams, "get"));
-                    JSONArray groups = groupsObject.getJSONArray("groups");
-                    for (int i = 0; i < groups.length(); i++) {
-                        result.add(groups.getJSONObject(i));
+                    if (groupsObject.isNull("groups")) {
+                        hasMore = false;
+                    } else {
+                        JSONArray groups = groupsObject.getJSONArray("groups");
+                        for (int i = 0; i < groups.length(); i++) {
+                            result.add(groups.getJSONObject(i).getString("groupId"));
+                        }
+                        requestParams.put("anchor", groupsObject.getString("anchor"));
                     }
-                    hasMore = groupsObject.getBoolean("hasMore");
-                    requestParams.put("anchor", groupsObject.getString("anchor"));
                 } catch (Exception e) {
+                    Console.print(e.getMessage());
                     hasMore = false;
                 }
             }
             return result;
         }
 
-        private List<JSONObject> getAllAlbums(String fid, String gid) {
+        private List<JSONObject> getAlbums(String fid, String gid) {
             Map<String, String> requestParams = new HashMap<String, String>();
             requestParams.put("fields", "album.*");
             if (fid != null) {
@@ -152,16 +157,20 @@ public class StreamActivity extends Activity {
                     hasMore = albumsObject.getBoolean("hasMore");
                     requestParams.put("anchor", albumsObject.getString("pagingAnchor"));
                 } catch (Exception e) {
+                    Console.print(e.getMessage());
                     hasMore = false;
                 }
             }
             return result;
         }
 
-        private List<JSONObject> getAllPhotos(String fid, String aid) {
+        private List<JSONObject> getAlbumPhotos(String fid, String gid, String aid) {
             Map<String, String> requestParams = new HashMap<String, String>();
             if (fid != null) {
                 requestParams.put("fid", fid);
+            }
+            if (gid != null) {
+                requestParams.put("gid", gid);
             }
             if (aid != null) {
                 requestParams.put("aid", aid);
@@ -177,8 +186,11 @@ public class StreamActivity extends Activity {
                         result.add(photos.getJSONObject(i));
                     }
                     hasMore = photosObject.getBoolean("hasMore");
-                    requestParams.put("anchor", photosObject.getString("anchor"));
+                    if (hasMore) {
+                        requestParams.put("anchor", photosObject.getString("anchor"));
+                    }
                 } catch (Exception e) {
+                    Console.print(e.getMessage());
                     hasMore = false;
                 }
             }
@@ -187,28 +199,48 @@ public class StreamActivity extends Activity {
 
         @Override
         protected Void doInBackground(Void... params) {
-            List<JSONObject> albums = getAllAlbums(null, null); // User own albums.
-            List<JSONObject> photos = getAllPhotos(null, null); //User own photos in private album.
-            List<String> friendIDs = getFriendIDs();
-            for (int i = 0; i < friendIDs.size(); i++) {
-                albums.addAll(getAllAlbums(friendIDs.get(i), null));
-                photos.addAll(getAllPhotos(friendIDs.get(i), null));
-            }
-            List<JSONObject> groups = getAllGroups();
-            for (int i = 0; i < groups.size(); i++) {
+            InfoHolder.clear();
+            InfoHolder.friendIds = getFriendIDs();
+            InfoHolder.groupIds = getGroupIds();
+            InfoHolder.userAlbums = getAlbums(null, null);
+            for (int i = 0; i < InfoHolder.userAlbums.size(); i++) {
                 try {
-                    albums.addAll(getAllAlbums(null, groups.get(i).getString("gid")));
-                } catch (Exception ignored) {
+                    InfoHolder.albumPhotos.put(InfoHolder.userAlbums.get(i).getString("aid"),
+                            getAlbumPhotos(null, null, InfoHolder.userAlbums.get(i).getString("aid")));
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
                 }
             }
-            for (int i = 0; i < albums.size(); i++) {
+            InfoHolder.userPrivatePhotos = getAlbumPhotos(null, null, null);
+            for (int i = 0; i < InfoHolder.friendIds.size(); i++) {
+                List<JSONObject> friendAlbums = getAlbums(InfoHolder.friendIds.get(i), null);
+                for (int j = 0; j < friendAlbums.size(); j++) {
+                    try {
+                        InfoHolder.albumPhotos.put(friendAlbums.get(j).getString("aid"),
+                                getAlbumPhotos(InfoHolder.friendIds.get(i), null, friendAlbums.get(j).getString("aid")));
+                    } catch (Exception e) {
+                        Console.print(e.getMessage());
+                    }
+                }
+                InfoHolder.friendAlbums.put(InfoHolder.friendIds.get(i), friendAlbums);
+                InfoHolder.friendPrivatePhotos.put(InfoHolder.friendIds.get(i), getAlbumPhotos(InfoHolder.friendIds.get(i), null, null));
+            }
+            for (int i = 0; i < InfoHolder.groupIds.size(); i++) {
                 try {
-                    photos.addAll(getAllPhotos(null, albums.get(i).getString("aid")));
-                } catch (Exception ignored) {
+                    List<JSONObject> groupAlbums = getAlbums(null, InfoHolder.groupIds.get(i));
+                    for (int j = 0; j < groupAlbums.size(); j++) {
+                        try {
+                            InfoHolder.albumPhotos.put(groupAlbums.get(j).getString("aid"),
+                                    getAlbumPhotos(null, InfoHolder.groupIds.get(i), groupAlbums.get(j).getString("aid")));
+                        } catch (Exception e) {
+                            Console.print(e.getMessage());
+                        }
+                    }
+                    InfoHolder.groupAlbums.put(InfoHolder.groupIds.get(i), groupAlbums);
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
                 }
             }
-
-
             return null;
         }
 
@@ -233,7 +265,22 @@ public class StreamActivity extends Activity {
     private void update() {
         photoListAdapter = new PhotoListAdapter(this);
         photoList.setAdapter(photoListAdapter);
-        new PhotoInfoLoader().execute();
+        new InfoLoader().execute();
+    }
+
+    public void onMyAlbumsClick(View view) {
+        Intent intent = new Intent(this, UserAlbumsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onFriendAlbumsClick(View view) {
+        Intent intent = new Intent(this, FriendAlbumsActivity.class);
+        startActivity(intent);
+    }
+
+    public void onGroupAlbumsClick(View view) {
+        Intent intent = new Intent(this, GroupAlbumsActivity.class);
+        startActivity(intent);
     }
 
     @Override
