@@ -9,5 +9,6 @@ import android.os.Bundle;
 public class GroupAlbumsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.groupalbumsactivity);
     }
 }

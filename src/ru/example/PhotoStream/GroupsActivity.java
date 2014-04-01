@@ -9,5 +9,6 @@ import android.os.Bundle;
 public class GroupsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.groupsactivity);
     }
 }
