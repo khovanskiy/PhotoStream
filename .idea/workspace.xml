@@ -79,23 +79,7 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java" line="201" class="ru.example.PhotoStream.StreamActivity.InfoLoader" package="ru.example.PhotoStream">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="REMOVE_AFTER_HIT" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
+    <line_breakpoints default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -108,33 +92,75 @@
       <file leaf-file-name="StreamActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="35" selection-start="3239" selection-end="3239" vertical-scroll-proportion="0.6452599" vertical-offset="1574" max-vertical-offset="5134">
+            <state line="503" column="40" selection-start="22496" selection-end="22496" vertical-scroll-proportion="0.33169532" vertical-offset="8416" max-vertical-offset="9333">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3069#3077#0" expanded="true" />
-                <element signature="e#3580#3596#0" expanded="true" />
-                <element signature="e#3647#3655#0" expanded="true" />
-                <element signature="e#5962#5978#0" expanded="true" />
-                <element signature="e#6361#6373#0" expanded="true" />
+                <element signature="e#6180#6188#0" expanded="true" />
+                <element signature="e#6752#6764#0" expanded="true" />
+                <element signature="e#6827#6843#0" expanded="true" />
+                <element signature="e#8494#8510#0" expanded="true" />
+                <element signature="e#8561#8569#0" expanded="true" />
+                <element signature="e#9651#9663#0" expanded="true" />
+                <element signature="e#9726#9742#0" expanded="true" />
+                <element signature="e#10916#10932#0" expanded="true" />
+                <element signature="e#11223#11235#0" expanded="true" />
+                <element signature="e#12176#12192#0" expanded="true" />
+                <element signature="e#12575#12587#0" expanded="true" />
+                <element signature="e#15288#15300#0" expanded="true" />
+                <element signature="e#16325#16337#0" expanded="true" />
+                <element signature="e#16909#16921#0" expanded="true" />
+                <element signature="e#17787#17799#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JSONObject.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSONObject.java">
+      <file leaf-file-name="Activity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/app/Activity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="514" column="0" selection-start="18723" selection-end="18723" vertical-scroll-proportion="0.0" vertical-offset="8336" max-vertical-offset="12121">
+            <state line="5270" column="0" selection-start="221534" selection-end="221534" vertical-scroll-proportion="0.0" vertical-offset="87483" max-vertical-offset="88706">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JSON.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSON.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="91" column="0" selection-start="2951" selection-end="2951" vertical-scroll-proportion="0.0" vertical-offset="1196" max-vertical-offset="1836">
+      <file leaf-file-name="groupstreamactivity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/groupstreamactivity.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Instrumentation.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/app/Instrumentation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1107" column="0" selection-start="42505" selection-end="42505" vertical-scroll-proportion="0.0" vertical-offset="17642" max-vertical-offset="29495">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ActivityThread.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/app/ActivityThread.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2299" column="0" selection-start="96365" selection-end="96365" vertical-scroll-proportion="0.0" vertical-offset="36699" max-vertical-offset="84609">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ZygoteInit.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/com/android/internal/os/ZygoteInit.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12410">
+              <folding>
+                <element signature="e#0#25702#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -142,51 +168,24 @@
       <file leaf-file-name="InfoHolder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="32" selection-start="968" selection-end="968" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="663">
+            <state line="115" column="20" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.0" vertical-offset="1828" max-vertical-offset="2261">
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#291#299#0" expanded="true" />
-                <element signature="e#358#366#0" expanded="true" />
-                <element signature="e#431#443#0" expanded="true" />
-                <element signature="e#515#527#0" expanded="true" />
-                <element signature="e#609#635#0" expanded="true" />
-                <element signature="e#716#742#0" expanded="true" />
-                <element signature="e#823#849#0" expanded="true" />
-                <element signature="e#938#964#0" expanded="true" />
+                <element signature="e#1048#1056#0" expanded="true" />
+                <element signature="e#1198#1218#0" expanded="true" />
+                <element signature="e#1340#1348#0" expanded="true" />
+                <element signature="e#1487#1507#0" expanded="true" />
+                <element signature="e#1618#1630#0" expanded="true" />
+                <element signature="e#1797#1809#0" expanded="true" />
+                <element signature="e#1994#2020#0" expanded="true" />
+                <element signature="e#2203#2234#0" expanded="true" />
+                <element signature="e#2383#2409#0" expanded="true" />
+                <element signature="e#2582#2613#0" expanded="true" />
+                <element signature="e#2758#2778#0" expanded="true" />
+                <element signature="e#2966#2997#0" expanded="true" />
+                <element signature="e#3203#3234#0" expanded="true" />
+                <element signature="e#3373#3393#0" expanded="true" />
+                <element signature="e#3542#3554#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="authactivity.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/authactivity.xml">
-          <provider editor-type-id="text-editor">
-            <state line="9" column="4" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="527">
-              <folding />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AsyncTask.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/os/AsyncTask.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="278" column="39" selection-start="11900" selection-end="11900" vertical-scroll-proportion="0.0" vertical-offset="4084" max-vertical-offset="10880">
-              <folding>
-                <element signature="e#10550#10787#0" expanded="true" />
-                <element signature="e#10772#10773#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GroupsActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="46" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -200,24 +199,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserAlbumsActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/UserAlbumsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="52" selection-start="332" selection-end="332" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+      <file leaf-file-name="streamactivity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state line="9" column="4" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1343">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="streamactivity.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
-          <provider editor-type-id="text-editor">
-            <state line="9" column="4" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1258">
-              <folding />
+      <file leaf-file-name="AsyncTask.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/os/AsyncTask.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="305" column="0" selection-start="12905" selection-end="12905" vertical-scroll-proportion="0.0" vertical-offset="4518" max-vertical-offset="10880">
+              <folding>
+                <element signature="e#11944#12279#0" expanded="true" />
+                <element signature="e#12268#12269#0" expanded="true" />
+              </folding>
             </state>
-          </provider>
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
           </provider>
         </entry>
       </file>
@@ -231,7 +233,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Console.java" />
         <option value="$PROJECT_DIR$/res/authactivity.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java" />
@@ -255,6 +256,10 @@
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/UserAlbumsActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/authactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/groupstreamactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/friendstreamactivity.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/layout/please_stand_by.xml" />
         <option value="$PROJECT_DIR$/res/layout/streamactivity.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java" />
@@ -293,8 +298,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -348,6 +351,10 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -377,12 +384,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="libs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -409,6 +432,10 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4300be4e65607000" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="default_avd" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
+    <property name="SearchEverywhereHistory" value="" />
+    <property name="DEBUGGABLE_DEVICE" value="4300be4e65607000" />
+    <property name="DEBUGGABLE_PROCESS" value="ru.example.PhotoStream" />
+    <property name="SHOW_ALL_PROCESSES" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -637,18 +664,16 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6776018" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6776018" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43557832" sideWeight="0.6776018" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40644172" sideWeight="0.6808199" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40644172" sideWeight="0.3191801" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28374234" sideWeight="0.6808199" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28374234" sideWeight="0.3191801" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11196319" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40337422" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11953042" sideWeight="0.6776018" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -659,7 +684,9 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43557832" sideWeight="0.6776018" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297546" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -685,71 +712,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AuthActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="18" selection-start="405" selection-end="405" vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="1088" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="25" selection-start="883" selection-end="883" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="782">
-          <folding>
-            <element signature="e#387#405#0" expanded="true" />
-            <element signature="e#512#530#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AuthActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="61" selection-start="727" selection-end="727" vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="1088" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="25" selection-start="883" selection-end="883" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="782">
-          <folding>
-            <element signature="e#387#405#0" expanded="true" />
-            <element signature="e#512#530#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="155" selection-start="133" selection-end="133" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="46" selection-start="344" selection-end="344" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="42" selection-start="93" selection-end="93" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PhotoStream.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Database.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="4" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0" vertical-offset="352" max-vertical-offset="833" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="476" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/EventDispatcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="14" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="1666" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/IEventDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="17" selection-start="50" selection-end="50" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238" />
@@ -802,23 +764,17 @@
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/AbsListView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="110449">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="110449" />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/BaseAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="0" selection-start="1261" selection-end="1261" vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="1258">
-          <folding />
-        </state>
+        <state line="33" column="0" selection-start="1261" selection-end="1261" vertical-scroll-proportion="0.0" vertical-offset="157" max-vertical-offset="1258" />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/view/ViewGroup.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4858" column="0" selection-start="182340" selection-end="182340" vertical-scroll-proportion="0.0" vertical-offset="81337" max-vertical-offset="111741">
-          <folding />
-        </state>
+        <state line="4858" column="0" selection-start="182340" selection-end="182340" vertical-scroll-proportion="0.0" vertical-offset="81337" max-vertical-offset="111741" />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/ListView.java">
@@ -830,115 +786,72 @@
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/AdapterView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="719" column="0" selection-start="23674" selection-end="23674" vertical-scroll-proportion="0.0" vertical-offset="11513" max-vertical-offset="20026">
-          <folding />
-        </state>
+        <state line="719" column="0" selection-start="23674" selection-end="23674" vertical-scroll-proportion="0.0" vertical-offset="11513" max-vertical-offset="20026" />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/view/accessibility/AccessibilityManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="213" column="0" selection-start="7211" selection-end="7211" vertical-scroll-proportion="0.0" vertical-offset="2945" max-vertical-offset="7157">
-          <folding />
-        </state>
+        <state line="213" column="0" selection-start="7211" selection-end="7211" vertical-scroll-proportion="0.0" vertical-offset="2945" max-vertical-offset="7157" />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/view/View.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8962" column="0" selection-start="346881" selection-end="346881" vertical-scroll-proportion="0.0" vertical-offset="149592" max-vertical-offset="316132">
-          <folding />
-        </state>
+        <state line="8962" column="0" selection-start="346881" selection-end="346881" vertical-scroll-proportion="0.0" vertical-offset="149592" max-vertical-offset="316132" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/albumactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/friendalbumsactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/friendsactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/groupalbumsactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/groupsactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/uploadactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="9" column="4" selection-start="489" selection-end="489" vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="340">
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/useralbumsactivity.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/useralbumsactivity.xml">
       <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/photoactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <folding />
         </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="37" selection-start="312" selection-end="312" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AuthActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="33" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1122">
           <folding />
         </state>
       </provider>
@@ -950,6 +863,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="20" selection-start="285" selection-end="285" vertical-scroll-proportion="0.0" vertical-offset="35" max-vertical-offset="425">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSON.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="91" column="0" selection-start="2951" selection-end="2951" vertical-scroll-proportion="0.0" vertical-offset="1196" max-vertical-offset="1836">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/ImageView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="112" column="0" selection-start="3829" selection-end="3829" vertical-scroll-proportion="0.0" vertical-offset="1094" max-vertical-offset="20026">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSONObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="514" column="0" selection-start="18723" selection-end="18723" vertical-scroll-proportion="0.0" vertical-offset="8319" max-vertical-offset="12121">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/FriendsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="47" selection-start="324" selection-end="324" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
@@ -957,9 +898,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupAlbumsActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AuthActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="51" selection-start="332" selection-end="332" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+        <state line="28" column="33" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.52619046" vertical-offset="153" max-vertical-offset="1122">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="46" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
           <folding />
         </state>
       </provider>
@@ -971,47 +919,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/FriendStreamActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="20" selection-start="285" selection-end="285" vertical-scroll-proportion="0.0" vertical-offset="35" max-vertical-offset="425">
+        <state line="8" column="12" selection-start="143" selection-end="143" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="9" column="4" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="340">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupAlbumsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="51" selection-start="332" selection-end="332" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupStreamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="13" selection-start="144" selection-end="144" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/groupsactivity.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <folding />
+        </state>
+      </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsActivity.java">
+    <entry file="file://$PROJECT_DIR$/res/layout/friendstreamactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/friendalbumsactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/friendsactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="46" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+        <state line="9" column="49" selection-start="426" selection-end="426" vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="272">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/authactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider editor-type-id="text-editor">
         <state line="9" column="4" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="510">
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/please_stand_by.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
       </provider>
-    </entry>
-    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/os/AsyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="278" column="39" selection-start="11900" selection-end="11900" vertical-scroll-proportion="0.0" vertical-offset="4084" max-vertical-offset="10880">
-          <folding>
-            <element signature="e#10550#10787#0" expanded="true" />
-            <element signature="e#10772#10773#0" expanded="true" />
-          </folding>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1024,45 +1016,107 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="32" selection-start="968" selection-end="968" vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="663">
+        <state line="115" column="20" selection-start="3645" selection-end="3645" vertical-scroll-proportion="0.0" vertical-offset="1828" max-vertical-offset="2261">
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#291#299#0" expanded="true" />
-            <element signature="e#358#366#0" expanded="true" />
-            <element signature="e#431#443#0" expanded="true" />
-            <element signature="e#515#527#0" expanded="true" />
-            <element signature="e#609#635#0" expanded="true" />
-            <element signature="e#716#742#0" expanded="true" />
-            <element signature="e#823#849#0" expanded="true" />
-            <element signature="e#938#964#0" expanded="true" />
+            <element signature="e#1048#1056#0" expanded="true" />
+            <element signature="e#1198#1218#0" expanded="true" />
+            <element signature="e#1340#1348#0" expanded="true" />
+            <element signature="e#1487#1507#0" expanded="true" />
+            <element signature="e#1618#1630#0" expanded="true" />
+            <element signature="e#1797#1809#0" expanded="true" />
+            <element signature="e#1994#2020#0" expanded="true" />
+            <element signature="e#2203#2234#0" expanded="true" />
+            <element signature="e#2383#2409#0" expanded="true" />
+            <element signature="e#2582#2613#0" expanded="true" />
+            <element signature="e#2758#2778#0" expanded="true" />
+            <element signature="e#2966#2997#0" expanded="true" />
+            <element signature="e#3203#3234#0" expanded="true" />
+            <element signature="e#3373#3393#0" expanded="true" />
+            <element signature="e#3542#3554#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSON.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="0" selection-start="2951" selection-end="2951" vertical-scroll-proportion="0.0" vertical-offset="1196" max-vertical-offset="1836">
+    <entry file="file://$PROJECT_DIR$/res/layout/groupstreamactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSONObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="514" column="0" selection-start="18723" selection-end="18723" vertical-scroll-proportion="0.0" vertical-offset="8336" max-vertical-offset="12121">
+    <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="9" column="4" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="340">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/os/AsyncTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="305" column="0" selection-start="12905" selection-end="12905" vertical-scroll-proportion="0.0" vertical-offset="4518" max-vertical-offset="10880">
+          <folding>
+            <element signature="e#11944#12279#0" expanded="true" />
+            <element signature="e#12268#12269#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/app/Activity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5270" column="0" selection-start="221534" selection-end="221534" vertical-scroll-proportion="0.0" vertical-offset="87483" max-vertical-offset="88706">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/app/Instrumentation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1107" column="0" selection-start="42505" selection-end="42505" vertical-scroll-proportion="0.0" vertical-offset="17642" max-vertical-offset="29495">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/app/ActivityThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2299" column="0" selection-start="96365" selection-end="96365" vertical-scroll-proportion="0.0" vertical-offset="36699" max-vertical-offset="84609">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/com/android/internal/os/ZygoteInit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12410">
+          <folding>
+            <element signature="e#0#25702#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="35" selection-start="3239" selection-end="3239" vertical-scroll-proportion="0.6452599" vertical-offset="1574" max-vertical-offset="5134">
+        <state line="503" column="40" selection-start="22496" selection-end="22496" vertical-scroll-proportion="0.33169532" vertical-offset="8416" max-vertical-offset="9333">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3069#3077#0" expanded="true" />
-            <element signature="e#3580#3596#0" expanded="true" />
-            <element signature="e#3647#3655#0" expanded="true" />
-            <element signature="e#5962#5978#0" expanded="true" />
-            <element signature="e#6361#6373#0" expanded="true" />
+            <element signature="e#6180#6188#0" expanded="true" />
+            <element signature="e#6752#6764#0" expanded="true" />
+            <element signature="e#6827#6843#0" expanded="true" />
+            <element signature="e#8494#8510#0" expanded="true" />
+            <element signature="e#8561#8569#0" expanded="true" />
+            <element signature="e#9651#9663#0" expanded="true" />
+            <element signature="e#9726#9742#0" expanded="true" />
+            <element signature="e#10916#10932#0" expanded="true" />
+            <element signature="e#11223#11235#0" expanded="true" />
+            <element signature="e#12176#12192#0" expanded="true" />
+            <element signature="e#12575#12587#0" expanded="true" />
+            <element signature="e#15288#15300#0" expanded="true" />
+            <element signature="e#16325#16337#0" expanded="true" />
+            <element signature="e#16909#16921#0" expanded="true" />
+            <element signature="e#17787#17799#0" expanded="true" />
           </folding>
         </state>
       </provider>

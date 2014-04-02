@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PhotoStream OK</string>
+    <string name="loading">Идет загрузка…</string>
+    <string name="login">Войти</string>
+    <string name="owner">Владелец</string>
+    <string name="album">Альбом</string>
+    <string name="my_albums">Мои альбомы</string>
+    <string name="my_friends">Мои друзья</string>
+    <string name="my_groups">Мои группы</string>
 </resources>

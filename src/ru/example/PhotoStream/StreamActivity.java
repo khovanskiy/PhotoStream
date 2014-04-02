@@ -5,23 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.io.InputStream;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StreamActivity extends Activity {
     private class PhotoListAdapter extends BaseAdapter {
@@ -42,7 +38,6 @@ public class StreamActivity extends Activity {
                     mIcon11 = BitmapFactory.decodeStream(in);
                 } catch (Exception e) {
                     Console.print(e.getMessage());
-                    e.printStackTrace();
                 }
                 return mIcon11;
             }
@@ -53,15 +48,70 @@ public class StreamActivity extends Activity {
         }
 
         private class PhotoInfo {
-            String url;
-            String source_id;
+            String photo_id;
             View view;
 
-            public PhotoInfo(String url, String source_id) {
-                this.url = url;
-                this.source_id = source_id;
-                this.view = new ImageView(context);
-                new DownloadImageTask((ImageView) view).execute(URLEncoder.encode(url));
+            public PhotoInfo(String photo_id) {
+                this.photo_id = photo_id;
+                ImageView photoView = new ImageView(context);
+                try {
+                    JSONObject photo = InfoHolder.allPhotos.get(photo_id);
+                    new DownloadImageTask(photoView).execute(photo.getString("pic190x190"));
+                    LinearLayout infoLayout = new LinearLayout(context);
+                    infoLayout.setOrientation(LinearLayout.VERTICAL);
+                    TextView owner = new TextView(context);
+                    owner.setTextColor(Color.BLACK);
+                    String userId = photo.getString("user_id");
+                    if (InfoHolder.friendInfo.containsKey(userId)) {
+                        JSONObject friend = InfoHolder.friendInfo.get(userId);
+                        try {
+                            owner.setText("Владелец: " + friend.getString("name"));
+                        } catch (Exception e) {
+                            Console.print(e.getMessage());
+                        }
+                    } else if (InfoHolder.groupInfo.containsKey(userId)) {
+                        JSONObject group = InfoHolder.groupInfo.get(userId);
+                        try {
+                            owner.setText("Владелец: " + group.getString("title"));
+                        } catch (Exception e) {
+                            Console.print(e.getMessage());
+                        }
+                    } else {
+                        owner.setText("Моя фотография");
+                    }
+                    infoLayout.addView(owner);
+                    TextView album = new TextView(context);
+                    album.setTextColor(Color.BLACK);
+                    if (photo.has("album_id")) {
+                        String albumId = photo.getString("album_id");
+                        JSONObject albumObject = InfoHolder.allAlbums.get(albumId);
+                        try {
+                            album.setText("Альбом: " + albumObject.getString("title"));
+                        } catch (Exception e) {
+                            Console.print(e.getMessage());
+                        }
+                    } else {
+                        album.setText("Личный альбом");
+                    }
+                    infoLayout.addView(album);
+                    TextView created = new TextView(context);
+                    created.setTextColor(Color.BLACK);
+                    long ms = Long.parseLong(photo.getString("created_ms"));
+                    Date date = new Date(ms);
+                    created.setText("Загружено: " + date.toLocaleString());
+                    infoLayout.addView(created);
+                    LinearLayout total = new LinearLayout(context);
+                    total.setOrientation(LinearLayout.HORIZONTAL);
+                    total.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
+                    total.addView(photoView);
+                    Space space = new Space(context);
+                    space.setMinimumWidth(40);
+                    total.addView(space);
+                    total.addView(infoLayout);
+                    this.view = total;
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                }
             }
         }
 
@@ -72,8 +122,8 @@ public class StreamActivity extends Activity {
             this.photoInfos = new ArrayList<PhotoInfo>();
         }
 
-        public void addPhoto(String url, String source_id) {
-            this.photoInfos.add(new PhotoInfo(url, source_id));
+        public void addPhoto(String photo_id) {
+            this.photoInfos.add(new PhotoInfo(photo_id));
         }
 
         @Override
@@ -97,7 +147,20 @@ public class StreamActivity extends Activity {
         }
     }
 
-    private class InfoLoader extends AsyncTask<Void, Void, Void> {
+    private enum InfoLoadingProgress {
+        GettingFriends,
+        GettingGroups,
+        GettingUserAlbums,
+        GettingUserPhotos,
+        GettingFriendAlbumsAndPhotos,
+        GettingGroupAlbumsAndPhotos,
+        ProcessingData,
+        Done,
+    }
+
+    private Context context;
+
+    private class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> {
 
         private List<String> getFriendIDs() {
             List<String> result = new ArrayList<String>();
@@ -108,6 +171,34 @@ public class StreamActivity extends Activity {
                 }
             } catch (Exception e) {
                 Console.print(e.getMessage());
+            }
+            return result;
+        }
+
+        private List<JSONObject> getFriendInfo(List<String> friendIds) {
+            final int MAX_REQUEST = 100;
+            List<JSONObject> result = new ArrayList<JSONObject>();
+            Map<String, String> requestParams = new HashMap<String, String>();
+            requestParams.put("fields", "uid, locale, first_name, last_name, name, gender, age, " +
+                    "birthday, has_email, location, current_location, current_status, current_status_id, " +
+                    "current_status_date, online, last_online, photo_id, pic_1, pic_2, pic_3, pic_4, pic_5, " +
+                    "pic50x50, pic128x128, pic128max, pic180min, pic240min, pic320min, pic190x190, pic640x480, " +
+                    "pic1024x768, url_profile, url_chat, url_profile_mobile, url_chat_mobile, can_vcall, " +
+                    "can_vmail, allows_anonym_access, allows_messaging_only_for_friends, registered_date, has_service_invisible");
+            for (int i = 0; i < friendIds.size() / MAX_REQUEST + 1; i++) {
+                StringBuilder builder = new StringBuilder();
+                for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, friendIds.size()); j++) {
+                    builder.append(",").append(friendIds.get(j));
+                }
+                requestParams.put("uids", builder.substring(1));
+                try {
+                    JSONArray friendInfoArray = new JSONArray(mOdnoklassniki.request("users.getInfo", requestParams, "get"));
+                    for (int j = 0; j < friendInfoArray.length(); j++) {
+                        result.add(friendInfoArray.getJSONObject(j));
+                    }
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                }
             }
             return result;
         }
@@ -131,6 +222,30 @@ public class StreamActivity extends Activity {
                 } catch (Exception e) {
                     Console.print(e.getMessage());
                     hasMore = false;
+                }
+            }
+            return result;
+        }
+
+        private List<JSONObject> getGroupInfo(List<String> groupIds) {
+            final int MAX_REQUEST = 100;
+            List<JSONObject> result = new ArrayList<JSONObject>();
+            Map<String, String> requestParams = new HashMap<String, String>();
+            requestParams.put("fields", "uid, name, description, shortname, pic_avatar, photo_id, " +
+                    "shop_visible_admin, shop_visible_public, members_count");
+            for (int i = 0; i < groupIds.size() / MAX_REQUEST + 1; i++) {
+                StringBuilder builder = new StringBuilder();
+                for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, groupIds.size()); j++) {
+                    builder.append(",").append(groupIds.get(j));
+                }
+                requestParams.put("uids", builder.substring(1));
+                try {
+                    JSONArray groupInfoArray = new JSONArray(mOdnoklassniki.request("group.getInfo", requestParams, "get"));
+                    for (int j = 0; j < groupInfoArray.length(); j++) {
+                        result.add(groupInfoArray.getJSONObject(j));
+                    }
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
                 }
             }
             return result;
@@ -194,49 +309,183 @@ public class StreamActivity extends Activity {
                     hasMore = false;
                 }
             }
+            Collections.sort(result, new InfoHolder.PhotoByUploadTimeComparator());
             return result;
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             InfoHolder.clear();
+            //Getting friends
+            publishProgress(InfoLoadingProgress.GettingFriends);
             InfoHolder.friendIds = getFriendIDs();
-            InfoHolder.groupIds = getGroupIds();
-            InfoHolder.userAlbums = getAlbums(null, null);
-            for (int i = 0; i < InfoHolder.userAlbums.size(); i++) {
+            List<JSONObject> friendInfo = getFriendInfo(InfoHolder.friendIds);
+            for (int i = 0; i < friendInfo.size(); i++) {
+                JSONObject friend = friendInfo.get(i);
                 try {
-                    InfoHolder.albumPhotos.put(InfoHolder.userAlbums.get(i).getString("aid"),
-                            getAlbumPhotos(null, null, InfoHolder.userAlbums.get(i).getString("aid")));
+                    InfoHolder.friendInfo.put(friend.getString("uid"), friend);
                 } catch (Exception e) {
                     Console.print(e.getMessage());
                 }
             }
-            InfoHolder.userPrivatePhotos = getAlbumPhotos(null, null, null);
+            //Getting groups
+            publishProgress(InfoLoadingProgress.GettingGroups);
+            InfoHolder.groupIds = getGroupIds();
+            List<JSONObject> groupInfo = getGroupInfo(InfoHolder.groupIds);
+            for (int i = 0; i < groupInfo.size(); i++) {
+                JSONObject group = groupInfo.get(i);
+                try {
+                    InfoHolder.groupInfo.put(group.getString("uid"), group);
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                }
+            }
+            //Getting user albums
+            publishProgress(InfoLoadingProgress.GettingUserAlbums);
+            InfoHolder.userAlbums = getAlbums(null, null);
+            //Getting user photos
+            publishProgress(InfoLoadingProgress.GettingUserPhotos);
+            for (int i = 0; i < InfoHolder.userAlbums.size(); i++) {
+                try {
+                    JSONObject album = InfoHolder.userAlbums.get(i);
+                    String aid = album.getString("aid");
+                    SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                    albumPhotos.addAll(getAlbumPhotos(null, null, aid));
+                    InfoHolder.albumPhotos.put(aid, albumPhotos);
+                    InfoHolder.allAlbums.put(aid, album);
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                }
+            }
+            InfoHolder.userPrivatePhotos.addAll(getAlbumPhotos(null, null, null));
+            //Getting friend albums and photos
+            publishProgress(InfoLoadingProgress.GettingFriendAlbumsAndPhotos);
             for (int i = 0; i < InfoHolder.friendIds.size(); i++) {
                 List<JSONObject> friendAlbums = getAlbums(InfoHolder.friendIds.get(i), null);
                 for (int j = 0; j < friendAlbums.size(); j++) {
                     try {
-                        InfoHolder.albumPhotos.put(friendAlbums.get(j).getString("aid"),
-                                getAlbumPhotos(InfoHolder.friendIds.get(i), null, friendAlbums.get(j).getString("aid")));
+                        JSONObject album = friendAlbums.get(j);
+                        String aid = album.getString("aid");
+                        SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                        albumPhotos.addAll(getAlbumPhotos(InfoHolder.friendIds.get(i), null, aid));
+                        InfoHolder.albumPhotos.put(aid, albumPhotos);
+                        InfoHolder.allAlbums.put(aid, album);
                     } catch (Exception e) {
                         Console.print(e.getMessage());
                     }
                 }
                 InfoHolder.friendAlbums.put(InfoHolder.friendIds.get(i), friendAlbums);
-                InfoHolder.friendPrivatePhotos.put(InfoHolder.friendIds.get(i), getAlbumPhotos(InfoHolder.friendIds.get(i), null, null));
+                SortedSet<JSONObject> privatePhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                privatePhotos.addAll(getAlbumPhotos(InfoHolder.friendIds.get(i), null, null));
+                InfoHolder.friendPrivatePhotos.put(InfoHolder.friendIds.get(i), privatePhotos);
             }
+            //Getting group albums and photos
+            publishProgress(InfoLoadingProgress.GettingGroupAlbumsAndPhotos);
             for (int i = 0; i < InfoHolder.groupIds.size(); i++) {
                 try {
                     List<JSONObject> groupAlbums = getAlbums(null, InfoHolder.groupIds.get(i));
                     for (int j = 0; j < groupAlbums.size(); j++) {
                         try {
-                            InfoHolder.albumPhotos.put(groupAlbums.get(j).getString("aid"),
-                                    getAlbumPhotos(null, InfoHolder.groupIds.get(i), groupAlbums.get(j).getString("aid")));
+                            JSONObject album = groupAlbums.get(j);
+                            String aid = album.getString("aid");
+                            SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                            albumPhotos.addAll(getAlbumPhotos(null, InfoHolder.groupIds.get(i), aid));
+                            InfoHolder.albumPhotos.put(aid, albumPhotos);
+                            InfoHolder.allAlbums.put(aid, album);
                         } catch (Exception e) {
                             Console.print(e.getMessage());
                         }
                     }
                     InfoHolder.groupAlbums.put(InfoHolder.groupIds.get(i), groupAlbums);
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                }
+            }
+            //Processing data
+            publishProgress(InfoLoadingProgress.ProcessingData);
+            for (JSONObject photo: InfoHolder.userPrivatePhotos) {
+                try {
+                    InfoHolder.allPhotos.put(photo.getString("id"), photo);
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                }
+            }
+            InfoHolder.sortedPhotos.addAll(InfoHolder.userPrivatePhotos);
+            for (SortedSet<JSONObject> photos : InfoHolder.friendPrivatePhotos.values()) {
+                for (JSONObject photo: photos) {
+                    try {
+                        InfoHolder.allPhotos.put(photo.getString("id"), photo);
+                    } catch (Exception e) {
+                        Console.print(e.getMessage());
+                    }
+                }
+                InfoHolder.sortedPhotos.addAll(photos);
+            }
+            for (SortedSet<JSONObject> photos : InfoHolder.albumPhotos.values()) {
+                for (JSONObject photo: photos) {
+                    try {
+                        InfoHolder.allPhotos.put(photo.getString("id"), photo);
+                    } catch (Exception e) {
+                        Console.print(e.getMessage());
+                    }
+                }
+                InfoHolder.sortedPhotos.addAll(photos);
+            }
+            publishProgress(InfoLoadingProgress.Done);
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(InfoLoadingProgress... values) {
+            for (int i = 0; i < values.length; i++) {
+                String waitingText = "";
+                switch (values[i]) {
+                    case GettingFriends:
+                        waitingText = "Получение списка друзей";
+                        break;
+                    case GettingGroups:
+                        waitingText = "Получение списка групп";
+                        break;
+                    case GettingUserAlbums:
+                        waitingText = "Получение ваших альбомов";
+                        break;
+                    case GettingUserPhotos:
+                        waitingText = "Получение ваших фотографий";
+                        break;
+                    case GettingFriendAlbumsAndPhotos:
+                        waitingText = "Получение альбомов и фотографий друзей";
+                        break;
+                    case GettingGroupAlbumsAndPhotos:
+                        waitingText = "Получение альбомов и фотографий групп";
+                        break;
+                    case ProcessingData:
+                        waitingText = "Обработка данных";
+                        break;
+                    case Done:
+                        waitingText = "Загрузка завершена";
+                        break;
+                }
+                ((TextView) findViewById(R.id.please_stand_by_text)).setText(waitingText);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            setContentView(R.layout.streamactivity);
+            photoList = (ListView) findViewById(R.id.streamactivity_photolist);
+            photoListAdapter = new PhotoListAdapter(context);
+            photoList.setAdapter(photoListAdapter);
+            new ImageLoader().execute(null);
+        }
+    }
+
+    private class ImageLoader extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            for (JSONObject photo: InfoHolder.sortedPhotos) {
+                try {
+                    photoListAdapter.addPhoto(photo.getString("id"));
                 } catch (Exception e) {
                     Console.print(e.getMessage());
                 }
@@ -257,14 +506,13 @@ public class StreamActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.streamactivity);
-        photoList = (ListView) findViewById(R.id.authactivity_photolist);
+        setContentView(R.layout.please_stand_by);
+        context = this;
         mOdnoklassniki = Odnoklassniki.getInstance(getApplicationContext());
+        update();
     }
 
     private void update() {
-        photoListAdapter = new PhotoListAdapter(this);
-        photoList.setAdapter(photoListAdapter);
         new InfoLoader().execute();
     }
 
@@ -286,7 +534,6 @@ public class StreamActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        update();
     }
 
     @Override

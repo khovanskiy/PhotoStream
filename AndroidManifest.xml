@@ -44,5 +44,7 @@
         <activity android:name=".GroupsActivity"/>
         <activity android:name=".UserAlbumsActivity"/>
         <activity android:name=".PhotoActivity"/>
+        <activity android:name=".FriendStreamActivity"/>
+        <activity android:name=".GroupStreamActivity"/>
     </application>
 </manifest>

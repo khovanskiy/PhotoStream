@@ -11,27 +11,31 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp" android:layout_weight="1" android:background="@android:color/white">
+        <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                />
         <ListView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:id="@+id/authactivity_photolist" android:layout_weight="4"
+                android:id="@+id/streamactivity_photolist" android:layout_weight="4"
                 android:background="@android:color/white"/>
         <Space
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2" android:background="@android:color/white"/>
+                android:layout_height="20dp"
+                android:layout_weight="0" android:background="@android:color/white"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="0dp" android:layout_weight="1" android:background="@android:color/white">
+                android:layout_height="70dp" android:background="@android:color/white" android:layout_weight="0">
             <Space
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"/>
             <Button
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Мои альбомы"
+                    android:layout_height="match_parent"
+                    android:text="@string/my_albums"
                     android:id="@+id/streamactivity_myalbums" android:layout_weight="1"
                     android:background="@android:color/holo_orange_dark" android:onClick="onMyAlbumsClick"
                     android:textColor="@android:color/white"/>
@@ -41,8 +45,8 @@
                     android:layout_weight="0.2"/>
             <Button
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Альбомы друзей"
+                    android:layout_height="match_parent"
+                    android:text="@string/my_friends"
                     android:id="@+id/streamactivity_friendalbums" android:layout_weight="1"
                     android:background="@android:color/holo_orange_dark" android:onClick="onFriendAlbumsClick"
                     android:textColor="@android:color/white"/>
@@ -52,8 +56,8 @@
                     android:layout_weight="0.2"/>
             <Button
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Альбомы групп"
+                    android:layout_height="match_parent"
+                    android:text="@string/my_groups"
                     android:id="@+id/streamactivity_groupalbums" android:layout_weight="1"
                     android:background="@android:color/holo_orange_dark" android:onClick="onGroupAlbumsClick"
                     android:textColor="@android:color/white"/>
@@ -62,8 +66,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.1"/>
         </LinearLayout>
+        <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                />
     </LinearLayout>
-    <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content"
-                  android:background="@android:color/holo_orange_dark" android:id="@+id/linearLayout"
-                  android:layout_gravity="right"/>
 </LinearLayout>
