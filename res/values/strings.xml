@@ -8,4 +8,16 @@
     <string name="my_albums">Мои альбомы</string>
     <string name="my_friends">Мои друзья</string>
     <string name="my_groups">Мои группы</string>
+    <string name="my_photo">Моя фотография</string>
+    <string name="private_album">Личный альбом</string>
+    <string name="uploaded">Загружена</string>
+    <string name="getting_friend_list">Получение списка друзей</string>
+    <string name="getting_group_list">Получение списка групп</string>
+    <string name="getting_your_albums">Получение ваших альбомов</string>
+    <string name="getting_your_photos">Получение ваших фотографий</string>
+    <string name="getting_friends_albums_and_photos">Получение альбомов и фотографий друзей</string>
+    <string name="getting_groups_albums_and_photos">Получение альбомов и фотографий групп</string>
+    <string name="processing_data">Обработка данных</string>
+    <string name="download_is_finished">Загрузка завершена</string>
+    <string name="like">Поставить "Класс!"</string>
 </resources>

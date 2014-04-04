@@ -12,8 +12,8 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp" android:layout_weight="1" android:background="@android:color/white">
         <Space
-                android:layout_width="20px"
-                android:layout_height="20px"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 />
         <ListView
                 android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="@string/my_albums"
-                    android:id="@+id/streamactivity_myalbums" android:layout_weight="1"
+                    android:id="@+id/streamactivity_myalbums_button" android:layout_weight="1"
                     android:background="@android:color/holo_orange_dark" android:onClick="onMyAlbumsClick"
                     android:textColor="@android:color/white"/>
             <Space
@@ -47,8 +47,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="@string/my_friends"
-                    android:id="@+id/streamactivity_friendalbums" android:layout_weight="1"
-                    android:background="@android:color/holo_orange_dark" android:onClick="onFriendAlbumsClick"
+                    android:id="@+id/streamactivity_my_friends_button" android:layout_weight="1"
+                    android:background="@android:color/holo_orange_dark" android:onClick="onMyFriendsClick"
                     android:textColor="@android:color/white"/>
             <Space
                     android:layout_width="0dp"
@@ -58,8 +58,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="@string/my_groups"
-                    android:id="@+id/streamactivity_groupalbums" android:layout_weight="1"
-                    android:background="@android:color/holo_orange_dark" android:onClick="onGroupAlbumsClick"
+                    android:id="@+id/streamactivity_my_groups_button" android:layout_weight="1"
+                    android:background="@android:color/holo_orange_dark" android:onClick="onMyGroupsClick"
                     android:textColor="@android:color/white"/>
             <Space
                     android:layout_width="wrap_content"
@@ -67,8 +67,8 @@
                     android:layout_weight="0.1"/>
         </LinearLayout>
         <Space
-                android:layout_width="20px"
-                android:layout_height="20px"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 />
     </LinearLayout>
 </LinearLayout>
