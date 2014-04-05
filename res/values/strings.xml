@@ -20,4 +20,5 @@
     <string name="processing_data">Обработка данных</string>
     <string name="download_is_finished">Загрузка завершена</string>
     <string name="like">Поставить "Класс!"</string>
+    <string name="to_albums">Альбомы</string>
 </resources>

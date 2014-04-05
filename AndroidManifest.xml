@@ -42,5 +42,6 @@
         <activity android:name=".GroupsActivity"/>
         <activity android:name=".PhotoActivity"/>
         <activity android:name=".AlbumsActivity"/>
+        <activity android:name=".SubstreamActivity"/>
     </application>
 </manifest>

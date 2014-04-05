@@ -114,7 +114,9 @@ public class InfoHolder {
 
     public static void clear() {
         friendIds.clear();
+        friendInfo.clear();
         groupIds.clear();
+        groupInfo.clear();
         userAlbums.clear();
         userPrivatePhotos.clear();
         friendAlbums.clear();
@@ -125,5 +127,6 @@ public class InfoHolder {
         albumPhotos.clear();
         friendPrivatePhotos.clear();
         allPhotos.clear();
+        sortedPhotos.clear();
     }
 }

@@ -48,11 +48,14 @@ public class StreamActivity extends Activity {
         }
 
         private class PhotoInfo {
-            String photo_id;
+            String photo_id, fid, gid, aid;
             View view;
 
             public PhotoInfo(String photo_id) {
                 this.photo_id = photo_id;
+                fid = null;
+                gid = null;
+                aid = null;
                 ImageView photoView = new ImageView(context);
                 try {
                     JSONObject photo = InfoHolder.allPhotos.get(photo_id);
@@ -63,6 +66,7 @@ public class StreamActivity extends Activity {
                     owner.setTextColor(Color.BLACK);
                     String userId = photo.getString("user_id");
                     if (InfoHolder.friendInfo.containsKey(userId)) {
+                        fid = userId;
                         JSONObject friend = InfoHolder.friendInfo.get(userId);
                         try {
                             owner.setText(R.string.owner + ": " + friend.getString("name"));
@@ -70,6 +74,7 @@ public class StreamActivity extends Activity {
                             Console.print(e.getMessage());
                         }
                     } else if (InfoHolder.groupInfo.containsKey(userId)) {
+                        gid = userId;
                         JSONObject group = InfoHolder.groupInfo.get(userId);
                         try {
                             owner.setText(R.string.owner + ": " + group.getString("title"));
@@ -83,8 +88,8 @@ public class StreamActivity extends Activity {
                     TextView album = new TextView(context);
                     album.setTextColor(Color.BLACK);
                     if (photo.has("album_id")) {
-                        String albumId = photo.getString("album_id");
-                        JSONObject albumObject = InfoHolder.allAlbums.get(albumId);
+                        aid = photo.getString("album_id");
+                        JSONObject albumObject = InfoHolder.allAlbums.get(aid);
                         try {
                             album.setText(R.string.album + ": " + albumObject.getString("title"));
                         } catch (Exception e) {
@@ -124,6 +129,22 @@ public class StreamActivity extends Activity {
 
         public void addPhoto(String photo_id) {
             this.photoInfos.add(new PhotoInfo(photo_id));
+        }
+
+        public String getPhotoId(int position) {
+            return photoInfos.get(position).photo_id;
+        }
+
+        public String getFriendId(int position) {
+            return photoInfos.get(position).fid;
+        }
+
+        public String getGroupId(int position) {
+            return photoInfos.get(position).gid;
+        }
+
+        public String getAlbumId(int position) {
+            return photoInfos.get(position).aid;
         }
 
         @Override
@@ -359,45 +380,50 @@ public class StreamActivity extends Activity {
             //Getting friend albums and photos
             publishProgress(InfoLoadingProgress.GettingFriendAlbumsAndPhotos);
             for (int i = 0; i < InfoHolder.friendIds.size(); i++) {
-                List<JSONObject> friendAlbums = getAlbums(InfoHolder.friendIds.get(i), null);
+                SortedSet<JSONObject> friendPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                String fid = InfoHolder.friendIds.get(i);
+                List<JSONObject> friendAlbums = getAlbums(fid, null);
                 for (int j = 0; j < friendAlbums.size(); j++) {
                     try {
                         JSONObject album = friendAlbums.get(j);
                         String aid = album.getString("aid");
                         SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
-                        albumPhotos.addAll(getAlbumPhotos(InfoHolder.friendIds.get(i), null, aid));
+                        albumPhotos.addAll(getAlbumPhotos(fid, null, aid));
+                        friendPhotos.addAll(albumPhotos);
                         InfoHolder.albumPhotos.put(aid, albumPhotos);
                         InfoHolder.allAlbums.put(aid, album);
                     } catch (Exception e) {
                         Console.print(e.getMessage());
                     }
                 }
-                InfoHolder.friendAlbums.put(InfoHolder.friendIds.get(i), friendAlbums);
+                InfoHolder.friendAlbums.put(fid, friendAlbums);
                 SortedSet<JSONObject> privatePhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
-                privatePhotos.addAll(getAlbumPhotos(InfoHolder.friendIds.get(i), null, null));
-                InfoHolder.friendPrivatePhotos.put(InfoHolder.friendIds.get(i), privatePhotos);
+                privatePhotos.addAll(getAlbumPhotos(fid, null, null));
+                InfoHolder.friendPrivatePhotos.put(fid, privatePhotos);
+                friendPhotos.addAll(privatePhotos);
+                InfoHolder.friendPhotos.put(fid, friendPhotos);
             }
             //Getting group albums and photos
             publishProgress(InfoLoadingProgress.GettingGroupAlbumsAndPhotos);
             for (int i = 0; i < InfoHolder.groupIds.size(); i++) {
-                try {
-                    List<JSONObject> groupAlbums = getAlbums(null, InfoHolder.groupIds.get(i));
-                    for (int j = 0; j < groupAlbums.size(); j++) {
-                        try {
-                            JSONObject album = groupAlbums.get(j);
-                            String aid = album.getString("aid");
-                            SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
-                            albumPhotos.addAll(getAlbumPhotos(null, InfoHolder.groupIds.get(i), aid));
-                            InfoHolder.albumPhotos.put(aid, albumPhotos);
-                            InfoHolder.allAlbums.put(aid, album);
-                        } catch (Exception e) {
-                            Console.print(e.getMessage());
-                        }
+                String gid = InfoHolder.groupIds.get(i);
+                SortedSet<JSONObject> groupPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                List<JSONObject> groupAlbums = getAlbums(null, gid);
+                for (int j = 0; j < groupAlbums.size(); j++) {
+                    try {
+                        JSONObject album = groupAlbums.get(j);
+                        String aid = album.getString("aid");
+                        SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
+                        albumPhotos.addAll(getAlbumPhotos(null, gid, aid));
+                        groupPhotos.addAll(albumPhotos);
+                        InfoHolder.albumPhotos.put(aid, albumPhotos);
+                        InfoHolder.allAlbums.put(aid, album);
+                    } catch (Exception e) {
+                        Console.print(e.getMessage());
                     }
-                    InfoHolder.groupAlbums.put(InfoHolder.groupIds.get(i), groupAlbums);
-                } catch (Exception e) {
-                    Console.print(e.getMessage());
                 }
+                InfoHolder.groupAlbums.put(InfoHolder.groupIds.get(i), groupAlbums);
+                InfoHolder.groupPhotos.put(gid, groupPhotos);
             }
             //Processing data
             publishProgress(InfoLoadingProgress.ProcessingData);
@@ -510,9 +536,30 @@ public class StreamActivity extends Activity {
         new InfoLoader().execute();
     }
 
+    private void onPhotoClick(int position) {
+        Intent intent = new Intent(this, PhotoActivity.class);
+        intent.putExtra("photo_id", photoListAdapter.getPhotoId(position));
+        if (photoListAdapter.getFriendId(position) != null) {
+            intent.putExtra("fid", photoListAdapter.getFriendId(position));
+        }
+        if (photoListAdapter.getGroupId(position) != null) {
+            intent.putExtra("gid", photoListAdapter.getGroupId(position));
+        }
+        if (photoListAdapter.getAlbumId(position) != null) {
+            intent.putExtra("aid", photoListAdapter.getAlbumId(position));
+        }
+        startActivity(intent);
+    }
+
     private void update() {
         photoListAdapter = new PhotoListAdapter(this);
         photoList.setAdapter(photoListAdapter);
+        photoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onPhotoClick(position);
+            }
+        });
         new ImageLoader().execute(null);
     }
 
