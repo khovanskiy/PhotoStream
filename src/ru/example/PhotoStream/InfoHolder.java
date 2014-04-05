@@ -102,7 +102,7 @@ public class InfoHolder {
             new HashMap<String, SortedSet<JSONObject>>();
 
     /**
-     * Contains mapping from photo id to photo info.
+     * Contains mapping from photo id (photo_id) to photo info.
      */
     public static Map<String, JSONObject> allPhotos = new HashMap<String, JSONObject>();
 
