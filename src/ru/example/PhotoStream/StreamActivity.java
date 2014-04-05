@@ -65,19 +65,19 @@ public class StreamActivity extends Activity {
                     if (InfoHolder.friendInfo.containsKey(userId)) {
                         JSONObject friend = InfoHolder.friendInfo.get(userId);
                         try {
-                            owner.setText(R.string.owner + ": " + friend.getString("name"));
+                            owner.setText("Владелец: " + friend.getString("name"));
                         } catch (Exception e) {
                             Console.print(e.getMessage());
                         }
                     } else if (InfoHolder.groupInfo.containsKey(userId)) {
                         JSONObject group = InfoHolder.groupInfo.get(userId);
                         try {
-                            owner.setText(R.string.owner + ": " + group.getString("title"));
+                            owner.setText("Владелец: " + group.getString("title"));
                         } catch (Exception e) {
                             Console.print(e.getMessage());
                         }
                     } else {
-                        owner.setText(getString(R.string.my_photo));
+                        owner.setText("Моя фотография");
                     }
                     infoLayout.addView(owner);
                     TextView album = new TextView(context);
@@ -86,19 +86,19 @@ public class StreamActivity extends Activity {
                         String albumId = photo.getString("album_id");
                         JSONObject albumObject = InfoHolder.allAlbums.get(albumId);
                         try {
-                            album.setText(R.string.album + ": " + albumObject.getString("title"));
+                            album.setText("Альбом: " + albumObject.getString("title"));
                         } catch (Exception e) {
                             Console.print(e.getMessage());
                         }
                     } else {
-                        album.setText(getString(R.string.private_album));
+                        album.setText("Личный альбом");
                     }
                     infoLayout.addView(album);
                     TextView created = new TextView(context);
                     created.setTextColor(Color.BLACK);
                     long ms = Long.parseLong(photo.getString("created_ms"));
                     Date date = new Date(ms);
-                    created.setText(getString(R.string.uploaded) + ": " + date.toLocaleString());
+                    created.setText("Загружено: " + date.toLocaleString());
                     infoLayout.addView(created);
                     LinearLayout total = new LinearLayout(context);
                     total.setOrientation(LinearLayout.HORIZONTAL);
@@ -157,6 +157,8 @@ public class StreamActivity extends Activity {
         ProcessingData,
         Done,
     }
+
+    private Context context;
 
     private class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> {
 
@@ -439,28 +441,28 @@ public class StreamActivity extends Activity {
                 String waitingText = "";
                 switch (values[i]) {
                     case GettingFriends:
-                        waitingText = getString(R.string.getting_friend_list);
+                        waitingText = "Получение списка друзей";
                         break;
                     case GettingGroups:
-                        waitingText = getString(R.string.getting_group_list);
+                        waitingText = "Получение списка групп";
                         break;
                     case GettingUserAlbums:
-                        waitingText = getString(R.string.getting_your_albums);
+                        waitingText = "Получение ваших альбомов";
                         break;
                     case GettingUserPhotos:
-                        waitingText = getString(R.string.getting_your_photos);
+                        waitingText = "Получение ваших фотографий";
                         break;
                     case GettingFriendAlbumsAndPhotos:
-                        waitingText = getString(R.string.getting_friends_albums_and_photos);
+                        waitingText = "Получение альбомов и фотографий друзей";
                         break;
                     case GettingGroupAlbumsAndPhotos:
-                        waitingText = getString(R.string.getting_groups_albums_and_photos);
+                        waitingText = "Получение альбомов и фотографий групп";
                         break;
                     case ProcessingData:
-                        waitingText = getString(R.string.processing_data);
+                        waitingText = "Обработка данных";
                         break;
                     case Done:
-                        waitingText = getString(R.string.download_is_finished);
+                        waitingText = "Загрузка завершена";
                         break;
                 }
                 ((TextView) findViewById(R.id.please_stand_by_text)).setText(waitingText);
@@ -471,9 +473,9 @@ public class StreamActivity extends Activity {
         protected void onPostExecute(Void result) {
             setContentView(R.layout.streamactivity);
             photoList = (ListView) findViewById(R.id.streamactivity_photolist);
-            photoList.setDividerHeight(20);
-            downloaded = true;
-            update();
+            photoListAdapter = new PhotoListAdapter(context);
+            photoList.setAdapter(photoListAdapter);
+            new ImageLoader().execute(null);
         }
     }
 
@@ -500,42 +502,42 @@ public class StreamActivity extends Activity {
     private ListView photoList;
     private PhotoListAdapter photoListAdapter;
     private Odnoklassniki mOdnoklassniki;
-    private boolean downloaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.please_stand_by);
+        context = this;
         mOdnoklassniki = Odnoklassniki.getInstance(getApplicationContext());
-        new InfoLoader().execute();
+        update();
     }
 
     private void update() {
-        photoListAdapter = new PhotoListAdapter(this);
-        photoList.setAdapter(photoListAdapter);
-        new ImageLoader().execute(null);
+        new InfoLoader().execute();
     }
 
     public void onMyAlbumsClick(View view) {
-        Intent intent = new Intent(this, AlbumsActivity.class);
+        Intent intent = new Intent(this, UserAlbumsActivity.class);
         startActivity(intent);
     }
 
-    public void onMyFriendsClick(View view) {
-        Intent intent = new Intent(this, FriendsActivity.class);
+    public void onFriendAlbumsClick(View view) {
+        Intent intent = new Intent(this, FriendAlbumsActivity.class);
         startActivity(intent);
     }
 
-    public void onMyGroupsClick(View view) {
-        Intent intent = new Intent(this, GroupsActivity.class);
+    public void onGroupAlbumsClick(View view) {
+        Intent intent = new Intent(this, GroupAlbumsActivity.class);
         startActivity(intent);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (downloaded) {
-            update();
-        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

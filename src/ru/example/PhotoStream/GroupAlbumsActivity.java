@@ -6,9 +6,9 @@ import android.os.Bundle;
 /**
  * Created by Genyaz on 01.04.14.
  */
-public class PhotoActivity extends Activity {
+public class GroupAlbumsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.photoactivity);
+        setContentView(R.layout.groupalbumsactivity);
     }
 }

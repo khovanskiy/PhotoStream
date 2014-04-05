@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * Created by Genyaz on 01.04.14.
+ * Created by Genyaz on 02.04.14.
  */
-public class PhotoActivity extends Activity {
+public class GroupStreamActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.photoactivity);
+        setContentView(R.layout.groupstreamactivity);
     }
 }

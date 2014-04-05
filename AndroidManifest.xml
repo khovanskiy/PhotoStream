@@ -37,10 +37,14 @@
         <activity android:name=".UploadActivity">
 
         </activity>
+        <activity android:name=".FriendAlbumsActivity"/>
         <activity android:name=".AlbumActivity"/>
         <activity android:name=".FriendsActivity"/>
+        <activity android:name=".GroupAlbumsActivity"/>
         <activity android:name=".GroupsActivity"/>
+        <activity android:name=".UserAlbumsActivity"/>
         <activity android:name=".PhotoActivity"/>
-        <activity android:name=".AlbumsActivity"/>
+        <activity android:name=".FriendStreamActivity"/>
+        <activity android:name=".GroupStreamActivity"/>
     </application>
 </manifest>
