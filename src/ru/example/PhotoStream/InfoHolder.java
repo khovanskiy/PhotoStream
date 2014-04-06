@@ -18,13 +18,13 @@ public class InfoHolder {
         @Override
         public int compare(JSONObject lhs, JSONObject rhs) {
             try {
-                int l = lhs.getInt("created_ms"), r = rhs.getInt("created_ms");
+                long l = lhs.getInt("created_ms"), r = rhs.getInt("created_ms");
                 if (l > r) {
                     return -1;
                 } else if (l > r) {
                     return 1;
                 } else {
-                    return new Long(Long.parseLong(lhs.getString("id"))).compareTo(new Long(Long.parseLong(rhs.getString("id"))));
+                    return -new Long(Long.parseLong(lhs.getString("id"))).compareTo(new Long(Long.parseLong(rhs.getString("id"))));
                 }
             } catch (Exception e) {
                 Console.print(e.getMessage());
