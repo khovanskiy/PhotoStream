@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import org.json.JSONObject;
 import ru.example.PhotoStream.ViewAdapters.AlbumListAdapter;
@@ -24,6 +25,15 @@ public class AlbumsActivity extends Activity {
         Intent intent = getIntent();
         fid = intent.getStringExtra("fid");
         gid = intent.getStringExtra("gid");
+        String toStream;
+        if (fid != null) {
+            toStream = getString(R.string.friend_stream);
+        } else if (gid != null) {
+            toStream = getString(R.string.group_stream);
+        } else {
+            toStream = getString(R.string.my_stream);
+        }
+        ((Button) findViewById(R.id.albumsactivity_stream)).setText(toStream);
         albumList = (ListView) findViewById(R.id.albumsactivity_album_list);
         albumList.setDividerHeight(20);
     }
@@ -83,6 +93,17 @@ public class AlbumsActivity extends Activity {
         }
         if (albumListAdapter.getAid(position) != null) {
             intent.putExtra("aid", albumListAdapter.getAid(position));
+        }
+        startActivity(intent);
+    }
+
+    public void onAlbumsToStreamClick(View view) {
+        Intent intent = new Intent(this, SubstreamActivity.class);
+        if (fid != null) {
+            intent.putExtra("fid", fid);
+        }
+        if (gid != null) {
+            intent.putExtra("gid", gid);
         }
         startActivity(intent);
     }

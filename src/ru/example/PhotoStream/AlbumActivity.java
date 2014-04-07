@@ -11,7 +11,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import org.json.JSONObject;
 import ru.example.PhotoStream.ViewAdapters.PhotoListAdapter;
+import ru.ok.android.sdk.Odnoklassniki;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SortedSet;
 
 /**
@@ -33,11 +36,24 @@ public class AlbumActivity extends Activity {
         fid = intent.getStringExtra("fid");
         gid = intent.getStringExtra("gid");
         aid = intent.getStringExtra("aid");
-        if (fid == null && gid == null) {
+        if (fid == null && gid == null || aid == null) {
             Button likeButton = (Button) findViewById(R.id.albumactivity_likebutton);
             likeButton.setEnabled(false);
             likeButton.setBackgroundColor(Color.GRAY);
         }
+        String toAlbums, toStream;
+        if (fid == null && gid == null) {
+            toAlbums = getString(R.string.my_albums);
+            toStream = getString(R.string.my_stream);
+        } else if (fid != null) {
+            toAlbums = getString(R.string.friend_albums);
+            toStream = getString(R.string.friend_stream);
+        } else {
+            toAlbums = getString(R.string.group_albums);
+            toStream = getString(R.string.group_stream);
+        }
+        ((Button) findViewById(R.id.albumactivity_albums)).setText(toAlbums);
+        ((Button) findViewById(R.id.albumactivity_stream)).setText(toStream);
         photoList = (ListView) findViewById(R.id.albumactivity_photolist);
     }
 
@@ -93,8 +109,40 @@ public class AlbumActivity extends Activity {
         });
     }
 
-    public void onAddLikeButton(View view) {
-        //todo
+    public void onAddAlbumLikeClick(View view) {
+        Odnoklassniki mOdnoklassniki = Odnoklassniki.getInstance(this);
+        Map<String, String> requestParams = new HashMap<String, String>();
+        requestParams.put("aid", aid);
+        if (gid != null) {
+            requestParams.put("gid", gid);
+        }
+        try {
+            mOdnoklassniki.request("photos.addAlbumLike", requestParams, "submit");
+        } catch (Exception e) {
+            Console.print(e.getMessage());
+        }
+    }
+
+    public void onAlbumToAlbumsClick(View view) {
+        Intent intent = new Intent(this, AlbumsActivity.class);
+        if (fid != null) {
+            intent.putExtra("fid", fid);
+        }
+        if (gid != null) {
+            intent.putExtra("gid", gid);
+        }
+        startActivity(intent);
+    }
+
+    public void onAlbumToStreamClick(View view) {
+        Intent intent = new Intent(this, SubstreamActivity.class);
+        if (fid != null) {
+            intent.putExtra("fid", fid);
+        }
+        if (gid != null) {
+            intent.putExtra("gid", gid);
+        }
+        startActivity(intent);
     }
 
     private void onPhotoClick(int position) {

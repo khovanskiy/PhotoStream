@@ -11,8 +11,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import org.json.JSONObject;
+import ru.ok.android.sdk.Odnoklassniki;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Genyaz on 01.04.14.
@@ -58,6 +61,20 @@ public class PhotoActivity extends Activity {
             likeButton.setEnabled(false);
             likeButton.setBackgroundColor(Color.GRAY);
         }
+        String toAlbums, toStream;
+        if (fid == null && gid == null) {
+            toAlbums = getString(R.string.my_albums);
+            toStream = getString(R.string.my_stream);
+        } else if (fid != null) {
+            toAlbums = getString(R.string.friend_albums);
+            toStream = getString(R.string.friend_stream);
+        } else {
+            toAlbums = getString(R.string.group_albums);
+            toStream = getString(R.string.group_stream);
+        }
+        ((Button) findViewById(R.id.photoactivity_album)).setText(toAlbums);
+        ((Button) findViewById(R.id.photoactivity_albums)).setText(toAlbums);
+        ((Button) findViewById(R.id.photoactivity_stream)).setText(toStream);
         ImageView photo = (ImageView) findViewById(R.id.photoactivity_image);
         JSONObject photoObject = InfoHolder.allPhotos.get(photoId);
         try {
@@ -68,6 +85,52 @@ public class PhotoActivity extends Activity {
     }
 
     public void onAddLikeClick(View view) {
-        //todo
+        Odnoklassniki mOdnoklassniki = Odnoklassniki.getInstance(this);
+        Map<String, String> requestParams = new HashMap<String, String>();
+        requestParams.put("photo_id", photoId);
+        if (gid != null) {
+            requestParams.put("gid", gid);
+        }
+        try {
+            mOdnoklassniki.request("photos.addPhotoLike", requestParams, "submit");
+        } catch (Exception e) {
+            Console.print(e.getMessage());
+        }
+    }
+
+    public void onPhotoToAlbumClick(View view) {
+        Intent intent = new Intent(this, AlbumActivity.class);
+        if (fid != null) {
+            intent.putExtra("fid", fid);
+        }
+        if (gid != null) {
+            intent.putExtra("gid", gid);
+        }
+        if (aid != null) {
+            intent.putExtra("aid", aid);
+        }
+        startActivity(intent);
+    }
+
+    public void onPhotoToAlbumsClick(View view) {
+        Intent intent = new Intent(this, AlbumsActivity.class);
+        if (fid != null) {
+            intent.putExtra("fid", fid);
+        }
+        if (gid != null) {
+            intent.putExtra("gid", gid);
+        }
+        startActivity(intent);
+    }
+
+    public void onPhotoToStreamClick(View view) {
+        Intent intent = new Intent(this, SubstreamActivity.class);
+        if (fid != null) {
+            intent.putExtra("fid", fid);
+        }
+        if (gid != null) {
+            intent.putExtra("gid", gid);
+        }
+        startActivity(intent);
     }
 }

@@ -221,12 +221,14 @@ public class StreamActivity extends Activity {
                     SortedSet<JSONObject> albumPhotos = new TreeSet<JSONObject>(new InfoHolder.PhotoByUploadTimeComparator());
                     albumPhotos.addAll(getAlbumPhotos(null, null, aid));
                     InfoHolder.albumPhotos.put(aid, albumPhotos);
+                    InfoHolder.userPhotos.addAll(albumPhotos);
                     InfoHolder.allAlbums.put(aid, album);
                 } catch (Exception e) {
                     Console.print(e.getMessage());
                 }
             }
             InfoHolder.userPrivatePhotos.addAll(getAlbumPhotos(null, null, null));
+            InfoHolder.userPhotos.addAll(InfoHolder.userPrivatePhotos);
             //Getting friend albums and photos
             publishProgress(InfoLoadingProgress.GettingFriendAlbumsAndPhotos);
             for (int i = 0; i < InfoHolder.friendIds.size(); i++) {
@@ -305,6 +307,7 @@ public class StreamActivity extends Activity {
                 }
                 InfoHolder.sortedPhotos.addAll(photos);
             }
+            InfoHolder.infoDownloaded = true;
             publishProgress(InfoLoadingProgress.Done);
             return null;
         }
@@ -346,9 +349,6 @@ public class StreamActivity extends Activity {
         @Override
         protected void onPostExecute(Void result) {
             setContentView(R.layout.streamactivity);
-            photoList = (ListView) findViewById(R.id.streamactivity_photolist);
-            photoList.setDividerHeight(20);
-            downloaded = true;
             update();
         }
     }
@@ -359,14 +359,18 @@ public class StreamActivity extends Activity {
     private ListView photoList;
     private PhotoListAdapter photoListAdapter;
     private Odnoklassniki mOdnoklassniki;
-    private boolean downloaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.please_stand_by);
         mOdnoklassniki = Odnoklassniki.getInstance(getApplicationContext());
-        new InfoLoader().execute();
+        if (!InfoHolder.infoDownloaded) {
+            setContentView(R.layout.please_stand_by);
+            new InfoLoader().execute();
+        } else {
+            setContentView(R.layout.streamactivity);
+            update();
+        }
     }
 
     private void onPhotoClick(int position) {
@@ -396,6 +400,8 @@ public class StreamActivity extends Activity {
     }
 
     private void update() {
+        photoList = (ListView) findViewById(R.id.streamactivity_photolist);
+        photoList.setDividerHeight(20);
         photoListAdapter = new PhotoListAdapter(this);
         photoList.setAdapter(photoListAdapter);
         photoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -422,8 +428,8 @@ public class StreamActivity extends Activity {
         });
     }
 
-    public void onMyAlbumsClick(View view) {
-        Intent intent = new Intent(this, AlbumsActivity.class);
+    public void onMyStreamClick(View view) {
+        Intent intent = new Intent(this, SubstreamActivity.class);
         startActivity(intent);
     }
 
@@ -440,7 +446,7 @@ public class StreamActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (downloaded) {
+        if (InfoHolder.infoDownloaded) {
             update();
         }
     }

@@ -91,23 +91,98 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="StreamActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="StreamActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="386" column="4" selection-start="18151" selection-end="18579" vertical-scroll-proportion="0.0" vertical-offset="6542" max-vertical-offset="7616">
+            <state line="431" column="49" selection-start="19996" selection-end="19996" vertical-scroll-proportion="0.5558583" vertical-offset="7123" max-vertical-offset="7803">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#970#978#0" expanded="true" />
+                <element signature="e#1542#1554#0" expanded="true" />
+                <element signature="e#1617#1633#0" expanded="true" />
+                <element signature="e#3284#3300#0" expanded="true" />
+                <element signature="e#3351#3359#0" expanded="true" />
+                <element signature="e#4441#4453#0" expanded="true" />
+                <element signature="e#4516#4532#0" expanded="true" />
+                <element signature="e#5706#5722#0" expanded="true" />
+                <element signature="e#6013#6025#0" expanded="true" />
+                <element signature="e#6966#6982#0" expanded="true" />
+                <element signature="e#7365#7377#0" expanded="true" />
+                <element signature="e#10078#10090#0" expanded="true" />
+                <element signature="e#10934#10946#0" expanded="true" />
+                <element signature="e#11408#11420#0" expanded="true" />
+                <element signature="e#12002#12014#0" expanded="true" />
+                <element signature="e#12646#12658#0" expanded="true" />
+                <element signature="e#13059#13071#0" expanded="true" />
+                <element signature="e#15482#15521#0" expanded="true" />
+                <element signature="e#15632#15670#0" expanded="true" />
+                <element signature="e#15785#15824#0" expanded="true" />
+                <element signature="e#15939#15978#0" expanded="true" />
+                <element signature="e#16104#16157#0" expanded="true" />
+                <element signature="e#16282#16334#0" expanded="true" />
+                <element signature="e#16446#16481#0" expanded="true" />
+                <element signature="e#16583#16623#0" expanded="true" />
+                <element signature="e#19007#19227#0" expanded="true" />
+                <element signature="e#19216#19217#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AlbumsActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AlbumsActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="25" selection-start="797" selection-end="797" vertical-scroll-proportion="0.33157894" vertical-offset="316" max-vertical-offset="1513">
+            <state line="99" column="24" selection-start="3478" selection-end="3478" vertical-scroll-proportion="0.0" vertical-offset="181" max-vertical-offset="1734">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="26" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="612">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="streamactivity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="47" selection-start="2099" selection-end="2099" vertical-scroll-proportion="-15.4" vertical-offset="414" max-vertical-offset="1564">
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="photoactivity.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/photoactivity.xml">
+          <provider editor-type-id="text-editor">
+            <state line="51" column="30" selection-start="2041" selection-end="2057" vertical-scroll-proportion="0.0" vertical-offset="669" max-vertical-offset="1615">
+              <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PhotoActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="74" column="55" selection-start="2497" selection-end="2497" vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="2142">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#2066#2095#0" expanded="true" />
+                <element signature="e#2120#2149#0" expanded="true" />
+                <element signature="e#2208#2241#0" expanded="true" />
+                <element signature="e#2266#2299#0" expanded="true" />
+                <element signature="e#2341#2373#0" expanded="true" />
+                <element signature="e#2398#2430#0" expanded="true" />
+                <element signature="e#3186#3202#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -116,36 +191,24 @@
       <file leaf-file-name="AlbumActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="21" selection-start="881" selection-end="881" vertical-scroll-proportion="0.0" vertical-offset="1201" max-vertical-offset="1938">
+            <state line="43" column="8" selection-start="1423" selection-end="2046" vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="2499">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#1515#1544#0" expanded="true" />
+                <element signature="e#1569#1598#0" expanded="true" />
+                <element signature="e#1657#1690#0" expanded="true" />
+                <element signature="e#1715#1748#0" expanded="true" />
+                <element signature="e#1790#1822#0" expanded="true" />
+                <element signature="e#1847#1879#0" expanded="true" />
+                <element signature="e#4176#4192#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FriendsActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/FriendsActivity.java">
+      <file leaf-file-name="AlbumListAdapter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/AlbumListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="4" selection-start="66" selection-end="66" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="901">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AuthActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AuthActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="12" selection-start="1345" selection-end="1345" vertical-scroll-proportion="0.0" vertical-offset="2" max-vertical-offset="1122">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GroupsActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="867">
+            <state line="67" column="51" selection-start="2095" selection-end="2095" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="2533">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -156,7 +219,7 @@
       <file leaf-file-name="InfoHolder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="43" selection-start="521" selection-end="521" vertical-scroll-proportion="0.0" vertical-offset="7" max-vertical-offset="2312">
+            <state line="111" column="37" selection-start="3550" selection-end="3550" vertical-scroll-proportion="0.0" vertical-offset="1945" max-vertical-offset="2465">
               <folding />
             </state>
           </provider>
@@ -165,27 +228,7 @@
       <file leaf-file-name="SubstreamActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SubstreamActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="4" selection-start="489" selection-end="600" vertical-scroll-proportion="0.0" vertical-offset="266" max-vertical-offset="1904">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PhotoActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="5" selection-start="2216" selection-end="2216" vertical-scroll-proportion="0.0" vertical-offset="2" max-vertical-offset="1122">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Pair.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Pair.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="13" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+            <state line="84" column="42" selection-start="3114" selection-end="3114" vertical-scroll-proportion="0.0" vertical-offset="1007" max-vertical-offset="1751">
               <folding />
             </state>
           </provider>
@@ -208,7 +251,6 @@
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/AuthActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/album.xml" />
-        <option value="$PROJECT_DIR$/res/layout/uploadactivity.xml" />
         <option value="$PROJECT_DIR$/res/layout/friends.xml" />
         <option value="$PROJECT_DIR$/res/layout/friendalbums.xml" />
         <option value="$PROJECT_DIR$/res/layout/groups.xml" />
@@ -218,30 +260,32 @@
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/FriendAlbumsActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/GroupAlbumsActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/UserAlbumsActivity.java" />
-        <option value="$PROJECT_DIR$/res/layout/authactivity.xml" />
         <option value="$PROJECT_DIR$/res/layout/groupstreamactivity.xml" />
         <option value="$PROJECT_DIR$/res/layout/friendstreamactivity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/please_stand_by.xml" />
-        <option value="$PROJECT_DIR$/res/layout/streamactivity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/friendsactivity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/albumactivity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/groupsactivity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/substreamactivity.xml" />
-        <option value="$PROJECT_DIR$/res/layout/albumsactivity.xml" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotoListAdapter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/AlbumListAdapter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/FriendListAdapter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/GroupListAdapter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/FriendsActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/SubstreamActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumsActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/albumactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/albumsactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/groupsactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/please_stand_by.xml" />
+        <option value="$PROJECT_DIR$/res/layout/uploadactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/authactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/friendsactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/substreamactivity.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/SubstreamActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/streamactivity.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/photoactivity.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
       </list>
     </option>
   </component>
@@ -277,8 +321,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -334,6 +378,56 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ViewAdapters" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -439,6 +533,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -464,19 +571,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -595,7 +689,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6776018" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -604,7 +698,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34509203" sideWeight="0.6808199" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34509203" sideWeight="0.6808199" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34509203" sideWeight="0.3191801" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -705,26 +799,6 @@
         <state line="8962" column="0" selection-start="346881" selection-end="346881" vertical-scroll-proportion="0.0" vertical-offset="149592" max-vertical-offset="316132" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/uploadactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="9" column="4" selection-start="489" selection-end="489" vertical-scroll-proportion="-6.12" vertical-offset="0" max-vertical-offset="340">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/photoactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSON.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="91" column="0" selection-start="2951" selection-end="2951" vertical-scroll-proportion="0.0" vertical-offset="1196" max-vertical-offset="1836" />
@@ -732,34 +806,12 @@
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/ImageView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="0" selection-start="3829" selection-end="3829" vertical-scroll-proportion="0.0" vertical-offset="1094" max-vertical-offset="20026">
-          <folding />
-        </state>
+        <state line="112" column="0" selection-start="3829" selection-end="3829" vertical-scroll-proportion="0.0" vertical-offset="1094" max-vertical-offset="20026" />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/org/json/JSONObject.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="514" column="0" selection-start="18723" selection-end="18723" vertical-scroll-proportion="0.0" vertical-offset="8319" max-vertical-offset="12121" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/authactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="9" column="4" selection-start="489" selection-end="489" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="510">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/please_stand_by.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/os/AsyncTask.java">
@@ -789,36 +841,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="12410" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/friendsactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/groupsactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/substreamactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/view/ViewGroup.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="436" column="0" selection-start="16442" selection-end="16442" vertical-scroll-proportion="0.0" vertical-offset="6444" max-vertical-offset="111741" />
@@ -826,74 +848,27 @@
     </entry>
     <entry file="file://D:/Programs/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-18/android/widget/LinearLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="0" selection-start="6775" selection-end="6775" vertical-scroll-proportion="0.0" vertical-offset="2257" max-vertical-offset="31263">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/albumactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
+        <state line="168" column="0" selection-start="6775" selection-end="6775" vertical-scroll-proportion="0.0" vertical-offset="2257" max-vertical-offset="31263" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PhotoStream.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/albumsactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="4.08" vertical-offset="102" max-vertical-offset="459">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
-      <provider editor-type-id="text-editor">
-        <state line="9" column="4" selection-start="447" selection-end="447" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="340">
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="20" selection-start="299" selection-end="299" vertical-scroll-proportion="-4.76" vertical-offset="0" max-vertical-offset="510">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gen/ru/example/PhotoStream/R.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="19" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
-          <folding />
-        </state>
+        <state line="5" column="19" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gen/ru/example/PhotoStream/Manifest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="19" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204">
-          <folding />
-        </state>
+        <state line="5" column="19" selection-start="177" selection-end="177" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="204" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gen/ru/example/PhotoStream/BuildConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="19" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <folding />
-        </state>
+        <state line="5" column="19" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Console.java">
@@ -903,35 +878,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotoListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="42" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.0" vertical-offset="2659" max-vertical-offset="3026">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2452#2485#0" expanded="true" />
-            <element signature="e#2929#2962#0" expanded="true" />
-            <element signature="e#3179#3215#0" expanded="true" />
-            <element signature="e#3624#3657#0" expanded="true" />
-            <element signature="e#4241#4277#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/AlbumListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="6" selection-start="619" selection-end="619" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2533">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1881#1922#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/FriendListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="6" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0" vertical-offset="181" max-vertical-offset="2074">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -940,7 +891,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="6" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="2108">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -952,33 +903,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="5" selection-start="2216" selection-end="2216" vertical-scroll-proportion="0.0" vertical-offset="640" max-vertical-offset="1122">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Pair.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="13" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="43" selection-start="521" selection-end="521" vertical-scroll-proportion="0.0" vertical-offset="1497" max-vertical-offset="2312">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="0" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0" vertical-offset="232" max-vertical-offset="867">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -996,38 +924,219 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SubstreamActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Pair.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="4" selection-start="489" selection-end="600" vertical-scroll-proportion="0.0" vertical-offset="266" max-vertical-offset="1904">
+        <state line="3" column="13" selection-start="47" selection-end="47" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotoListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="100" column="42" selection-start="3888" selection-end="3888" vertical-scroll-proportion="0.0" vertical-offset="2659" max-vertical-offset="3026">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/albumactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="14" selection-start="273" selection-end="273" vertical-scroll-proportion="-4.08" vertical-offset="0" max-vertical-offset="1445">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/friendsactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="38" selection-start="639" selection-end="639" vertical-scroll-proportion="-9.52" vertical-offset="0" max-vertical-offset="561">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/authactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="42" selection-start="1326" selection-end="1326" vertical-scroll-proportion="-19.72" vertical-offset="0" max-vertical-offset="663">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/albumsactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="12" selection-start="1384" selection-end="1384" vertical-scroll-proportion="-12.28" vertical-offset="254" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/groupsactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="12" selection-start="940" selection-end="940" vertical-scroll-proportion="-15.64" vertical-offset="0" max-vertical-offset="578">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/please_stand_by.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="12" selection-start="1172" selection-end="1172" vertical-scroll-proportion="-12.28" vertical-offset="169" max-vertical-offset="680">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/uploadactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="17" selection-start="291" selection-end="291" vertical-scroll-proportion="-3.4" vertical-offset="0" max-vertical-offset="374">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/substreamactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="35" selection-start="1203" selection-end="1203" vertical-scroll-proportion="-9.56" vertical-offset="271" max-vertical-offset="782">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/AlbumListAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="51" selection-start="2095" selection-end="2095" vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="2533">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/InfoHolder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="386" column="4" selection-start="18151" selection-end="18579" vertical-scroll-proportion="0.0" vertical-offset="6542" max-vertical-offset="7616">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="111" column="37" selection-start="3550" selection-end="3550" vertical-scroll-proportion="0.0" vertical-offset="1945" max-vertical-offset="2465">
+          <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SubstreamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="42" selection-start="3114" selection-end="3114" vertical-scroll-proportion="0.0" vertical-offset="1007" max-vertical-offset="1751">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/streamactivity.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="47" selection-start="2099" selection-end="2099" vertical-scroll-proportion="-15.4" vertical-offset="414" max-vertical-offset="1564">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="21" selection-start="881" selection-end="881" vertical-scroll-proportion="0.0" vertical-offset="1201" max-vertical-offset="1938">
+        <state line="43" column="8" selection-start="1423" selection-end="2046" vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="2499">
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1515#1544#0" expanded="true" />
+            <element signature="e#1569#1598#0" expanded="true" />
+            <element signature="e#1657#1690#0" expanded="true" />
+            <element signature="e#1715#1748#0" expanded="true" />
+            <element signature="e#1790#1822#0" expanded="true" />
+            <element signature="e#1847#1879#0" expanded="true" />
+            <element signature="e#4176#4192#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="25" selection-start="797" selection-end="797" vertical-scroll-proportion="0.33157894" vertical-offset="316" max-vertical-offset="1513">
+        <state line="99" column="24" selection-start="3478" selection-end="3478" vertical-scroll-proportion="0.0" vertical-offset="1177" max-vertical-offset="1734">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="55" selection-start="2497" selection-end="2497" vertical-scroll-proportion="0.0" vertical-offset="776" max-vertical-offset="2142">
+          <folding>
+            <element signature="e#2066#2095#0" expanded="true" />
+            <element signature="e#2120#2149#0" expanded="true" />
+            <element signature="e#2208#2241#0" expanded="true" />
+            <element signature="e#2266#2299#0" expanded="true" />
+            <element signature="e#2341#2373#0" expanded="true" />
+            <element signature="e#2398#2430#0" expanded="true" />
+            <element signature="e#3186#3202#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="26" selection-start="1632" selection-end="1632" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="612">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/photoactivity.xml">
+      <provider editor-type-id="text-editor">
+        <state line="51" column="30" selection-start="2041" selection-end="2057" vertical-scroll-proportion="0.0" vertical-offset="669" max-vertical-offset="1615">
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="431" column="49" selection-start="19996" selection-end="19996" vertical-scroll-proportion="0.5558583" vertical-offset="7123" max-vertical-offset="7803">
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#970#978#0" expanded="true" />
+            <element signature="e#1542#1554#0" expanded="true" />
+            <element signature="e#1617#1633#0" expanded="true" />
+            <element signature="e#3284#3300#0" expanded="true" />
+            <element signature="e#3351#3359#0" expanded="true" />
+            <element signature="e#4441#4453#0" expanded="true" />
+            <element signature="e#4516#4532#0" expanded="true" />
+            <element signature="e#5706#5722#0" expanded="true" />
+            <element signature="e#6013#6025#0" expanded="true" />
+            <element signature="e#6966#6982#0" expanded="true" />
+            <element signature="e#7365#7377#0" expanded="true" />
+            <element signature="e#10078#10090#0" expanded="true" />
+            <element signature="e#10934#10946#0" expanded="true" />
+            <element signature="e#11408#11420#0" expanded="true" />
+            <element signature="e#12002#12014#0" expanded="true" />
+            <element signature="e#12646#12658#0" expanded="true" />
+            <element signature="e#13059#13071#0" expanded="true" />
+            <element signature="e#15482#15521#0" expanded="true" />
+            <element signature="e#15632#15670#0" expanded="true" />
+            <element signature="e#15785#15824#0" expanded="true" />
+            <element signature="e#15939#15978#0" expanded="true" />
+            <element signature="e#16104#16157#0" expanded="true" />
+            <element signature="e#16282#16334#0" expanded="true" />
+            <element signature="e#16446#16481#0" expanded="true" />
+            <element signature="e#16583#16623#0" expanded="true" />
+            <element signature="e#19007#19227#0" expanded="true" />
+            <element signature="e#19216#19217#0" expanded="true" />
           </folding>
         </state>
       </provider>

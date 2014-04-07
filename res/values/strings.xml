@@ -6,6 +6,8 @@
     <string name="owner">Владелец</string>
     <string name="sample">Пример</string>
     <string name="album">Альбом</string>
+    <string name="albums">Альбомы</string>
+    <string name="my_stream">Мой стрим</string>
     <string name="my_albums">Мои альбомы</string>
     <string name="my_friends">Мои друзья</string>
     <string name="my_groups">Мои группы</string>
@@ -21,5 +23,9 @@
     <string name="processing_data">Обработка данных</string>
     <string name="download_is_finished">Загрузка завершена</string>
     <string name="like">Поставить "Класс!"</string>
-    <string name="to_albums">Альбомы</string>
+    <string name="friend_albums">Альбомы друга</string>
+    <string name="friend_stream">Стрим друга</string>
+    <string name="group_albums">Альбомы группы</string>
+    <string name="group_stream">Стрим группы</string>
+    <string name="to_album">К альбому</string>
 </resources>

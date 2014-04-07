@@ -74,6 +74,8 @@ public class SubstreamActivity extends Activity {
             photos = InfoHolder.friendPhotos.get(fid);
         } else if (gid != null) {
             photos = InfoHolder.groupPhotos.get(gid);
+        } else {
+            photos = InfoHolder.userPhotos;
         }
         photosToDisplay = photos.toArray(new JSONObject[0]);
         nextAdded = 0;
@@ -99,7 +101,7 @@ public class SubstreamActivity extends Activity {
         update();
     }
 
-    public void onAlbumsClick(View view) {
+    public void onSubstreamToAlbumsClick(View view) {
         Intent intent = new Intent(this, AlbumsActivity.class);
         if (fid != null) {
             intent.putExtra("fid", fid);

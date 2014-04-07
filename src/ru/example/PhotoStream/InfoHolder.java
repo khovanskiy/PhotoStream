@@ -65,6 +65,11 @@ public class InfoHolder {
                 new TreeSet<JSONObject>(new PhotoByUploadTimeComparator());
 
     /**
+     * Contains user photos sorted by upload time.
+     */
+    public static SortedSet<JSONObject> userPhotos =
+            new TreeSet<JSONObject>(new PhotoByUploadTimeComparator());
+    /**
      * Contains mapping from friend id to friend albums.
      */
     public static Map<String, List<JSONObject>> friendAlbums = new HashMap<String, List<JSONObject>>();
@@ -112,13 +117,17 @@ public class InfoHolder {
     public static SortedSet<JSONObject> sortedPhotos =
             new TreeSet<JSONObject>(new PhotoByUploadTimeComparator());
 
+    public static boolean infoDownloaded = false;
+
     public static void clear() {
+        infoDownloaded = false;
         friendIds.clear();
         friendInfo.clear();
         groupIds.clear();
         groupInfo.clear();
         userAlbums.clear();
         userPrivatePhotos.clear();
+        userPhotos.clear();
         friendAlbums.clear();
         friendPhotos.clear();
         groupAlbums.clear();
