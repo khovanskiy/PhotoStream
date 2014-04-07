@@ -34,6 +34,10 @@ public class AlbumsActivity extends Activity {
             toStream = getString(R.string.my_stream);
         }
         ((Button) findViewById(R.id.albumsactivity_stream)).setText(toStream);
+        if (fid != null || gid != null) {
+            findViewById(R.id.albumsactivity_create_album).setVisibility(View.GONE);
+            findViewById(R.id.albumsactivity_button_space).setVisibility(View.GONE);
+        }
         albumList = (ListView) findViewById(R.id.albumsactivity_album_list);
         albumList.setDividerHeight(20);
     }
@@ -106,5 +110,9 @@ public class AlbumsActivity extends Activity {
             intent.putExtra("gid", gid);
         }
         startActivity(intent);
+    }
+
+    public void onCreateAlbumClick(View view) {
+        //todo
     }
 }

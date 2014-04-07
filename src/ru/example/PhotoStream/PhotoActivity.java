@@ -58,8 +58,7 @@ public class PhotoActivity extends Activity {
         photoId = intent.getStringExtra("photo_id");
         if (fid == null && gid == null) {
             Button likeButton = (Button) findViewById(R.id.photoactivity_like_button);
-            likeButton.setEnabled(false);
-            likeButton.setBackgroundColor(Color.GRAY);
+            likeButton.setVisibility(View.GONE);
         }
         String toAlbums, toStream;
         if (fid == null && gid == null) {

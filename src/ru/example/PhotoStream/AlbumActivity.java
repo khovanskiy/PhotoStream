@@ -38,8 +38,7 @@ public class AlbumActivity extends Activity {
         aid = intent.getStringExtra("aid");
         if (fid == null && gid == null || aid == null) {
             Button likeButton = (Button) findViewById(R.id.albumactivity_likebutton);
-            likeButton.setEnabled(false);
-            likeButton.setBackgroundColor(Color.GRAY);
+            likeButton.setVisibility(View.GONE);
         }
         String toAlbums, toStream;
         if (fid == null && gid == null) {

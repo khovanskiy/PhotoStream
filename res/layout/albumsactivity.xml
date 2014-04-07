@@ -24,15 +24,38 @@
     <Space android:layout_width="20dp"
            android:layout_height="20dp"
            android:id="@+id/space"/>
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="To stream"
-            android:id="@+id/albumsactivity_stream"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_orange_dark"
-            android:onClick="onAlbumsToStreamClick"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To stream"
+                android:id="@+id/albumsactivity_stream"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="onAlbumsToStreamClick"/>
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" android:id="@+id/albumsactivity_button_space"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_album"
+                android:id="@+id/albumsactivity_create_album" android:background="@android:color/holo_orange_dark"
+                android:textColor="@android:color/white" android:onClick="onCreateAlbumClick"/>
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+    </LinearLayout>
     <Space
             android:layout_width="20dp"
             android:layout_height="20dp"
