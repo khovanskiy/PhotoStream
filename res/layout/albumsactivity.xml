@@ -9,8 +9,7 @@
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="fill_parent"
                   android:layout_height="50dp"
-                  android:background="@android:color/holo_orange_dark"
-                  android:id="@+id/linearLayout"/>
+                  android:background="@android:color/holo_orange_dark"/>
     <Space
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -22,8 +21,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"/>
     <Space android:layout_width="20dp"
-           android:layout_height="20dp"
-           android:id="@+id/space"/>
+           android:layout_height="20dp"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -50,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/create_album"
                 android:id="@+id/albumsactivity_create_album" android:background="@android:color/holo_orange_dark"
-                android:textColor="@android:color/white" android:onClick="onCreateAlbumClick"/>
+                android:textColor="@android:color/white" android:onClick="onCreateAlbumClick"
+                android:visibility="gone"/>
         <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"

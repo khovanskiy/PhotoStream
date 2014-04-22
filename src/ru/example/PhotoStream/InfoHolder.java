@@ -116,6 +116,11 @@ public class InfoHolder {
      */
     public static SortedSet<JSONObject> sortedPhotos =
             new TreeSet<JSONObject>(new PhotoByUploadTimeComparator());
+    /**
+     * Contains all photos liked during this session.
+     */
+    public static Set<String> likedDuringSessionPhotos = new HashSet<String>();
+
 
     public static boolean infoDownloaded = false;
 

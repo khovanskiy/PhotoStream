@@ -19,15 +19,13 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authactivity);
-        Console.print("Auth Activity");
     }
 
     public void onLoginClick(View view) {
         mOdnoklassniki = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
         mOdnoklassniki.setTokenRequestListener(this);
-        Console.print("Token created");
-        mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
-        Console.print("Token requested");
+        String allPermissions = "VALUABLE ACCESS;MESSAGING;PUBLISH TO STREAM;PHOTO CONTENT;SET STATUS;LIKE;ADD LIKE";
+        mOdnoklassniki.requestAuthorization(this, false, "LIKE");
     }
 
     @Override
@@ -45,7 +43,7 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
 
     @Override
     public void onSuccess(String token) {
-        Console.print("Your token: " + token);
+        TokenHolder.authorizedToken = mOdnoklassniki;
         Intent intent = new Intent(this, StreamActivity.class);
         startActivity(intent);
     }

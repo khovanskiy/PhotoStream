@@ -29,4 +29,6 @@
     <string name="group_stream">Стрим группы</string>
     <string name="to_album">К альбому</string>
     <string name="create_album">Создать альбом</string>
+    <string name="you_liked_this_photo">Вы уже поставили "Класс!"</string>
+    <string name="cant_add_like">Не удалось поставить "Класс!"</string>
 </resources>
