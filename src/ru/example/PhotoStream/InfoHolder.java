@@ -18,7 +18,7 @@ public class InfoHolder {
         @Override
         public int compare(JSONObject lhs, JSONObject rhs) {
             try {
-                long l = lhs.getInt("created_ms"), r = rhs.getInt("created_ms");
+                long l = lhs.getLong("created_ms"), r = rhs.getLong("created_ms");
                 if (l > r) {
                     return -1;
                 } else if (l > r) {
