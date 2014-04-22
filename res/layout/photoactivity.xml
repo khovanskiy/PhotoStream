@@ -45,8 +45,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/you_liked_this_photo"
-                android:id="@+id/photoactivity_you_liked_text" android:background="@android:color/holo_orange_dark"/>
+                android:text="@string/you_liked_this"
+                android:id="@+id/photoactivity_you_liked_text" android:background="@android:color/holo_orange_dark"
+                android:visibility="gone"/>
         <Space
                 android:layout_width="0dp"
                 android:layout_height="0dp"

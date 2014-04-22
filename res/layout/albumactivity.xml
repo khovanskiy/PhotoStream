@@ -25,15 +25,35 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             />
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/like"
-            android:id="@+id/albumactivity_likebutton"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_orange_dark"
-            android:onClick="onAddAlbumLikeClick"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/like"
+                android:id="@+id/albumactivity_likebutton"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                android:background="@android:color/holo_orange_dark"
+                android:onClick="onAddAlbumLikeClick"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/you_liked_this"
+                android:id="@+id/albumactivity_you_liked_text" android:autoText="false"
+                android:background="@android:color/holo_orange_dark" android:visibility="gone"/>
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+    </LinearLayout>
     <Space
             android:layout_width="20dp"
             android:layout_height="20dp"

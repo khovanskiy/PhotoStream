@@ -120,6 +120,7 @@ public class InfoHolder {
      * Contains all photos liked during this session.
      */
     public static Set<String> likedDuringSessionPhotos = new HashSet<String>();
+    public static Set<String> likedDuringSessionAlbums = new HashSet<String>();
 
 
     public static boolean infoDownloaded = false;
