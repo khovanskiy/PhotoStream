@@ -4,12 +4,6 @@
               android:layout_height="fill_parent"
               android:background="@android:color/white">
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/holo_orange_dark">
-    </LinearLayout>
-    <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
@@ -24,8 +18,7 @@
                 android:id="@+id/authactivity_button"
                 android:layout_gravity="center_horizontal"
                 android:onClick="onLoginClick"
-                android:background="@android:color/holo_orange_dark"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white" style="@style/LoginButton"/>
         <Space
                 android:layout_width="20dp"
                 android:layout_height="0dp"

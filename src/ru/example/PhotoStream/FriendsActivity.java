@@ -8,9 +8,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import ru.example.PhotoStream.ViewAdapters.FriendListAdapter;
 
-/**
- * Created by Genyaz on 01.04.14.
- */
 public class FriendsActivity extends Activity {
 
     private ListView friendList;

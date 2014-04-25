@@ -2,39 +2,21 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@android:color/white">
-
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="fill_parent"
-                  android:layout_height="50dp"
-                  android:background="@android:color/holo_orange_dark"/>
-    <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            />
-    <ListView
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="#e0e0e0">
+    <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipe_container"
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <GridView
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:id="@+id/substreamactivity_photolist"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"/>
-    <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            />
-    <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/albums"
-            android:id="@+id/substreamactivity_to_albums"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            android:background="@android:color/holo_orange_dark"
-            android:onClick="onSubstreamToAlbumsClick"/>
-    <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            />
+            android:layout_gravity="center"
+            android:layout_weight="1" android:numColumns="auto_fit" android:clickable="false"
+            android:stretchMode="columnWidth" android:background="@android:color/white" android:gravity="top"
+            android:columnWidth="256dp" android:minHeight="256dp"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
