@@ -34,7 +34,6 @@ public class SmartImage extends ImageView implements IEventHadler{
         };
     }
 
-    private static long totalBytes = 0;
     private ImageLoader loader = null;
 
     public SmartImage(Context context) {
@@ -112,9 +111,8 @@ public class SmartImage extends ImageView implements IEventHadler{
                 setupBitmap(bitmap);
                 if (cache.get(path) == null) {
                     cache.put(path, bitmap);
-                    totalBytes += bitmap.getByteCount();
-                    Console.print("Total: " + totalBytes + "B / " + (totalBytes / 1024) + "KB");
-                    calcAvailableMemory();
+                    //Console.print("Total: " + totalBytes + "B / " + (totalBytes / 1024) + "KB");
+                    //calcAvailableMemory();
                 }
             }
         }

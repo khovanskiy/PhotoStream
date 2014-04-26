@@ -84,7 +84,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53038939046008 Одноклассники API
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
-        DataLoader loader = new PhotosLoader(api, "50582132228315", 1);
+        DataLoader loader = new PhotosLoader(api, null, 0);
         loader.addEventListener(this);
         loader.execute();
     }

@@ -261,14 +261,14 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
      * @return list of albums
      */
     protected List<Album> getAlbums(String fid, String gid) {
-        //Console.print("Start loading");
         Map<String, String> requestParams = new HashMap<>();
-        //requestParams.put("fields", "album.*");
         if (fid != null) {
             requestParams.put("fid", fid);
+            requestParams.put("fields", "user_album.*");
         }
         if (gid != null) {
             requestParams.put("gid", gid);
+            requestParams.put("fields", "group_album.*");
         }
         List<Album> result = new ArrayList<>();
         boolean hasMore = true;
@@ -299,8 +299,8 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
         }
         if (gid != null) {
             requestParams.put("gid", gid);
+            requestParams.put("fields", "group_photo.*");
         }
-        requestParams.put("fields", "group_photo.*");
         Photo result = null;
         try {
             String response = api.request("photos.getPhotoInfo", requestParams, "get");
@@ -318,13 +318,18 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
             requestParams.put("fid", fid);
             requestParams.put("fields", "photo.*");
         }
-        if (gid != null) {
+        else if (gid != null) {
             requestParams.put("gid", gid);
             requestParams.put("fields", "group_photo.*");
+        }
+        else
+        {
+            requestParams.put("fields", "photo.*");
         }
         if (aid != null) {
             requestParams.put("aid", aid);
         }
+        //Console.print(requestParams.toString());
         List<Photo> result = new ArrayList<>();
         boolean hasMore = true;
         while (hasMore) {

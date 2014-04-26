@@ -26,20 +26,16 @@ public class PhotosLoader extends DataLoader
                 List<Photo> photos = getAlbumPhotos(uid, null, album.aid);
                 result.addAll(photos);
             }
+            Console.print("Total photos: " + result.size());
             return result;
         }
         else {
-            Console.print("Group`s photos");
             List<Album> albums = getAlbums(null, uid);
-            Console.print("Albums: " + albums.size());
             List<Photo> result = new ArrayList<>();
-            int sum = 0;
             for (Album album : albums) {
                 List<Photo> photos = getAlbumPhotos(null, uid, album.aid);
                 result.addAll(photos);
-                sum += photos.size();
             }
-            Console.print("Photos: " + sum);
             return result;
         }
     }
