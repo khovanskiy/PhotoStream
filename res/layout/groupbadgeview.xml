@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:minHeight="100dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent" android:layout_weight="1"
+            android:background="@android:color/white" android:layout_margin="15dp">
+        <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent" android:layout_weight="1"
+                android:padding="25dp">
+            <ru.example.PhotoStream.SquareTile android:layout_width="fill_parent" android:layout_height="fill_parent" android:scaleType="centerCrop" android:layout_weight="1"
+                                               android:id="@+id/groupbadgeview_image" />
+        </FrameLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent" android:layout_weight="1" android:paddingTop="25dp"
+                android:paddingRight="25dp" android:paddingBottom="25dp">
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="New Text"
+                    android:id="@+id/groupbadgeview_title" android:minHeight="35dp"
+                    android:gravity="center_vertical" android:singleLine="true"
+                    android:textColor="@android:color/holo_green_dark" android:textSize="20dp"/>
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="New Text"
+                    android:id="@+id/groupbadgeview_description" android:textColor="#333333" android:textSize="15dp"
+                    android:autoText="false"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

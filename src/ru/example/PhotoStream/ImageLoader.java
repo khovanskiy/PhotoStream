@@ -18,7 +18,6 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEvent
 
     protected Bitmap doInBackground(Void... urls) {
         String urldisplay = path;
-        Console.print("Start: " + urldisplay);
         Bitmap mIcon11 = null;
         InputStream in = null;
         try
@@ -40,7 +39,6 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEvent
         catch (Exception e) {
 
         }
-        Console.print("Loaded: " + urldisplay);
         return mIcon11;
     }
 

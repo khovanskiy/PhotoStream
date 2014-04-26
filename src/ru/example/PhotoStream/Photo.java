@@ -6,6 +6,7 @@ public class Photo {
     public String pic50x50 = "";
     public String pic128x128 = "";
     public String pic190x190 = "";
+    public String pic180min = "";
     public String pic640x480 = "";
     public String pic1024x768 = "";
     public int comments_count = 0;

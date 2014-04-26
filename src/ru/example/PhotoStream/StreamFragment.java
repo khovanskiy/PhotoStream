@@ -51,7 +51,6 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Console.print("get view " + position + " " + photos.size());
             Photo photo = photos.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.streamphotoview, parent, false);
@@ -103,14 +102,13 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     public void handleEvent(Event e) {
         if (e.type == Event.COMPLETE)
         {
+            e.target.removeEventListener(this);
             List<Photo> photos = (List<Photo>) e.data.get("photos");
-            Console.print("Complete loader");
             photoListAdapter = new PhotosAdapter(getActivity());
             photoList.setAdapter(photoListAdapter);
 
             for (Photo photo : photos)
             {
-                Console.print(photo.id + " " + photo.pic640x480);
                 photoListAdapter.addPhoto(photo);
             }
 

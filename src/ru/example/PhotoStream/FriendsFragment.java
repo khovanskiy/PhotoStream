@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 import ru.example.PhotoStream.Loaders.FriendsLoader;
-import ru.example.PhotoStream.Loaders.PhotosLoader;
+import ru.example.PhotoStream.Loaders.GroupsLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
@@ -51,7 +50,6 @@ public class FriendsFragment extends Fragment implements IEventHadler{
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            Console.print("get view " + position + " " + users.size());
             User user = users.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.friendsbadgeview, parent, false);
@@ -88,6 +86,7 @@ public class FriendsFragment extends Fragment implements IEventHadler{
     public void handleEvent(Event e) {
         if (e.type == Event.COMPLETE)
         {
+            e.target.removeEventListener(this);
             List<User> users = (List<User>) e.data.get("friends");
             Console.print("Complete loader");
             photoListAdapter = new UsersAdapter(getActivity());

@@ -216,21 +216,6 @@ public class StreamActivity extends FragmentActivity implements ActionBar.TabLis
         }); */
     }
 
-    public void onMyStreamClick(View view) {
-        Intent intent = new Intent(this, SubstreamActivity.class);
-        startActivity(intent);
-    }
-
-    public void onMyFriendsClick(View view) {
-        Intent intent = new Intent(this, FriendsActivity.class);
-        startActivity(intent);
-    }
-
-    public void onMyGroupsClick(View view) {
-        Intent intent = new Intent(this, GroupsActivity.class);
-        startActivity(intent);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
