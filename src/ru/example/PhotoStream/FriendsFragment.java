@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
 import ru.example.PhotoStream.Loaders.FriendsLoader;
 import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
@@ -51,18 +52,20 @@ public class FriendsFragment extends Fragment implements IEventHadler{
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Console.print("get view " + position + " " + users.size());
-            User photo = users.get(position);
+            User user = users.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.streamphotoview, parent, false);
-            SmartImage imageView = (SmartImage) view.findViewById(R.id.streamphotoview_imageView);
-            imageView.loadFromURL(photo.pic190x190);
+            View view = inflater.inflate(R.layout.friendsbadgeview, parent, false);
+            SmartImage imageView = (SmartImage) view.findViewById(R.id.friendsbadgeview_image);
+            imageView.loadFromURL(user.pic190x190);
+            TextView title = (TextView) view.findViewById(R.id.friendsbadgeview_title);
+            title.setText(user.first_name + " " + user.last_name);
             return view;
         }
     }
 
     private Odnoklassniki api;
     private UsersAdapter photoListAdapter;
-    private ListView photoList;
+    private GridView photoList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -77,7 +80,7 @@ public class FriendsFragment extends Fragment implements IEventHadler{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friendsactivity, container, false);
-        photoList = (ListView) view.findViewById(R.id.friendsactivity_friendlist);
+        photoList = (GridView) view.findViewById(R.id.friendsactivity_friendlist);
         return view;
     }
 
