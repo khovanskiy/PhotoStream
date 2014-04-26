@@ -2,7 +2,10 @@ package ru.example.PhotoStream;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Debug;
+import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -13,7 +16,26 @@ import android.widget.ImageView;
 import java.util.LinkedHashMap;
 
 public class SmartImage extends ImageView implements IEventHadler{
-    private static LinkedHashMap<String, Bitmap> cache = new LinkedHashMap<>();
+    private static LruCache<String, Bitmap> cache;
+    static
+    {
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        // Use 1/8th of the available memory for this memory cache.
+        final int cacheSize = maxMemory / 8;
+
+        cache = new LruCache<String, Bitmap>(cacheSize) {
+            @Override
+            protected int sizeOf(String key, Bitmap bitmap) {
+                // The cache size will be measured in kilobytes rather than
+                // number of items.
+                return bitmap.getByteCount() / 1024;
+            }
+        };
+    }
+
+    private static long totalBytes = 0;
+    private ImageLoader loader = null;
 
     public SmartImage(Context context) {
         super(context);
@@ -32,6 +54,7 @@ public class SmartImage extends ImageView implements IEventHadler{
         {
             return;
         }
+        this.setVisibility(VISIBLE);
         this.setImageBitmap(bitmap);
         final Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
         fadeIn.setInterpolator(new LinearInterpolator());
@@ -41,15 +64,41 @@ public class SmartImage extends ImageView implements IEventHadler{
     }
 
     public void loadFromURL(String url) {
-        //this.setVisibility(INVISIBLE);
-        if (cache.containsKey(url)) {
-            setupBitmap(cache.get(url));
+        this.setVisibility(INVISIBLE);
+        if (loader != null)
+        {
+            if (!loader.isCancelled())
+            {
+                loader.cancel(true);
+            }
+        }
+        Bitmap bitmap = cache.get(url);
+        if (bitmap != null) {
+            setupBitmap(bitmap);
         }
         else {
-            ImageLoader loader = new ImageLoader(url);
+            loader = new ImageLoader(url);
             loader.addEventListener(this);
             loader.execute();
         }
+    }
+
+    private long calcAvailableMemory()
+    {
+        long value = Runtime.getRuntime().maxMemory();
+        String type = "";
+        if (android.os.Build.VERSION.SDK_INT >= 11)
+        {
+            value = (value / 1024) - (Runtime.getRuntime().totalMemory() / 1024);
+            type = "JAVA";
+        }
+        else
+        {
+            value = (value / 1024) - (Debug.getNativeHeapAllocatedSize() / 1024);
+            type = "NATIVE";
+        }
+        Log.i("CONSOLE", "calcAvailableMemory, size = " + value + ", type = " + type);
+        return value;
     }
 
     @Override
@@ -58,9 +107,15 @@ public class SmartImage extends ImageView implements IEventHadler{
             e.target.removeEventListener(this);
             Bitmap bitmap = (Bitmap) e.data.get("bitmap");
             String path = (String) e.data.get("path");
-            setupBitmap(bitmap);
-            if (!cache.containsKey(path)) {
-                cache.put(path, bitmap);
+            if (bitmap != null)
+            {
+                setupBitmap(bitmap);
+                if (cache.get(path) == null) {
+                    cache.put(path, bitmap);
+                    totalBytes += bitmap.getByteCount();
+                    Console.print("Total: " + totalBytes + "B / " + (totalBytes / 1024) + "KB");
+                    calcAvailableMemory();
+                }
             }
         }
     }

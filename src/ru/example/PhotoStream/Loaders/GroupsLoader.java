@@ -1,9 +1,6 @@
 package ru.example.PhotoStream.Loaders;
 
-import ru.example.PhotoStream.DataLoader;
-import ru.example.PhotoStream.Event;
-import ru.example.PhotoStream.Group;
-import ru.example.PhotoStream.Photo;
+import ru.example.PhotoStream.*;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
@@ -21,7 +18,10 @@ public class GroupsLoader extends DataLoader
         for (Group group : groups)
         {
             Photo photo = getPhoto(group.photo_id, group.uid);
-            group.photo = photo;
+            if (photo != null)
+            {
+                group.photo = photo;
+            }
         }
         return groups;
     }

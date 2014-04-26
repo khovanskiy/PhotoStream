@@ -22,11 +22,11 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     static class PhotosAdapter extends BaseAdapter{
 
         private List<Photo> photos = new ArrayList<>();
-        private Context context;
+        private LayoutInflater inflater;
 
         public PhotosAdapter(Context context)
         {
-             this.context = context;
+            this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         public void addPhoto(Photo photo)
@@ -49,14 +49,25 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
             return position;
         }
 
+        static class ViewHolder {
+            SmartImage image;
+        }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Photo photo = photos.get(position);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.streamphotoview, parent, false);
-            SmartImage imageView = (SmartImage) view.findViewById(R.id.streamphotoview_imageView);
-            imageView.loadFromURL(photo.pic190x190);
-            return view;
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.streamphotoview, parent, false);
+                holder = new ViewHolder();
+                holder.image = (SmartImage) convertView.findViewById(R.id.streamphotoview_imageView);
+                convertView.setTag(holder);
+            }
+            else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            holder.image.loadFromURL(photo.pic180min);
+            return convertView;
         }
     }
 
@@ -69,8 +80,11 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
-
-        DataLoader loader = new PhotosLoader(api);
+                                /*50582132228315 Одноклассники. Всё ОК!
+04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
+04-27 00:11:59.490: INFO/CONSOLE(20471): 53038939046008 Одноклассники API
+04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
+        DataLoader loader = new PhotosLoader(api, "50582132228315", 1);
         loader.addEventListener(this);
         loader.execute();
     }

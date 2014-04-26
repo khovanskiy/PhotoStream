@@ -194,8 +194,12 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
                 "shop_visible_admin, shop_visible_public, members_count");
         for (int i = 0; i < groupIds.size() / MAX_REQUEST + 1; ++i) {
             StringBuilder builder = new StringBuilder();
-            for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, groupIds.size()); j++) {
+            for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, groupIds.size()); ++j) {
                 builder.append(",").append(groupIds.get(j));
+            }
+            if (builder.length() == 0)
+            {
+                break;
             }
             requestParams.put("uids", builder.substring(1));
             try {
@@ -257,9 +261,9 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
      * @return list of albums
      */
     protected List<Album> getAlbums(String fid, String gid) {
-        Console.print("Start loading");
+        //Console.print("Start loading");
         Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("fields", "album.*");
+        //requestParams.put("fields", "album.*");
         if (fid != null) {
             requestParams.put("fid", fid);
         }
@@ -270,7 +274,9 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
         boolean hasMore = true;
         while (hasMore) {
             try {
-                JSONObject albumsObject = new JSONObject(api.request("photos.getAlbums", requestParams, "get"));
+                String response = api.request("photos.getAlbums", requestParams, "post");
+                //Console.print("Response " + response);
+                JSONObject albumsObject = new JSONObject(response);
                 JSONArray albums = albumsObject.getJSONArray("albums");
                 for (int i = 0; i < albums.length(); ++i) {
                     Album album = parseAlbum(albums.getJSONObject(i));
@@ -310,19 +316,21 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
         Map<String, String> requestParams = new HashMap<String, String>();
         if (fid != null) {
             requestParams.put("fid", fid);
+            requestParams.put("fields", "photo.*");
         }
         if (gid != null) {
             requestParams.put("gid", gid);
+            requestParams.put("fields", "group_photo.*");
         }
         if (aid != null) {
             requestParams.put("aid", aid);
         }
-        requestParams.put("fields", "photo.*");
-        List<Photo> result = new ArrayList<Photo>();
+        List<Photo> result = new ArrayList<>();
         boolean hasMore = true;
         while (hasMore) {
             try {
-                JSONObject photosObject = new JSONObject(api.request("photos.getPhotos", requestParams, "get"));
+                String response = api.request("photos.getPhotos", requestParams, "get");
+                JSONObject photosObject = new JSONObject(response);
                 JSONArray photos = photosObject.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); ++i) {
                     Photo photo = parsePhoto(photos.getJSONObject(i));

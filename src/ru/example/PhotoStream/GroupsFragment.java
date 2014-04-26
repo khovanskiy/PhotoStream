@@ -54,7 +54,6 @@ public class GroupsFragment extends Fragment implements IEventHadler{
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.groupbadgeview, parent, false);
             SmartImage imageView = (SmartImage) view.findViewById(R.id.groupbadgeview_image);
-            //Console.print("Group avater " + group.pic_avatar);
             imageView.loadFromURL(group.photo.pic180min);
             TextView title = (TextView) view.findViewById(R.id.groupbadgeview_title);
             title.setText(group.name);

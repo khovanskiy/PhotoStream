@@ -33,6 +33,7 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEvent
                 if (in != null)
                 {
                     in.close();
+                    in = null;
                 }
             }
         }
