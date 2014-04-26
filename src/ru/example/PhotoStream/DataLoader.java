@@ -9,7 +9,34 @@ import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
 
-public class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEventDispatcher {
+public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEventDispatcher {
+
+    public class Groups extends DataLoader
+    {
+        public Groups(Odnoklassniki api) {
+            super(api);
+        }
+
+        @Override
+        protected List<?> doInBackground(Void... params) {
+            List<Album> albums = getAlbums(null, null);
+            List<Photo> result = new ArrayList<Photo>();
+            for (Album album : albums)
+            {
+                List<Photo> photos = getAlbumPhotos(null, null, album.aid);
+                result.addAll(photos);
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(List<?> data) {
+            Event e = new Event(this, Event.COMPLETE);
+            e.data.put("friends", data);
+            dispatchEvent(e);
+        }
+    }
+
     private EventDispatcher eventDispatcher;
     private Odnoklassniki api;
 
@@ -19,19 +46,48 @@ public class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEvent
         eventDispatcher = new EventDispatcher();
     }
 
-    @Override
-    protected List<?> doInBackground(Void... params) {
-        List<Album> albums = getAlbums(null, null);
-        List<Photo> result = new ArrayList<Photo>();
-        for (Album album : albums)
+    protected User parseUser(JSONObject object) throws JSONException {
+        User current = new User();
+        if (object.has("uid"))
         {
-            List<Photo> photos = getAlbumPhotos(null, null, album.aid);
-            result.addAll(photos);
+            current.uid = object.getString("uid");
         }
-        return result;
+        if (object.has("locale"))
+        {
+            current.locale = object.getString("locale");
+        }
+        if (object.has("first_name"))
+        {
+            current.first_name = object.getString("first_name");
+        }
+        if (object.has("last_name"))
+        {
+            current.last_name = object.getString("last_name");
+        }
+        if (object.has("pic50x50"))
+        {
+            current.pic50x50 = object.getString("pic50x50");
+        }
+        if (object.has("pic128x128"))
+        {
+            current.pic128x128 = object.getString("pic128x128");
+        }
+        if (object.has("pic190x190"))
+        {
+            current.pic190x190 = object.getString("pic190x190");
+        }
+        if (object.has("pic640x480"))
+        {
+            current.pic640x480 = object.getString("pic640x480");
+        }
+        if (object.has("pic1024x768"))
+        {
+            current.pic1024x768 = object.getString("pic1024x768");
+        }
+        return current;
     }
 
-    private Album parseAlbum(JSONObject object) throws JSONException {
+    protected Album parseAlbum(JSONObject object) throws JSONException {
         Album current = new Album();
         if (object.has("aid"))
         {
@@ -56,7 +112,7 @@ public class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEvent
         return current;
     }
 
-    private Photo parsePhoto(JSONObject object) throws JSONException {
+    protected Photo parsePhoto(JSONObject object) throws JSONException {
         Photo current = new Photo();
         if (object.has("id"))
         {
@@ -109,15 +165,80 @@ public class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEvent
         return current;
     }
 
+    protected List<String> getGroupIds() {
+        Map<String, String> requestParams = new HashMap<String, String>();
+        List<String> result = new ArrayList<String>();
+        boolean hasMore = true;
+        while (hasMore) {
+            try {
+                JSONObject groupsObject = new JSONObject(api.request("group.getUserGroupsV2", requestParams, "get"));
+                if (groupsObject.isNull("groups")) {
+                    hasMore = false;
+                } else {
+                    JSONArray groups = groupsObject.getJSONArray("groups");
+                    for (int i = 0; i < groups.length(); i++) {
+                        result.add(groups.getJSONObject(i).getString("groupId"));
+                    }
+                    requestParams.put("anchor", groupsObject.getString("anchor"));
+                }
+            } catch (Exception e) {
+                Console.print(e.getMessage());
+                hasMore = false;
+            }
+        }
+        return result;
+    }
+
+    protected List<String> getFriendIDs() {
+        List<String> result = new ArrayList<String>();
+        try {
+            JSONArray friendIDs = new JSONArray(api.request("friends.get", null, "get"));
+            for (int i = 0; i < friendIDs.length(); i++) {
+                result.add(friendIDs.getString(i));
+            }
+        } catch (Exception e) {
+            Console.print(e.getMessage());
+        }
+        return result;
+    }
+
+    protected List<User> getUserInfo(List<String> usersIds) {
+        final int MAX_REQUEST = 100;
+        List<User> result = new ArrayList<>();
+        Map<String, String> requestParams = new HashMap<>();
+        requestParams.put("fields", "uid, locale, first_name, last_name, name, gender, age, " +
+                "birthday, has_email, location, current_location, current_status, current_status_id, " +
+                "current_status_date, online, last_online, photo_id, pic_1, pic_2, pic_3, pic_4, pic_5, " +
+                "pic50x50, pic128x128, pic128max, pic180min, pic240min, pic320min, pic190x190, pic640x480, " +
+                "pic1024x768, url_profile, url_chat, url_profile_mobile, url_chat_mobile, can_vcall, " +
+                "can_vmail, allows_anonym_access, allows_messaging_only_for_friends, registered_date, has_service_invisible");
+        for (int i = 0; i < usersIds.size() / MAX_REQUEST + 1; ++i) {
+            StringBuilder builder = new StringBuilder();
+            for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, usersIds.size()); ++j) {
+                builder.append(",").append(usersIds.get(j));
+            }
+            requestParams.put("uids", builder.substring(1));
+            try {
+                JSONArray friendInfoArray = new JSONArray(api.request("users.getInfo", requestParams, "get"));
+                for (int j = 0; j < friendInfoArray.length(); ++j) {
+                    result.add(parseUser(friendInfoArray.getJSONObject(j)));
+                }
+            } catch (Exception e) {
+                Console.print(e.getMessage());
+            }
+        }
+        return result;
+    }
+
     /**
      *
      * @param fid friend ID
      * @param gid group ID
      * @return list of albums
      */
-    private List<Album> getAlbums(String fid, String gid) {
+    protected List<Album> getAlbums(String fid, String gid) {
         Console.print("Start loading");
-        Map<String, String> requestParams = new HashMap<String, String>();
+        Map<String, String> requestParams = new HashMap<>();
         requestParams.put("fields", "album.*");
         if (fid != null) {
             requestParams.put("fid", fid);
@@ -145,7 +266,7 @@ public class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEvent
         return result;
     }
 
-    private List<Photo> getAlbumPhotos(String fid, String gid, String aid) {
+    protected List<Photo> getAlbumPhotos(String fid, String gid, String aid) {
         Map<String, String> requestParams = new HashMap<String, String>();
         if (fid != null) {
             requestParams.put("fid", fid);
@@ -178,13 +299,6 @@ public class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEvent
         }
         //Collections.sort(result, new InfoHolder.PhotoByUploadTimeComparator());
         return result;
-    }
-
-    @Override
-    protected void onPostExecute(List<?> data) {
-        Event e = new Event(this, Event.COMPLETE);
-        e.data.put("photos", data);
-        dispatchEvent(e);
     }
 
     @Override

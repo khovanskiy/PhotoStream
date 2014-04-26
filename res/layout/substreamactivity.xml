@@ -17,6 +17,6 @@
             android:layout_gravity="center"
             android:layout_weight="1" android:numColumns="auto_fit" android:clickable="false"
             android:stretchMode="columnWidth" android:background="@android:color/white" android:gravity="top"
-            android:columnWidth="256dp" android:minHeight="256dp"/>
+            android:columnWidth="200dp" android:minHeight="200dp"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

@@ -1,0 +1,42 @@
+package ru.example.PhotoStream;
+
+public class User {
+    public String uid = "";
+    public String locale = "";
+    public String first_name = "";
+    public String last_name = "";
+    public String name = "";
+    public String gender = "";
+    public String age = "";
+    public String birthday = "";
+    public String has_email = "";
+    public String location = "";
+    public String city = "";
+    public String country = "";
+    public String current_location = "";
+    public String current_status = "";
+    public String current_status_id = "";
+    public String current_status_date = "";
+    public String online = "";
+    public String last_online = "";
+    public String photo_id = "";
+    public String pic50x50 = "";
+    public String pic128x128 = "";
+    public String pic128max = "";
+    public String pic180min = "";
+    public String pic240min = "";
+    public String pic320min = "";
+    public String pic190x190 = "";
+    public String pic640x480 = "";
+    public String pic1024x768 = "";
+    public String url_profile = "";
+    public String url_chat = "";
+    public String url_profile_mobile = "";
+    public String url_chat_mobile = "";
+    public String can_vcall = "";
+    public String can_vmail = "";
+    public String allows_anonym_access = "";
+    public String allows_messaging_only_for_friends = "";
+    public String registered_date = "";
+    public String has_service_invisible = "";
+}

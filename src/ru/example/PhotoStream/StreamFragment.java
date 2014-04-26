@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
         @Override
         public Object getItem(int position) {
-            return null;
+            return photos.get(position);
         }
 
         @Override
@@ -59,6 +60,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
             return view;
         }
     }
+
     private Odnoklassniki api;
     private GridView photoList;
     private PhotosAdapter photoListAdapter;
@@ -69,7 +71,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
 
-        DataLoader loader = new DataLoader(api);
+        DataLoader loader = new PhotosLoader(api);
         loader.addEventListener(this);
         loader.execute();
     }
@@ -112,11 +114,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
                 photoListAdapter.addPhoto(photo);
             }
 
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    photoListAdapter.notifyDataSetChanged();
-                }
-            });
+            photoListAdapter.notifyDataSetChanged();
         }
     }
 }
