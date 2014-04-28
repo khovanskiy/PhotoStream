@@ -78,19 +78,40 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        Console.print("ACTIVITY CREATED");
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
                                 /*50582132228315 Одноклассники. Всё ОК!
 04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53038939046008 Одноклассники API
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
-        DataLoader loader = new PhotosLoader(api, null, 0);
+
+        Bundle bundle = getArguments();
+
+        DataLoader loader = null;
+        if (bundle == null)
+        {
+            loader = new PhotosLoader(api, null, 0);
+        }
+        else
+        {
+            if (bundle.getString("uid") != null)
+            {
+                loader = new PhotosLoader(api, bundle.getString("uid", null), 0);
+            }
+            else
+            {
+                loader = new PhotosLoader(api, bundle.getString("gid", null), 1);
+            }
+        }
         loader.addEventListener(this);
+        swipeLayout.setRefreshing(true);
         loader.execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Console.print("VIEW CREATED");
         View view = inflater.inflate(R.layout.substreamactivity, container, false);
         photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
         swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
@@ -117,6 +138,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         if (e.type == Event.COMPLETE)
         {
             e.target.removeEventListener(this);
+            swipeLayout.setRefreshing(false);
             List<Photo> photos = (List<Photo>) e.data.get("photos");
             photoListAdapter = new PhotosAdapter(getActivity());
             photoList.setAdapter(photoListAdapter);

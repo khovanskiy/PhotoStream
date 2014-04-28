@@ -36,7 +36,7 @@ public class FriendsActivity extends Activity {
 
     private void onFriendClick(int position) {
         Intent intent = new Intent(this, SubstreamActivity.class);
-        intent.putExtra("fid", friendListAdapter.getFriendId(position));
+        intent.putExtra("user", friendListAdapter.getFriendId(position));
         startActivity(intent);
     }
 

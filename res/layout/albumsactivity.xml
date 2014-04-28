@@ -6,57 +6,13 @@
               android:layout_height="match_parent"
               android:background="@android:color/white">
 
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="fill_parent"
-                  android:layout_height="50dp"
-                  android:background="@android:color/holo_orange_dark"/>
-    <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            />
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/albumsactivity_album_list"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"/>
-    <Space android:layout_width="20dp"
-           android:layout_height="20dp"/>
-    <LinearLayout
-            android:orientation="horizontal"
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/textView"/>
+    <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-        <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="To stream"
-                android:id="@+id/albumsactivity_stream"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/white"
-                android:background="@android:color/holo_orange_dark"
-                android:onClick="onAlbumsToStreamClick"/>
-        <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" android:id="@+id/albumsactivity_button_space"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/create_album"
-                android:id="@+id/albumsactivity_create_album" android:background="@android:color/holo_orange_dark"
-                android:textColor="@android:color/white" android:onClick="onCreateAlbumClick"
-                android:visibility="gone"/>
-        <Space
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-    </LinearLayout>
-    <Space
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            />
+            android:layout_height="fill_parent" android:id="@+id/albumsactivity_frame">
+    </FrameLayout>
 </LinearLayout>

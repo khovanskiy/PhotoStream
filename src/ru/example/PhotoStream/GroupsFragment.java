@@ -1,11 +1,13 @@
 package ru.example.PhotoStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupsFragment extends Fragment implements IEventHadler{
+public class GroupsFragment extends Fragment implements IEventHadler, AdapterView.OnItemClickListener{
 
     static class GroupsAdapter extends BaseAdapter {
 
@@ -81,7 +83,16 @@ public class GroupsFragment extends Fragment implements IEventHadler{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.groupsactivity, container, false);
         photoList = (GridView) view.findViewById(R.id.groupsactivity_grouplist);
+        photoList.setOnItemClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), AlbumsActivity.class);
+        Group obj  = (Group) photoList.getItemAtPosition(position);
+        intent.putExtra("gid", obj.uid);
+        startActivity(intent);
     }
 
     @Override

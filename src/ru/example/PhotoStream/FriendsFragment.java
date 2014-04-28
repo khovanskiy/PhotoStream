@@ -1,11 +1,13 @@
 package ru.example.PhotoStream;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -16,7 +18,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendsFragment extends Fragment implements IEventHadler{
+public class FriendsFragment extends Fragment implements IEventHadler, AdapterView.OnItemClickListener {
 
     static class UsersAdapter extends BaseAdapter {
 
@@ -79,7 +81,16 @@ public class FriendsFragment extends Fragment implements IEventHadler{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.friendsactivity, container, false);
         photoList = (GridView) view.findViewById(R.id.friendsactivity_friendlist);
+        photoList.setOnItemClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), AlbumsActivity.class);
+        User obj  = (User) photoList.getItemAtPosition(position);
+        intent.putExtra("uid", obj.uid);
+        startActivity(intent);
     }
 
     @Override

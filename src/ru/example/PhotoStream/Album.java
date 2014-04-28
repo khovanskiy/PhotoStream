@@ -1,6 +1,8 @@
 package ru.example.PhotoStream;
 
-public class Album {
+import java.io.Serializable;
+
+public class Album implements Serializable {
     public String aid = "";
     public String title = "";
     public String description = "";
