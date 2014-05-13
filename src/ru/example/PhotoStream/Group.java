@@ -91,7 +91,7 @@ public class Group extends AlbumsKeeper {
                     albums.add(album);
                 }
                 hasMore = albumsObject.getBoolean("hasMore");
-                requestParams.put("anchor", albumsObject.getString("pagingAnchor"));
+                requestParams.put("pagingAnchor", albumsObject.getString("pagingAnchor"));
             } catch (Exception e) {
                 Log.i("CONSOLE", e.toString(), e);
                 hasMore = false;

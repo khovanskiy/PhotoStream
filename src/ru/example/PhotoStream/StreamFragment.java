@@ -1,7 +1,6 @@
 package ru.example.PhotoStream;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,34 +8,32 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
 
-    static class PhotosAdapter extends BaseAdapter{
+    static class PhotosAdapter extends BaseAdapter {
 
         private List<Photo> photos = new ArrayList<>();
         private LayoutInflater inflater;
 
-        public PhotosAdapter(Context context)
-        {
+        public PhotosAdapter(Context context) {
             this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        public void addPhoto(Photo photo)
-        {
+        public void addPhoto(Photo photo) {
             photos.add(photo);
         }
 
-        public void clear()
-        {
+        public void clear() {
             photos.clear();
         }
 
@@ -68,9 +65,9 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
                 holder = new ViewHolder();
                 holder.image = (SmartImage) convertView.findViewById(R.id.streamphotoview_imageView);
                 convertView.setTag(holder);
-            }
-            else {
+            } else {
                 holder = (ViewHolder) convertView.getTag();
+                holder.image.setImageBitmap(null);
             }
             holder.image.loadFromURL(photo.pic180min);
             return convertView;
@@ -87,7 +84,6 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Console.print("ACTIVITY CREATED");
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
 
@@ -95,12 +91,9 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         Bundle bundle = getArguments();
         if (bundle == null) {
             entry = User.get("");
-        }
-        else if (bundle.getString("uid") != null)
-        {
+        } else if (bundle.getString("uid") != null) {
             entry = User.get(bundle.getString("uid", ""));
-        }
-        else {
+        } else {
             entry = Group.get(bundle.getString("gid", ""));
         }
 
@@ -109,44 +102,19 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         AlbumsLoader loader = new AlbumsLoader(api, entry);
         loader.addEventListener(this);
         loader.execute();
+        swipeLayout.setRefreshing(true);
 
                                 /*50582132228315 Одноклассники. Всё ОК!
 04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53038939046008 Одноклассники API
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
-
-
-
-        /*Bundle bundle = getArguments();
-        if (bundle == null)
-        {
-            streamType = 0;
-            feed.add(User.get(""));
-        }
-        else
-        {
-            if (bundle.getString("uid") != null)
-            {
-                current_uid = bundle.getString("uid", null);
-                streamType = 1;
-            }
-            else
-            {
-                //current_uid = bundle.getString("gid", null);
-                //streamType = 2;
-            }
-        }          */
-        //loadMorePhotos();
     }
 
-    private void loadMorePhotos()
-    {
-        if (swipeLayout.isRefreshing())
-        {
+    private void loadMorePhotos() {
+        if (swipeLayout.isRefreshing()) {
             return;
         }
         swipeLayout.setRefreshing(true);
-        Console.print("start loading");
         DataLoader loader = new PhotosLoader(api, feed);
         loader.addEventListener(this);
         loader.execute();
@@ -154,7 +122,6 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Console.print("VIEW CREATED");
         View view = inflater.inflate(R.layout.substreamactivity, container, false);
         swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(this);
@@ -168,6 +135,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     }
 
     private int scrollState = SCROLL_STATE_IDLE;
+
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         this.scrollState = scrollState;
@@ -176,7 +144,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         int lastItem = firstVisibleItem + visibleItemCount;
-        if(lastItem == totalItemCount && scrollState != SCROLL_STATE_IDLE) {
+        if (lastItem == totalItemCount && scrollState != SCROLL_STATE_IDLE) {
             loadMorePhotos();
         }
     }
@@ -184,7 +152,8 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     @Override
     public void onRefresh() {
         new Handler().postDelayed(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 swipeLayout.setRefreshing(false);
             }
         }, 3000);
@@ -194,32 +163,29 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     public void handleEvent(Event e) {
         if (e.type == Event.ALBUMS_LOADED) {
             e.target.removeEventListener(this);
+            swipeLayout.setRefreshing(false);
+
             List<Album> albums = (List<Album>) e.data.get("albums");
             for (Album album : albums) {
                 Console.print("Album: " + album.title);
                 feed.add(album);
             }
             loadMorePhotos();
-        }
-        else if (e.type == Event.COMPLETE)
-        {
+        } else if (e.type == Event.COMPLETE) {
             e.target.removeEventListener(this);
             swipeLayout.setRefreshing(false);
             List<Photo> photos = (List<Photo>) e.data.get("photos");
 
             PhotosAdapter photoListAdapter = (PhotosAdapter) photoList.getAdapter();
-            if (photoListAdapter == null)
-            {
+            if (photoListAdapter == null) {
                 photoListAdapter = new PhotosAdapter(getActivity());
                 photoList.setAdapter(photoListAdapter);
             }
             Console.print("Total photos: " + photos.size());
-            if (photos.size() > photoListAdapter.getCount())
-            {
+            if (photos.size() > photoListAdapter.getCount()) {
                 photoListAdapter.clear();
 
-                for (Photo photo : photos)
-                {
+                for (Photo photo : photos) {
                     photoListAdapter.addPhoto(photo);
                 }
 

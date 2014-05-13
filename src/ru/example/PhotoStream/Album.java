@@ -46,7 +46,7 @@ public class Album extends Entry implements Serializable {
     }
 
     public static Album get(String albumId) {
-        Album current = null;
+        Album current;
         if (!cache.containsKey(albumId)) {
             current = new Album();
             cache.put(albumId, current);
@@ -93,7 +93,7 @@ public class Album extends Entry implements Serializable {
     }
 
     @Override
-    public boolean loadNextChunk(Odnoklassniki api) {
+    public boolean loadNextChunk(Odnoklassniki api, int count) {
         Map<String, String> requestParams = new HashMap<>();
         if (albumType == AlbumType.USER) {
             requestParams.put("fid", user_id);
@@ -103,6 +103,8 @@ public class Album extends Entry implements Serializable {
             requestParams.put("fields", "group_photo.*");
         }
         requestParams.put("aid", aid);
+        requestParams.put("count", count + "");
+
         if (hasMore) {
             Chunk chunk = new Chunk();
             chunk.anchor = lastAnchor;
@@ -110,7 +112,7 @@ public class Album extends Entry implements Serializable {
                 requestParams.put("anchor", lastAnchor);
             }
             try {
-                Console.print("Prepared request: " + requestParams.toString());
+                //Console.print("Prepared request: " + requestParams.toString());
                 String response = api.request("photos.getPhotos", requestParams, "get");
                 JSONObject photosObject = new JSONObject(response);
                 JSONArray photos = photosObject.getJSONArray("photos");
@@ -127,7 +129,7 @@ public class Album extends Entry implements Serializable {
                 Log.i("CONSOLE", e.toString(), e);
                 hasMore = false;
             }
-            Console.print("Album " + title + " added chunk with " + chunk.photos.size() + " photos");
+            //Console.print("Album " + title + " added chunk with " + chunk.photos.size() + " photos");
             chunks.add(chunk);
             return true;
         }
