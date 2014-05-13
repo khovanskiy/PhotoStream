@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener {
+public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
 
     static class PhotosAdapter extends BaseAdapter{
 
@@ -32,6 +33,11 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         public void addPhoto(Photo photo)
         {
             photos.add(photo);
+        }
+
+        public void clear()
+        {
+            photos.clear();
         }
 
         @Override
@@ -73,39 +79,76 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     private Odnoklassniki api;
     private GridView photoList;
-    private PhotosAdapter photoListAdapter;
     private SwipeRefreshLayout swipeLayout;
+    private int streamType = 0;
+    private String current_uid = "";
+    private Feed feed;
+    private AlbumsKeeper entry;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Console.print("ACTIVITY CREATED");
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
+
+        feed = new Feed(api);
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            entry = User.get("");
+        }
+        else if (bundle.getString("uid") != null)
+        {
+            entry = User.get(bundle.getString("uid", ""));
+        }
+        else {
+            entry = Group.get(bundle.getString("gid", ""));
+        }
+
+        assert (entry != null);
+
+        AlbumsLoader loader = new AlbumsLoader(api, entry);
+        loader.addEventListener(this);
+        loader.execute();
+
                                 /*50582132228315 Одноклассники. Всё ОК!
 04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53038939046008 Одноклассники API
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
 
-        Bundle bundle = getArguments();
 
-        DataLoader loader = null;
+
+        /*Bundle bundle = getArguments();
         if (bundle == null)
         {
-            loader = new PhotosLoader(api, null, 0);
+            streamType = 0;
+            feed.add(User.get(""));
         }
         else
         {
             if (bundle.getString("uid") != null)
             {
-                loader = new PhotosLoader(api, bundle.getString("uid", null), 0);
+                current_uid = bundle.getString("uid", null);
+                streamType = 1;
             }
             else
             {
-                loader = new PhotosLoader(api, bundle.getString("gid", null), 1);
+                //current_uid = bundle.getString("gid", null);
+                //streamType = 2;
             }
+        }          */
+        //loadMorePhotos();
+    }
+
+    private void loadMorePhotos()
+    {
+        if (swipeLayout.isRefreshing())
+        {
+            return;
         }
-        loader.addEventListener(this);
         swipeLayout.setRefreshing(true);
+        Console.print("start loading");
+        DataLoader loader = new PhotosLoader(api, feed);
+        loader.addEventListener(this);
         loader.execute();
     }
 
@@ -113,15 +156,29 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Console.print("VIEW CREATED");
         View view = inflater.inflate(R.layout.substreamactivity, container, false);
-        photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
         swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(this);
         swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
+        photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
+        photoList.setOnScrollListener(this);
         return view;
+    }
+
+    private int scrollState = SCROLL_STATE_IDLE;
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        this.scrollState = scrollState;
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        int lastItem = firstVisibleItem + visibleItemCount;
+        if(lastItem == totalItemCount && scrollState != SCROLL_STATE_IDLE) {
+            loadMorePhotos();
+        }
     }
 
     @Override
@@ -135,20 +192,39 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE)
+        if (e.type == Event.ALBUMS_LOADED) {
+            e.target.removeEventListener(this);
+            List<Album> albums = (List<Album>) e.data.get("albums");
+            for (Album album : albums) {
+                Console.print("Album: " + album.title);
+                feed.add(album);
+            }
+            loadMorePhotos();
+        }
+        else if (e.type == Event.COMPLETE)
         {
             e.target.removeEventListener(this);
             swipeLayout.setRefreshing(false);
             List<Photo> photos = (List<Photo>) e.data.get("photos");
-            photoListAdapter = new PhotosAdapter(getActivity());
-            photoList.setAdapter(photoListAdapter);
 
-            for (Photo photo : photos)
+            PhotosAdapter photoListAdapter = (PhotosAdapter) photoList.getAdapter();
+            if (photoListAdapter == null)
             {
-                photoListAdapter.addPhoto(photo);
+                photoListAdapter = new PhotosAdapter(getActivity());
+                photoList.setAdapter(photoListAdapter);
             }
+            Console.print("Total photos: " + photos.size());
+            if (photos.size() > photoListAdapter.getCount())
+            {
+                photoListAdapter.clear();
 
-            photoListAdapter.notifyDataSetChanged();
+                for (Photo photo : photos)
+                {
+                    photoListAdapter.addPhoto(photo);
+                }
+
+                photoListAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

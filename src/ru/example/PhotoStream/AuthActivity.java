@@ -19,12 +19,14 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authactivity);
-    }
 
-    public void onLoginClick(View view) {
         mOdnoklassniki = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
         mOdnoklassniki.setTokenRequestListener(this);
         mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
+    }
+
+    public void onLoginClick(View view) {
+
     }
 
     @Override

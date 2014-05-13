@@ -2,6 +2,7 @@ package ru.example.PhotoStream;
 
 
 import android.os.AsyncTask;
+import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,156 +15,16 @@ import java.util.Map;
 
 public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implements IEventDispatcher {
 
-    public class Groups extends DataLoader {
-        public Groups(Odnoklassniki api) {
-            super(api);
-        }
-
-        @Override
-        protected List<?> doInBackground(Void... params) {
-            List<Album> albums = getAlbums(null, null);
-            List<Photo> result = new ArrayList<>();
-            for (Album album : albums) {
-                List<Photo> photos = getAlbumPhotos(null, null, album.aid);
-                result.addAll(photos);
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(List<?> data) {
-            Event e = new Event(this, Event.COMPLETE);
-            e.data.put("friends", data);
-            dispatchEvent(e);
-        }
-    }
-
     private EventDispatcher eventDispatcher;
-    private Odnoklassniki api;
+    protected Odnoklassniki api;
 
     public DataLoader(Odnoklassniki api) {
         this.api = api;
         eventDispatcher = new EventDispatcher();
     }
 
-    protected User parseUser(JSONObject object) throws JSONException {
-        User current = new User();
-        if (object.has("uid")) {
-            current.uid = object.getString("uid");
-        }
-        if (object.has("locale")) {
-            current.locale = object.getString("locale");
-        }
-        if (object.has("first_name")) {
-            current.first_name = object.getString("first_name");
-        }
-        if (object.has("last_name")) {
-            current.last_name = object.getString("last_name");
-        }
-        if (object.has("pic50x50")) {
-            current.pic50x50 = object.getString("pic50x50");
-        }
-        if (object.has("pic128x128")) {
-            current.pic128x128 = object.getString("pic128x128");
-        }
-        if (object.has("pic190x190")) {
-            current.pic190x190 = object.getString("pic190x190");
-        }
-        if (object.has("pic640x480")) {
-            current.pic640x480 = object.getString("pic640x480");
-        }
-        if (object.has("pic1024x768")) {
-            current.pic1024x768 = object.getString("pic1024x768");
-        }
-        return current;
-    }
-
-    protected Album parseAlbum(JSONObject object) throws JSONException {
-        Album current = new Album();
-        if (object.has("aid")) {
-            current.aid = object.getString("aid");
-        }
-        if (object.has("title")) {
-            current.title = object.getString("title");
-        }
-        if (object.has("description")) {
-            current.description = object.getString("description");
-        }
-        if (object.has("created")) {
-            current.created = object.getString("created");
-        }
-        if (object.has("type")) {
-            current.type = object.getString("type");
-        }
-        return current;
-    }
-
-    protected Group parseGroup(JSONObject object) throws JSONException {
-        Group current = new Group();
-        if (object.has("uid")) {
-            current.uid = object.getString("uid");
-        }
-        if (object.has("name")) {
-            current.name = object.getString("name");
-        }
-        if (object.has("description")) {
-            current.description = object.getString("description");
-        }
-        if (object.has("shortname")) {
-            current.shortname = object.getString("shortname");
-        }
-        if (object.has("photo_id")) {
-            current.photo_id = object.getString("photo_id");
-        }
-        return current;
-    }
-
-    protected Photo parsePhoto(JSONObject object) throws JSONException {
-        Photo current = new Photo();
-        if (object.has("id")) {
-            current.id = object.getString("id");
-        }
-        if (object.has("album_id")) {
-            current.album_id = object.getString("album_id");
-        }
-        if (object.has("pic50x50")) {
-            current.pic50x50 = object.getString("pic50x50");
-        }
-        if (object.has("pic128x128")) {
-            current.pic128x128 = object.getString("pic128x128");
-        }
-        if (object.has("pic180min")) {
-            current.pic180min = object.getString("pic180min");
-        }
-        if (object.has("pic190x190")) {
-            current.pic190x190 = object.getString("pic190x190");
-        }
-        if (object.has("pic640x480")) {
-            current.pic640x480 = object.getString("pic640x480");
-        }
-        if (object.has("pic1024x768")) {
-            current.pic1024x768 = object.getString("pic1024x768");
-        }
-        if (object.has("comments_count")) {
-            current.comments_count = object.getInt("comments_count");
-        }
-        if (object.has("user_id")) {
-            current.user_id = object.getString("user_id");
-        }
-        if (object.has("mark_count")) {
-            current.mark_count = object.getInt("mark_count");
-        }
-        if (object.has("mark_bonus_count")) {
-            current.mark_bonus_count = object.getInt("mark_bonus_count");
-        }
-        if (object.has("mark_avg")) {
-            current.mark_avg = object.getDouble("mark_avg");
-        }
-        return current;
-    }
-
     protected List<String> getGroupIds() {
-        Map<String, String> requestParams = new HashMap<String, String>();
+        Map<String, String> requestParams = new HashMap<>();
         List<String> result = new ArrayList<>();
         boolean hasMore = true;
         while (hasMore) {
@@ -197,15 +58,14 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
             for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, groupIds.size()); ++j) {
                 builder.append(",").append(groupIds.get(j));
             }
-            if (builder.length() == 0)
-            {
+            if (builder.length() == 0) {
                 break;
             }
             requestParams.put("uids", builder.substring(1));
             try {
                 JSONArray groupInfoArray = new JSONArray(api.request("group.getInfo", requestParams, "get"));
                 for (int j = 0; j < groupInfoArray.length(); ++j) {
-                    result.add(parseGroup(groupInfoArray.getJSONObject(j)));
+                    result.add(Group.build(groupInfoArray.getJSONObject(j)));
                 }
             } catch (Exception e) {
                 Console.print(e.getMessage());
@@ -246,47 +106,10 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
             try {
                 JSONArray friendInfoArray = new JSONArray(api.request("users.getInfo", requestParams, "get"));
                 for (int j = 0; j < friendInfoArray.length(); ++j) {
-                    result.add(parseUser(friendInfoArray.getJSONObject(j)));
+                    result.add(User.build(friendInfoArray.getJSONObject(j)));
                 }
             } catch (Exception e) {
                 Console.print(e.getMessage());
-            }
-        }
-        return result;
-    }
-
-    /**
-     * @param fid friend ID
-     * @param gid group ID
-     * @return list of albums
-     */
-    protected List<Album> getAlbums(String fid, String gid) {
-        Map<String, String> requestParams = new HashMap<>();
-        if (fid != null) {
-            requestParams.put("fid", fid);
-            requestParams.put("fields", "user_album.*");
-        }
-        if (gid != null) {
-            requestParams.put("gid", gid);
-            requestParams.put("fields", "group_album.*");
-        }
-        List<Album> result = new ArrayList<>();
-        boolean hasMore = true;
-        while (hasMore) {
-            try {
-                String response = api.request("photos.getAlbums", requestParams, "post");
-                //Console.print("Response " + response);
-                JSONObject albumsObject = new JSONObject(response);
-                JSONArray albums = albumsObject.getJSONArray("albums");
-                for (int i = 0; i < albums.length(); ++i) {
-                    Album album = parseAlbum(albums.getJSONObject(i));
-                    result.add(album);
-                }
-                hasMore = albumsObject.getBoolean("hasMore");
-                requestParams.put("anchor", albumsObject.getString("pagingAnchor"));
-            } catch (Exception e) {
-                Console.print(e.getMessage());
-                hasMore = false;
             }
         }
         return result;
@@ -305,52 +128,10 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
         try {
             String response = api.request("photos.getPhotoInfo", requestParams, "get");
             JSONObject photosObject = new JSONObject(response);
-            result = parsePhoto(photosObject.getJSONObject("photo"));
+            result = Photo.build(photosObject.getJSONObject("photo"));
         } catch (Exception e) {
             Console.print("Error " + e.getMessage());
         }
-        return result;
-    }
-
-    protected List<Photo> getAlbumPhotos(String fid, String gid, String aid) {
-        Map<String, String> requestParams = new HashMap<String, String>();
-        if (fid != null) {
-            requestParams.put("fid", fid);
-            requestParams.put("fields", "photo.*");
-        }
-        else if (gid != null) {
-            requestParams.put("gid", gid);
-            requestParams.put("fields", "group_photo.*");
-        }
-        else
-        {
-            requestParams.put("fields", "photo.*");
-        }
-        if (aid != null) {
-            requestParams.put("aid", aid);
-        }
-        //Console.print(requestParams.toString());
-        List<Photo> result = new ArrayList<>();
-        boolean hasMore = true;
-        while (hasMore) {
-            try {
-                String response = api.request("photos.getPhotos", requestParams, "get");
-                JSONObject photosObject = new JSONObject(response);
-                JSONArray photos = photosObject.getJSONArray("photos");
-                for (int i = 0; i < photos.length(); ++i) {
-                    Photo photo = parsePhoto(photos.getJSONObject(i));
-                    result.add(photo);
-                }
-                hasMore = photosObject.getBoolean("hasMore");
-                if (hasMore) {
-                    requestParams.put("anchor", photosObject.getString("anchor"));
-                }
-            } catch (Exception e) {
-                Console.print(e.getMessage());
-                hasMore = false;
-            }
-        }
-        //Collections.sort(result, new InfoHolder.PhotoByUploadTimeComparator());
         return result;
     }
 

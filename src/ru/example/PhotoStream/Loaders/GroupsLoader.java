@@ -20,7 +20,7 @@ public class GroupsLoader extends DataLoader
             Photo photo = getPhoto(group.photo_id, group.uid);
             if (photo != null)
             {
-                group.photo = photo;
+                //group.photo = photo;
             }
         }
         return groups;
