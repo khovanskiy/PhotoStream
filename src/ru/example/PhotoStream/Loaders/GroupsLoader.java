@@ -28,7 +28,7 @@ public class GroupsLoader extends DataLoader
 
     @Override
     protected void onPostExecute(List<?> data) {
-        Event e = new Event(this, Event.COMPLETE);
+        Event e = new Event(this, Event.GROUPS_LOADED);
         e.data.put("groups", data);
         dispatchEvent(e);
     }

@@ -95,7 +95,7 @@ public class FriendsFragment extends Fragment implements IEventHadler, AdapterVi
 
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE)
+        if (e.type == Event.FRIENDS_LOADED)
         {
             e.target.removeEventListener(this);
             List<User> users = (List<User>) e.data.get("friends");

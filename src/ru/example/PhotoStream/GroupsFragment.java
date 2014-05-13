@@ -97,7 +97,7 @@ public class GroupsFragment extends Fragment implements IEventHadler, AdapterVie
 
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE)
+        if (e.type == Event.GROUPS_LOADED)
         {
             e.target.removeEventListener(this);
             List<Group> groups = (List<Group>) e.data.get("groups");

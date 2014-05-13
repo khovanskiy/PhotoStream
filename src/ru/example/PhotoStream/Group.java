@@ -82,7 +82,7 @@ public class Group extends AlbumsKeeper {
         while (hasMore) {
             try {
                 String response = api.request("photos.getAlbums", requestParams, "post");
-                Console.print("Response " + response);
+                //Console.print("Response " + response);
                 JSONObject albumsObject = new JSONObject(response);
                 JSONArray array = albumsObject.getJSONArray("albums");
                 for (int i = 0; i < array.length(); ++i) {

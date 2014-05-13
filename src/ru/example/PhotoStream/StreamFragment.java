@@ -12,6 +12,8 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
+import ru.example.PhotoStream.Loaders.FriendsLoader;
+import ru.example.PhotoStream.Loaders.GroupsLoader;
 import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
@@ -77,8 +79,6 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
     private Odnoklassniki api;
     private GridView photoList;
     private SwipeRefreshLayout swipeLayout;
-    private int streamType = 0;
-    private String current_uid = "";
     private Feed feed;
     private AlbumsKeeper entry;
 
@@ -88,21 +88,38 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         api = Odnoklassniki.getInstance(getActivity());
 
         feed = new Feed(api);
+
+        swipeLayout.setRefreshing(true);
+
         Bundle bundle = getArguments();
         if (bundle == null) {
             entry = User.get("");
-        } else if (bundle.getString("uid") != null) {
-            entry = User.get(bundle.getString("uid", ""));
+            GroupsLoader groupsLoader = new GroupsLoader(api);
+            groupsLoader.addEventListener(this);
+            groupsLoader.execute();
+
+            FriendsLoader friendsLoader = new FriendsLoader(api);
+            friendsLoader.addEventListener(this);
+            friendsLoader.execute();
         } else {
-            entry = Group.get(bundle.getString("gid", ""));
+            if (bundle.getString("uid") != null) {
+                entry = User.get(bundle.getString("uid", ""));
+            } else {
+                entry = Group.get(bundle.getString("gid", ""));
+            }
+            AlbumsLoader loader = new AlbumsLoader(api, entry);
+            loader.addEventListener(this);
+            loader.execute();
         }
 
         assert (entry != null);
 
+        /*
         AlbumsLoader loader = new AlbumsLoader(api, entry);
         loader.addEventListener(this);
         loader.execute();
-        swipeLayout.setRefreshing(true);
+         */
+
 
                                 /*50582132228315 Одноклассники. Всё ОК!
 04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
@@ -159,18 +176,46 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         }, 3000);
     }
 
+    private int semaphore = 0;
+
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.ALBUMS_LOADED) {
+        if (e.type == Event.GROUPS_LOADED) {
             e.target.removeEventListener(this);
-            swipeLayout.setRefreshing(false);
+            List<Group> groups = (List<Group>) e.data.get("groups");
+            semaphore += groups.size();
 
+            for (Group group : groups) {
+                AlbumsLoader loader = new AlbumsLoader(api, group);
+                loader.addEventListener(this);
+                loader.execute();
+            }
+        } else if (e.type == Event.FRIENDS_LOADED) {
+            e.target.removeEventListener(this);
+            List<User> friends = (List<User>) e.data.get("friends");
+            semaphore += friends.size();
+
+            for (User user : friends) {
+                AlbumsLoader loader = new AlbumsLoader(api, user);
+                loader.addEventListener(this);
+                loader.execute();
+            }
+        } else if (e.type == Event.ALBUMS_LOADED) {
+            e.target.removeEventListener(this);
             List<Album> albums = (List<Album>) e.data.get("albums");
             for (Album album : albums) {
                 Console.print("Album: " + album.title);
                 feed.add(album);
             }
-            loadMorePhotos();
+
+            if (semaphore > 0) {
+                semaphore--;
+            }
+
+            if (semaphore == 0) {
+                swipeLayout.setRefreshing(false);
+                loadMorePhotos();
+            }
         } else if (e.type == Event.COMPLETE) {
             e.target.removeEventListener(this);
             swipeLayout.setRefreshing(false);
@@ -181,7 +226,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
                 photoListAdapter = new PhotosAdapter(getActivity());
                 photoList.setAdapter(photoListAdapter);
             }
-            Console.print("Total photos: " + photos.size());
+            //Console.print("Total photos: " + photos.size());
             if (photos.size() > photoListAdapter.getCount()) {
                 photoListAdapter.clear();
 

@@ -19,7 +19,7 @@ public class FriendsLoader extends DataLoader
 
     @Override
     protected void onPostExecute(List<?> data) {
-        Event e = new Event(this, Event.COMPLETE);
+        Event e = new Event(this, Event.FRIENDS_LOADED);
         e.data.put("friends", data);
         dispatchEvent(e);
     }
