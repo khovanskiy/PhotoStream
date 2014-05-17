@@ -46,19 +46,18 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="CONSOLE" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="INFO" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: ru.example.PhotoStream" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" name="Default" comment="" />
     <ignored path="PhotoStream.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/StreamActivity.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398431429844" ignored="false" />
+    <file path="/StreamActivity.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400337559908" ignored="false" />
     <file path="/InfoLoader.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398272720803" ignored="false" />
     <file path="/streamactivity.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398425582518" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398269116532" ignored="false" />
-    <file path="/StreamFragment.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399996891693" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400340224792" ignored="false" />
+    <file path="/StreamFragment.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400340133534" ignored="false" />
     <file path="/FriendsFragment.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399995026208" ignored="false" />
     <file path="/GroupsFragment.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399995018936" ignored="false" />
     <file path="/a.dummy" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399833967404" ignored="false" />
@@ -67,15 +66,15 @@
     <file path="/Photo.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399977405700" ignored="false" />
     <file path="/substreamactivity.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398425851995" ignored="false" />
     <file path="/fragment.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398525065427" ignored="false" />
-    <file path="$PROJECT_DIR$/gen/ru/example/PhotoStream/BuildConfig.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398362561805" ignored="false" />
-    <file path="/Dummy.txt" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398528907016" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/ru/example/PhotoStream/BuildConfig.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400339980082" ignored="false" />
+    <file path="/Dummy.txt" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400336679854" ignored="false" />
     <file path="/SquareTile.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398419792217" ignored="false" />
     <file path="/streamphotoview.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398366319755" ignored="false" />
     <file path="/ImageLoader.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398543827767" ignored="false" />
     <file path="/AutoImage.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398421276198" ignored="false" />
     <file path="/SmartImage.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399985257698" ignored="false" />
     <file path="/themes.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398688468586" ignored="false" />
-    <file path="/AndroidManifest.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398453211414" ignored="false" />
+    <file path="/AndroidManifest.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400341822154" ignored="false" />
     <file path="/main_activity_actions.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398448381724" ignored="false" />
     <file path="/strings.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398430295048" ignored="false" />
     <file path="/authactivity.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398451696771" ignored="false" />
@@ -98,6 +97,12 @@
     <file path="/Event.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399994995713" ignored="false" />
     <file path="/FriendsLoader.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399995032766" ignored="false" />
     <file path="/FeedLoader.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399996013333" ignored="false" />
+    <file path="/PhotoUploadActivity.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400336709277" ignored="false" />
+    <file path="/UploadActivity.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400337193262" ignored="false" />
+    <file path="/AuthActivity.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400337810901" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/ru/example/PhotoStream/Manifest.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400339930683" ignored="false" />
+    <file path="$PROJECT_DIR$/gen/ru/example/PhotoStream/R.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400339930683" ignored="false" />
+    <file path="$PROJECT_DIR$/res/menu/main_activity_actions.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400338787413" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,20 +164,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PhotosLoader.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/PhotosLoader.java">
+      <file leaf-file-name="StreamActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="38" selection-start="174" selection-end="174" vertical-scroll-proportion="0.0">
+            <state line="130" column="27" selection-start="4491" selection-end="4491" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DataLoader.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/DataLoader.java">
+      <file leaf-file-name="AuthActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="48" selection-start="363" selection-end="363" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="39" column="31" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.422452">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -180,43 +187,25 @@
       <file leaf-file-name="Group.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="18" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.0">
+            <state line="6" column="24" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StreamFragment.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamFragment.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="184" column="68" selection-start="6100" selection-end="6100" vertical-scroll-proportion="0.13023256">
+            <state line="7" column="26" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StreamActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
+      <file leaf-file-name="StreamFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="40" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Photo.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="42" selection-start="3215" selection-end="3215" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Album.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Album.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="44" selection-start="3060" selection-end="3060" vertical-scroll-proportion="0.0">
+            <state line="8" column="38" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -232,22 +221,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumsKeeper.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/DataLoader.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/User.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Entry.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Album.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Feed.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Event.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/GroupsLoader.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsFragment.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/FriendsFragment.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/FriendsLoader.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/FeedLoader.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/StreamFragment.java" />
+        <option value="$PROJECT_DIR$/res/layout/photouploadactivity.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoUploadActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/uploadactivity.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/UploadActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java" />
       </list>
     </option>
   </component>
@@ -316,16 +305,14 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="PhotoStream" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -410,6 +397,50 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Fragments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Activities" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -452,8 +483,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -465,7 +494,7 @@
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.SHOW" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/android-sdk/sdk/extras/android/support/v7/appcompat" />
     <property name="DEBUGGABLE_DEVICE" value="4300be4e65607000" />
     <property name="DEBUGGABLE_PROCESS" value="ru.example.PhotoStream" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -477,7 +506,7 @@
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Android Logcat" />
+    <property name="options.lastSelected" value="editor" />
     <property name="SearchEverywhereHistory" value="" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.STATE" value="right" />
     <property name="AndroidLayoutSelectedEditor" value="android-designer" />
@@ -505,7 +534,7 @@
   <component name="RunManager" selected="Android Application.PhotoStream">
     <configuration default="false" name="StreamActivity" type="AndroidRunConfigurationType" factoryName="Android Application" temporary="true">
       <module name="PhotoStream" />
-      <option name="ACTIVITY_CLASS" value="ru.example.PhotoStream.StreamActivity" />
+      <option name="ACTIVITY_CLASS" value="ru.example.PhotoStream.Activities.StreamActivity" />
       <option name="MODE" value="specific_activity" />
       <option name="DEPLOY" value="true" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
@@ -739,14 +768,14 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.489819" sideWeight="0.42209178" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35180995" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4841629" sideWeight="0.5773746" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3495475" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48303166" sideWeight="0.5773746" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.11953042" sideWeight="0.5780543" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16915688" sideWeight="0.51583713" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20475113" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16915688" sideWeight="0.79524887" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20475113" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3180363" sideWeight="0.5147059" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -835,69 +864,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Feed.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="42" selection-start="641" selection-end="641" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="23" selection-start="484" selection-end="484" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="42" selection-start="3215" selection-end="3215" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Album.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="44" selection-start="3060" selection-end="3060" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/android-sdk/sdk/sources/android-15/android/os/AsyncTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="174" column="54" selection-start="7893" selection-end="7900" vertical-scroll-proportion="0.7358944">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="40" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="70" selection-start="3321" selection-end="3425" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="18" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/GroupsLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="53" selection-start="782" selection-end="782" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/FeedLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="24" selection-start="108" selection-end="108" vertical-scroll-proportion="0.102564104">
@@ -905,7 +871,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/FriendsFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/FriendsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="100" column="12" selection-start="3287" selection-end="3341" vertical-scroll-proportion="0.20465116">
           <folding />
@@ -940,10 +906,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/StreamFragment.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="184" column="68" selection-start="6100" selection-end="6100" vertical-scroll-proportion="0.13023256">
+        <state line="101" column="42" selection-start="3215" selection-end="3215" vertical-scroll-proportion="0.7186046">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Album.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="105" column="44" selection-start="3060" selection-end="3060" vertical-scroll-proportion="0.025581395">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/uploadactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/SubstreamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="27" selection-start="857" selection-end="857" vertical-scroll-proportion="-1.2255814">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/UploadActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="25" selection-start="303" selection-end="303" vertical-scroll-proportion="0.25581396">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="24" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="130" column="27" selection-start="4491" selection-end="4491" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="26" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="38" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="31" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.422452">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -988,7 +1024,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.7</last-edited>
+          <last-edited>Android 4.0.3 Platform</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

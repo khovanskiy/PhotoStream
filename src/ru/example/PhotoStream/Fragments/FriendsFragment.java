@@ -1,4 +1,4 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import ru.example.PhotoStream.Activities.AlbumsActivity;
+import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Loaders.FriendsLoader;
-import ru.example.PhotoStream.Loaders.GroupsLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
@@ -25,13 +26,11 @@ public class FriendsFragment extends Fragment implements IEventHadler, AdapterVi
         private List<User> users = new ArrayList<>();
         private Context context;
 
-        public UsersAdapter(Context context)
-        {
+        public UsersAdapter(Context context) {
             this.context = context;
         }
 
-        public void addUser(User user)
-        {
+        public void addUser(User user) {
             users.add(user);
         }
 
@@ -88,23 +87,21 @@ public class FriendsFragment extends Fragment implements IEventHadler, AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AlbumsActivity.class);
-        User obj  = (User) photoList.getItemAtPosition(position);
+        User obj = (User) photoList.getItemAtPosition(position);
         intent.putExtra("uid", obj.uid);
         startActivity(intent);
     }
 
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.FRIENDS_LOADED)
-        {
+        if (e.type == Event.FRIENDS_LOADED) {
             e.target.removeEventListener(this);
             List<User> users = (List<User>) e.data.get("friends");
             Console.print("Complete loader");
             photoListAdapter = new UsersAdapter(getActivity());
             photoList.setAdapter(photoListAdapter);
 
-            for (User user : users)
-            {
+            for (User user : users) {
                 Console.print(user.uid + " " + user.first_name);
                 photoListAdapter.addUser(user);
             }

@@ -1,21 +1,19 @@
 package ru.example.PhotoStream;
 
 import android.os.AsyncTask;
-import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
 
-class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> implements IEventDispatcher{
+class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> implements IEventDispatcher {
 
     private Odnoklassniki mOdnoklassniki;
     private EventDispatcher eventDispatcher;
 
-    public InfoLoader(Odnoklassniki mOdnoklassniki)
-    {
-            this.mOdnoklassniki = mOdnoklassniki;
+    public InfoLoader(Odnoklassniki mOdnoklassniki) {
+        this.mOdnoklassniki = mOdnoklassniki;
     }
 
     private List<String> getFriendIDs() {
@@ -266,7 +264,7 @@ class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> implements I
         }
         //Processing data
         publishProgress(InfoLoadingProgress.ProcessingData);
-        for (JSONObject photo: InfoHolder.userPrivatePhotos) {
+        for (JSONObject photo : InfoHolder.userPrivatePhotos) {
             try {
                 InfoHolder.allPhotos.put(photo.getString("id"), photo);
             } catch (Exception e) {
@@ -275,7 +273,7 @@ class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> implements I
         }
         InfoHolder.sortedPhotos.addAll(InfoHolder.userPrivatePhotos);
         for (SortedSet<JSONObject> photos : InfoHolder.friendPrivatePhotos.values()) {
-            for (JSONObject photo: photos) {
+            for (JSONObject photo : photos) {
                 try {
                     InfoHolder.allPhotos.put(photo.getString("id"), photo);
                 } catch (Exception e) {
@@ -285,7 +283,7 @@ class InfoLoader extends AsyncTask<Void, InfoLoadingProgress, Void> implements I
             InfoHolder.sortedPhotos.addAll(photos);
         }
         for (SortedSet<JSONObject> photos : InfoHolder.albumPhotos.values()) {
-            for (JSONObject photo: photos) {
+            for (JSONObject photo : photos) {
                 try {
                     InfoHolder.allPhotos.put(photo.getString("id"), photo);
                 } catch (Exception e) {

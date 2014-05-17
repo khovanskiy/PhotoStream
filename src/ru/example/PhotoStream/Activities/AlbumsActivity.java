@@ -1,4 +1,4 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Activities;
 
 import android.app.ActionBar;
 import android.content.Intent;
@@ -6,9 +6,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import ru.example.PhotoStream.Fragments.StreamFragment;
+import ru.example.PhotoStream.R;
 import ru.example.PhotoStream.ViewAdapters.AlbumListAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 

@@ -64,8 +64,7 @@ public class User extends AlbumsKeeper {
         if (!cache.containsKey(userId)) {
             current = new User();
             cache.put(userId, current);
-        }
-        else {
+        } else {
             current = cache.get(userId);
         }
         current.uid = userId;

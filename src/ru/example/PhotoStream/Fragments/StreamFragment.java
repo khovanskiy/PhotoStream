@@ -1,4 +1,4 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
+import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Loaders.FriendsLoader;
 import ru.example.PhotoStream.Loaders.GroupsLoader;

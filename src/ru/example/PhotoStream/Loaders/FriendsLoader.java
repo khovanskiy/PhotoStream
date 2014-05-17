@@ -6,8 +6,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
 
-public class FriendsLoader extends DataLoader
-{
+public class FriendsLoader extends DataLoader {
     public FriendsLoader(Odnoklassniki api) {
         super(api);
     }

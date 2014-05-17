@@ -7,9 +7,9 @@ import java.util.List;
 public abstract class Entry {
 
     private final static int DEFAULT_CHUNK_SIZE = 10;
+
     /**
      * Can entry load more photos
-     *
      */
     public abstract boolean hasMore();
 
@@ -26,7 +26,7 @@ public abstract class Entry {
     /**
      * Load next chunk with at most {@code count} photos
      *
-     * @param api API of Odnoklassniki.ru
+     * @param api   API of Odnoklassniki.ru
      * @param count maximum count of photos
      * @return is something has been loaded
      */

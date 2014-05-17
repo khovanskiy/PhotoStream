@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_update"
           android:showAsAction="always"/>
     <item android:id="@+id/action_search"
           android:title="title1"/>
     <item android:id="@+id/action_compose"
-          android:title="tile2" />
+          android:title="tile2"/>
 </menu>

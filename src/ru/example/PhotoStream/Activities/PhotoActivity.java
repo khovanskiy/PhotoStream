@@ -1,11 +1,10 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Activities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 import org.json.JSONObject;
+import ru.example.PhotoStream.Console;
+import ru.example.PhotoStream.InfoHolder;
+import ru.example.PhotoStream.R;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.io.InputStream;

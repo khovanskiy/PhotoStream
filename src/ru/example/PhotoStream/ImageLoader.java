@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import java.io.InputStream;
 import java.net.URL;
 
-public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEventDispatcher{
+public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEventDispatcher {
     private String path;
     private EventDispatcher eventDispatcher;
 
@@ -20,24 +20,20 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEvent
         String urldisplay = path;
         Bitmap mIcon11 = null;
         InputStream in = null;
-        try
-        {
+        try {
             try {
                 in = new URL(urldisplay).openStream();
                 mIcon11 = BitmapFactory.decodeStream(in);
 
             } catch (Exception e) {
                 Console.print(e.getMessage());
-            }
-            finally {
-                if (in != null)
-                {
+            } finally {
+                if (in != null) {
                     in.close();
                     in = null;
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
         return mIcon11;

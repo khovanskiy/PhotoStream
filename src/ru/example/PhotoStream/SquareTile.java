@@ -2,7 +2,6 @@ package ru.example.PhotoStream;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 public class SquareTile extends SmartImage {
     public SquareTile(Context context) {

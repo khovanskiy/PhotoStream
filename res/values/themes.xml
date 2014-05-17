@@ -13,7 +13,7 @@
         <item name="android:textColor">#ffffff</item>
         <!-- The textColor property is backward compatible with the Support Library -->
     </style>
-    <style name="Widget.Sherlock.ActionButton" parent="@android:style/Widget.Holo.ActionButton" />
+    <style name="Widget.Sherlock.ActionButton" parent="@android:style/Widget.Holo.ActionButton"/>
     <style name="Widget.Styled.ActionButton" parent="@style/Widget.Sherlock.ActionButton">
         <item name="android:paddingLeft">0.0dip</item>
         <item name="android:paddingRight">0.0dip</item>

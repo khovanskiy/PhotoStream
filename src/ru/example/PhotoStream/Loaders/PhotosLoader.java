@@ -1,9 +1,12 @@
 package ru.example.PhotoStream.Loaders;
 
-import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.DataLoader;
+import ru.example.PhotoStream.Event;
+import ru.example.PhotoStream.Feed;
+import ru.example.PhotoStream.Photo;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.*;
+import java.util.List;
 
 public class PhotosLoader extends DataLoader {
 

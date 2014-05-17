@@ -35,8 +35,7 @@ public class Photo {
         if (!cache.containsKey(photoId)) {
             current = new Photo();
             cache.put(photoId, current);
-        }
-        else {
+        } else {
             current = cache.get(photoId);
         }
         current.id = photoId;

@@ -1,14 +1,16 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import ru.example.PhotoStream.Console;
+import ru.example.PhotoStream.R;
 import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkTokenRequestListener;
 import ru.ok.android.sdk.util.OkScope;
 
-public class AuthActivity extends Activity implements OkTokenRequestListener {
+public class AuthActivity extends ActionBarActivity implements OkTokenRequestListener {
     private Odnoklassniki mOdnoklassniki = null;
 
     private final String APP_ID = "409574400";
@@ -22,11 +24,12 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
 
         mOdnoklassniki = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
         mOdnoklassniki.setTokenRequestListener(this);
+
         mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
     }
 
     public void onLoginClick(View view) {
-
+        mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
     }
 
     @Override

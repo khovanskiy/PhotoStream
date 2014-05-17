@@ -1,4 +1,4 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,9 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import org.json.JSONObject;
+import ru.example.PhotoStream.Console;
+import ru.example.PhotoStream.InfoHolder;
+import ru.example.PhotoStream.R;
 import ru.example.PhotoStream.ViewAdapters.PhotoListAdapter;
 
 import java.util.SortedSet;
@@ -88,7 +91,7 @@ public class SubstreamActivity extends Activity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int lastItem = firstVisibleItem + visibleItemCount;
-                if(lastItem == totalItemCount) {
+                if (lastItem == totalItemCount) {
                     loadMorePhotos();
                 }
             }

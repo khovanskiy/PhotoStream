@@ -35,8 +35,7 @@ public class Group extends AlbumsKeeper {
         if (!cache.containsKey(groupId)) {
             current = new Group();
             cache.put(groupId, current);
-        }
-        else {
+        } else {
             current = cache.get(groupId);
         }
         current.uid = groupId;

@@ -62,7 +62,7 @@ public class InfoHolder {
      * Contains user private photos sorted by upload time.
      */
     public static SortedSet<JSONObject> userPrivatePhotos =
-                new TreeSet<JSONObject>(new PhotoByUploadTimeComparator());
+            new TreeSet<JSONObject>(new PhotoByUploadTimeComparator());
 
     /**
      * Contains user photos sorted by upload time.

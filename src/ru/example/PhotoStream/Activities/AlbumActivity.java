@@ -1,14 +1,16 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Activities;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import org.json.JSONObject;
+import ru.example.PhotoStream.Console;
+import ru.example.PhotoStream.InfoHolder;
+import ru.example.PhotoStream.R;
 import ru.example.PhotoStream.ViewAdapters.PhotoListAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
@@ -99,7 +101,7 @@ public class AlbumActivity extends Activity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 final int lastItem = firstVisibleItem + visibleItemCount;
-                if(lastItem == totalItemCount) {
+                if (lastItem == totalItemCount) {
                     loadMorePhotos();
                 }
             }

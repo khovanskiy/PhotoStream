@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="ru.example.PhotoStream">
-    <uses-sdk android:minSdkVersion="13"/>
+    <uses-sdk android:minSdkVersion="9"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
-    <application android:icon="@drawable/actionbar_logo" android:label="@string/app_name" android:theme="@style/OKTheme">
-        <activity android:name=".AuthActivity"
+    <application android:icon="@drawable/actionbar_logo" android:label="@string/app_name" android:theme="@style/Theme.AppCompat.Light">
+        <activity android:name=".Activities.AuthActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,10 +19,10 @@
                 android:launchMode="singleTask"
                 android:configChanges="orientation">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <data
                         android:scheme="okauth"
@@ -30,18 +30,17 @@
                         />
             </intent-filter>
         </activity>
-
-        <activity android:name=".StreamActivity">
-
-        </activity>
-        <activity android:name=".UploadActivity">
+        <activity android:name=".Activities.StreamActivity">
 
         </activity>
-        <activity android:name=".AlbumActivity"/>
-        <activity android:name=".FriendsActivity"/>
-        <activity android:name=".GroupsActivity"/>
-        <activity android:name=".PhotoActivity"/>
-        <activity android:name=".AlbumsActivity"/>
-        <activity android:name=".SubstreamActivity"/>
+        <activity android:name=".Activities.UploadActivity">
+
+        </activity>
+        <activity android:name=".Activities.AlbumActivity"/>
+        <activity android:name=".Activities.FriendsActivity"/>
+        <activity android:name=".Activities.GroupsActivity"/>
+        <activity android:name=".Activities.PhotoActivity"/>
+        <activity android:name=".Activities.AlbumsActivity"/>
+        <activity android:name=".Activities.SubstreamActivity"/>
     </application>
 </manifest>

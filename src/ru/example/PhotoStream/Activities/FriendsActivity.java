@@ -1,4 +1,4 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import ru.example.PhotoStream.InfoHolder;
+import ru.example.PhotoStream.R;
 import ru.example.PhotoStream.ViewAdapters.FriendListAdapter;
 
 public class FriendsActivity extends Activity {
@@ -28,7 +30,7 @@ public class FriendsActivity extends Activity {
                 onFriendClick(position);
             }
         });
-        for (String fid: InfoHolder.friendIds) {
+        for (String fid : InfoHolder.friendIds) {
             friendListAdapter.addFriend(fid);
         }
         friendListAdapter.notifyDataSetChanged();

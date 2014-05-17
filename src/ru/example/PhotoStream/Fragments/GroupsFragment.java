@@ -1,4 +1,4 @@
-package ru.example.PhotoStream;
+package ru.example.PhotoStream.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
+import ru.example.PhotoStream.Activities.AlbumsActivity;
+import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Loaders.GroupsLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
@@ -18,20 +20,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupsFragment extends Fragment implements IEventHadler, AdapterView.OnItemClickListener{
+public class GroupsFragment extends Fragment implements IEventHadler, AdapterView.OnItemClickListener {
 
     static class GroupsAdapter extends BaseAdapter {
 
         private List<Group> groups = new ArrayList<>();
         private Context context;
 
-        public GroupsAdapter(Context context)
-        {
+        public GroupsAdapter(Context context) {
             this.context = context;
         }
 
-        public void addGroup(Group group)
-        {
+        public void addGroup(Group group) {
             groups.add(group);
         }
 
@@ -90,22 +90,20 @@ public class GroupsFragment extends Fragment implements IEventHadler, AdapterVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AlbumsActivity.class);
-        Group obj  = (Group) photoList.getItemAtPosition(position);
+        Group obj = (Group) photoList.getItemAtPosition(position);
         intent.putExtra("gid", obj.uid);
         startActivity(intent);
     }
 
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.GROUPS_LOADED)
-        {
+        if (e.type == Event.GROUPS_LOADED) {
             e.target.removeEventListener(this);
             List<Group> groups = (List<Group>) e.data.get("groups");
             photoListAdapter = new GroupsAdapter(getActivity());
             photoList.setAdapter(photoListAdapter);
 
-            for (Group group : groups)
-            {
+            for (Group group : groups) {
                 Console.print(group.uid + " " + group.name);
                 photoListAdapter.addGroup(group);
             }
