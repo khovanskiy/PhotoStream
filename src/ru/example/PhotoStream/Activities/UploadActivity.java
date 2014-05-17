@@ -10,6 +10,6 @@ public class UploadActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadactivity);
-        getSupportActionBar().setTitle("Загрузка");
+        getSupportActionBar().setTitle("Загрузка фотографии");
     }
 }

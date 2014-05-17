@@ -37,10 +37,7 @@
 
         </activity>
         <activity android:name=".Activities.AlbumActivity"/>
-        <activity android:name=".Activities.FriendsActivity"/>
-        <activity android:name=".Activities.GroupsActivity"/>
         <activity android:name=".Activities.PhotoActivity"/>
         <activity android:name=".Activities.AlbumsActivity"/>
-        <activity android:name=".Activities.SubstreamActivity"/>
     </application>
 </manifest>

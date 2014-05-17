@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import ru.example.PhotoStream.Fragments.StreamFragment;
@@ -14,11 +15,8 @@ import ru.example.PhotoStream.ViewAdapters.AlbumListAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
 
-public class AlbumsActivity extends FragmentActivity {
+public class AlbumsActivity extends ActionBarActivity {
 
-    private String fid, gid;
-    private ListView albumList;
-    private AlbumListAdapter albumListAdapter;
     private Odnoklassniki mOdnoklassniki;
     private ActionBar actionBar;
 

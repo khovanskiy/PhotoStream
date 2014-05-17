@@ -1,12 +1,12 @@
 package ru.example.PhotoStream.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,10 +21,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Genyaz on 01.04.14.
- */
-public class PhotoActivity extends Activity {
+public class PhotoActivity extends ActionBarActivity {
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
@@ -173,13 +170,6 @@ public class PhotoActivity extends Activity {
     }
 
     public void onPhotoToStreamClick(View view) {
-        Intent intent = new Intent(this, SubstreamActivity.class);
-        if (fid != null) {
-            intent.putExtra("fid", fid);
-        }
-        if (gid != null) {
-            intent.putExtra("gid", gid);
-        }
-        startActivity(intent);
+
     }
 }

@@ -1,10 +1,10 @@
 package ru.example.PhotoStream.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.*;
 import org.json.JSONObject;
@@ -18,10 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedSet;
 
-/**
- * Created by Genyaz on 01.04.14.
- */
-public class AlbumActivity extends Activity {
+public class AlbumActivity extends ActionBarActivity {
 
     private final int PHOTOS_TO_LOAD = 3;
     private JSONObject[] photosToDisplay;
@@ -184,14 +181,7 @@ public class AlbumActivity extends Activity {
     }
 
     public void onAlbumToStreamClick(View view) {
-        Intent intent = new Intent(this, SubstreamActivity.class);
-        if (fid != null) {
-            intent.putExtra("fid", fid);
-        }
-        if (gid != null) {
-            intent.putExtra("gid", gid);
-        }
-        startActivity(intent);
+
     }
 
     private void onPhotoClick(int position) {

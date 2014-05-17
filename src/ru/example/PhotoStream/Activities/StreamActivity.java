@@ -1,6 +1,7 @@
 package ru.example.PhotoStream.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import ru.example.PhotoStream.Event;
 import ru.example.PhotoStream.Fragments.FriendsFragment;
 import ru.example.PhotoStream.Fragments.GroupsFragment;
@@ -69,13 +71,13 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
         public Fragment getItem(int position) {
             switch (position) {
                 case 1: {
-                    return new FriendsFragment();
+                    return new StreamFragment();
                 }
                 case 2: {
-                    return new GroupsFragment();
+                    return new FriendsFragment();
                 }
                 default: {
-                    return new StreamFragment();
+                    return new GroupsFragment();
                 }
             }
         }
@@ -89,13 +91,13 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 1: {
-                    return context.getString(R.string.my_friends);
+                    return context.getString(R.string.my_stream);
                 }
                 case 2: {
-                    return context.getString(R.string.my_groups);
+                    return context.getString(R.string.my_friends);
                 }
                 default: {
-                    return context.getString(R.string.my_stream);
+                    return context.getString(R.string.my_groups);
                 }
             }
         }
@@ -129,13 +131,26 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
 
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
-        pager.setCurrentItem(0);
+        pager.setCurrentItem(1);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_upload:
+            {
+                Intent intent = new Intent(this, UploadActivity.class);
+                startActivity(intent);
+            } break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void update() {
