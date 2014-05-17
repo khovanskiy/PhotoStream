@@ -73,7 +73,7 @@
     <file path="/ImageLoader.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398543827767" ignored="false" />
     <file path="/AutoImage.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398421276198" ignored="false" />
     <file path="/SmartImage.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1399985257698" ignored="false" />
-    <file path="/themes.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398688468586" ignored="false" />
+    <file path="/themes.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400342811270" ignored="false" />
     <file path="/AndroidManifest.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400341822154" ignored="false" />
     <file path="/main_activity_actions.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398448381724" ignored="false" />
     <file path="/strings.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1398430295048" ignored="false" />
@@ -102,7 +102,6 @@
     <file path="/AuthActivity.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400337810901" ignored="false" />
     <file path="$PROJECT_DIR$/gen/ru/example/PhotoStream/Manifest.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400339930683" ignored="false" />
     <file path="$PROJECT_DIR$/gen/ru/example/PhotoStream/R.java" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400339930683" ignored="false" />
-    <file path="$PROJECT_DIR$/res/menu/main_activity_actions.xml" changelist="96d16dbc-a4ac-40ec-b1d6-709bdde7bb6c" time="1400338787413" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,27 +166,16 @@
       <file leaf-file-name="StreamActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="27" selection-start="4491" selection-end="4491" vertical-scroll-proportion="0.0">
+            <state line="108" column="22" selection-start="3226" selection-end="3226" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AuthActivity.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java">
+      <file leaf-file-name="themes.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/themes.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="31" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.422452">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Group.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="24" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
+            <state line="2" column="17" selection-start="68" selection-end="75" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -196,16 +184,16 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="26" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
+            <state line="7" column="119" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StreamFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
+      <file leaf-file-name="main_activity_actions.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/menu/main_activity_actions.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="38" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -221,7 +209,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/GroupsFragment.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/FriendsFragment.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/FriendsLoader.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java" />
@@ -233,10 +220,11 @@
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/UploadActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/StreamActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/UploadActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java" />
+        <option value="$PROJECT_DIR$/res/values/themes.xml" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -462,6 +450,10 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -478,6 +470,30 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="appcompat" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -864,20 +880,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/FeedLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="24" selection-start="108" selection-end="108" vertical-scroll-proportion="0.102564104">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/FriendsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="12" selection-start="3287" selection-end="3341" vertical-scroll-proportion="0.20465116">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Loaders/PhotosLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="38" selection-start="174" selection-end="174" vertical-scroll-proportion="0.0">
@@ -946,40 +948,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="31" selection-start="1434" selection-end="1434" vertical-scroll-proportion="1.267356">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="24" selection-start="168" selection-end="168" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="27" selection-start="4491" selection-end="4491" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="26" selection-start="351" selection-end="351" vertical-scroll-proportion="0.0">
+        <state line="6" column="24" selection-start="168" selection-end="168" vertical-scroll-proportion="0.032496307">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="38" selection-start="282" selection-end="282" vertical-scroll-proportion="0.0">
+        <state line="8" column="38" selection-start="282" selection-end="282" vertical-scroll-proportion="0.25997046">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/AuthActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="31" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.422452">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="108" column="22" selection-start="3226" selection-end="3226" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/themes.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="17" selection-start="68" selection-end="75" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="119" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/menu/main_activity_actions.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
