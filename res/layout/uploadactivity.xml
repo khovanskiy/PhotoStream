@@ -3,9 +3,9 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@android:color/white">
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-    </LinearLayout>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/uploadactivity_imageview" android:layout_gravity="center"
+            android:adjustViewBounds="true"/>
 </LinearLayout>

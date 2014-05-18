@@ -36,6 +36,9 @@
         <activity android:name=".Activities.UploadActivity">
 
         </activity>
+        <activity android:name=".Activities.CameraActivity">
+
+        </activity>
         <activity android:name=".Activities.AlbumActivity"/>
         <activity android:name=".Activities.PhotoActivity"/>
         <activity android:name=".Activities.AlbumsActivity"/>

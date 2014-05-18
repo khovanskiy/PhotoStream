@@ -146,7 +146,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
         {
             case R.id.action_upload:
             {
-                Intent intent = new Intent(this, UploadActivity.class);
+                Intent intent = new Intent(this, CameraActivity.class);
                 startActivity(intent);
             } break;
         }
