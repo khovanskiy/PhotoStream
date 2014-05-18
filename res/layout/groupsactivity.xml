@@ -11,6 +11,6 @@
             android:layout_height="0dp"
             android:id="@+id/groupsactivity_grouplist"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="1" android:stretchMode="columnWidth" android:numColumns="2"
+            android:layout_weight="1" android:stretchMode="columnWidth" android:numColumns="1"
             android:background="#e0e0e0"/>
 </LinearLayout>

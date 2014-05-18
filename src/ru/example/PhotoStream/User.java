@@ -121,6 +121,9 @@ public class User extends AlbumsKeeper {
         if (object.has("last_name")) {
             current.last_name = object.getString("last_name");
         }
+        if (object.has("name")) {
+            current.name = object.getString("name");
+        }
         if (object.has("pic50x50")) {
             current.pic50x50 = object.getString("pic50x50");
         }

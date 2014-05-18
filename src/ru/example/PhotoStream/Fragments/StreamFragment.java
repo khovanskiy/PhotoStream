@@ -21,7 +21,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener {
+public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener {
 
     static class PhotosAdapter extends BaseAdapter {
 
@@ -92,6 +92,11 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
         swipeLayout.setRefreshing(true);
 
+
+        Console.print("Container " + photoList.getWidth() + " " + photoList.getHeight());
+        photoList.measure(photoList.getMeasuredState(), photoList.getMeasuredState());
+        Console.print("Measured " + photoList.getMeasuredWidth() + " " + photoList.getMeasuredHeight());
+
         Bundle bundle = getArguments();
         if (bundle == null) {
             entry = User.get("");
@@ -148,8 +153,25 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
+        photoList.addOnLayoutChangeListener(this);
         photoList.setOnScrollListener(this);
         return view;
+    }
+
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        int oldWidth = oldRight - oldLeft;
+        int oldHeight = oldBottom - oldTop;
+        int currentWidth = right - left;
+        int currentHeight = bottom - top;
+        if (oldWidth != currentWidth || oldHeight != currentHeight) {
+            Console.print("Width: " + currentWidth);
+            Console.print("Height " + currentHeight);
+            int columns = (int)Math.ceil(currentWidth / 180.0);
+            Console.print("Columns: " + columns);
+            photoList.setNumColumns(columns);
+        }
     }
 
     private int scrollState = SCROLL_STATE_IDLE;
