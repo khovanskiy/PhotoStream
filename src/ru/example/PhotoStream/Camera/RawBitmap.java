@@ -81,6 +81,10 @@ public class RawBitmap {
                 colors[i * width + j] = Color.argb(a[i][j], r[i][j], g[i][j], b[i][j]);
             }
         }
+        this.a = null;
+        this.r = null;
+        this.g = null;
+        this.b = null;
         return Bitmap.createBitmap(colors, width, height, Bitmap.Config.ARGB_8888);
     }
 }

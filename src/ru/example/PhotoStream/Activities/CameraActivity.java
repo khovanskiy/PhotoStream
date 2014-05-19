@@ -81,6 +81,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         pictureTaken = bitmap;
         Intent intent = new Intent(this, UploadActivity.class);
         takePictureButton.setClickable(true);
+        preview.resetPreview();
         startActivity(intent);
     }
 }

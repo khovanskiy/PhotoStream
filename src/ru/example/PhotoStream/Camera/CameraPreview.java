@@ -125,6 +125,9 @@ public class CameraPreview extends FrameLayout {
             camera.release();
             camera = null;
         }
+    }
+
+    public synchronized void resetPreview() {
         holderReady = false;
     }
 

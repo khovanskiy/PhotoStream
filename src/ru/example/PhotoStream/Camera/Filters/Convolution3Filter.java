@@ -6,7 +6,6 @@ import ru.example.PhotoStream.Camera.RawBitmap;
  * Created by Genyaz on 18.05.2014.
  */
 public class Convolution3Filter implements PhotoFilter {
-    private float[][] tmp = null;
     private float[][] matrix;
     private int offset;
 
@@ -22,9 +21,7 @@ public class Convolution3Filter implements PhotoFilter {
 
     @Override
     public synchronized void transformOpaque(RawBitmap bitmap) {
-        if (tmp == null || tmp.length != bitmap.height || tmp[0].length != bitmap.width) {
-            tmp = new float[bitmap.height][bitmap.width];
-        }
+        float[][] tmp = new float[bitmap.height][bitmap.width];
         int[][] color;
         for (int c = 0; c < 3; c++) {
             switch (c) {

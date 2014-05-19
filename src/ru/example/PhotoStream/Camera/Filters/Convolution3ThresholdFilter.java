@@ -6,7 +6,6 @@ import ru.example.PhotoStream.Camera.RawBitmap;
  * Created by Genyaz on 18.05.2014.
  */
 public class Convolution3ThresholdFilter implements PhotoFilter {
-    private float[][] tmp = null;
     private float[][] matrix;
     private int offset;
     private int threshold;
@@ -24,9 +23,7 @@ public class Convolution3ThresholdFilter implements PhotoFilter {
 
     @Override
     public synchronized void transformOpaque(RawBitmap bitmap) {
-        if (tmp == null || tmp.length != bitmap.height || tmp[0].length != bitmap.width) {
-            tmp = new float[bitmap.height][bitmap.width];
-        }
+        float[][] tmp = new float[bitmap.height][bitmap.width];
         int[][] color;
         for (int c = 0; c < 3; c++) {
             switch (c) {
@@ -78,6 +75,7 @@ public class Convolution3ThresholdFilter implements PhotoFilter {
                         amount += matrix[2][2];
                     }
                     tmp[i][j] /= amount;
+                    tmp[i][j] += offset;
                 }
             }
             for (int i = 1; i < bitmap.height - 1; i++) {
