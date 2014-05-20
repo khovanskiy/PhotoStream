@@ -1,175 +1,121 @@
 package ru.example.PhotoStream.Activities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
-import org.json.JSONObject;
-import ru.example.PhotoStream.Console;
-import ru.example.PhotoStream.InfoHolder;
-import ru.example.PhotoStream.R;
+import android.view.ViewGroup;
+import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
-public class PhotoActivity extends ActionBarActivity {
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
+public class PhotoActivity extends ActionBarActivity implements IEventHadler {
 
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
+    private class FullScreenImageAdapter extends PagerAdapter {
+
+        private List<Photo> photos = new ArrayList<>();
+        private LayoutInflater inflater;
+
+        public FullScreenImageAdapter(Context context) {
+            this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Console.print(e.getMessage());
-            }
-            return mIcon11;
+        public void add(Photo photo) {
+            photos.add(photo);
         }
 
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+        @Override
+        public int getCount() {
+            return photos.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view.equals(object);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Photo photo = photos.get(position);
+            View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
+            SmartImage imgDisplay = (SmartImage) viewLayout.findViewById(R.id.photoactivity_page_image);
+            imgDisplay.loadFromURL(photo.pic1024x768);
+            container.addView(viewLayout);
+            return viewLayout;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        public void clear() {
+            photos.clear();
         }
     }
 
-    private String fid, gid, aid, photoId;
-    private Context context;
+    private static Feed feed;
+    private Odnoklassniki api;
+    private ViewPager viewPager;
+    private int initPosition;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
         setContentView(R.layout.photoactivity);
-        Intent intent = getIntent();
-        fid = intent.getStringExtra("fid");
-        gid = intent.getStringExtra("gid");
-        aid = intent.getStringExtra("aid");
-        photoId = intent.getStringExtra("photo_id");
-        String toAlbums, toStream;
-        if (fid == null && gid == null) {
-            toAlbums = getString(R.string.my_albums);
-            toStream = getString(R.string.my_stream);
-        } else if (fid != null) {
-            toAlbums = getString(R.string.friend_albums);
-            toStream = getString(R.string.friend_stream);
-        } else {
-            toAlbums = getString(R.string.group_albums);
-            toStream = getString(R.string.group_stream);
+
+        api = Odnoklassniki.getInstance(this);
+
+        initPosition = getIntent().getIntExtra("position", 0);
+        viewPager = (ViewPager) findViewById(R.id.photoactivity_pager);
+        FullScreenImageAdapter photoListAdapter = new FullScreenImageAdapter(this);
+        viewPager.setAdapter(photoListAdapter);
+        List<Photo> photos = feed.getAvailablePhotos();
+        for (Photo photo : photos) {
+            photoListAdapter.add(photo);
         }
-        ((Button) findViewById(R.id.photoactivity_albums)).setText(toAlbums);
-        ((Button) findViewById(R.id.photoactivity_stream)).setText(toStream);
-        ImageView photo = (ImageView) findViewById(R.id.photoactivity_image);
-        JSONObject photoObject = InfoHolder.allPhotos.get(photoId);
-        try {
-            new DownloadImageTask(photo).execute(photoObject.getString("pic1024x768"));
-        } catch (Exception e) {
-            Console.print(e.getMessage());
-        }
-        updateLayout();
+        viewPager.setCurrentItem(initPosition);
+        photoListAdapter.notifyDataSetChanged();
     }
 
-    private class LikeAdder extends AsyncTask<Map<String, String>, Void, Boolean> {
+    public static void setFeed(Feed newFeed) {
+        feed = newFeed;
+        assert (feed != null);
+    }
 
-        @Override
-        protected Boolean doInBackground(Map<String, String>... params) {
-            try {
-                Odnoklassniki mOdnoklassniki = Odnoklassniki.getInstance(context);
-                String responseString = mOdnoklassniki.request("photos.addPhotoLike", params[0], "get");
-                if (responseString.equals("true")) {
-                    return true;
-                } else {
-                    Console.print(responseString);
-                    return false;
+    private void loadMore() {
+        DataLoader loader = new PhotosLoader(api, feed);
+        loader.addEventListener(this);
+        loader.execute();
+    }
+
+    @Override
+    public void handleEvent(Event e) {
+        /*if (e.type == Event.COMPLETE) {
+            e.target.removeEventListener(this);
+            List<Photo> photos = (List<Photo>) e.data.get("photos");
+            FullScreenImageAdapter photoListAdapter = (FullScreenImageAdapter) viewPager.getAdapter();
+            boolean isInit = photoListAdapter.getCount() == 0;
+
+            if (photos.size() > photoListAdapter.getCount()) {
+                photoListAdapter.clear();
+
+                for (Photo photo : photos) {
+                    photoListAdapter.add(photo);
                 }
-            } catch (Exception e) {
-                Console.print(e.getMessage());
-                return false;
+
+                photoListAdapter.notifyDataSetChanged();
             }
-        }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (result) {
-                InfoHolder.likedDuringSessionPhotos.add(photoId);
-                updateLayout();
-            } else {
-                Context context = getApplicationContext();
-                CharSequence text = getString(R.string.cant_add_like);
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+            if (isInit) {
+                viewPager.setCurrentItem(initPosition);
             }
-        }
-    }
-
-    public void onAddPhotoLikeClick(View view) {
-        Map<String, String> requestParams = new HashMap<String, String>();
-        requestParams.put("photo_id", photoId);
-        if (gid != null) {
-            requestParams.put("gid", gid);
-        }
-        new LikeAdder().execute(requestParams);
-    }
-
-    public void updateLayout() {
-        JSONObject photoObject = InfoHolder.allPhotos.get(photoId);
-        try {
-            if (photoObject.getBoolean("liked_it") || InfoHolder.likedDuringSessionPhotos.contains(photoId)) {
-                findViewById(R.id.photoactivity_like_button).setVisibility(View.GONE);
-                findViewById(R.id.photoactivity_you_liked_text).setVisibility(View.VISIBLE);
-            } else {
-                findViewById(R.id.photoactivity_like_button).setVisibility(View.VISIBLE);
-                findViewById(R.id.photoactivity_you_liked_text).setVisibility(View.GONE);
-            }
-            if (fid == null && gid == null) {
-                Button likeButton = (Button) findViewById(R.id.photoactivity_like_button);
-                likeButton.setVisibility(View.GONE);
-            }
-        } catch (Exception e) {
-            Console.print(e.getMessage());
-        }
-    }
-
-    public void onPhotoToAlbumClick(View view) {
-        Intent intent = new Intent(this, AlbumActivity.class);
-        if (fid != null) {
-            intent.putExtra("fid", fid);
-        }
-        if (gid != null) {
-            intent.putExtra("gid", gid);
-        }
-        if (aid != null) {
-            intent.putExtra("aid", aid);
-        }
-        startActivity(intent);
-    }
-
-    public void onPhotoToAlbumsClick(View view) {
-        Intent intent = new Intent(this, AlbumsActivity.class);
-        if (fid != null) {
-            intent.putExtra("fid", fid);
-        }
-        if (gid != null) {
-            intent.putExtra("gid", gid);
-        }
-        startActivity(intent);
-    }
-
-    public void onPhotoToStreamClick(View view) {
-
+        } */
     }
 }

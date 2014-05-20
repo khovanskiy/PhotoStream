@@ -2,12 +2,13 @@ package ru.example.PhotoStream;
 
 import ru.ok.android.sdk.Odnoklassniki;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class Feed {
+public class Feed implements Serializable {
 
     private class PhotoByUploadTimeComparator implements Comparator<Photo> {
 
@@ -36,11 +37,10 @@ public class Feed {
     }
 
     public List<Photo> getAvailablePhotos() {
-        update();
         return toDisplay;
     }
 
-    private void update() {
+    public void loadMore() {
         for (Album album : albums) {
             if (album.hasMore() && album.chunksCount() == 0) {
                 album.loadNextChunk(api, 1);

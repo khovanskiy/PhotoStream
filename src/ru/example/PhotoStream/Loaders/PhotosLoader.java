@@ -1,5 +1,7 @@
 package ru.example.PhotoStream.Loaders;
 
+import android.support.v4.view.PagerAdapter;
+import android.view.View;
 import ru.example.PhotoStream.DataLoader;
 import ru.example.PhotoStream.Event;
 import ru.example.PhotoStream.Feed;
@@ -19,6 +21,7 @@ public class PhotosLoader extends DataLoader {
 
     @Override
     protected List<?> doInBackground(Void... params) {
+        feed.loadMore();
         List<Photo> result = feed.getAvailablePhotos();
         return result;
     }

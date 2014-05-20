@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Album extends Entry implements Serializable {
 
-    private class Chunk {
+    private class Chunk implements Serializable {
         public String anchor = "";
         public List<Photo> photos = new ArrayList<>();
 

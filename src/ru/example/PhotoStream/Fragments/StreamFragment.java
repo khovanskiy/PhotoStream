@@ -1,6 +1,7 @@
 package ru.example.PhotoStream.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.Activities.PhotoActivity;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Loaders.FriendsLoader;
 import ru.example.PhotoStream.Loaders.GroupsLoader;
@@ -21,7 +24,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener {
+public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
     static class PhotosAdapter extends BaseAdapter {
 
@@ -133,6 +136,15 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
     }
 
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), PhotoActivity.class);
+        PhotoActivity.setFeed(feed);
+        intent.putExtra("position", position);
+        startActivity(intent);
+    }
+
     private void loadMorePhotos() {
         if (swipeLayout.isRefreshing()) {
             return;
@@ -155,6 +167,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
         photoList.addOnLayoutChangeListener(this);
         photoList.setOnScrollListener(this);
+        photoList.setOnItemClickListener(this);
         return view;
     }
 
