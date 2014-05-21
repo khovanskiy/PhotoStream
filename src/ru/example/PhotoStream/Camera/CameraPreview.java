@@ -1,6 +1,8 @@
 package ru.example.PhotoStream.Camera;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -93,7 +95,7 @@ public class CameraPreview extends FrameLayout {
                 public void onPreviewFrame(byte[] data, Camera camera) {
                     RawBitmap rawBitmap = new RawBitmap(data, width, height);
                     for (PhotoFilter photoFilter : photoFilters) {
-                        photoFilter.transformOpaque(rawBitmap);
+                        photoFilter.transformOpaqueRaw(rawBitmap);
                     }
                     realView.setImageBitmap(rawBitmap.toBitmap());
                 }
@@ -163,12 +165,15 @@ public class CameraPreview extends FrameLayout {
         camera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-                RawBitmap rawBitmap = new RawBitmap(data);
+                BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
+                bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                bitmapFactoryOptions.inMutable = true;
+                Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
                 for (PhotoFilter photoFilter : photoFilters) {
-                    photoFilter.transformOpaque(rawBitmap);
+                    photoFilter.transformOpaque(image);
                 }
                 if (pictureBitmapCallback != null) {
-                    pictureBitmapCallback.onPictureTaken(rawBitmap.toBitmap());
+                    pictureBitmapCallback.onPictureTaken(image);
                     pictureBitmapCallback = null;
                 }
             }

@@ -3,6 +3,7 @@ package ru.example.PhotoStream.Activities;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -66,7 +67,7 @@ public class UploadActivity extends ActionBarActivity {
                 Toast.makeText(this, "Фотография загружена в личный альбом", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.i("CONSOLE", e.getMessage(), e);
             Toast.makeText(this, "Невозможно получить адрес для загрузки.", Toast.LENGTH_SHORT).show();
         }
     }
