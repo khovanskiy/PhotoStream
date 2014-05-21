@@ -6,11 +6,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Group extends AlbumsKeeper {
     public String uid = "";
@@ -24,10 +22,24 @@ public class Group extends AlbumsKeeper {
 
     private static Map<String, Group> cache = new ConcurrentHashMap<>();
     private List<Album> albums = new ArrayList<>();
+    private static List<Group> groups = new ArrayList<>();
+    private static AtomicBoolean actual = new AtomicBoolean(false);
     //public Photo photo = new Photo();
 
     private Group() {
 
+    }
+
+    public static List<Group> getAllGroups() {
+        if (actual.compareAndSet(false, true)) {
+            groups.clear();
+            Iterator<Map.Entry<String, Group>> i = cache.entrySet().iterator();
+            while (i.hasNext()) {
+                Group group = i.next().getValue();
+                groups.add(group);
+            }
+        }
+        return groups;
     }
 
     public static Group get(String groupId) {

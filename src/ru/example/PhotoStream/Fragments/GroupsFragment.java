@@ -14,13 +14,14 @@ import android.widget.TextView;
 import ru.example.PhotoStream.Activities.AlbumsActivity;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Loaders.GroupsLoader;
+import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupsFragment extends Fragment implements IEventHadler, AdapterView.OnItemClickListener {
+public class GroupsFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     static class GroupsAdapter extends BaseAdapter {
 
@@ -53,62 +54,71 @@ public class GroupsFragment extends Fragment implements IEventHadler, AdapterVie
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             Group group = groups.get(position);
+            Console.print("==Group: " + group.name + " ==");
+
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.groupbadgeview, parent, false);
-            SmartImage imageView = (SmartImage) view.findViewById(R.id.groupbadgeview_image);
-            //imageView.loadFromURL(group.photo.pic180min);
+            GridView photosList = (GridView) view.findViewById(R.id.groupbadgeview_grid);
+            PhotosAdapter groupsAdapter = (PhotosAdapter) photosList.getAdapter();
+            if (groupsAdapter == null) {
+                groupsAdapter = new PhotosAdapter(context);
+                photosList.setAdapter(groupsAdapter);
+            }
             TextView title = (TextView) view.findViewById(R.id.groupbadgeview_title);
             title.setText(group.name);
-            TextView description = (TextView) view.findViewById(R.id.groupbadgeview_description);
-            description.setText(group.description);
+            if (group.getAlbums().size() > 0) {
+                Console.print("Has albums " + group.getAlbums().size());
+                Album album = group.getAlbums().get(0);
+                if (album.chunksCount() > 0) {
+                    Console.print("Has first chunk");
+                    List<Photo> photos = album.getChunk(0);
+                    if (photos.size() > 0) {
+                        Console.print("Has photos there " + photos.size());
+                        groupsAdapter.clear();
+                        for (int i = 0; i < photos.size(); ++i) {
+                            Console.print("Photo: " + photos.get(i).pic180min);
+                            groupsAdapter.addPhoto(photos.get(i));
+                        }
+                        groupsAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
             return view;
         }
     }
 
     private Odnoklassniki api;
-    private GroupsAdapter photoListAdapter;
-    private GridView photoList;
+    private GridView groupsList;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
 
-        DataLoader loader = new GroupsLoader(api);
-        loader.addEventListener(this);
-        loader.execute();
+        GroupsAdapter groupsAdapter = new GroupsAdapter(getActivity());
+        groupsList.setAdapter(groupsAdapter);
+
+        List<Group> groups = Group.getAllGroups();
+        for (Group group : groups) {
+            groupsAdapter.addGroup(group);
+        }
+
+        groupsAdapter.notifyDataSetChanged();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.groupsactivity, container, false);
-        photoList = (GridView) view.findViewById(R.id.groupsactivity_grouplist);
-        photoList.setOnItemClickListener(this);
+        groupsList = (GridView) view.findViewById(R.id.groupsactivity_grouplist);
+        groupsList.setOnItemClickListener(this);
         return view;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AlbumsActivity.class);
-        Group obj = (Group) photoList.getItemAtPosition(position);
+        Group obj = (Group) groupsList.getItemAtPosition(position);
         intent.putExtra("gid", obj.uid);
         startActivity(intent);
-    }
-
-    @Override
-    public void handleEvent(Event e) {
-        if (e.type == Event.GROUPS_LOADED) {
-            e.target.removeEventListener(this);
-            List<Group> groups = (List<Group>) e.data.get("groups");
-            photoListAdapter = new GroupsAdapter(getActivity());
-            photoList.setAdapter(photoListAdapter);
-
-            for (Group group : groups) {
-                Console.print(group.uid + " " + group.name);
-                photoListAdapter.addGroup(group);
-            }
-
-            photoListAdapter.notifyDataSetChanged();
-        }
     }
 }
