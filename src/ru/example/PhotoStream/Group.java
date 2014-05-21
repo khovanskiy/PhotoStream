@@ -11,13 +11,36 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Group extends AlbumsKeeper {
+    /**
+     * Group's id.
+     */
     public String uid = "";
+
+    /**
+     * Group's title.
+     */
     public String name = "";
+
+    /**
+     * Group's description.
+     */
     public String description = "";
+
+    /**
+     * Short name.
+     */
     public String shortname = "";
+
+    /**
+     * Title photo's id.
+     */
     public String photo_id = "";
     public boolean shop_visible_admin = false;
     public boolean shop_visible_public = false;
+
+    /**
+     * Group's members count.
+     */
     public int members_count = 0;
 
     private static Map<String, Group> cache = new ConcurrentHashMap<>();
@@ -30,6 +53,10 @@ public class Group extends AlbumsKeeper {
 
     }
 
+    /**
+     * Returns all groups where this user is registered.
+     * @return list of groups
+     */
     public static List<Group> getAllGroups() {
         if (actual.compareAndSet(false, true)) {
             groups.clear();
@@ -42,6 +69,11 @@ public class Group extends AlbumsKeeper {
         return groups;
     }
 
+    /**
+     * Returns group by its group id
+     * @param groupId group id
+     * @return group
+     */
     public static Group get(String groupId) {
         Group current;
         if (!cache.containsKey(groupId)) {
@@ -54,6 +86,12 @@ public class Group extends AlbumsKeeper {
         return current;
     }
 
+    /**
+     * Builds group from its JSON representation received from server.
+     * @param object JSON form
+     * @return group
+     * @throws JSONException
+     */
     public static Group build(JSONObject object) throws JSONException {
         Group current;
         if (object.has("uid")) {

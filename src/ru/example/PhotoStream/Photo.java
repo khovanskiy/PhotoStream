@@ -7,22 +7,89 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Photo {
+    /**
+     * Photo's id.
+     */
     public String id = "";
+
+    /**
+     * Creation time in milliseconds.
+     */
     public long created_ms = 0;
+
+    /**
+     * Id of the album where the photo is located or null if the album is private.
+     */
     public String album_id = "";
+
+    /**
+     * Url of 50x50 version.
+     */
     public String pic50x50 = "";
+
+    /**
+     * Url of 128x128 version.
+     */
     public String pic128x128 = "";
+
+    /**
+     * Url of 190x190 version.
+     */
     public String pic190x190 = "";
+
+    /**
+     * Url of version with min size 180.
+     */
     public String pic180min = "";
+
+    /**
+     * Url of 640x480 version.
+     */
     public String pic640x480 = "";
+
+    /**
+     * Url of 1024x768 version.
+     */
     public String pic1024x768 = "";
+
+    /**
+     * Comments' count.
+     */
     public int comments_count = 0;
+
+    /**
+     * Likes' count.
+     */
     public String like_count = "";
+
+    /**
+     * Shows if the user has already liked this photo.
+     */
     public String liked_it = "";
+
+    /**
+     * User id of the photo's owner.
+     */
     public String user_id = "";
+
+    /**
+     * Marks' count.
+     */
     public int mark_count = 0;
+
+    /**
+     * Marks' bonus count.
+     */
     public int mark_bonus_count = 0;
+
+    /**
+     * Average mark.
+     */
     public double mark_avg = 0.0;
+
+    /**
+     * User's mark of this photo.
+     */
     public String viewer_mark = "";
 
     private static Map<String, Photo> cache = new ConcurrentHashMap<>();
@@ -30,6 +97,11 @@ public class Photo {
     private Photo() {
     }
 
+    /**
+     * Returns photo by its id.
+     * @param photoId photo's id
+     * @return photo
+     */
     public static Photo get(String photoId) {
         Photo current = null;
         if (!cache.containsKey(photoId)) {
@@ -41,6 +113,13 @@ public class Photo {
         current.id = photoId;
         return current;
     }
+
+    /**
+     * Builds photo from its JSON representation received from server.
+     * @param object JSON form
+     * @return photo
+     * @throws JSONException
+     */
 
     public static Photo build(JSONObject object) throws JSONException {
         Photo current;

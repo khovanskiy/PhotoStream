@@ -108,6 +108,11 @@ public class SmartImage extends ImageView {
         this.startAnimation(fadeIn);
     }
 
+    /**
+     * Loads image from requested url or retrieves it from the cache and then displays it.
+     * @param url
+     */
+
     public void loadFromURL(String url) {
         this.setVisibility(INVISIBLE);
         this.path = url;

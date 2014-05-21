@@ -25,18 +25,56 @@ public class Album extends Entry {
         }
     }
 
+    /**
+     * Album's id or empty string if album is private.
+     */
     public String aid = "";
+
+    /**
+     * User's id or empty string if this is current user's or group's album.
+     */
     public String user_id = "";
+
+    /**
+     * Group's id or empty string if this is friend's album.
+     */
     public String group_id = "";
+
+    /**
+     * Album's title.
+     */
     public String title = "";
+
+    /**
+     * Album's description.
+     */
     public String description = "";
+
+    /**
+     * Creation time in milliseconds.
+     */
     public String created = "";
+
+    /**
+     * Album's type in string form.
+     */
     public String type = "";
+
+    /**
+     * Album's type in enum form.
+     */
     public AlbumType albumType = AlbumType.USER;
 
     private static Map<String, Album> cache = new ConcurrentHashMap<>();
 
+    /**
+     * Last anchor for retrieving photos from the OK server.
+     */
     public String lastAnchor = "";
+
+    /**
+     * List of chunks containing photos.
+     */
     public List<Chunk> chunks = new ArrayList<>();
     private boolean hasMore = true;
     private Photo lastLoadedPhoto = null;
@@ -44,6 +82,12 @@ public class Album extends Entry {
     private Album() {
 
     }
+
+    /**
+     * Returns album by its album id.
+     * @param albumId album id
+     * @return album
+     */
 
     public static Album get(String albumId) {
         Album current;
@@ -55,6 +99,13 @@ public class Album extends Entry {
         }
         return current;
     }
+
+    /**
+     * Creates album from its JSON representation received from server.
+     * @param object JSON form of album
+     * @return album
+     * @throws JSONException
+     */
 
     public static Album build(JSONObject object) throws JSONException {
         String currentId;
@@ -136,13 +187,28 @@ public class Album extends Entry {
         return false;
     }
 
+    /**
+     * Returns last loaded from the server photo.
+     * @return photo
+     */
     public Photo getLastLoadedPhoto() {
         return lastLoadedPhoto;
     }
 
+    /**
+     * Returns photos chunk by its position.
+     * @param location location in the list
+     * @return photos chunk
+     */
+
     public List<Photo> getChunk(int location) {
         return chunks.get(location).photos;
     }
+
+    /**
+     * Returns chunk list size.
+     * @return chunks count
+     */
 
     public int chunksCount() {
         return chunks.size();
