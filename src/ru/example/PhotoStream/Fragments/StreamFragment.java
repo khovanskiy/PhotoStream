@@ -53,6 +53,8 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
             feed.addAll(currentKeeper.getAlbums());
         }
         assert (currentKeeper != null);
+
+        loadMorePhotos();
     }
 
 

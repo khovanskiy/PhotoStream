@@ -11,6 +11,7 @@ import ru.example.PhotoStream.Camera.CameraPreview;
 import ru.example.PhotoStream.Camera.Filters.Filters;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
 import ru.example.PhotoStream.Camera.PictureBitmapCallback;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.ArrayList;
@@ -19,10 +20,6 @@ import java.util.List;
 public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback {
     private CameraPreview preview;
     private Button takePictureButton;
-    /**
-     * Bitmap taken by takePicture() method.
-     */
-    public static Bitmap pictureTaken = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,9 +65,6 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
     @Override
     public void onResume() {
         super.onResume();
-        if (pictureTaken != null) {
-            pictureTaken = null;
-        }
         preview.setPictureBitmapCallback(this);
         preview.startPreview();
     }
@@ -83,7 +77,8 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
 
     @Override
     public void onPictureTaken(Bitmap bitmap) {
-        pictureTaken = bitmap;
+        Console.print("Camera bitmap: " + bitmap.getByteCount());
+        UploadActivity.setPicture(bitmap);
         Intent intent = new Intent(this, UploadActivity.class);
         takePictureButton.setClickable(true);
         startActivity(intent);

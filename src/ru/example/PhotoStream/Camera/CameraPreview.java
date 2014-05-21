@@ -168,7 +168,24 @@ public class CameraPreview extends FrameLayout {
                 BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
                 bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmapFactoryOptions.inMutable = true;
+
+                bitmapFactoryOptions.inTempStorage = new byte[16 * 1024];
+                Camera.Parameters parameters = camera.getParameters();
+                Camera.Size size = parameters.getPictureSize();
+
+                int height = size.height;
+                int width = size.width;
+                float mb = (width * height) / 1024000;
+
+                if (mb > 4f) {
+                    bitmapFactoryOptions.inSampleSize = 4;
+                } else if (mb > 3f) {
+                    bitmapFactoryOptions.inSampleSize = 2;
+                }
+
+
                 Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
+
                 for (PhotoFilter photoFilter : photoFilters) {
                     photoFilter.transformOpaque(image);
                 }
