@@ -1,5 +1,6 @@
 package ru.example.PhotoStream.Camera.Filters;
 
+import android.graphics.Color;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
 /**
@@ -14,16 +15,12 @@ public class BlackAndWhiteFilter implements PhotoFilter {
 
     @Override
     public synchronized void transformOpaque(RawBitmap bitmap) {
-        int h = bitmap.height, w = bitmap.width;
-        int[][] r = bitmap.r, g = bitmap.g, b = bitmap.b;
-        int avg;
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                avg = (r[i][j] + g[i][j] + b[i][j]) / 3;
-                r[i][j] = avg;
-                g[i][j] = avg;
-                b[i][j] = avg;
-            }
+        int frameSize = bitmap.height * bitmap.width;
+        int c, avg;
+        for (int i = 0; i < frameSize; i++) {
+            c = bitmap.colors[i];
+            avg = (Color.red(c) + Color.green(c) + Color.blue(c)) / 3;
+            bitmap.colors[i] = Color.argb(Color.alpha(c), avg, avg, avg);
         }
     }
 }

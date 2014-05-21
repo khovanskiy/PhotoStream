@@ -19,9 +19,8 @@ import java.util.List;
 
 public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback {
     private CameraPreview preview;
-    private Spinner filterSpinner;
     private Button takePictureButton;
-    public static Bitmap pictureTaken;
+    public static Bitmap pictureTaken = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,13 +30,13 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         preview = (CameraPreview) findViewById(R.id.cameraactivity_preview);
         preview.setPictureBitmapCallback(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        filterSpinner = (Spinner) findViewById(R.id.cameraactivity_filter_spinner);
+        Spinner filterSpinner = (Spinner) findViewById(R.id.cameraactivity_filter_spinner);
         Filters.FilterType[] filterTypes = Filters.FilterType.values();
         String[] filterNames = new String[Filters.FilterType.values().length];
         for (int i = 0; i < filterNames.length; i++) {
             filterNames[i] = filterTypes[i].name();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, filterNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(adapter);
         filterSpinner.setSelection(0);
@@ -45,7 +44,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 List<PhotoFilter> photoFilters = new ArrayList<>();
-                photoFilters.add(Filters.byName(((TextView)view).getText().toString()));
+                photoFilters.add(Filters.byName(((TextView) view).getText().toString()));
                 preview.setPhotoFilters(photoFilters);
             }
 
@@ -67,6 +66,10 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
     @Override
     public void onResume() {
         super.onResume();
+        if (pictureTaken != null) {
+            pictureTaken = null;
+        }
+        preview.setPictureBitmapCallback(this);
         preview.startPreview();
     }
 
@@ -81,7 +84,6 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         pictureTaken = bitmap;
         Intent intent = new Intent(this, UploadActivity.class);
         takePictureButton.setClickable(true);
-        preview.resetPreview();
         startActivity(intent);
     }
 }

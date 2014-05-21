@@ -23,7 +23,7 @@ public class Convolution3ThresholdFilter implements PhotoFilter {
 
     @Override
     public synchronized void transformOpaque(RawBitmap bitmap) {
-        float[][] tmp = new float[bitmap.height][bitmap.width];
+        /*float[][] tmp = new float[bitmap.height][bitmap.width];
         int[][] color;
         for (int c = 0; c < 3; c++) {
             switch (c) {
@@ -83,6 +83,6 @@ public class Convolution3ThresholdFilter implements PhotoFilter {
                     color[i][j] = (int)(tmp[i][j] < 0 ? 0 : tmp[i][j] > 255 ? 255 : tmp[i][j]);
                 }
             }
-        }
+        } /**/
     }
 }
