@@ -25,4 +25,4 @@ proguard/
 .idea/
 .idea/*
 gen/ru/example/PhotoStream/BuildConfig.java
-gen/ru/example/PhotoStream/BuildConfig.java
+**/.idea/workspace.xml
