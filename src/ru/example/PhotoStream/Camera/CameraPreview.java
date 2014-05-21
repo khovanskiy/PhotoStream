@@ -167,6 +167,7 @@ public class CameraPreview extends FrameLayout {
             public void onPictureTaken(byte[] data, Camera camera) {
                 BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
                 bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                bitmapFactoryOptions.inMutable = true;
                 Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
                 for (PhotoFilter photoFilter : photoFilters) {
                     photoFilter.transformOpaque(image);
