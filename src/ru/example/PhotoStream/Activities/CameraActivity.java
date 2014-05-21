@@ -1,6 +1,5 @@
 package ru.example.PhotoStream.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -11,8 +10,8 @@ import android.widget.*;
 import ru.example.PhotoStream.Camera.CameraPreview;
 import ru.example.PhotoStream.Camera.Filters.Filters;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
-import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Camera.PictureBitmapCallback;
+import ru.example.PhotoStream.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +19,9 @@ import java.util.List;
 public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback {
     private CameraPreview preview;
     private Button takePictureButton;
+    /**
+     * Bitmap taken by takePicture() method.
+     */
     public static Bitmap pictureTaken = null;
 
     @Override

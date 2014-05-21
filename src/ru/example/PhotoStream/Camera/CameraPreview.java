@@ -1,7 +1,6 @@
 package ru.example.PhotoStream.Camera;
 
 import android.content.Context;
-import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -15,9 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Genyaz on 14.05.2014.
- */
 public class CameraPreview extends FrameLayout {
     private Camera camera = null;
     private boolean holderReady = false, toPreview = false, toTakePicture = false, previewing = false;
@@ -25,7 +21,7 @@ public class CameraPreview extends FrameLayout {
     private ImageView realView;
     private int width = 0, height = 0;
     private PictureBitmapCallback pictureBitmapCallback = null;
-    private List<PhotoFilter> photoFilters = new ArrayList<PhotoFilter>();
+    private List<PhotoFilter> photoFilters = new ArrayList<>();
 
     private synchronized void init() {
         Context context = getContext();
@@ -75,6 +71,11 @@ public class CameraPreview extends FrameLayout {
         init();
     }
 
+    /**
+     * Set {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter}s for camera preview and picture taking.
+     *
+     * @param photoFilters photo filters to apply
+     */
     public synchronized void setPhotoFilters(List<PhotoFilter> photoFilters) {
         this.photoFilters = photoFilters;
     }
@@ -110,6 +111,10 @@ public class CameraPreview extends FrameLayout {
         }
     }
 
+    /**
+     * Sends a signal to start preview.
+     * This isn't an instant action according to {@link android.hardware.Camera} contracts.
+     */
     public synchronized void startPreview() {
         if (holderReady) {
             realStart();
@@ -127,6 +132,9 @@ public class CameraPreview extends FrameLayout {
         camera = null;
     }
 
+    /**
+     * Sends a signal to stop preview.
+     */
     public synchronized void stopPreview() {
         if (previewing) {
             realStop();
@@ -142,6 +150,11 @@ public class CameraPreview extends FrameLayout {
         toTakePicture = false;
     }
 
+    /**
+     * Determines the action invoked after receiving and transforming photo.
+     *
+     * @param callback callback to invoke.
+     */
     public synchronized void setPictureBitmapCallback(PictureBitmapCallback callback) {
         this.pictureBitmapCallback = callback;
     }
@@ -151,7 +164,7 @@ public class CameraPreview extends FrameLayout {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
                 RawBitmap rawBitmap = new RawBitmap(data);
-                for (PhotoFilter photoFilter: photoFilters) {
+                for (PhotoFilter photoFilter : photoFilters) {
                     photoFilter.transformOpaque(rawBitmap);
                 }
                 if (pictureBitmapCallback != null) {
@@ -163,6 +176,10 @@ public class CameraPreview extends FrameLayout {
         toTakePicture = false;
     }
 
+    /**
+     * Sends a signal to take picture.
+     * Stops previewing after receiving photo according to {@link android.hardware.Camera} contracts.
+     */
     public synchronized void takePicture() {
         if (previewing) {
             realTakePicture();

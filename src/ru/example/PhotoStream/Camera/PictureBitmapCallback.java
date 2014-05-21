@@ -2,9 +2,11 @@ package ru.example.PhotoStream.Camera;
 
 import android.graphics.Bitmap;
 
-/**
- * Created by Genyaz on 17.05.2014.
- */
 public interface PictureBitmapCallback {
+    /**
+     * Action on taking {@link ru.example.PhotoStream.Camera.CameraPreview} picture.
+     *
+     * @param bitmap picture in {@link android.graphics.Bitmap} format.
+     */
     public void onPictureTaken(Bitmap bitmap);
 }

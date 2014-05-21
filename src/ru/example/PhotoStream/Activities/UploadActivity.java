@@ -12,27 +12,25 @@ import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.json.JSONObject;
 import ru.example.PhotoStream.R;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UploadActivity extends ActionBarActivity {
-    private ImageView photo;
-    private Odnoklassniki mOdnoklassniki;
 
     private void uploadPhoto(Bitmap bitmap) {
-        mOdnoklassniki = Odnoklassniki.getInstance(this);
+        Odnoklassniki mOdnoklassniki = Odnoklassniki.getInstance(this);
         Map<String, String> requestParameters = new HashMap<>();
         try {
             JSONObject response = new JSONObject(mOdnoklassniki.request("photosV2.getUploadUrl", requestParameters, "get"));
@@ -45,10 +43,11 @@ public class UploadActivity extends ActionBarActivity {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             byte[] data = outputStream.toByteArray();
             ByteArrayBody body = new ByteArrayBody(data, "filtered.jpg");
-            MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-            entity.addPart("uploaded", body);
-            entity.addPart("photoCaption", new StringBody("filtered"));
-            request.setEntity(entity);
+            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+            entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            entityBuilder.addPart("uploaded", body);
+            entityBuilder.addTextBody("photoCaption", "filtered");
+            request.setEntity(entityBuilder.build());
             HttpResponse httpResponse = httpclient.execute(request);
             StringBuilder builder = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
@@ -77,7 +76,7 @@ public class UploadActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadactivity);
         getSupportActionBar().setTitle("Загрузка фотографии");
-        photo = (ImageView) findViewById(R.id.uploadactivity_imageview);
+        ImageView photo = (ImageView) findViewById(R.id.uploadactivity_imageview);
         photo.setImageBitmap(CameraActivity.pictureTaken);
         Button uploadButton = (Button) findViewById(R.id.uploadactivity_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {

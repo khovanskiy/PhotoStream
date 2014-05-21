@@ -1,14 +1,18 @@
 package ru.example.PhotoStream.Camera;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 
-import java.io.ByteArrayOutputStream;
-
-/**
- * Created by Genyaz on 17.05.2014.
- */
 public class RawBitmap {
+    /**
+     * Pixels of the image in the ARGB_8888 format.
+     */
     public int[] colors;
+
+    /**
+     * Width and height of the image.
+     */
     public int width, height;
 
     private void init(Bitmap bitmap) {
@@ -18,6 +22,13 @@ public class RawBitmap {
         bitmap.getPixels(colors, 0, width, 0, 0, width, height);
     }
 
+    /**
+     * Creates raw bitmap from YUV bytes in NV21 format.
+     *
+     * @param yuv    YUV bytes
+     * @param width  image width
+     * @param height image height
+     */
     public RawBitmap(byte[] yuv, int width, int height) {
         this.width = width;
         this.height = height;
@@ -37,11 +48,15 @@ public class RawBitmap {
                 b = (int) (1.164f * (y - 16) + 2.018f * (u - 128));
                 b = b < 0 ? 0 : (b > 255 ? 255 : b);
                 this.colors[i * width + j] = Color.argb(255, r, g, b);
-
             }
         }
     }
 
+    /**
+     * Creates raw bitmap from its jpeg representation.
+     *
+     * @param jpeg jpeg bytes
+     */
     public RawBitmap(byte[] jpeg) {
         BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
         bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -50,10 +65,20 @@ public class RawBitmap {
         image.recycle();
     }
 
+    /**
+     * Creates raw bitmap from standard bitmap.
+     *
+     * @param bitmap standard bitmap
+     */
     public RawBitmap(Bitmap bitmap) {
         init(bitmap);
     }
 
+    /**
+     * Transforms bitmap from raw to standard format.
+     *
+     * @return standard bitmap
+     */
     public Bitmap toBitmap() {
         return Bitmap.createBitmap(colors, width, height, Bitmap.Config.ARGB_8888);
     }
