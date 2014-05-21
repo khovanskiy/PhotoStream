@@ -239,7 +239,11 @@
       <file leaf-file-name="StreamFragment.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state line="46" column="37" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.5233083">
+=======
+            <state line="38" column="54" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.2586466">
+>>>>>>> 8f9d7de26b78158fe01eae68aa5ab86f2a0956f9
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -861,7 +865,11 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16915688" sideWeight="0.7963801" order="0" side_tool="false" content_ui="combo" />
+<<<<<<< HEAD
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20361991" sideWeight="0.5421558" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20361991" sideWeight="0.5421558" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> 8f9d7de26b78158fe01eae68aa5ab86f2a0956f9
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
@@ -1060,7 +1068,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state line="46" column="37" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.5233083">
+=======
+        <state line="38" column="54" selection-start="1390" selection-end="1390" vertical-scroll-proportion="0.2586466">
+>>>>>>> 8f9d7de26b78158fe01eae68aa5ab86f2a0956f9
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
