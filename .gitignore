@@ -26,3 +26,9 @@ proguard/
 .idea/*
 gen/ru/example/PhotoStream/BuildConfig.java
 **/.idea/workspace.xml
+out/production/PhotoStream/PhotoStream.apk
+out/production/PhotoStream/PhotoStream.unaligned.apk
+out/production/PhotoStream/ru/example/PhotoStream/R$string.class
+out/production/PhotoStream/ru/example/PhotoStream/R.class
+.idea/workspace.xml
+AndroidManifest.xml
