@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="ru.example.PhotoStream">
-    <uses-sdk android:minSdkVersion="9"/>
+    <uses-sdk android:minSdkVersion="13"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
 
@@ -30,12 +30,9 @@
                         />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.StreamActivity">
-
-        </activity>
-        <activity android:name=".Activities.UploadActivity">
-
-        </activity>
+        <activity android:name=".Activities.InitActivity"/>
+        <activity android:name=".Activities.StreamActivity"/>
+        <activity android:name=".Activities.UploadActivity"/>
         <activity android:name=".Activities.AlbumActivity"/>
         <activity android:name=".Activities.PhotoActivity"/>
         <activity android:name=".Activities.AlbumsActivity"/>

@@ -95,6 +95,12 @@ public class Feed extends EventDispatcher {
         return heap.size() > 0;
     }
 
+    public void addAll(List<Album> albums) {
+        for (Album album : albums) {
+            add(album);
+        }
+    }
+
     public void add(Album album) {
         albums.add(album);
         for (int i = 0; i < album.chunksCount(); ++i) {

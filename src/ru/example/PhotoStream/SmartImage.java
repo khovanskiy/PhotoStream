@@ -64,12 +64,14 @@ public class SmartImage extends ImageView {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            setupBitmap(bitmap);
-            anim(500);
-            if (cache.get(path) == null) {
-                cache.put(path, bitmap);
+            if (running.compareAndSet(true, false)) {
+                setupBitmap(bitmap);
+                anim(500);
+                if (cache.get(path) == null) {
+                    cache.put(path, bitmap);
+                }
             }
-            running.compareAndSet(true, false);
+            calcAvailableMemory();
         }
     }
 
@@ -113,16 +115,13 @@ public class SmartImage extends ImageView {
         if (bitmap != null) {
             setupBitmap(bitmap);
         } else {
-            if (running.compareAndSet(false, true)) {
-                loader = new Loader();
-                loader.execute();
-            } else {
+            if (!running.compareAndSet(false, true)) {
                 if (!loader.isCancelled()) {
                     loader.cancel(true);
                 }
-                loader = new Loader();
-                loader.executeOnExecutor(executor);
             }
+            loader = new Loader();
+            loader.executeOnExecutor(executor);
         }
     }
 
@@ -136,7 +135,7 @@ public class SmartImage extends ImageView {
             value = (value / 1024) - (Debug.getNativeHeapAllocatedSize() / 1024);
             type = "NATIVE";
         }
-        Log.i("CONSOLE", "calcAvailableMemory, size = " + value + ", type = " + type);
+        Log.i("C_MEMORY", "calcAvailableMemory, size = " + value + ", type = " + type);
         return value;
     }
 }

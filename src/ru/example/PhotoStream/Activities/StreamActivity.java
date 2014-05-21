@@ -124,7 +124,6 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
 
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);

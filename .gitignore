@@ -24,3 +24,5 @@ proguard/
 *.iws
 .idea/
 .idea/*
+gen/ru/example/PhotoStream/BuildConfig.java
+gen/ru/example/PhotoStream/BuildConfig.java

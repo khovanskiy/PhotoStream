@@ -47,7 +47,7 @@ public class AuthActivity extends ActionBarActivity implements OkTokenRequestLis
 
     @Override
     public void onSuccess(String token) {
-        Intent intent = new Intent(this, StreamActivity.class);
+        Intent intent = new Intent(this, InitActivity.class);
         startActivity(intent);
     }
 
