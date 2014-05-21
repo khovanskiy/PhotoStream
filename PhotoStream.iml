@@ -36,6 +36,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="httpclient-4.3.3" level="project" />
+    <orderEntry type="library" name="httpmime-4.3.3" level="project" />
+    <orderEntry type="library" name="httpcore-4.3.2" level="project" />
   </component>
 </module>
 

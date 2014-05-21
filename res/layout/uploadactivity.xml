@@ -5,7 +5,13 @@
               android:background="@android:color/white">
     <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:id="@+id/uploadactivity_imageview" android:layout_gravity="center"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true" android:layout_weight="0.9"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Загрузить в личный альбом"
+            android:id="@+id/uploadactivity_upload" android:layout_weight="0.2" android:layout_gravity="center_horizontal"
+            android:background="@android:color/holo_orange_dark" android:textColor="@android:color/white"/>
 </LinearLayout>
