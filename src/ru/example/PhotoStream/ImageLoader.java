@@ -10,6 +10,7 @@ import java.net.URL;
 public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEventDispatcher {
     private String path;
     private EventDispatcher eventDispatcher;
+    private boolean valid = true;
 
     public ImageLoader(String path) {
         this.path = path;
@@ -39,11 +40,17 @@ public class ImageLoader extends AsyncTask<Void, Void, Bitmap> implements IEvent
         return mIcon11;
     }
 
+    protected void invalidate() {
+        this.valid = false;
+    }
+
     protected void onPostExecute(Bitmap result) {
-        Event e = new Event(this, Event.COMPLETE);
-        e.data.put("bitmap", result);
-        e.data.put("path", path);
-        dispatchEvent(e);
+        if (valid) {
+            Event e = new Event(this, Event.COMPLETE);
+            e.data.put("bitmap", result);
+            e.data.put("path", path);
+            dispatchEvent(e);
+        }
     }
 
     @Override

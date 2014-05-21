@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import ru.example.PhotoStream.*;
-import ru.example.PhotoStream.Loaders.PhotosLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
@@ -87,12 +86,6 @@ public class PhotoActivity extends ActionBarActivity implements IEventHadler {
     public static void setFeed(Feed newFeed) {
         feed = newFeed;
         assert (feed != null);
-    }
-
-    private void loadMore() {
-        DataLoader loader = new PhotosLoader(api, feed);
-        loader.addEventListener(this);
-        loader.execute();
     }
 
     @Override

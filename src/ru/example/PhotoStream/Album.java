@@ -10,9 +10,9 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Album extends Entry implements Serializable {
+public class Album extends Entry {
 
-    private class Chunk implements Serializable {
+    private class Chunk {
         public String anchor = "";
         public List<Photo> photos = new ArrayList<>();
 

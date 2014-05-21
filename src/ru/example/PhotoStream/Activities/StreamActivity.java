@@ -124,10 +124,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
 
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
-        //actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        //actionBar.addTab(actionBar.newTab().setText(getString(R.string.my_stream)).setTabListener(this));
-        //actionBar.addTab(actionBar.newTab().setText(getString(R.string.my_friends)).setTabListener(this));
-        //actionBar.addTab(actionBar.newTab().setText(getString(R.string.my_groups)).setTabListener(this));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
@@ -151,39 +148,5 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
             } break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void update() {
-        /*photoList = (ListView) findViewById(R.id.streamactivity_photolist);
-        photoList.setDividerHeight(20);
-        photoListAdapter = new PhotoListAdapter(this);
-        photoList.setAdapter(photoListAdapter);
-        photoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onPhotoClick(position);
-            }
-        });
-        photosToDisplay = InfoHolder.sortedPhotos.toArray(new JSONObject[0]);
-        nextAdded = 0;
-        loadMorePhotos();
-        photoList.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                final int lastItem = firstVisibleItem + visibleItemCount;
-                if(lastItem == totalItemCount) {
-                    loadMorePhotos();
-                }
-            }
-        }); */
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

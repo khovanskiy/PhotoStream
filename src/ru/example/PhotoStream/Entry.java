@@ -9,7 +9,7 @@ public abstract class Entry {
     private final static int DEFAULT_CHUNK_SIZE = 10;
 
     /**
-     * Can entry load more photos
+     * Can entry loadMore more photos
      */
     public abstract boolean hasMore();
 
