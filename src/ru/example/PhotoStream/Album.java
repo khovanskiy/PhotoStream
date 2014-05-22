@@ -163,7 +163,6 @@ public class Album extends Entry {
                 requestParams.put("anchor", lastAnchor);
             }
             try {
-                //Console.print("Prepared request: " + requestParams.toString());
                 String response = api.request("photos.getPhotos", requestParams, "get");
                 JSONObject photosObject = new JSONObject(response);
                 JSONArray photos = photosObject.getJSONArray("photos");
@@ -180,7 +179,6 @@ public class Album extends Entry {
                 Log.i("CONSOLE", e.toString(), e);
                 hasMore = false;
             }
-            //Console.print("Album " + title + " added chunk with " + chunk.photos.size() + " photos");
             chunks.add(chunk);
             return true;
         }

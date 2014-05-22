@@ -11,7 +11,6 @@ import ru.example.PhotoStream.Camera.CameraPreview;
 import ru.example.PhotoStream.Camera.Filters.Filters;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
 import ru.example.PhotoStream.Camera.PictureBitmapCallback;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cameraactivity);
-        getSupportActionBar().setTitle("Получение фотоснимка");
+        getSupportActionBar().setTitle(getString(R.string.cameraActivity_title));
         preview = (CameraPreview) findViewById(R.id.cameraactivity_preview);
         preview.setPictureBitmapCallback(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -77,7 +76,6 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
 
     @Override
     public void onPictureTaken(Bitmap bitmap) {
-        Console.print("Camera bitmap: " + bitmap.getByteCount());
         UploadActivity.setPicture(bitmap);
         Intent intent = new Intent(this, UploadActivity.class);
         takePictureButton.setClickable(true);

@@ -3,11 +3,14 @@ package ru.example.PhotoStream.Camera;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
@@ -17,6 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CameraPreview extends FrameLayout {
+
+    private class HiddenSurface extends SurfaceView
+    {
+        public HiddenSurface(Context context) {
+            super(context);
+        }
+
+        public HiddenSurface(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public HiddenSurface(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            this.setMeasuredDimension(2, 2);
+        }
+    }
+
     private Camera camera = null;
     private boolean holderReady = false, toPreview = false, toTakePicture = false, previewing = false;
     private SurfaceHolder holder;
@@ -27,7 +51,7 @@ public class CameraPreview extends FrameLayout {
 
     private synchronized void init() {
         Context context = getContext();
-        SurfaceView surface = new SurfaceView(context);
+        SurfaceView surface = new HiddenSurface(context);
         holder = surface.getHolder();
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         holder.addCallback(new SurfaceHolder.Callback() {

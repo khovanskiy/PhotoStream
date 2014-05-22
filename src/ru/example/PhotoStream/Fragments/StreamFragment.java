@@ -17,7 +17,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
 
-public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
+public class StreamFragment extends IFragmentSwitcher implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
     private Odnoklassniki api;
     private GridView photoList;
@@ -120,7 +120,6 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     @Override
     public void onRefresh() {
-        feed.resetList();
         feed.loadMore();
     }
 

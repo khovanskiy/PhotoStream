@@ -16,9 +16,15 @@ public class PhotosAdapter extends BaseAdapter {
 
     private List<Photo> photos = new ArrayList<>();
     private LayoutInflater inflater;
+    private boolean isStatic;
 
     public PhotosAdapter(Context context) {
+        this(context, false);
+    }
+
+    public PhotosAdapter(Context context, boolean shouldStatic) {
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.isStatic = shouldStatic;
     }
 
     public void addPhoto(Photo photo) {
@@ -60,6 +66,9 @@ public class PhotosAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
             holder.image.setImageBitmap(null);
+        }
+        if (isStatic) {
+            holder.image.setClickable(false);
         }
         holder.image.loadFromURL(photo.pic180min);
         return convertView;

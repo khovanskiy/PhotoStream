@@ -19,6 +19,7 @@ public class InitActivity extends ActionBarActivity implements IEventHadler{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.please_stand_by);
         api = Odnoklassniki.getInstance(this);
 
         GroupsLoader groupsLoader = new GroupsLoader(api);

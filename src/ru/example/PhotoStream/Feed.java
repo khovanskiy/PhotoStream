@@ -80,19 +80,11 @@ public class Feed extends EventDispatcher {
         return toDisplay;
     }
 
-    public void resetList() {
-        toDisplay.clear();
-    }
-
     public void loadMore() {
         if (running.compareAndSet(false, true)) {
             Loader loader = new Loader();
             loader.execute();
         }
-    }
-
-    public boolean hasMore() {
-        return heap.size() > 0;
     }
 
     public void addAll(List<Album> albums) {

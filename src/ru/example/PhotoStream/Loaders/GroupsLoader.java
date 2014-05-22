@@ -17,12 +17,12 @@ public class GroupsLoader extends DataLoader {
     protected List<?> doInBackground(Void... params) {
         List<String> gids = getGroupIds();
         List<Group> groups = getGroupInfo(gids);
-        for (Group group : groups) {
+        /*for (Group group : groups) {
             Photo photo = getPhoto(group.photo_id, group.uid);
             if (photo != null) {
                 //group.photo = photo;
             }
-        }
+        }*/
         return groups;
     }
 

@@ -88,9 +88,9 @@ public class UploadActivity extends ActionBarActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
-                Toast.makeText(UploadActivity.this, "Фотография загружена в личный альбом", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(UploadActivity.this, "Невозможно получить адрес для загрузки.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -108,13 +108,14 @@ public class UploadActivity extends ActionBarActivity {
         setContentView(R.layout.uploadactivity);
         api = Odnoklassniki.getInstance(this);
 
-        getSupportActionBar().setTitle("Загрузка фотографии");
+        getSupportActionBar().setTitle(getString(R.string.uploadActivity_title));
         ImageView photo = (ImageView) findViewById(R.id.uploadactivity_imageview);
         photo.setImageBitmap(pictureTaken);
         Button uploadButton = (Button) findViewById(R.id.uploadactivity_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(UploadActivity.this, getString(R.string.uploadStarting), Toast.LENGTH_LONG).show();
                 Loader loader = new Loader(pictureTaken);
                 loader.execute();
             }

@@ -7,7 +7,7 @@
 
     <application android:logo="@drawable/actionbar_logo" android:icon="@drawable/logo" android:label="@string/app_name" android:theme="@style/OKTheme">
         <activity android:name=".Activities.AuthActivity"
-                  android:label="@string/app_name">
+                  android:label="@string/app_name" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -25,12 +25,15 @@
                 <data android:scheme="okauth" android:host="ok409574400" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.InitActivity"/>
+        <activity android:name=".Activities.InitActivity" android:noHistory="true"/>
         <activity android:name=".Activities.StreamActivity"/>
         <activity android:name=".Activities.UploadActivity"/>
         <activity android:name=".Activities.CameraActivity"/>
-        <activity android:name=".Activities.AlbumActivity"/>
         <activity android:name=".Activities.PhotoActivity"/>
-        <activity android:name=".Activities.AlbumsActivity"/>
+        <activity android:name=".Activities.AlbumsActivity">
+            <meta-data
+                    android:name="android.support.PARENT_ACTIVITY"
+                    android:value=".Activities.StreamActivity" />
+        </activity>
     </application>
 </manifest>

@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.*;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -22,6 +19,7 @@ import ru.example.PhotoStream.Fragments.FriendsFragment;
 import ru.example.PhotoStream.Fragments.GroupsFragment;
 import ru.example.PhotoStream.Fragments.StreamFragment;
 import ru.example.PhotoStream.IEventHadler;
+import ru.example.PhotoStream.IFragmentSwitcher;
 import ru.example.PhotoStream.R;
 
 public class StreamActivity extends ActionBarActivity implements ActionBar.TabListener, ViewPager.OnPageChangeListener, IEventHadler {
@@ -45,7 +43,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
 
     @Override
     public void onPageSelected(int position) {
-        //getActionBar().setSelectedNavigationItem(position);
+        currentPosition = position;
     }
 
     @Override
@@ -59,53 +57,45 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
         }
     }
 
-    static class PageAdapter extends FragmentPagerAdapter {
+    private class PageAdapter extends FragmentPagerAdapter{
         private Context context;
 
         public PageAdapter(FragmentManager fragmentManager, Context context) {
             super(fragmentManager);
             this.context = context;
+            fragments[0] = new GroupsFragment();
+            titles[0] = R.string.my_groups;
+            fragments[1] = new StreamFragment();
+            titles[1] = R.string.my_stream;
+            fragments[2] = new FriendsFragment();
+            titles[2] = R.string.my_friends;
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 1: {
-                    return new StreamFragment();
-                }
-                case 2: {
-                    return new FriendsFragment();
-                }
-                default: {
-                    return new GroupsFragment();
-                }
-            }
+            return fragments[position % MAX_PAGES];
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return MAX_PAGES;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 1: {
-                    return context.getString(R.string.my_stream);
-                }
-                case 2: {
-                    return context.getString(R.string.my_friends);
-                }
-                default: {
-                    return context.getString(R.string.my_groups);
-                }
-            }
+            return context.getString(titles[position % MAX_PAGES]);
         }
     }
 
+    protected final static int MAX_PAGES = 3;
+    protected final static int DEFAULT_PAGE_ID = 1;
+    protected final IFragmentSwitcher[] fragments = new IFragmentSwitcher[MAX_PAGES];
+    protected final int[] titles = new int[MAX_PAGES];
+
     private ActionBar actionBar;
-    private ViewPager pager;
-    private PagerAdapter adapter;
+    protected ViewPager pager;
+    private FragmentPagerAdapter adapter;
+    private int currentPosition = DEFAULT_PAGE_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +117,7 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
 
         pager.setAdapter(adapter);
         pager.setOnPageChangeListener(this);
-        pager.setCurrentItem(1);
+        pager.setCurrentItem(currentPosition);
     }
 
     @Override
