@@ -1,6 +1,5 @@
 package ru.example.PhotoStream;
 
-public interface IEventHadler
-{
+public interface IEventHadler {
     void handleEvent(Event e);
 }

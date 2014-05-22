@@ -1,4 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PhotoStream OK</string>
+    <string name="app_name">Фотострим OK</string>
+    <string name="loading">Идет загрузка…</string>
+    <string name="login">Войти</string>
+    <string name="owner">Владелец</string>
+    <string name="sample">Пример</string>
+    <string name="album">Альбом</string>
+    <string name="albums">Альбомы</string>
+    <string name="my_stream">Лента фотографий</string>
+    <string name="my_albums">Мои альбомы</string>
+    <string name="my_friends">Мои друзья</string>
+    <string name="my_groups">Мои группы</string>
+    <string name="my_photo">Моя фотография</string>
+    <string name="private_album">Личный альбом</string>
+    <string name="uploaded">Загружена</string>
+    <string name="getting_friend_list">Получение списка друзей</string>
+    <string name="getting_group_list">Получение списка групп</string>
+    <string name="getting_your_albums">Получение ваших альбомов</string>
+    <string name="getting_your_photos">Получение ваших фотографий</string>
+    <string name="getting_friends_albums_and_photos">Получение альбомов и фотографий друзей</string>
+    <string name="getting_groups_albums_and_photos">Получение альбомов и фотографий групп</string>
+    <string name="processing_data">Обработка данных</string>
+    <string name="download_is_finished">Загрузка завершена</string>
+    <string name="you_liked_this">Вы уже поставили "Класс!"</string>
+    <string name="cant_add_like">Не удалось поставить "Класс!"</string>
+    <string name="uploadToAlbum">Загрузить в личный альбом</string>
+    <string name="takeCameraPicture">Сделать снимок</string>
+    <string name="uploadSuccess">Фотография загружена в личный альбом</string>
+    <string name="uploadFailure">Невозможно получить адрес для загрузки.</string>
+    <string name="uploadActivity_title">Загрузка фотографии</string>
+    <string name="cameraActivity_title">Получение фотоснимка</string>
+    <string name="uploadStarting">Загружается...</string>
 </resources>

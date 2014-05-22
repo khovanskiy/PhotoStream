@@ -2,14 +2,13 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp" android:background="@android:color/holo_orange_dark">
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-    </LinearLayout>
+    <view android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          class="android.support.v4.view.ViewPager" android:id="@+id/streamactivity_pager"
+            >
+        <view class="android.support.v4.view.PagerTabStrip" android:id="@+id/streamactivity_pagertabstrip"
+              android:layout_width="fill_parent"
+              android:layout_height="40dp" android:textColor="#717171" android:paddingBottom="5dp"
+              android:paddingTop="5dp"/>
+    </view>
 </LinearLayout>
