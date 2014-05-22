@@ -31,4 +31,5 @@
     <string name="uploadActivity_title">Загрузка фотографии</string>
     <string name="cameraActivity_title">Получение фотоснимка</string>
     <string name="uploadStarting">Загружается...</string>
+    <string name="CameraIsNotAvailable">Камера недоступна</string>
 </resources>

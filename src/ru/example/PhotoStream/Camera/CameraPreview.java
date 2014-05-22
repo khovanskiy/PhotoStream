@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
+import ru.example.PhotoStream.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,7 +109,12 @@ public class CameraPreview extends FrameLayout {
     }
 
     private synchronized void realStart() {
-        camera = Camera.open();
+        try {
+            camera = Camera.open();
+        }
+        catch (Exception e) {
+            Toast.makeText(getContext(), getContext().getString(R.string.CameraIsNotAvailable), Toast.LENGTH_SHORT).show();
+        }
         if (camera != null) {
             Camera.Size size = camera.getParameters().getPreviewSize();
             if (size != null) {
