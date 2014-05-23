@@ -47,6 +47,8 @@ public class CameraPreview extends FrameLayout {
     private boolean holderReady = false, toPreview = false, toTakePicture = false, previewing = false;
     private SurfaceHolder holder;
     private ImageView realView;
+    private RawBitmap rawBitmap;
+    private Bitmap bitmap;
     private int width = 0, height = 0;
     private PictureBitmapCallback pictureBitmapCallback = null;
     private List<PhotoFilter> photoFilters = new ArrayList<>();
@@ -124,11 +126,21 @@ public class CameraPreview extends FrameLayout {
             camera.setPreviewCallback(new Camera.PreviewCallback() {
                 @Override
                 public void onPreviewFrame(byte[] data, Camera camera) {
-                    RawBitmap rawBitmap = new RawBitmap(data, width, height);
+                    if (rawBitmap == null) {
+                        rawBitmap = new RawBitmap(data, width, height);
+                    } else {
+                        rawBitmap.fillFrom(data, width, height);
+                    }
                     for (PhotoFilter photoFilter : photoFilters) {
                         photoFilter.transformOpaqueRaw(rawBitmap);
                     }
-                    realView.setImageBitmap(rawBitmap.toBitmap());
+                    if (bitmap == null) {
+                        bitmap = rawBitmap.toBitmap();
+                        realView.setImageBitmap(bitmap);
+                    } else {
+                        rawBitmap.fillBitmap(bitmap);
+                        realView.setImageBitmap(bitmap);
+                    }
                 }
             });
             try {
@@ -181,6 +193,8 @@ public class CameraPreview extends FrameLayout {
         previewing = false;
         toPreview = false;
         toTakePicture = false;
+        bitmap = null;
+        rawBitmap = null;
     }
 
     /**
@@ -206,7 +220,7 @@ public class CameraPreview extends FrameLayout {
 
                 int height = size.height;
                 int width = size.width;
-                float mb = (width * height) / 1024000;
+                float mb = (width * height) / 1024000f;
 
                 if (mb > 4f) {
                     bitmapFactoryOptions.inSampleSize = 4;
@@ -214,12 +228,13 @@ public class CameraPreview extends FrameLayout {
                     bitmapFactoryOptions.inSampleSize = 2;
                 }
 
-
+                bitmapFactoryOptions.inMutable = true;
                 Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
-
+                RawBitmap rb = new RawBitmap(image);
                 for (PhotoFilter photoFilter : photoFilters) {
-                    photoFilter.transformOpaque(image);
+                    photoFilter.transformOpaqueRaw(rb);
                 }
+                rb.fillBitmap(image);
                 if (pictureBitmapCallback != null) {
                     pictureBitmapCallback.onPictureTaken(image);
                     pictureBitmapCallback = null;

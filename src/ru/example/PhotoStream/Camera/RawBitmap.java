@@ -19,7 +19,6 @@ public class RawBitmap {
         this.height = bitmap.getHeight();
         this.colors = new int[width * height];
         bitmap.getPixels(colors, 0, width, 0, 0, width, height);
-        bitmap.recycle();
     }
 
     /**
@@ -34,6 +33,26 @@ public class RawBitmap {
         this.height = height;
         final int frameSize = width * height;
         this.colors = new int[frameSize];
+        int y, u, v, r, g, b;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                y = (0xff & ((int) yuv[i * width + j]));
+                u = (0xff & ((int) yuv[frameSize + (i >> 1) * width + (j & ~1) + 1]));
+                v = (0xff & ((int) yuv[frameSize + (i >> 1) * width + (j & ~1) + 0]));
+                y = y < 16 ? 16 : y;
+                r = (int) (1.164f * (y - 16) + 1.596f * (v - 128));
+                r = r < 0 ? 0 : (r > 255 ? 255 : r);
+                g = (int) (1.164f * (y - 16) - 0.813f * (v - 128) - 0.391f * (u - 128));
+                g = g < 0 ? 0 : (g > 255 ? 255 : g);
+                b = (int) (1.164f * (y - 16) + 2.018f * (u - 128));
+                b = b < 0 ? 0 : (b > 255 ? 255 : b);
+                this.colors[i * width + j] = Color.argb(255, r, g, b);
+            }
+        }
+    }
+
+    public void fillFrom(byte[] yuv, int width, int height) {
+        final int frameSize = width * height;
         int y, u, v, r, g, b;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -67,6 +86,12 @@ public class RawBitmap {
      * @return standard bitmap
      */
     public Bitmap toBitmap() {
-        return Bitmap.createBitmap(colors, width, height, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        fillBitmap(bitmap);
+        return bitmap;
+    }
+
+    public void fillBitmap(Bitmap bitmap) {
+        bitmap.setPixels(colors, 0, width, 0, 0, width, height);
     }
 }
