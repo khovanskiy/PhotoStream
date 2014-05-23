@@ -1,6 +1,7 @@
 package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
 public interface PhotoFilter {
@@ -17,4 +18,16 @@ public interface PhotoFilter {
      * @param bitmap bitmap in standard format.
      */
     public void transformOpaque(Bitmap bitmap);
+
+    /**
+     * Returns true if this photo filter can be applied to the resulting image directly.
+     * @return preview modification possibility
+     */
+    public boolean hasPreviewModification();
+
+    /**
+     * Modifies preview image.
+     * @param view preview image
+     */
+    public void modifyPreview(ImageView view);
 }

@@ -131,8 +131,13 @@ public class CameraPreview extends FrameLayout {
                     } else {
                         rawBitmap.fillFrom(data, width, height);
                     }
+                    realView.setColorFilter(null);
                     for (PhotoFilter photoFilter : photoFilters) {
-                        photoFilter.transformOpaqueRaw(rawBitmap);
+                        if (photoFilter.hasPreviewModification()) {
+                            photoFilter.modifyPreview(realView);
+                        } else {
+                            photoFilter.transformOpaqueRaw(rawBitmap);
+                        }
                     }
                     if (bitmap == null) {
                         bitmap = rawBitmap.toBitmap();

@@ -1,6 +1,7 @@
 package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.Bitmap;
+import android.widget.ImageView;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
 public class NegativeFilter implements PhotoFilter {
@@ -21,5 +22,15 @@ public class NegativeFilter implements PhotoFilter {
                 bitmap.setPixel(j, i, bitmap.getPixel(j, i) ^ 0x00FFFFFF);
             }
         }
+    }
+
+    @Override
+    public boolean hasPreviewModification() {
+        return false;
+    }
+
+    @Override
+    public void modifyPreview(ImageView view) {
+
     }
 }

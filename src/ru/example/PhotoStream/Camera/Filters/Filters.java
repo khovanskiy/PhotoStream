@@ -1,5 +1,7 @@
 package ru.example.PhotoStream.Camera.Filters;
 
+import android.graphics.ColorMatrix;
+
 public class Filters {
     /**
      * Enumerates available {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter}s.
@@ -14,6 +16,10 @@ public class Filters {
         Sharpen,
         EdgesNegative,
         EdgesPositive,
+        Contrast,
+        Sepia,
+        Polaroid,
+        VintageBlackAndWhite,
     }
 
     /**
@@ -40,6 +46,14 @@ public class Filters {
                 return EdgesNegative();
             case "EdgesPositive":
                 return EdgesPositive();
+            case "Contrast":
+                return Contrast();
+            case "Sepia":
+                return Sepia();
+            case "Polaroid":
+                return Polaroid();
+            case "VintageBlackAndWhite":
+                return VintageBlackAndWhite();
             default:
                 return NoFilter();
         }
@@ -125,4 +139,43 @@ public class Filters {
     public static PhotoFilter Negative() {
         return new NegativeFilter();
     }
+
+    public static PhotoFilter Sepia() {
+        float[] matrix = new float[] {
+                0.393f, 0.349f, 0.272f, 0, 0,
+                0.769f, 0.686f, 0.534f, 0, 0,
+                0.180f, 0.168f, 0.131f, 0, 0,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Polaroid() {
+        float[] matrix = new float[] {
+                1.438f, -0.062f, -0.062f, 0, 0,
+                -0.122f, 1.378f, -0.122f, 0, 0,
+                -0.016f, -0.016f, 1.483f, 0, 0,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Contrast() {
+        float[] matrix = new float[] {
+                1.5f, 0, 0, 0, -40,
+                0f, 1.5f, 0f, 0, -40,
+                0f, 0f, 1.5f, 0, -40,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter VintageBlackAndWhite() {
+        float[] matrix = new float[] {
+                1.5f, 1.5f, 1.5f, 0, 0,
+                1.5f, 1.5f, 1.5f, 0, 0,
+                1.5f, 1.5f, 1.5f, 0, 0,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));    }
 }

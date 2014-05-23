@@ -2,6 +2,7 @@ package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.widget.ImageView;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
 public class Convolution3Filter implements PhotoFilter {
@@ -187,5 +188,15 @@ public class Convolution3Filter implements PhotoFilter {
             bitmap.setPixel(j, h - 2, last[j]);
             bitmap.setPixel(j, h - 1, cur[j]);
         }
+    }
+
+    @Override
+    public boolean hasPreviewModification() {
+        return false;
+    }
+
+    @Override
+    public void modifyPreview(ImageView view) {
+
     }
 }
