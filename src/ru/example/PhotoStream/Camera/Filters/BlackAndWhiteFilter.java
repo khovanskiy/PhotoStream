@@ -13,7 +13,7 @@ public class BlackAndWhiteFilter implements PhotoFilter {
         for (int i = 0; i < frameSize; i++) {
             c = bitmap.colors[i];
             avg = (Color.red(c) + Color.green(c) + Color.blue(c)) / 3;
-            bitmap.colors[i] = Color.argb(Color.alpha(c), avg, avg, avg);
+            bitmap.colors[i] = Color.argb(255, avg, avg, avg);
         }
     }
 
@@ -24,7 +24,7 @@ public class BlackAndWhiteFilter implements PhotoFilter {
             for (int j = 0; j < w; j++) {
                 c = bitmap.getPixel(j, i);
                 avg = (Color.red(c) + Color.green(c) + Color.blue(c)) / 3;
-                bitmap.setPixel(j, i, Color.argb(Color.alpha(c), avg, avg, avg));
+                bitmap.setPixel(j, i, Color.argb(255, avg, avg, avg));
             }
         }
     }
