@@ -19,16 +19,12 @@ import java.util.List;
 public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback {
     private CameraPreview preview;
     private Button takePictureButton;
-    /**
-     * Bitmap taken by takePicture() method.
-     */
-    public static Bitmap pictureTaken = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cameraactivity);
-        getSupportActionBar().setTitle("Получение фотоснимка");
+        getSupportActionBar().setTitle(getString(R.string.cameraActivity_title));
         preview = (CameraPreview) findViewById(R.id.cameraactivity_preview);
         preview.setPictureBitmapCallback(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -68,9 +64,6 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
     @Override
     public void onResume() {
         super.onResume();
-        if (pictureTaken != null) {
-            pictureTaken = null;
-        }
         preview.setPictureBitmapCallback(this);
         preview.startPreview();
     }
@@ -83,7 +76,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
 
     @Override
     public void onPictureTaken(Bitmap bitmap) {
-        pictureTaken = bitmap;
+        UploadActivity.setPicture(bitmap);
         Intent intent = new Intent(this, UploadActivity.class);
         takePictureButton.setClickable(true);
         startActivity(intent);

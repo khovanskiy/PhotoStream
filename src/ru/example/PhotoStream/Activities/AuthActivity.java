@@ -25,7 +25,7 @@ public class AuthActivity extends ActionBarActivity implements OkTokenRequestLis
         mOdnoklassniki = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
         mOdnoklassniki.setTokenRequestListener(this);
 
-        mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
+        mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS, OkScope.PHOTO_CONTENT);
     }
 
     public void onLoginClick(View view) {
@@ -47,7 +47,7 @@ public class AuthActivity extends ActionBarActivity implements OkTokenRequestLis
 
     @Override
     public void onSuccess(String token) {
-        Intent intent = new Intent(this, StreamActivity.class);
+        Intent intent = new Intent(this, InitActivity.class);
         startActivity(intent);
     }
 

@@ -2,6 +2,8 @@ package ru.example.PhotoStream;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Debug;
 import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
@@ -11,7 +13,13 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
-public class SmartImage extends ImageView implements IEventHadler {
+import java.io.InputStream;
+import java.net.URL;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class SmartImage extends ImageView {
     private static LruCache<String, Bitmap> cache;
 
     static {
@@ -30,7 +38,47 @@ public class SmartImage extends ImageView implements IEventHadler {
         };
     }
 
-    private ImageLoader loader = null;
+    private class Loader extends AsyncTask<Void, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(Void... params) {
+            Bitmap bitmap = null;
+            InputStream inputStream = null;
+            try {
+                try {
+                    inputStream = new URL(path).openStream();
+                    bitmap = BitmapFactory.decodeStream(inputStream);
+
+                } catch (Exception e) {
+                    Console.print(e.getMessage());
+                } finally {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                }
+            } catch (Exception e) {
+
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            if (running.compareAndSet(true, false)) {
+                setupBitmap(bitmap);
+                anim(500);
+                if (cache.get(path) == null) {
+                    cache.put(path, bitmap);
+                }
+            }
+            calcAvailableMemory();
+        }
+    }
+
+    private static final Executor executor = Executors.newFixedThreadPool(5);
+    private Loader loader = null;
+    protected AtomicBoolean running = new AtomicBoolean(false);
+    protected String path;
 
     public SmartImage(Context context) {
         super(context);
@@ -60,20 +108,25 @@ public class SmartImage extends ImageView implements IEventHadler {
         this.startAnimation(fadeIn);
     }
 
+    /**
+     * Loads image from requested url or retrieves it from the cache and then displays it.
+     * @param url
+     */
+
     public void loadFromURL(String url) {
         this.setVisibility(INVISIBLE);
-        if (loader != null) {
-            if (!loader.isCancelled()) {
-                loader.cancel(true);
-            }
-        }
+        this.path = url;
         Bitmap bitmap = cache.get(url);
         if (bitmap != null) {
             setupBitmap(bitmap);
         } else {
-            loader = new ImageLoader(url);
-            loader.addEventListener(this);
-            loader.execute();
+            if (!running.compareAndSet(false, true)) {
+                if (!loader.isCancelled()) {
+                    loader.cancel(true);
+                }
+            }
+            loader = new Loader();
+            loader.executeOnExecutor(executor);
         }
     }
 
@@ -87,25 +140,7 @@ public class SmartImage extends ImageView implements IEventHadler {
             value = (value / 1024) - (Debug.getNativeHeapAllocatedSize() / 1024);
             type = "NATIVE";
         }
-        Log.i("CONSOLE", "calcAvailableMemory, size = " + value + ", type = " + type);
+        Log.i("C_MEMORY", "calcAvailableMemory, size = " + value + ", type = " + type);
         return value;
-    }
-
-    @Override
-    public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE) {
-            e.target.removeEventListener(this);
-            Bitmap bitmap = (Bitmap) e.data.get("bitmap");
-            String path = (String) e.data.get("path");
-            if (bitmap != null) {
-                setupBitmap(bitmap);
-                anim(500);
-                if (cache.get(path) == null) {
-                    cache.put(path, bitmap);
-                    //Console.print("Total: " + totalBytes + "B / " + (totalBytes / 1024) + "KB");
-                    //calcAvailableMemory();
-                }
-            }
-        }
     }
 }

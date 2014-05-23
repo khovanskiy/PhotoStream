@@ -3,20 +3,46 @@ package ru.example.PhotoStream.Camera;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
+import ru.example.PhotoStream.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CameraPreview extends FrameLayout {
+
+    private class HiddenSurface extends SurfaceView
+    {
+        public HiddenSurface(Context context) {
+            super(context);
+        }
+
+        public HiddenSurface(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public HiddenSurface(Context context, AttributeSet attrs, int defStyle) {
+            super(context, attrs, defStyle);
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            this.setMeasuredDimension(2, 2);
+        }
+    }
+
     private Camera camera = null;
     private boolean holderReady = false, toPreview = false, toTakePicture = false, previewing = false;
     private SurfaceHolder holder;
@@ -27,7 +53,7 @@ public class CameraPreview extends FrameLayout {
 
     private synchronized void init() {
         Context context = getContext();
-        SurfaceView surface = new SurfaceView(context);
+        SurfaceView surface = new HiddenSurface(context);
         holder = surface.getHolder();
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         holder.addCallback(new SurfaceHolder.Callback() {
@@ -83,7 +109,12 @@ public class CameraPreview extends FrameLayout {
     }
 
     private synchronized void realStart() {
-        camera = Camera.open();
+        try {
+            camera = Camera.open();
+        }
+        catch (Exception e) {
+            Toast.makeText(getContext(), getContext().getString(R.string.CameraIsNotAvailable), Toast.LENGTH_SHORT).show();
+        }
         if (camera != null) {
             Camera.Size size = camera.getParameters().getPreviewSize();
             if (size != null) {
@@ -168,7 +199,24 @@ public class CameraPreview extends FrameLayout {
                 BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
                 bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmapFactoryOptions.inMutable = true;
+
+                bitmapFactoryOptions.inTempStorage = new byte[16 * 1024];
+                Camera.Parameters parameters = camera.getParameters();
+                Camera.Size size = parameters.getPictureSize();
+
+                int height = size.height;
+                int width = size.width;
+                float mb = (width * height) / 1024000;
+
+                if (mb > 4f) {
+                    bitmapFactoryOptions.inSampleSize = 4;
+                } else if (mb > 3f) {
+                    bitmapFactoryOptions.inSampleSize = 2;
+                }
+
+
                 Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
+
                 for (PhotoFilter photoFilter : photoFilters) {
                     photoFilter.transformOpaque(image);
                 }

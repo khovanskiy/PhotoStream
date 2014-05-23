@@ -6,30 +6,74 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Group extends AlbumsKeeper {
+    /**
+     * Group's id.
+     */
     public String uid = "";
+
+    /**
+     * Group's title.
+     */
     public String name = "";
+
+    /**
+     * Group's description.
+     */
     public String description = "";
+
+    /**
+     * Short name.
+     */
     public String shortname = "";
+
+    /**
+     * Title photo's id.
+     */
     public String photo_id = "";
     public boolean shop_visible_admin = false;
     public boolean shop_visible_public = false;
+
+    /**
+     * Group's members count.
+     */
     public int members_count = 0;
 
     private static Map<String, Group> cache = new ConcurrentHashMap<>();
     private List<Album> albums = new ArrayList<>();
+    private static List<Group> groups = new ArrayList<>();
+    private static AtomicBoolean actual = new AtomicBoolean(false);
     //public Photo photo = new Photo();
 
     private Group() {
 
     }
 
+    /**
+     * Returns all groups where this user is registered.
+     * @return list of groups
+     */
+    public static List<Group> getAllGroups() {
+        if (actual.compareAndSet(false, true)) {
+            groups.clear();
+            Iterator<Map.Entry<String, Group>> i = cache.entrySet().iterator();
+            while (i.hasNext()) {
+                Group group = i.next().getValue();
+                groups.add(group);
+            }
+        }
+        return groups;
+    }
+
+    /**
+     * Returns group by its group id
+     * @param groupId group id
+     * @return group
+     */
     public static Group get(String groupId) {
         Group current;
         if (!cache.containsKey(groupId)) {
@@ -42,6 +86,12 @@ public class Group extends AlbumsKeeper {
         return current;
     }
 
+    /**
+     * Builds group from its JSON representation received from server.
+     * @param object JSON form
+     * @return group
+     * @throws JSONException
+     */
     public static Group build(JSONObject object) throws JSONException {
         Group current;
         if (object.has("uid")) {
@@ -81,7 +131,7 @@ public class Group extends AlbumsKeeper {
         while (hasMore) {
             try {
                 String response = api.request("photos.getAlbums", requestParams, "post");
-                //Console.print("Response " + response);
+                Console.print("Response " + response);
                 JSONObject albumsObject = new JSONObject(response);
                 JSONArray array = albumsObject.getJSONArray("albums");
                 for (int i = 0; i < array.length(); ++i) {

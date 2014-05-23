@@ -1,87 +1,29 @@
 package ru.example.PhotoStream.Fragments;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.BaseAdapter;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import ru.example.PhotoStream.Activities.PhotoActivity;
 import ru.example.PhotoStream.*;
-import ru.example.PhotoStream.Loaders.AlbumsLoader;
-import ru.example.PhotoStream.Loaders.FriendsLoader;
-import ru.example.PhotoStream.Loaders.GroupsLoader;
-import ru.example.PhotoStream.Loaders.PhotosLoader;
+import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class StreamFragment extends Fragment implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener {
-
-    static class PhotosAdapter extends BaseAdapter {
-
-        private List<Photo> photos = new ArrayList<>();
-        private LayoutInflater inflater;
-
-        public PhotosAdapter(Context context) {
-            this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        public void addPhoto(Photo photo) {
-            photos.add(photo);
-        }
-
-        public void clear() {
-            photos.clear();
-        }
-
-        @Override
-        public int getCount() {
-            return photos.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return photos.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        static class ViewHolder {
-            SmartImage image;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            Photo photo = photos.get(position);
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.streamphotoview, parent, false);
-                holder = new ViewHolder();
-                holder.image = (SmartImage) convertView.findViewById(R.id.streamphotoview_imageView);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-                holder.image.setImageBitmap(null);
-            }
-            holder.image.loadFromURL(photo.pic180min);
-            return convertView;
-        }
-    }
+public class StreamFragment extends IFragmentSwitcher implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
     private Odnoklassniki api;
     private GridView photoList;
     private SwipeRefreshLayout swipeLayout;
     private Feed feed;
-    private AlbumsKeeper entry;
+    private AlbumsKeeper currentKeeper;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -89,48 +31,39 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         api = Odnoklassniki.getInstance(getActivity());
 
         feed = new Feed(api);
-
-        swipeLayout.setRefreshing(true);
-
-
-        Console.print("Container " + photoList.getWidth() + " " + photoList.getHeight());
-        photoList.measure(photoList.getMeasuredState(), photoList.getMeasuredState());
-        Console.print("Measured " + photoList.getMeasuredWidth() + " " + photoList.getMeasuredHeight());
+        feed.addEventListener(this);
 
         Bundle bundle = getArguments();
         if (bundle == null) {
-            entry = User.get("");
-            GroupsLoader groupsLoader = new GroupsLoader(api);
-            groupsLoader.addEventListener(this);
-            groupsLoader.execute();
-
-            FriendsLoader friendsLoader = new FriendsLoader(api);
-            friendsLoader.addEventListener(this);
-            friendsLoader.execute();
+            currentKeeper = User.get("");
+            List<User> users = User.getAllUsers();
+            for (User user : users) {
+                feed.addAll(user.getAlbums());
+            }
+            List<Group> groups = Group.getAllGroups();
+            for (Group group : groups) {
+                feed.addAll(group.getAlbums());
+            }
         } else {
             if (bundle.getString("uid") != null) {
-                entry = User.get(bundle.getString("uid", ""));
+                currentKeeper = User.get(bundle.getString("uid", ""));
             } else {
-                entry = Group.get(bundle.getString("gid", ""));
+                currentKeeper = Group.get(bundle.getString("gid", ""));
             }
-            AlbumsLoader loader = new AlbumsLoader(api, entry);
-            loader.addEventListener(this);
-            loader.execute();
+            feed.addAll(currentKeeper.getAlbums());
         }
+        assert (currentKeeper != null);
 
-        assert (entry != null);
-
-        /*
-        AlbumsLoader loader = new AlbumsLoader(api, entry);
-        loader.addEventListener(this);
-        loader.execute();
-         */
+        loadMorePhotos();
+    }
 
 
-                                /*50582132228315 Одноклассники. Всё ОК!
-04-27 00:11:59.390: INFO/CONSOLE(20471): 53053217505400 Mobile Arena
-04-27 00:11:59.490: INFO/CONSOLE(20471): 53038939046008 Одноклассники API
-04-27 00:11:59.490: INFO/CONSOLE(20471): 53122247360638 Фотострим ОК*/
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(getActivity(), PhotoActivity.class);
+        PhotoActivity.setFeed(feed);
+        intent.putExtra("position", position);
+        startActivity(intent);
     }
 
     private void loadMorePhotos() {
@@ -138,9 +71,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
             return;
         }
         swipeLayout.setRefreshing(true);
-        DataLoader loader = new PhotosLoader(api, feed);
-        loader.addEventListener(this);
-        loader.execute();
+        feed.loadMore();
     }
 
     @Override
@@ -155,6 +86,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
         photoList.addOnLayoutChangeListener(this);
         photoList.setOnScrollListener(this);
+        photoList.setOnItemClickListener(this);
         return view;
     }
 
@@ -166,10 +98,7 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
         int currentWidth = right - left;
         int currentHeight = bottom - top;
         if (oldWidth != currentWidth || oldHeight != currentHeight) {
-            Console.print("Width: " + currentWidth);
-            Console.print("Height " + currentHeight);
-            int columns = (int)Math.ceil(currentWidth / 180.0);
-            Console.print("Columns: " + columns);
+            int columns = (int) Math.ceil(currentWidth / 180.0);
             photoList.setNumColumns(columns);
         }
     }
@@ -191,58 +120,14 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
 
     @Override
     public void onRefresh() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                swipeLayout.setRefreshing(false);
-            }
-        }, 3000);
+        feed.loadMore();
     }
-
-    private int semaphore = 0;
 
     @Override
     public void handleEvent(Event e) {
-        if (e.type == Event.GROUPS_LOADED) {
-            e.target.removeEventListener(this);
-            List<Group> groups = (List<Group>) e.data.get("groups");
-            semaphore += groups.size();
-
-            for (Group group : groups) {
-                AlbumsLoader loader = new AlbumsLoader(api, group);
-                loader.addEventListener(this);
-                loader.execute();
-            }
-        } else if (e.type == Event.FRIENDS_LOADED) {
-            e.target.removeEventListener(this);
-            List<User> friends = (List<User>) e.data.get("friends");
-            semaphore += friends.size();
-
-            for (User user : friends) {
-                AlbumsLoader loader = new AlbumsLoader(api, user);
-                loader.addEventListener(this);
-                loader.execute();
-            }
-        } else if (e.type == Event.ALBUMS_LOADED) {
-            e.target.removeEventListener(this);
-            List<Album> albums = (List<Album>) e.data.get("albums");
-            for (Album album : albums) {
-                Console.print("Album: " + album.title);
-                feed.add(album);
-            }
-
-            if (semaphore > 0) {
-                semaphore--;
-            }
-
-            if (semaphore == 0) {
-                swipeLayout.setRefreshing(false);
-                loadMorePhotos();
-            }
-        } else if (e.type == Event.COMPLETE) {
-            e.target.removeEventListener(this);
+        if (e.type == Event.COMPLETE) {
             swipeLayout.setRefreshing(false);
-            List<Photo> photos = (List<Photo>) e.data.get("photos");
+            List<Photo> photos = feed.getAvailablePhotos();
 
             PhotosAdapter photoListAdapter = (PhotosAdapter) photoList.getAdapter();
             if (photoListAdapter == null) {
@@ -253,8 +138,8 @@ public class StreamFragment extends Fragment implements IEventHadler, SwipeRefre
             if (photos.size() > photoListAdapter.getCount()) {
                 photoListAdapter.clear();
 
-                for (Photo photo : photos) {
-                    photoListAdapter.addPhoto(photo);
+                for (int i = 0; i < photos.size(); ++i) {
+                    photoListAdapter.addPhoto(photos.get(i));
                 }
 
                 photoListAdapter.notifyDataSetChanged();

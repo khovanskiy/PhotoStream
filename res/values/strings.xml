@@ -22,13 +22,14 @@
     <string name="getting_groups_albums_and_photos">Получение альбомов и фотографий групп</string>
     <string name="processing_data">Обработка данных</string>
     <string name="download_is_finished">Загрузка завершена</string>
-    <string name="like">Поставить "Класс!"</string>
-    <string name="friend_albums">Альбомы друга</string>
-    <string name="friend_stream">Стрим друга</string>
-    <string name="group_albums">Альбомы группы</string>
-    <string name="group_stream">Стрим группы</string>
-    <string name="to_album">К альбому</string>
-    <string name="create_album">Создать альбом</string>
     <string name="you_liked_this">Вы уже поставили "Класс!"</string>
     <string name="cant_add_like">Не удалось поставить "Класс!"</string>
+    <string name="uploadToAlbum">Загрузить в личный альбом</string>
+    <string name="takeCameraPicture">Сделать снимок</string>
+    <string name="uploadSuccess">Фотография загружена в личный альбом</string>
+    <string name="uploadFailure">Невозможно получить адрес для загрузки.</string>
+    <string name="uploadActivity_title">Загрузка фотографии</string>
+    <string name="cameraActivity_title">Получение фотоснимка</string>
+    <string name="uploadStarting">Загружается...</string>
+    <string name="CameraIsNotAvailable">Камера недоступна</string>
 </resources>

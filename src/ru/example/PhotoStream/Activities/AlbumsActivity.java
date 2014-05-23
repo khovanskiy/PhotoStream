@@ -27,6 +27,7 @@ public class AlbumsActivity extends ActionBarActivity {
         actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         FrameLayout frameLayout = (FrameLayout) findViewById(R.id.albumsactivity_frame);
         Fragment newFragment = new StreamFragment();
