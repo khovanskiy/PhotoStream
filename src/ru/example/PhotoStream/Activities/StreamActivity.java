@@ -22,40 +22,7 @@ import ru.example.PhotoStream.IEventHadler;
 import ru.example.PhotoStream.IFragmentSwitcher;
 import ru.example.PhotoStream.R;
 
-public class StreamActivity extends ActionBarActivity implements ActionBar.TabListener, ViewPager.OnPageChangeListener, IEventHadler {
-
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        //pager.setCurrentItem(tab.getPosition());
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        currentPosition = position;
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-    }
-
-    @Override
-    public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE) {
-            e.target.removeEventListener(this);
-        }
-    }
+public class StreamActivity extends ActionBarActivity {
 
     private class PageAdapter extends FragmentPagerAdapter{
         private Context context;
@@ -92,19 +59,13 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
     protected final IFragmentSwitcher[] fragments = new IFragmentSwitcher[MAX_PAGES];
     protected final int[] titles = new int[MAX_PAGES];
 
-    private ActionBar actionBar;
-    protected ViewPager pager;
-    private FragmentPagerAdapter adapter;
-    private int currentPosition = DEFAULT_PAGE_ID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streamactivity);
 
-        actionBar = getSupportActionBar();
-        pager = (ViewPager) findViewById(R.id.streamactivity_pager);
-        adapter = new PageAdapter(getSupportFragmentManager(), this);
+        ViewPager pager = (ViewPager) findViewById(R.id.streamactivity_pager);
+        FragmentPagerAdapter adapter = new PageAdapter(getSupportFragmentManager(), this);
         PagerTabStrip tabStrip = (PagerTabStrip) findViewById(R.id.streamactivity_pagertabstrip);
         tabStrip.setTabIndicatorColor(Color.argb(0xff, 0xfd, 0x97, 0x0f));
         tabStrip.setBackgroundColor(Color.argb(0xff, 0xe0, 0xe0, 0xe0));
@@ -112,12 +73,12 @@ public class StreamActivity extends ActionBarActivity implements ActionBar.TabLi
         tabStrip.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
         tabStrip.setTextSpacing(35);
 
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
 
         pager.setAdapter(adapter);
-        pager.setOnPageChangeListener(this);
-        pager.setCurrentItem(currentPosition);
+        pager.setCurrentItem(DEFAULT_PAGE_ID);
     }
 
     @Override

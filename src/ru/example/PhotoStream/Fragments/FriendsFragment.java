@@ -17,7 +17,7 @@ import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendsFragment extends IFragmentSwitcher implements AdapterView.OnItemClickListener {
+public class FriendsFragment extends IFragmentSwitcher implements AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
 
     private class UsersAdapter extends BaseAdapter {
 
@@ -119,7 +119,20 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
         View view = inflater.inflate(R.layout.friendsactivity, container, false);
         usersList = (GridView) view.findViewById(R.id.friendsactivity_friendlist);
         usersList.setOnItemClickListener(this);
+        usersList.addOnLayoutChangeListener(this);
         return view;
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        int oldWidth = oldRight - oldLeft;
+        int oldHeight = oldBottom - oldTop;
+        int currentWidth = right - left;
+        int currentHeight = bottom - top;
+        if (oldWidth != currentWidth || oldHeight != currentHeight) {
+            int columns = (int) Math.ceil(currentWidth / (PREVIEWS_PER_BADGE * 180.0));
+            usersList.setNumColumns(columns);
+        }
     }
 
     @Override
