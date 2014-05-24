@@ -5,20 +5,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.*;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import ru.example.PhotoStream.Event;
 import ru.example.PhotoStream.Fragments.FriendsFragment;
 import ru.example.PhotoStream.Fragments.GroupsFragment;
 import ru.example.PhotoStream.Fragments.StreamFragment;
-import ru.example.PhotoStream.IEventHadler;
 import ru.example.PhotoStream.IFragmentSwitcher;
 import ru.example.PhotoStream.R;
 
@@ -33,7 +29,7 @@ public class StreamActivity extends ActionBarActivity {
             fragments[0] = new GroupsFragment();
             titles[0] = R.string.my_groups;
             fragments[1] = new StreamFragment();
-            titles[1] = R.string.my_stream;
+            titles[1] = R.string.photoStream;
             fragments[2] = new FriendsFragment();
             titles[2] = R.string.my_friends;
         }

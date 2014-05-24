@@ -14,7 +14,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="35dp"
                 android:text=""
-                android:id="@+id/friendsbadgeview_title" android:minHeight="35dp"
+                android:id="@+id/badgeview_title" android:minHeight="35dp"
                 android:gravity="center_vertical" android:singleLine="true"
                 android:textColor="@android:color/holo_green_dark" android:textSize="20dp" android:padding="3dp"/>
         <GridView
