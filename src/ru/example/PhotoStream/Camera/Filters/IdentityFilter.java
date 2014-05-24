@@ -17,7 +17,7 @@ public class IdentityFilter implements PhotoFilter {
 
     @Override
     public boolean hasPreviewModification() {
-        return false;
+        return true;
     }
 
     @Override
