@@ -13,11 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3d9935bf-367d-4f42-bc47-dc4ac145a1ac" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\Genyaz\Documents\GitHub\PhotoStream\src\ru\example\PhotoStream\Camera\Filters\BlackAndWhiteFilter.java" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\Genyaz\Documents\GitHub\PhotoStream\src\ru\example\PhotoStream\Camera\Filters\NegativeFilter.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/ru/example/PhotoStream/BuildConfig.java" afterPath="$PROJECT_DIR$/gen/ru/example/PhotoStream/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IdentityFilter.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IdentityFilter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhotoStream.iws" />
@@ -84,7 +81,7 @@
       <file leaf-file-name="Convolution3Filter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Convolution3Filter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2068" max-vertical-offset="3451">
+            <state vertical-scroll-proportion="0.0" vertical-offset="3213" max-vertical-offset="3536">
               <caret line="189" column="31" selection-start-line="189" selection-start-column="9" selection-end-line="189" selection-end-column="9" />
               <folding />
             </state>
@@ -94,8 +91,8 @@
       <file leaf-file-name="Filters.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.4469273" vertical-offset="1844" max-vertical-offset="4590">
-              <caret line="162" column="58" selection-start-line="162" selection-start-column="10" selection-end-line="162" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.4301676" vertical-offset="2515" max-vertical-offset="4947">
+              <caret line="159" column="31" selection-start-line="159" selection-start-column="31" selection-end-line="159" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -104,7 +101,7 @@
       <file leaf-file-name="ColorMatrixPhotoFilter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorMatrixPhotoFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="918">
+            <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1105">
               <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
               <folding />
             </state>
@@ -114,12 +111,9 @@
       <file leaf-file-name="IdentityFilter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IdentityFilter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="527">
+            <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="561">
               <caret line="24" column="4" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding>
-                <element signature="e#434#435#0" expanded="true" />
-                <element signature="e#461#462#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -146,9 +140,9 @@
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Convolution3Filter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorMatrixPhotoFilter.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IdentityFilter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/NegativeFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" />
       </list>
     </option>
   </component>
@@ -184,6 +178,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -292,8 +288,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -308,7 +302,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4300be4e65607000" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.56.102:5555" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="default_avd" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -502,7 +496,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30307692" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37076923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37076923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -543,6 +537,78 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IdentityFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="561">
+          <caret line="24" column="4" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/RawBitmap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1751">
+          <caret line="20" column="64" selection-start-line="20" selection-start-column="64" selection-end-line="20" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="4573">
+          <caret line="225" column="29" selection-start-line="225" selection-start-column="29" selection-end-line="225" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/PictureBitmapCallback.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="306">
+          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/PhotoFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="663">
+          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Convolution3Filter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3213" max-vertical-offset="3536">
+          <caret line="189" column="31" selection-start-line="189" selection-start-column="9" selection-end-line="189" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1844" max-vertical-offset="4590">
+          <caret line="162" column="58" selection-start-line="162" selection-start-column="10" selection-end-line="162" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorMatrixPhotoFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1105">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IdentityFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="408" max-vertical-offset="561">
+          <caret line="24" column="4" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/RawBitmap.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1751">
@@ -603,10 +669,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="238" max-vertical-offset="561">
           <caret line="14" column="8" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding>
-            <element signature="e#434#435#0" expanded="true" />
-            <element signature="e#461#462#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -844,17 +907,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="527">
           <caret line="24" column="4" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="e#434#435#0" expanded="true" />
-            <element signature="e#461#462#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.4469273" vertical-offset="1844" max-vertical-offset="4590">
-          <caret line="162" column="58" selection-start-line="162" selection-start-column="10" selection-end-line="162" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.4301676" vertical-offset="2515" max-vertical-offset="4947">
+          <caret line="159" column="31" selection-start-line="159" selection-start-column="31" selection-end-line="159" selection-end-column="31" />
           <folding />
         </state>
       </provider>

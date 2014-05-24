@@ -8,11 +8,8 @@ public class Filters {
      */
     public static enum FilterType {
         NoFilter,
-        BlackAndWhite,
         Negative,
         Grayscale,
-        Hudson,
-        Amaro,
         Contrast,
         Sepia,
         Polaroid,
@@ -20,6 +17,11 @@ public class Filters {
         Nashville,
         Sierra,
         Valencia,
+        Walden,
+        Hudson,
+        Amaro,
+        Rise,
+        Y1977,
     }
 
     /**
@@ -30,8 +32,6 @@ public class Filters {
      */
     public static PhotoFilter byName(String name) {
         switch (name) {
-            case "BlackAndWhite":
-                return BlackAndWhite();
             case "Negative":
                 return Negative();
             case "Grayscale":
@@ -66,6 +66,12 @@ public class Filters {
                 return Sierra();
             case "Valencia":
                 return Valencia();
+            case "Walden":
+                return Walden();
+            case "Rise":
+                return Rise();
+            case "Y1977":
+                return Y1977();
             default:
                 return NoFilter();
         }
@@ -96,21 +102,6 @@ public class Filters {
      */
     public static PhotoFilter Blur() {
         return new Convolution3Filter(new float[][]{{1f / 16, 1f / 8, 1f / 16}, {1f / 8, 1f / 4, 1f / 8}, {1f / 16, 1f / 8, 1f / 16}}, 0);
-    }
-
-    /**
-     * Returns black-and-white filter.
-     *
-     * @return photo filter
-     */
-    public static PhotoFilter BlackAndWhite() {
-        float[] matrix = new float[] {
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0, 0, 0, 1, 0
-        };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
     }
 
     /**
@@ -166,9 +157,9 @@ public class Filters {
 
     public static PhotoFilter Sepia() {
         float[] matrix = new float[] {
-                0.393f, 0.349f, 0.272f, 0, 0,
-                0.769f, 0.686f, 0.534f, 0, 0,
-                0.180f, 0.168f, 0.131f, 0, 0,
+                0.393f, 0.769f, 0.180f, 0, 0,
+                0.349f, 0.686f, 0.168f, 0, 0,
+                0.272f, 0.534f, 0.131f, 0, 0,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
@@ -196,9 +187,9 @@ public class Filters {
 
     public static PhotoFilter VintageBlackAndWhite() {
         float[] matrix = new float[] {
-                1.5f, 1.5f, 1.5f, 0, 0,
-                1.5f, 1.5f, 1.5f, 0, 0,
-                1.5f, 1.5f, 1.5f, 0, 0,
+                0.75f, 0.75f, 0.75f, 0, 0,
+                0.75f, 0.75f, 0.75f, 0, 0,
+                0.75f, 0.75f, 0.75f, 0, 0,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
@@ -206,9 +197,9 @@ public class Filters {
 
     public static PhotoFilter Grayscale() {
         float[] matrix = new float[] {
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0.59f, 0.59f, 0.59f, 0, 0,
-                0.11f, 0.11f, 0.11f, 0, 0,
+                0.33f, 0.59f, 0.11f, 0, 0,
+                0.33f, 0.59f, 0.11f, 0, 0,
+                0.33f, 0.59f, 0.11f, 0, 0,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
@@ -244,7 +235,7 @@ public class Filters {
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
     }
 
-    public static PhotoFilter Sierra() {
+    public static PhotoFilter Rise() {
         float[] matrix = new float[] {
                 0.914f, 0f, 0f, 0, 22,
                 0f, 0.914f, 0f, 0, 22,
@@ -259,6 +250,36 @@ public class Filters {
                 0.824f, 0f, 0f, 0, 30,
                 0f, 1f, 0f, 0, 0,
                 0f, 0f, 0.804f, 0, 28,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Walden() {
+        float[] matrix = new float[] {
+                0.949f, 0f, 0f, 0, 11,
+                0f, 0.812f, 0f, 0, 39,
+                0f, 0f, 0.533f, 0, 90,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Sierra() {
+        float[] matrix = new float[] {
+                0.933f, 0f, 0f, 0, 10,
+                0f, 0.871f, 0f, 0, 12,
+                0f, 0f, 0.757f, 0, 27,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Y1977() {
+        float[] matrix = new float[] {
+                0.567f, 0f, 0f, 0, 81,
+                0f, 0.773f, 0f, 0, 57,
+                0f, 0f, 0.580f, 0, 64,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
