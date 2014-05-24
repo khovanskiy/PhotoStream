@@ -77,8 +77,7 @@ public class CameraPreview extends FrameLayout {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                stopPreview();
-                resetPreview();
+                holderReady = false;
             }
         });
         realView = new ImageView(context);

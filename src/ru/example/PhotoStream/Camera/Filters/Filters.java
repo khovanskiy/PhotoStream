@@ -2,6 +2,8 @@ package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.ColorMatrix;
 
+import java.util.Random;
+
 public class Filters {
     /**
      * Enumerates available {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter}s.
@@ -22,6 +24,8 @@ public class Filters {
         Amaro,
         Rise,
         Y1977,
+        Random,
+        Special,
     }
 
     /**
@@ -72,6 +76,10 @@ public class Filters {
                 return Rise();
             case "Y1977":
                 return Y1977();
+            case "Random":
+                return Random();
+            case "Special":
+                return Special();
             default:
                 return NoFilter();
         }
@@ -283,5 +291,20 @@ public class Filters {
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Random() {
+        Random rand = new Random();
+        float[] matrix = new float[] {
+                rand.nextFloat(), rand.nextFloat() / 2, rand.nextFloat() / 2, 0, rand.nextInt(100) - 50,
+                rand.nextFloat() / 2, rand.nextFloat(), rand.nextFloat() / 2, 0, rand.nextInt(100) - 50,
+                rand.nextFloat() / 2, rand.nextFloat() / 2, rand.nextFloat(), 0, rand.nextInt(100) - 50,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Special() {
+        return new SpecialFilter();
     }
 }
