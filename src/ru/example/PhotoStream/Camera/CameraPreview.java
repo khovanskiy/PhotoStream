@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.io.IOException;
@@ -131,8 +132,13 @@ public class CameraPreview extends FrameLayout {
                     } else {
                         rawBitmap.fillFrom(data, width, height);
                     }
+                    realView.setColorFilter(null);
                     for (PhotoFilter photoFilter : photoFilters) {
-                        photoFilter.transformOpaqueRaw(rawBitmap);
+                        if (photoFilter.hasPreviewModification()) {
+                            photoFilter.modifyPreview(realView);
+                        } else {
+                            photoFilter.transformOpaqueRaw(rawBitmap);
+                        }
                     }
                     if (bitmap == null) {
                         bitmap = rawBitmap.toBitmap();

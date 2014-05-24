@@ -2,6 +2,7 @@ package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.widget.ImageView;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
 public class BlackAndWhiteFilter implements PhotoFilter {
@@ -27,5 +28,15 @@ public class BlackAndWhiteFilter implements PhotoFilter {
                 bitmap.setPixel(j, i, Color.argb(255, avg, avg, avg));
             }
         }
+    }
+
+    @Override
+    public boolean hasPreviewModification() {
+        return false;
+    }
+
+    @Override
+    public void modifyPreview(ImageView view) {
+
     }
 }
