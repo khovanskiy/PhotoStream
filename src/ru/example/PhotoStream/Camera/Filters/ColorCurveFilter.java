@@ -11,18 +11,24 @@ public abstract class ColorCurveFilter implements PhotoFilter {
     protected abstract int redCurve(int redSource);
     protected abstract int greenCurve(int greenSource);
     protected abstract int blueCurve(int blueSource);
+    private int[] r = null, g = null, b = null;
 
     @Override
     public void transformOpaqueRaw(RawBitmap bitmap) {
-        int c, imageSize = bitmap.width * bitmap.height;
-        for (int i = 0; i < 256; i++) {
-            int r = redCurve(i);
-            int g = greenCurve(i);
-            int b = blueCurve(i);
+        if (r == null) {
+            r = new int[256];
+            g = new int[256];
+            b = new int[256];
+            for (int i = 0; i < 256; i++) {
+                r[i] = redCurve(i);
+                g[i] = greenCurve(i);
+                b[i] = blueCurve(i);
+            }
         }
+        int c, imageSize = bitmap.width * bitmap.height;
         for (int i = 0; i < imageSize; i++) {
             c = bitmap.colors[i];
-            bitmap.colors[i] = Color.argb(255, redCurve(Color.red(c)), greenCurve(Color.green(c)), blueCurve(Color.blue(c)));
+            bitmap.colors[i] = Color.argb(255, r[Color.red(c)], g[Color.green(c)], b[Color.blue(c)]);
         }
     }
 

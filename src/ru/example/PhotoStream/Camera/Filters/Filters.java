@@ -107,6 +107,12 @@ public class Filters {
                 return context.getString(R.string.TealAndOrange);
             }
         },
+        Smooth {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Smooth);
+            }
+        },
         Random {
             @Override
             public String toString(Context context) {
@@ -160,6 +166,8 @@ public class Filters {
             return Y1977();
         } else if (name.equals(context.getString(R.string.TealAndOrange))) {
             return TealAndOrange();
+        } else if (name.equals(context.getString(R.string.Smooth))) {
+            return Smooth();
         } else if (name.equals(context.getString(R.string.Random))) {
             return Random();
         } else if (name.equals(context.getString(R.string.Special))) {
@@ -381,6 +389,9 @@ public class Filters {
         return new TealAndOrange();
     }
 
+    public static PhotoFilter Smooth() {
+        return new SmoothFilter();
+    }
     public static PhotoFilter Random() {
         Random rand = new Random();
         float[] matrix = new float[] {
