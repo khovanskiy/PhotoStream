@@ -101,6 +101,12 @@ public class Filters {
                 return context.getString(R.string.Y1977);
             }
         },
+        TealAndOrange {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.TealAndOrange);
+            }
+        },
         Random {
             @Override
             public String toString(Context context) {
@@ -152,6 +158,8 @@ public class Filters {
             return Rise();
         } else if (name.equals(context.getString(R.string.Y1977))) {
             return Y1977();
+        } else if (name.equals(context.getString(R.string.TealAndOrange))) {
+            return TealAndOrange();
         } else if (name.equals(context.getString(R.string.Random))) {
             return Random();
         } else if (name.equals(context.getString(R.string.Special))) {
@@ -367,6 +375,10 @@ public class Filters {
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter TealAndOrange() {
+        return new TealAndOrange();
     }
 
     public static PhotoFilter Random() {
