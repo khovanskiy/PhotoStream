@@ -5,17 +5,13 @@ package ru.example.PhotoStream.Camera.Filters;
  */
 public class SmoothFilter extends ColorCurveFilter {
     @Override
-    protected int redCurve(int redSource) {
-        return 7379 * redSource / 4064 - 13 * redSource * redSource / 4064;
-    }
-
-    @Override
-    protected int greenCurve(int greenSource) {
-        return 7379 * greenSource / 4064 - 13 * greenSource * greenSource / 4064;
-    }
-
-    @Override
-    protected int blueCurve(int blueSource) {
-        return 7379 * blueSource / 4064 - 13 * blueSource * blueSource / 4064;
+    protected void fillColors(int[] red, int[] green, int[] blue) {
+        int c;
+        for (int i = 0; i < 256; i++) {
+            c = 7379 * i / 4064 - 13 * i * i / 4064;
+            red[i] = c;
+            green[i] = c;
+            blue[i] = c;
+        }
     }
 }
