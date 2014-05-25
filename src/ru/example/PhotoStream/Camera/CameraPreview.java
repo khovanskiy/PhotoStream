@@ -138,11 +138,11 @@ public class CameraPreview extends FrameLayout {
             for (int i = 0; i < formats.size(); ++i) {
                 Console.print(formats.get(i));
             }
-            Camera.Parameters parameters = camera.getParameters();
-            Camera.Size size = getBestPreviewSize(parameters);
-            parameters.setPreviewSize(size.width / 3, size.height / 3);
-            parameters.setPictureSize(size.width, size.height);
-            camera.setParameters(parameters);
+            Camera.Parameters params = camera.getParameters();
+            Camera.Size size = getBestPreviewSize(params);
+            params.setPreviewSize(size.width / 3, size.height / 3);
+            params.setPictureSize(size.width, size.height);
+            camera.setParameters(params);
 
             if (size != null) {
                 Console.print("Current prevew size: " + size.width + " " + size.height);
@@ -175,8 +175,18 @@ public class CameraPreview extends FrameLayout {
                 }
             });
             try {
-                camera.setPreviewDisplay(holder);
                 holder.setFixedSize(width, height);
+                camera.setPreviewDisplay(holder);
+                Camera.Parameters parameters = camera.getParameters();
+                if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                } else if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                }
+                List<int[]> FPS = parameters.getSupportedPreviewFpsRange();
+                int[] bestFPS = FPS.get(FPS.size() - 1);
+                parameters.setPreviewFpsRange(bestFPS[0], bestFPS[1]);
+                camera.setParameters(parameters);
                 camera.startPreview();
                 previewing = true;
                 toPreview = false;
