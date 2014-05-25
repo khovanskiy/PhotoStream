@@ -8,9 +8,7 @@ import ru.example.PhotoStream.Camera.RawBitmap;
  * Created by Genyaz on 25.05.2014.
  */
 public abstract class ColorCurveFilter implements PhotoFilter {
-    protected abstract int redCurve(int redSource);
-    protected abstract int greenCurve(int greenSource);
-    protected abstract int blueCurve(int blueSource);
+    protected abstract void fillColors(int[] red, int[] green, int[] blue);
     private int[] r = null, g = null, b = null;
 
     @Override
@@ -19,11 +17,7 @@ public abstract class ColorCurveFilter implements PhotoFilter {
             r = new int[256];
             g = new int[256];
             b = new int[256];
-            for (int i = 0; i < 256; i++) {
-                r[i] = redCurve(i);
-                g[i] = greenCurve(i);
-                b[i] = blueCurve(i);
-            }
+            fillColors(r, g, b);
         }
         int c, imageSize = bitmap.width * bitmap.height;
         for (int i = 0; i < imageSize; i++) {

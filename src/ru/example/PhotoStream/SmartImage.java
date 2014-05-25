@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
+import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.Executor;
@@ -46,9 +47,11 @@ public class SmartImage extends ImageView {
             InputStream inputStream = null;
             try {
                 try {
-                    inputStream = new URL(path).openStream();
-                    bitmap = BitmapFactory.decodeStream(inputStream);
-
+                    inputStream = new BufferedInputStream(new URL(path).openStream());
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
+                    options.inTempStorage = new byte[16*1024];
+                    bitmap = BitmapFactory.decodeStream(inputStream, null, options);
                 } catch (Exception e) {
                     Console.print(e.getMessage());
                 } finally {
@@ -110,6 +113,7 @@ public class SmartImage extends ImageView {
 
     /**
      * Loads image from requested url or retrieves it from the cache and then displays it.
+     *
      * @param url
      */
 

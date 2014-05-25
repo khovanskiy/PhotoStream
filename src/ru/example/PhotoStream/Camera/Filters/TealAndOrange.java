@@ -5,25 +5,19 @@ package ru.example.PhotoStream.Camera.Filters;
  */
 public class TealAndOrange extends ColorCurveFilter {
     @Override
-    protected int redCurve(int redSource) {
-        if (redSource < 128) {
-            return (3 * redSource * redSource) / 512 + redSource / 4;
-        } else {
-            return (-redSource * redSource / 168) + 551 * redSource / 168 - 194;
-        }
-    }
-
-    @Override
-    protected int greenCurve(int greenSource) {
-        return greenSource;
-    }
-
-    @Override
-    protected int blueCurve(int blueSource) {
-        if (blueSource < 128) {
-            return 7 * blueSource / 4 - 3 * blueSource * blueSource / 512;
-        } else {
-            return blueSource * blueSource / 168 - 215 * blueSource / 168 + 194;
+    protected void fillColors(int[] red, int[] green, int[] blue) {
+        for (int i = 0; i < 256; i++) {
+            if (i < 128) {
+                red[i] = (3 * i * i) / 512 + i / 4;
+            } else {
+                red[i] = (-i * i / 168) + 551 * i / 168 - 194;
+            }
+            green[i] = i;
+            if (i < 128) {
+                blue[i] = 7 * i / 4 - 3 * i * i / 512;
+            } else {
+                blue[i] = i * i / 168 - 215 * i / 168 + 194;
+            }
         }
     }
 }

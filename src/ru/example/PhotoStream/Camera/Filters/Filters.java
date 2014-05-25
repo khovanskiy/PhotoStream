@@ -101,6 +101,18 @@ public class Filters {
                 return context.getString(R.string.Y1977);
             }
         },
+        Kelvin {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Kelvin);
+            }
+        },
+        XPro {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Xpro);
+            }
+        },
         TealAndOrange {
             @Override
             public String toString(Context context) {
@@ -164,6 +176,10 @@ public class Filters {
             return Rise();
         } else if (name.equals(context.getString(R.string.Y1977))) {
             return Y1977();
+        } else if (name.equals(context.getString(R.string.Kelvin))) {
+            return Kelvin(context);
+        } else if (name.equals(context.getString(R.string.Xpro))) {
+            return Xpro(context);
         } else if (name.equals(context.getString(R.string.TealAndOrange))) {
             return TealAndOrange();
         } else if (name.equals(context.getString(R.string.Smooth))) {
@@ -392,6 +408,15 @@ public class Filters {
     public static PhotoFilter Smooth() {
         return new SmoothFilter();
     }
+
+    public static PhotoFilter Kelvin(Context context) {
+        return new ColorCurveFromImageFilter(context, R.drawable.kelvin_map);
+    }
+
+    public static PhotoFilter Xpro(Context context) {
+        return new ColorCurveFromImageFilter(context, R.drawable.xpro_map);
+    }
+
     public static PhotoFilter Random() {
         Random rand = new Random();
         float[] matrix = new float[] {

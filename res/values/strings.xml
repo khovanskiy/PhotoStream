@@ -51,4 +51,6 @@
     <string name="Special">Особый</string>
     <string name="TealAndOrange">Кинематограф</string>
     <string name="Smooth">Мягкие цвета</string>
+    <string name="Kelvin">Kelvin</string>
+    <string name="Xpro">XPro</string>
 </resources>
