@@ -34,7 +34,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         for (int i = 0; i < filterNames.length; i++) {
             filterNames[i] = filterTypes[i].name();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(adapter);
         filterSpinner.setSelection(0);
@@ -42,7 +42,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 List<PhotoFilter> photoFilters = new ArrayList<>();
-                photoFilters.add(Filters.byName(((TextView) view).getText().toString()));
+                photoFilters.add(Filters.byName(adapter.getItem(position)));
                 preview.setPhotoFilters(photoFilters);
             }
 

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.FrameLayout;
+import ru.example.PhotoStream.Album;
 import ru.example.PhotoStream.Fragments.StreamFragment;
 import ru.example.PhotoStream.R;
 
@@ -20,7 +21,9 @@ public class AlbumActivity extends ActionBarActivity {
         FrameLayout layout = (FrameLayout) findViewById(R.id.fragmentactivity_frame);
         Bundle bundle = new Bundle();
         Fragment fragment = new StreamFragment();
-        bundle.putString("aid", intent.getStringExtra("aid"));
+        String aid = intent.getStringExtra("aid");
+        bundle.putString("aid", aid);
+        setTitle(getString(R.string.album) + " " + Album.get(aid).title);
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(layout.getId(), fragment).commit();
