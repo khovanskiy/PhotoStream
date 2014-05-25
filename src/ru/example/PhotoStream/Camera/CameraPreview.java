@@ -149,8 +149,18 @@ public class CameraPreview extends FrameLayout {
                 }
             });
             try {
-                camera.setPreviewDisplay(holder);
                 holder.setFixedSize(width, height);
+                camera.setPreviewDisplay(holder);
+                Camera.Parameters parameters = camera.getParameters();
+                if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                } else if (parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                }
+                List<int[]> FPS = parameters.getSupportedPreviewFpsRange();
+                int[] bestFPS = FPS.get(FPS.size() - 1);
+                parameters.setPreviewFpsRange(bestFPS[0], bestFPS[1]);
+                camera.setParameters(parameters);
                 camera.startPreview();
                 previewing = true;
                 toPreview = false;

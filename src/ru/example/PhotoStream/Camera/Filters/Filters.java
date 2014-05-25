@@ -128,6 +128,8 @@ public class Filters {
             return Negative();
         } else if (name.equals(context.getString(R.string.Grayscale))) {
             return Grayscale();
+        } else if (name.equals(context.getString(R.string.Contrast))) {
+            return Contrast();
         } else if (name.equals(context.getString(R.string.Sepia))) {
             return Sepia();
         } else if (name.equals(context.getString(R.string.Polaroid))) {
@@ -136,6 +138,8 @@ public class Filters {
             return VintageBlackAndWhite();
         } else if (name.equals(context.getString(R.string.Hudson))) {
             return Hudson();
+        } else if (name.equals(context.getString(R.string.Nashville))) {
+            return Nashville();
         } else if (name.equals(context.getString(R.string.Amaro))) {
             return Amaro();
         } else if (name.equals(context.getString(R.string.Sierra))) {
