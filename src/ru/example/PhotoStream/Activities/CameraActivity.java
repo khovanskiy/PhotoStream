@@ -17,10 +17,11 @@ import ru.example.PhotoStream.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback {
+public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback, AdapterView.OnItemSelectedListener {
     private Context context;
     private CameraPreview preview;
     private Button takePictureButton;
+    private ArrayAdapter<String> adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,23 +38,11 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         for (int i = 0; i < filterNames.length; i++) {
             filterNames[i] = filterTypes[i].toString(context);
         }
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(adapter);
         filterSpinner.setSelection(0);
-        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                List<PhotoFilter> photoFilters = new ArrayList<>();
-                photoFilters.add(Filters.byName(context, adapter.getItem(position)));
-                preview.setPhotoFilters(photoFilters);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        filterSpinner.setOnItemSelectedListener(this);
         takePictureButton = (Button) findViewById(R.id.cameraactivity_takepicture_button);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,5 +72,17 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         Intent intent = new Intent(this, UploadActivity.class);
         takePictureButton.setClickable(true);
         startActivity(intent);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        List<PhotoFilter> photoFilters = new ArrayList<>();
+        photoFilters.add(Filters.byName(this, adapter.getItem(position)));
+        preview.setPhotoFilters(photoFilters);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }

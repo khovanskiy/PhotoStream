@@ -21,8 +21,7 @@ import java.util.List;
 
 public class CameraPreview extends FrameLayout {
 
-    private class HiddenSurface extends SurfaceView
-    {
+    private class HiddenSurface extends SurfaceView {
         public HiddenSurface(Context context) {
             super(context);
         }
@@ -42,7 +41,8 @@ public class CameraPreview extends FrameLayout {
     }
 
     private Camera camera = null;
-    private boolean holderReady = false, toPreview = false, toTakePicture = false, previewing = false;
+    private boolean holderReady = false;
+    private boolean toPreview = false, toTakePicture = false, previewing = false;
     private SurfaceHolder holder;
     private ImageView realView;
     private RawBitmap rawBitmap;
@@ -77,8 +77,7 @@ public class CameraPreview extends FrameLayout {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                stopPreview();
-                resetPreview();
+                holderReady = false;
             }
         });
         realView = new ImageView(context);
@@ -113,9 +112,8 @@ public class CameraPreview extends FrameLayout {
     private synchronized void realStart() {
         try {
             camera = Camera.open();
-        }
-        catch (Exception e) {
-            Toast.makeText(getContext(), getContext().getString(R.string.CameraIsNotAvailable), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), getContext().getString(R.string.cameraIsNotAvailable), Toast.LENGTH_SHORT).show();
         }
         if (camera != null) {
             Camera.Size size = camera.getParameters().getPreviewSize();
@@ -168,6 +166,8 @@ public class CameraPreview extends FrameLayout {
                 Log.v("Camera error:", e.getMessage());
                 e.printStackTrace();
             }
+        } else {
+            Toast.makeText(getContext(), getContext().getString(R.string.cameraIsNotAvailable), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -203,7 +203,7 @@ public class CameraPreview extends FrameLayout {
         }
     }
 
-    private synchronized void resetPreview() {
+    public synchronized void resetPreview() {
         holderReady = false;
         previewing = false;
         toPreview = false;

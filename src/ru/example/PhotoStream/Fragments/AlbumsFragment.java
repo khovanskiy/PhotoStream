@@ -10,36 +10,36 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
-import ru.example.PhotoStream.Activities.AlbumsActivity;
 import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.Activities.AlbumActivity;
 import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendsFragment extends IFragmentSwitcher implements AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
+public class AlbumsFragment extends IFragmentSwitcher implements AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
 
-    private class UsersAdapter extends BaseAdapter {
+    private class AlbumsAdapter extends BaseAdapter {
 
-        private List<User> users = new ArrayList<>();
+        private List<Album> albums = new ArrayList<>();
         private Context context;
 
-        public UsersAdapter(Context context) {
+        public AlbumsAdapter(Context context) {
             this.context = context;
         }
 
-        public void add(User user) {
-            users.add(user);
+        public void add(Album album) {
+            albums.add(album);
         }
 
         @Override
         public int getCount() {
-            return users.size();
+            return albums.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return users.get(position);
+            return albums.get(position);
         }
 
         @Override
@@ -48,12 +48,12 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
         }
 
         public void clear() {
-            users.clear();
+            albums.clear();
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            User user = users.get(position);
+            Album album = albums.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.badgeview, parent, false);
             GridView photosList = (GridView) view.findViewById(R.id.friendsbadgeview_grid);
@@ -67,18 +67,16 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
             photosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
-                    FriendsFragment.this.onItemClick(null, null, position, id);
+                    AlbumsFragment.this.onItemClick(null, null, position, id);
                 }
             });
 
             TextView title = (TextView) view.findViewById(R.id.badgeview_title);
-            title.setText(user.name);
+            title.setText(album.title);
 
-            List<Album> albums = user.getAlbums();
             int count = 0;
             photosAdapter.clear();
             loop:
-            for (Album album : albums) {
                 for (int j = 0; j < album.chunksCount(); ++j) {
                     List<Photo> photos = album.getChunk(j);
                     for (int k = 0; k < photos.size(); ++k) {
@@ -89,21 +87,33 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
                         }
                     }
                 }
-            }
             photosAdapter.notifyDataSetChanged();
             return view;
         }
     }
 
-    private GridView badgesGrid;
+    private GridView albumsList;
     protected final static int PREVIEWS_PER_BADGE = 3;
+    private AlbumsKeeper currentKeeper;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Bundle bundle = getArguments();
+        if (bundle.getString("uid") != null) {
+            currentKeeper = User.get(bundle.getString("uid", ""));
+        } else {
+            currentKeeper = Group.get(bundle.getString("gid", ""));
+        }
+        assert (currentKeeper != null);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.badgesactivity, container, false);
-        badgesGrid = (GridView) view.findViewById(R.id.badgesActivity_grid);
-        badgesGrid.setOnItemClickListener(this);
-        badgesGrid.addOnLayoutChangeListener(this);
+        albumsList = (GridView) view.findViewById(R.id.badgesActivity_grid);
+        albumsList.setOnItemClickListener(this);
+        albumsList.addOnLayoutChangeListener(this);
         return view;
     }
 
@@ -115,33 +125,31 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
         int currentHeight = bottom - top;
         if (oldWidth != currentWidth || oldHeight != currentHeight) {
             int columns = (int) Math.ceil(currentWidth / (PREVIEWS_PER_BADGE * 180.0));
-            badgesGrid.setNumColumns(columns);
+            albumsList.setNumColumns(columns);
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), AlbumsActivity.class);
-        User obj = (User) badgesGrid.getItemAtPosition(position);
-        intent.putExtra("uid", obj.uid);
+        Intent intent = new Intent(getActivity(), AlbumActivity.class);
+        Album obj = (Album) albumsList.getItemAtPosition(position);
+        intent.putExtra("aid", obj.aid);
         startActivity(intent);
     }
 
     @Override
     public void onVisible() {
         super.onVisible();
-        UsersAdapter usersAdapter = (UsersAdapter) badgesGrid.getAdapter();
-        if (usersAdapter == null) {
-            usersAdapter = new UsersAdapter(getActivity());
-            badgesGrid.setAdapter(usersAdapter);
+        AlbumsAdapter albumsAdapter = (AlbumsAdapter) albumsList.getAdapter();
+        if (albumsAdapter == null) {
+            albumsAdapter = new AlbumsAdapter(getActivity());
+            albumsList.setAdapter(albumsAdapter);
         }
-        usersAdapter.clear();
-        List<User> groups = User.getAllUsers();
-        for (User user : groups) {
-            if (!user.uid.equals("")) {
-                usersAdapter.add(user);
-            }
+        albumsAdapter.clear();
+        List<Album> albums = currentKeeper.getAlbums();
+        for (Album album : albums) {
+            albumsAdapter.add(album);
         }
-        usersAdapter.notifyDataSetChanged();
+        albumsAdapter.notifyDataSetChanged();
     }
 }

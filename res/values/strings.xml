@@ -7,7 +7,7 @@
     <string name="sample">Пример</string>
     <string name="album">Альбом</string>
     <string name="albums">Альбомы</string>
-    <string name="my_stream">Лента фотографий</string>
+    <string name="photoStream">Фотографии</string>
     <string name="my_albums">Мои альбомы</string>
     <string name="my_friends">Мои друзья</string>
     <string name="my_groups">Мои группы</string>
@@ -31,7 +31,7 @@
     <string name="uploadActivity_title">Загрузка фотографии</string>
     <string name="cameraActivity_title">Получение фотоснимка</string>
     <string name="uploadStarting">Загружается...</string>
-    <string name="CameraIsNotAvailable">Камера недоступна</string>
+    <string name="cameraIsNotAvailable">Камера недоступна</string>
     <string name="NoFilter">Без фильтра</string>
     <string name="Negative">Негатив</string>
     <string name="Grayscale">Серые тона</string>

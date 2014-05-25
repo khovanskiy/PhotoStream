@@ -2,7 +2,6 @@ package ru.example.PhotoStream.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +22,6 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
     private GridView photoList;
     private SwipeRefreshLayout swipeLayout;
     private Feed feed;
-    private AlbumsKeeper currentKeeper;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
         Bundle bundle = getArguments();
         if (bundle == null) {
-            currentKeeper = User.get("");
             List<User> users = User.getAllUsers();
             for (User user : users) {
                 feed.addAll(user.getAlbums());
@@ -44,15 +41,13 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
             for (Group group : groups) {
                 feed.addAll(group.getAlbums());
             }
+        } else if (bundle.getString("aid") != null) {
+            feed.add(Album.get(bundle.getString("aid", "")));
+        } else if (bundle.getString("uid") != null) {
+            feed.addAll(User.get(bundle.getString("uid", "")).getAlbums());
         } else {
-            if (bundle.getString("uid") != null) {
-                currentKeeper = User.get(bundle.getString("uid", ""));
-            } else {
-                currentKeeper = Group.get(bundle.getString("gid", ""));
-            }
-            feed.addAll(currentKeeper.getAlbums());
+            feed.addAll(Group.get(bundle.getString("gid", "")).getAlbums());
         }
-        assert (currentKeeper != null);
 
         loadMorePhotos();
     }
