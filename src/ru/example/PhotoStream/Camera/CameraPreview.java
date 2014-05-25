@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
+import ru.example.PhotoStream.Camera.Filters.SpecialFilter;
 import ru.example.PhotoStream.R;
 
 import java.io.IOException;
@@ -63,11 +64,13 @@ public class CameraPreview extends FrameLayout {
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-                holderReady = true;
-                if (toPreview) {
-                    realStart();
-                    if (toTakePicture) {
-                        realTakePicture();
+                if (!holderReady) {
+                    holderReady = true;
+                    if (toPreview) {
+                        realStart();
+                        if (toTakePicture) {
+                            realTakePicture();
+                        }
                     }
                 }
             }
@@ -215,28 +218,24 @@ public class CameraPreview extends FrameLayout {
                 BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
                 bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmapFactoryOptions.inMutable = true;
-
                 bitmapFactoryOptions.inTempStorage = new byte[16 * 1024];
                 Camera.Parameters parameters = camera.getParameters();
                 Camera.Size size = parameters.getPictureSize();
-
                 int height = size.height;
                 int width = size.width;
                 float mb = (width * height) / 1024000f;
-
                 if (mb > 4f) {
                     bitmapFactoryOptions.inSampleSize = 4;
                 } else if (mb > 3f) {
                     bitmapFactoryOptions.inSampleSize = 2;
                 }
-
-                bitmapFactoryOptions.inMutable = true;
                 Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
                 RawBitmap rb = new RawBitmap(image);
                 for (PhotoFilter photoFilter : photoFilters) {
                     photoFilter.transformOpaqueRaw(rb);
                 }
                 rb.fillBitmap(image);
+                SpecialFilter.unfreeze();
                 if (pictureBitmapCallback != null) {
                     pictureBitmapCallback.onPictureTaken(image);
                     pictureBitmapCallback = null;
@@ -251,6 +250,7 @@ public class CameraPreview extends FrameLayout {
      * Stops previewing after receiving photo according to {@link android.hardware.Camera} contracts.
      */
     public synchronized void takePicture() {
+        SpecialFilter.freeze();
         if (previewing) {
             realTakePicture();
         } else {

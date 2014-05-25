@@ -32,4 +32,21 @@
     <string name="cameraActivity_title">Получение фотоснимка</string>
     <string name="uploadStarting">Загружается...</string>
     <string name="cameraIsNotAvailable">Камера недоступна</string>
+    <string name="NoFilter">Без фильтра</string>
+    <string name="Negative">Негатив</string>
+    <string name="Grayscale">Серые тона</string>
+    <string name="Contrast">Контрастный</string>
+    <string name="Sepia">Сепия</string>
+    <string name="Polaroid">Поляроид</string>
+    <string name="VintageBlackAndWhite">Старинный ч/б</string>
+    <string name="Nashville">Nashville</string>
+    <string name="Sierra">Sierra</string>
+    <string name="Valencia">Valencia</string>
+    <string name="Walden">Walden</string>
+    <string name="Hudson">Hudson</string>
+    <string name="Amaro">Amaro</string>
+    <string name="Rise">Rise</string>
+    <string name="Y1977">1977</string>
+    <string name="Random">Случайный</string>
+    <string name="Special">Особый</string>
 </resources>

@@ -1,25 +1,120 @@
 package ru.example.PhotoStream.Camera.Filters;
 
+import android.content.Context;
 import android.graphics.ColorMatrix;
+import ru.example.PhotoStream.R;
+
+import java.util.Random;
 
 public class Filters {
     /**
      * Enumerates available {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter}s.
      */
     public static enum FilterType {
-        NoFilter,
-        BlackAndWhite,
-        Negative,
-        Grayscale,
-        Hudson,
-        Amaro,
-        Contrast,
-        Sepia,
-        Polaroid,
-        VintageBlackAndWhite,
-        Nashville,
-        Sierra,
-        Valencia,
+        NoFilter {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.NoFilter);
+            }
+        },
+        Negative {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Negative);
+            }
+        },
+        Grayscale {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Grayscale);
+            }
+        },
+        Contrast {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Contrast);
+            }
+        },
+        Sepia {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Sepia);
+            }
+        },
+        Polaroid {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Polaroid);
+            }
+        },
+        VintageBlackAndWhite {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.VintageBlackAndWhite);
+            }
+        },
+        Nashville {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Nashville);
+            }
+        },
+        Sierra {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Sierra);
+            }
+        },
+        Valencia {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Valencia);
+            }
+        },
+        Walden {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Walden);
+            }
+        },
+        Hudson {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Hudson);
+            }
+        },
+        Amaro {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Amaro);
+            }
+        },
+        Rise {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Rise);
+            }
+        },
+        Y1977 {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Y1977);
+            }
+        },
+        Random {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Random);
+            }
+        },
+        Special {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Special);
+            }
+        };
+
+        public abstract String toString(Context context);
     }
 
     /**
@@ -28,46 +123,37 @@ public class Filters {
      * @param name photo filter name
      * @return photo filter
      */
-    public static PhotoFilter byName(String name) {
-        switch (name) {
-            case "BlackAndWhite":
-                return BlackAndWhite();
-            case "Negative":
-                return Negative();
-            case "Grayscale":
-                return Grayscale();
-            case "Emboss":
-                return Emboss();
-            case "Blur":
-                return Blur();
-            case "Glow":
-                return Glow();
-            case "Sharpen":
-                return Sharpen();
-            case "EdgesNegative":
-                return EdgesNegative();
-            case "EdgesPositive":
-                return EdgesPositive();
-            case "Contrast":
-                return Contrast();
-            case "Sepia":
-                return Sepia();
-            case "Polaroid":
-                return Polaroid();
-            case "VintageBlackAndWhite":
-                return VintageBlackAndWhite();
-            case "Hudson":
-                return Hudson();
-            case "Amaro":
-                return Amaro();
-            case "Nashville":
-                return Nashville();
-            case "Sierra":
-                return Sierra();
-            case "Valencia":
-                return Valencia();
-            default:
-                return NoFilter();
+    public static PhotoFilter byName(Context context, String name) {
+        if (name.equals(context.getString(R.string.Negative))) {
+            return Negative();
+        } else if (name.equals(context.getString(R.string.Grayscale))) {
+            return Grayscale();
+        } else if (name.equals(context.getString(R.string.Sepia))) {
+            return Sepia();
+        } else if (name.equals(context.getString(R.string.Polaroid))) {
+            return Polaroid();
+        } else if (name.equals(context.getString(R.string.VintageBlackAndWhite))) {
+            return VintageBlackAndWhite();
+        } else if (name.equals(context.getString(R.string.Hudson))) {
+            return Hudson();
+        } else if (name.equals(context.getString(R.string.Amaro))) {
+            return Amaro();
+        } else if (name.equals(context.getString(R.string.Sierra))) {
+            return Sierra();
+        } else if (name.equals(context.getString(R.string.Valencia))) {
+            return Valencia();
+        } else if (name.equals(context.getString(R.string.Walden))) {
+            return Walden();
+        } else if (name.equals(context.getString(R.string.Rise))) {
+            return Rise();
+        } else if (name.equals(context.getString(R.string.Y1977))) {
+            return Y1977();
+        } else if (name.equals(context.getString(R.string.Random))) {
+            return Random();
+        } else if (name.equals(context.getString(R.string.Special))) {
+            return Special();
+        } else {
+            return NoFilter();
         }
     }
 
@@ -96,21 +182,6 @@ public class Filters {
      */
     public static PhotoFilter Blur() {
         return new Convolution3Filter(new float[][]{{1f / 16, 1f / 8, 1f / 16}, {1f / 8, 1f / 4, 1f / 8}, {1f / 16, 1f / 8, 1f / 16}}, 0);
-    }
-
-    /**
-     * Returns black-and-white filter.
-     *
-     * @return photo filter
-     */
-    public static PhotoFilter BlackAndWhite() {
-        float[] matrix = new float[] {
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0, 0, 0, 1, 0
-        };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
     }
 
     /**
@@ -166,9 +237,9 @@ public class Filters {
 
     public static PhotoFilter Sepia() {
         float[] matrix = new float[] {
-                0.393f, 0.349f, 0.272f, 0, 0,
-                0.769f, 0.686f, 0.534f, 0, 0,
-                0.180f, 0.168f, 0.131f, 0, 0,
+                0.393f, 0.769f, 0.180f, 0, 0,
+                0.349f, 0.686f, 0.168f, 0, 0,
+                0.272f, 0.534f, 0.131f, 0, 0,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
@@ -196,9 +267,9 @@ public class Filters {
 
     public static PhotoFilter VintageBlackAndWhite() {
         float[] matrix = new float[] {
-                1.5f, 1.5f, 1.5f, 0, 0,
-                1.5f, 1.5f, 1.5f, 0, 0,
-                1.5f, 1.5f, 1.5f, 0, 0,
+                0.75f, 0.75f, 0.75f, 0, 0,
+                0.75f, 0.75f, 0.75f, 0, 0,
+                0.75f, 0.75f, 0.75f, 0, 0,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
@@ -206,9 +277,9 @@ public class Filters {
 
     public static PhotoFilter Grayscale() {
         float[] matrix = new float[] {
-                0.33f, 0.33f, 0.33f, 0, 0,
-                0.59f, 0.59f, 0.59f, 0, 0,
-                0.11f, 0.11f, 0.11f, 0, 0,
+                0.33f, 0.59f, 0.11f, 0, 0,
+                0.33f, 0.59f, 0.11f, 0, 0,
+                0.33f, 0.59f, 0.11f, 0, 0,
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
@@ -244,7 +315,7 @@ public class Filters {
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
     }
 
-    public static PhotoFilter Sierra() {
+    public static PhotoFilter Rise() {
         float[] matrix = new float[] {
                 0.914f, 0f, 0f, 0, 22,
                 0f, 0.914f, 0f, 0, 22,
@@ -262,5 +333,50 @@ public class Filters {
                 0, 0, 0, 1, 0
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Walden() {
+        float[] matrix = new float[] {
+                0.949f, 0f, 0f, 0, 11,
+                0f, 0.812f, 0f, 0, 39,
+                0f, 0f, 0.533f, 0, 90,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Sierra() {
+        float[] matrix = new float[] {
+                0.933f, 0f, 0f, 0, 10,
+                0f, 0.871f, 0f, 0, 12,
+                0f, 0f, 0.757f, 0, 27,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Y1977() {
+        float[] matrix = new float[] {
+                0.567f, 0f, 0f, 0, 81,
+                0f, 0.773f, 0f, 0, 57,
+                0f, 0f, 0.580f, 0, 64,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Random() {
+        Random rand = new Random();
+        float[] matrix = new float[] {
+                rand.nextFloat(), rand.nextFloat() / 2, rand.nextFloat() / 2, 0, rand.nextInt(100) - 50,
+                rand.nextFloat() / 2, rand.nextFloat(), rand.nextFloat() / 2, 0, rand.nextInt(100) - 50,
+                rand.nextFloat() / 2, rand.nextFloat() / 2, rand.nextFloat(), 0, rand.nextInt(100) - 50,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    }
+
+    public static PhotoFilter Special() {
+        return new SpecialFilter();
     }
 }
