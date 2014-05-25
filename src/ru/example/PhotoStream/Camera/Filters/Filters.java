@@ -1,5 +1,6 @@
 package ru.example.PhotoStream.Camera.Filters;
 
+import android.content.Context;
 import android.graphics.ColorMatrix;
 import ru.example.PhotoStream.R;
 
@@ -12,109 +13,108 @@ public class Filters {
     public static enum FilterType {
         NoFilter {
             @Override
-            public String toString() {
-                return "Без фильтра";
+            public String toString(Context context) {
+                return context.getString(R.string.NoFilter);
             }
         },
         Negative {
             @Override
-            public String toString() {
-                return "Негатив";
+            public String toString(Context context) {
+                return context.getString(R.string.Negative);
             }
         },
         Grayscale {
             @Override
-            public String toString() {
-                return "Серые тона";
+            public String toString(Context context) {
+                return context.getString(R.string.Grayscale);
             }
         },
         Contrast {
             @Override
-            public String toString() {
-                return "Контрастный";
+            public String toString(Context context) {
+                return context.getString(R.string.Contrast);
             }
         },
         Sepia {
             @Override
-            public String toString() {
-                return "Сепия";
+            public String toString(Context context) {
+                return context.getString(R.string.Sepia);
             }
         },
         Polaroid {
             @Override
-            public String toString() {
-                return "Поляроид";
+            public String toString(Context context) {
+                return context.getString(R.string.Polaroid);
             }
         },
         VintageBlackAndWhite {
             @Override
-            public String toString() {
-                return "Старинный ч/б";
+            public String toString(Context context) {
+                return context.getString(R.string.VintageBlackAndWhite);
             }
         },
         Nashville {
             @Override
-            public String toString() {
-                return "Нэшвилль";
+            public String toString(Context context) {
+                return context.getString(R.string.Nashville);
             }
         },
         Sierra {
             @Override
-            public String toString() {
-                return "Сьерра";
+            public String toString(Context context) {
+                return context.getString(R.string.Sierra);
             }
         },
         Valencia {
             @Override
-            public String toString() {
-                return "Валенсия";
+            public String toString(Context context) {
+                return context.getString(R.string.Valencia);
             }
         },
         Walden {
             @Override
-            public String toString() {
-                return "Вальден";
+            public String toString(Context context) {
+                return context.getString(R.string.Walden);
             }
         },
         Hudson {
             @Override
-            public String toString() {
-                return "Гудзон";
+            public String toString(Context context) {
+                return context.getString(R.string.Hudson);
             }
         },
         Amaro {
             @Override
-            public String toString() {
-                return "Амаро";
+            public String toString(Context context) {
+                return context.getString(R.string.Amaro);
             }
         },
         Rise {
             @Override
-            public String toString() {
-                return "Рассвет";
+            public String toString(Context context) {
+                return context.getString(R.string.Rise);
             }
         },
         Y1977 {
             @Override
-            public String toString() {
-                return "1984";
+            public String toString(Context context) {
+                return context.getString(R.string.Y1977);
             }
         },
         Random {
             @Override
-            public String toString() {
-                return "Случайный";
+            public String toString(Context context) {
+                return context.getString(R.string.Random);
             }
         },
         Special {
             @Override
-            public String toString() {
-                return "Особый";
+            public String toString(Context context) {
+                return context.getString(R.string.Special);
             }
         };
 
-        @Override
-        public abstract String toString();
+        public abstract String toString(Context context);
     }
 
     /**
@@ -123,42 +123,37 @@ public class Filters {
      * @param name photo filter name
      * @return photo filter
      */
-    public static PhotoFilter byName(String name) {
-        switch (name) {
-            case "Негатив":
-                return Negative();
-            case "Серые тона":
-                return Grayscale();
-            case "Контрастный":
-                return Contrast();
-            case "Сепия":
-                return Sepia();
-            case "Поляроид":
-                return Polaroid();
-            case "Старинный ч/б":
-                return VintageBlackAndWhite();
-            case "Гудзон":
-                return Hudson();
-            case "Амаро":
-                return Amaro();
-            case "Нэшвилль":
-                return Nashville();
-            case "Сьерра":
-                return Sierra();
-            case "Валенсия":
-                return Valencia();
-            case "Вальден":
-                return Walden();
-            case "Рассвет":
-                return Rise();
-            case "1984":
-                return Y1977();
-            case "Случайный":
-                return Random();
-            case "Особый":
-                return Special();
-            default:
-                return NoFilter();
+    public static PhotoFilter byName(Context context, String name) {
+        if (name.equals(context.getString(R.string.Negative))) {
+            return Negative();
+        } else if (name.equals(context.getString(R.string.Grayscale))) {
+            return Grayscale();
+        } else if (name.equals(context.getString(R.string.Sepia))) {
+            return Sepia();
+        } else if (name.equals(context.getString(R.string.Polaroid))) {
+            return Polaroid();
+        } else if (name.equals(context.getString(R.string.VintageBlackAndWhite))) {
+            return VintageBlackAndWhite();
+        } else if (name.equals(context.getString(R.string.Hudson))) {
+            return Hudson();
+        } else if (name.equals(context.getString(R.string.Amaro))) {
+            return Amaro();
+        } else if (name.equals(context.getString(R.string.Sierra))) {
+            return Sierra();
+        } else if (name.equals(context.getString(R.string.Valencia))) {
+            return Valencia();
+        } else if (name.equals(context.getString(R.string.Walden))) {
+            return Walden();
+        } else if (name.equals(context.getString(R.string.Rise))) {
+            return Rise();
+        } else if (name.equals(context.getString(R.string.Y1977))) {
+            return Y1977();
+        } else if (name.equals(context.getString(R.string.Random))) {
+            return Random();
+        } else if (name.equals(context.getString(R.string.Special))) {
+            return Special();
+        } else {
+            return NoFilter();
         }
     }
 

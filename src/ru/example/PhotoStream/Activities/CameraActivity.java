@@ -1,5 +1,6 @@
 package ru.example.PhotoStream.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -17,12 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CameraActivity extends ActionBarActivity implements PictureBitmapCallback {
+    private Context context;
     private CameraPreview preview;
     private Button takePictureButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = this;
         setContentView(R.layout.cameraactivity);
         getSupportActionBar().setTitle(getString(R.string.cameraActivity_title));
         preview = (CameraPreview) findViewById(R.id.cameraactivity_preview);
@@ -32,7 +35,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
         Filters.FilterType[] filterTypes = Filters.FilterType.values();
         String[] filterNames = new String[Filters.FilterType.values().length];
         for (int i = 0; i < filterNames.length; i++) {
-            filterNames[i] = filterTypes[i].toString();
+            filterNames[i] = filterTypes[i].toString(context);
         }
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -42,7 +45,7 @@ public class CameraActivity extends ActionBarActivity implements PictureBitmapCa
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 List<PhotoFilter> photoFilters = new ArrayList<>();
-                photoFilters.add(Filters.byName(adapter.getItem(position)));
+                photoFilters.add(Filters.byName(context, adapter.getItem(position)));
                 preview.setPhotoFilters(photoFilters);
             }
 
