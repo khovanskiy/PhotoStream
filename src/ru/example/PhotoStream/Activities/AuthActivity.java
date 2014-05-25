@@ -34,9 +34,6 @@ public class AuthActivity extends ActionBarActivity implements OkTokenRequestLis
 
     @Override
     protected void onDestroy() {
-        if (mOdnoklassniki != null) {
-            mOdnoklassniki.removeTokenRequestListener();
-        }
         super.onDestroy();
     }
 

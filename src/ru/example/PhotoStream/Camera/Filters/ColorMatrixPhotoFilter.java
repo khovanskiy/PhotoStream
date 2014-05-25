@@ -19,7 +19,7 @@ public class ColorMatrixPhotoFilter implements PhotoFilter {
     }
 
     @Override
-    public void transformOpaqueRaw(RawBitmap bitmap) {
+    public synchronized void transformOpaqueRaw(RawBitmap bitmap) {
         int c, a0, r0, g0, b0;
         float a1, r1, g1, b1;
         float[] m = colorMatrix.getArray();
@@ -43,17 +43,12 @@ public class ColorMatrixPhotoFilter implements PhotoFilter {
     }
 
     @Override
-    public void transformOpaque(Bitmap bitmap) {
-
-    }
-
-    @Override
-    public boolean hasPreviewModification() {
+    public synchronized boolean hasPreviewModification() {
         return true;
     }
 
     @Override
-    public void modifyPreview(ImageView view) {
+    public synchronized void modifyPreview(ImageView view) {
         view.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
     }
 }

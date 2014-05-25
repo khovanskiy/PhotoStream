@@ -13,13 +13,6 @@ public interface PhotoFilter {
     public void transformOpaqueRaw(RawBitmap bitmap);
 
     /**
-     * Transforms bitmap without alpha channel.
-     *
-     * @param bitmap bitmap in standard format.
-     */
-    public void transformOpaque(Bitmap bitmap);
-
-    /**
      * Returns true if this photo filter can be applied to the resulting image directly.
      * @return preview modification possibility
      */

@@ -1,6 +1,7 @@
 package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.ColorMatrix;
+import ru.example.PhotoStream.R;
 
 import java.util.Random;
 
@@ -9,23 +10,111 @@ public class Filters {
      * Enumerates available {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter}s.
      */
     public static enum FilterType {
-        NoFilter,
-        Negative,
-        Grayscale,
-        Contrast,
-        Sepia,
-        Polaroid,
-        VintageBlackAndWhite,
-        Nashville,
-        Sierra,
-        Valencia,
-        Walden,
-        Hudson,
-        Amaro,
-        Rise,
-        Y1977,
-        Random,
-        Special,
+        NoFilter {
+            @Override
+            public String toString() {
+                return "Без фильтра";
+            }
+        },
+        Negative {
+            @Override
+            public String toString() {
+                return "Негатив";
+            }
+        },
+        Grayscale {
+            @Override
+            public String toString() {
+                return "Серые тона";
+            }
+        },
+        Contrast {
+            @Override
+            public String toString() {
+                return "Контрастный";
+            }
+        },
+        Sepia {
+            @Override
+            public String toString() {
+                return "Сепия";
+            }
+        },
+        Polaroid {
+            @Override
+            public String toString() {
+                return "Поляроид";
+            }
+        },
+        VintageBlackAndWhite {
+            @Override
+            public String toString() {
+                return "Старинный ч/б";
+            }
+        },
+        Nashville {
+            @Override
+            public String toString() {
+                return "Нэшвилль";
+            }
+        },
+        Sierra {
+            @Override
+            public String toString() {
+                return "Сьерра";
+            }
+        },
+        Valencia {
+            @Override
+            public String toString() {
+                return "Валенсия";
+            }
+        },
+        Walden {
+            @Override
+            public String toString() {
+                return "Вальден";
+            }
+        },
+        Hudson {
+            @Override
+            public String toString() {
+                return "Гудзон";
+            }
+        },
+        Amaro {
+            @Override
+            public String toString() {
+                return "Амаро";
+            }
+        },
+        Rise {
+            @Override
+            public String toString() {
+                return "Рассвет";
+            }
+        },
+        Y1977 {
+            @Override
+            public String toString() {
+                return "1984";
+            }
+        },
+        Random {
+            @Override
+            public String toString() {
+                return "Случайный";
+            }
+        },
+        Special {
+            @Override
+            public String toString() {
+                return "Особый";
+            }
+        };
+
+        @Override
+        public abstract String toString();
     }
 
     /**
@@ -36,49 +125,37 @@ public class Filters {
      */
     public static PhotoFilter byName(String name) {
         switch (name) {
-            case "Negative":
+            case "Негатив":
                 return Negative();
-            case "Grayscale":
+            case "Серые тона":
                 return Grayscale();
-            case "Emboss":
-                return Emboss();
-            case "Blur":
-                return Blur();
-            case "Glow":
-                return Glow();
-            case "Sharpen":
-                return Sharpen();
-            case "EdgesNegative":
-                return EdgesNegative();
-            case "EdgesPositive":
-                return EdgesPositive();
-            case "Contrast":
+            case "Контрастный":
                 return Contrast();
-            case "Sepia":
+            case "Сепия":
                 return Sepia();
-            case "Polaroid":
+            case "Поляроид":
                 return Polaroid();
-            case "VintageBlackAndWhite":
+            case "Старинный ч/б":
                 return VintageBlackAndWhite();
-            case "Hudson":
+            case "Гудзон":
                 return Hudson();
-            case "Amaro":
+            case "Амаро":
                 return Amaro();
-            case "Nashville":
+            case "Нэшвилль":
                 return Nashville();
-            case "Sierra":
+            case "Сьерра":
                 return Sierra();
-            case "Valencia":
+            case "Валенсия":
                 return Valencia();
-            case "Walden":
+            case "Вальден":
                 return Walden();
-            case "Rise":
+            case "Рассвет":
                 return Rise();
-            case "Y1977":
+            case "1984":
                 return Y1977();
-            case "Random":
+            case "Случайный":
                 return Random();
-            case "Special":
+            case "Особый":
                 return Special();
             default:
                 return NoFilter();

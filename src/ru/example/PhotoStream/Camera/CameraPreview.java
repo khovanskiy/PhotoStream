@@ -3,18 +3,16 @@ package ru.example.PhotoStream.Camera;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
+import ru.example.PhotoStream.Camera.Filters.SpecialFilter;
 import ru.example.PhotoStream.R;
 
 import java.io.IOException;
@@ -66,18 +64,21 @@ public class CameraPreview extends FrameLayout {
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-                holderReady = true;
-                if (toPreview) {
-                    realStart();
-                    if (toTakePicture) {
-                        realTakePicture();
+                if (!holderReady) {
+                    holderReady = true;
+                    if (toPreview) {
+                        realStart();
+                        if (toTakePicture) {
+                            realTakePicture();
+                        }
                     }
                 }
             }
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                holderReady = false;
+                stopPreview();
+                resetPreview();
             }
         });
         realView = new ImageView(context);
@@ -217,28 +218,24 @@ public class CameraPreview extends FrameLayout {
                 BitmapFactory.Options bitmapFactoryOptions = new BitmapFactory.Options();
                 bitmapFactoryOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 bitmapFactoryOptions.inMutable = true;
-
                 bitmapFactoryOptions.inTempStorage = new byte[16 * 1024];
                 Camera.Parameters parameters = camera.getParameters();
                 Camera.Size size = parameters.getPictureSize();
-
                 int height = size.height;
                 int width = size.width;
                 float mb = (width * height) / 1024000f;
-
                 if (mb > 4f) {
                     bitmapFactoryOptions.inSampleSize = 4;
                 } else if (mb > 3f) {
                     bitmapFactoryOptions.inSampleSize = 2;
                 }
-
-                bitmapFactoryOptions.inMutable = true;
                 Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length, bitmapFactoryOptions);
                 RawBitmap rb = new RawBitmap(image);
                 for (PhotoFilter photoFilter : photoFilters) {
                     photoFilter.transformOpaqueRaw(rb);
                 }
                 rb.fillBitmap(image);
+                SpecialFilter.unfreeze();
                 if (pictureBitmapCallback != null) {
                     pictureBitmapCallback.onPictureTaken(image);
                     pictureBitmapCallback = null;
@@ -253,6 +250,7 @@ public class CameraPreview extends FrameLayout {
      * Stops previewing after receiving photo according to {@link android.hardware.Camera} contracts.
      */
     public synchronized void takePicture() {
+        SpecialFilter.freeze();
         if (previewing) {
             realTakePicture();
         } else {

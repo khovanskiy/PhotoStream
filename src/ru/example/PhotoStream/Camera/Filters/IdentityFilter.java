@@ -11,17 +11,12 @@ public class IdentityFilter implements PhotoFilter {
     }
 
     @Override
-    public void transformOpaque(Bitmap bitmap) {
-
-    }
-
-    @Override
-    public boolean hasPreviewModification() {
+    public synchronized boolean hasPreviewModification() {
         return true;
     }
 
     @Override
-    public void modifyPreview(ImageView view) {
+    public synchronized void modifyPreview(ImageView view) {
 
     }
 }

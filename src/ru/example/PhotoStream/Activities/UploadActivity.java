@@ -1,5 +1,6 @@
 package ru.example.PhotoStream.Activities;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -107,7 +108,7 @@ public class UploadActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.uploadactivity);
         api = Odnoklassniki.getInstance(this);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getSupportActionBar().setTitle(getString(R.string.uploadActivity_title));
         ImageView photo = (ImageView) findViewById(R.id.uploadactivity_imageview);
         photo.setImageBitmap(pictureTaken);
