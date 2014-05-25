@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -65,6 +64,8 @@ public class Album extends Entry {
      */
     public AlbumType albumType = AlbumType.USER;
 
+    public boolean isPersonal = false;
+
     private static Map<String, Album> cache = new ConcurrentHashMap<>();
 
     /**
@@ -85,6 +86,7 @@ public class Album extends Entry {
 
     /**
      * Returns album by its album id.
+     *
      * @param albumId album id
      * @return album
      */
@@ -97,11 +99,24 @@ public class Album extends Entry {
         } else {
             current = cache.get(albumId);
         }
+        current.aid = albumId;
         return current;
+    }
+
+    public static Album build(String aid, String ownerId, AlbumType type) {
+        Album album = Album.get(aid);
+        if (type == AlbumType.USER) {
+            album.user_id = ownerId;
+        } else {
+            album.group_id = ownerId;
+        }
+        album.albumType = type;
+        return album;
     }
 
     /**
      * Creates album from its JSON representation received from server.
+     *
      * @param object JSON form of album
      * @return album
      * @throws JSONException
@@ -138,6 +153,13 @@ public class Album extends Entry {
         return current;
     }
 
+    public void clear() {
+        lastAnchor = "";
+        hasMore = true;
+        lastLoadedPhoto = null;
+        chunks.clear();
+    }
+
     @Override
     public boolean hasMore() {
         return hasMore;
@@ -153,7 +175,9 @@ public class Album extends Entry {
             requestParams.put("gid", group_id);
             requestParams.put("fields", "group_photo.*");
         }
-        requestParams.put("aid", aid);
+        if (!isPersonal) {
+            requestParams.put("aid", aid);
+        }
         requestParams.put("count", count + "");
 
         if (hasMore) {
@@ -168,6 +192,7 @@ public class Album extends Entry {
                 JSONArray photos = photosObject.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); ++i) {
                     Photo photo = Photo.build(photos.getJSONObject(i));
+                    photo.album_id = aid;
                     chunk.photos.add(photo);
                     lastLoadedPhoto = photo;
                 }
@@ -187,6 +212,7 @@ public class Album extends Entry {
 
     /**
      * Returns last loaded from the server photo.
+     *
      * @return photo
      */
     public Photo getLastLoadedPhoto() {
@@ -195,6 +221,7 @@ public class Album extends Entry {
 
     /**
      * Returns photos chunk by its position.
+     *
      * @param location location in the list
      * @return photos chunk
      */
@@ -205,6 +232,7 @@ public class Album extends Entry {
 
     /**
      * Returns chunk list size.
+     *
      * @return chunks count
      */
 

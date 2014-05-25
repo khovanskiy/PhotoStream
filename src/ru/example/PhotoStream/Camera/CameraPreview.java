@@ -3,6 +3,7 @@ package ru.example.PhotoStream.Camera;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import ru.example.PhotoStream.Camera.Filters.PhotoFilter;
 import ru.example.PhotoStream.Camera.Filters.SpecialFilter;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.io.IOException;
@@ -109,6 +111,22 @@ public class CameraPreview extends FrameLayout {
         this.photoFilters = photoFilters;
     }
 
+    private Camera.Size getBestPreviewSize(Camera.Parameters parameters){
+        Camera.Size bestSize = null;
+        List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
+
+        bestSize = sizeList.get(0);
+
+        for(int i = 1; i < sizeList.size(); i++){
+            if((sizeList.get(i).width * sizeList.get(i).height) >
+                    (bestSize.width * bestSize.height)){
+                bestSize = sizeList.get(i);
+            }
+        }
+
+        return bestSize;
+    }
+
     private synchronized void realStart() {
         try {
             camera = Camera.open();
@@ -116,10 +134,20 @@ public class CameraPreview extends FrameLayout {
             Toast.makeText(getContext(), getContext().getString(R.string.cameraIsNotAvailable), Toast.LENGTH_SHORT).show();
         }
         if (camera != null) {
-            Camera.Size size = camera.getParameters().getPreviewSize();
+            List<Integer> formats = camera.getParameters().getSupportedPreviewFormats();
+            for (int i = 0; i < formats.size(); ++i) {
+                Console.print(formats.get(i));
+            }
+            Camera.Parameters parameters = camera.getParameters();
+            Camera.Size size = getBestPreviewSize(parameters);
+            parameters.setPreviewSize(size.width / 3, size.height / 3);
+            parameters.setPictureSize(size.width, size.height);
+            camera.setParameters(parameters);
+
             if (size != null) {
-                this.width = size.width;
-                this.height = size.height;
+                Console.print("Current prevew size: " + size.width + " " + size.height);
+                this.width = size.width / 3;
+                this.height = size.height / 3;
             }
             camera.setPreviewCallback(new Camera.PreviewCallback() {
                 @Override
