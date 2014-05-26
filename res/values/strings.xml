@@ -54,4 +54,6 @@
     <string name="Kelvin">Kelvin</string>
     <string name="Xpro">XPro</string>
     <string name="likeButtonText">Класс!</string>
+    <string name="Toaster">Toaster</string>
+    <string name="ColorReduction">Цветовое сокращение</string>
 </resources>

@@ -113,6 +113,12 @@ public class Filters {
                 return context.getString(R.string.Xpro);
             }
         },
+        Toaster {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Toaster);
+            }
+        },
         TealAndOrange {
             @Override
             public String toString(Context context) {
@@ -123,6 +129,12 @@ public class Filters {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Smooth);
+            }
+        },
+        ColorReduction {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.ColorReduction);
             }
         },
         Random {
@@ -167,7 +179,7 @@ public class Filters {
         } else if (name.equals(context.getString(R.string.Amaro))) {
             return Amaro();
         } else if (name.equals(context.getString(R.string.Sierra))) {
-            return Sierra();
+            return Sierra(context);
         } else if (name.equals(context.getString(R.string.Valencia))) {
             return Valencia();
         } else if (name.equals(context.getString(R.string.Walden))) {
@@ -175,15 +187,19 @@ public class Filters {
         } else if (name.equals(context.getString(R.string.Rise))) {
             return Rise();
         } else if (name.equals(context.getString(R.string.Y1977))) {
-            return Y1977();
+            return Y1977(context);
         } else if (name.equals(context.getString(R.string.Kelvin))) {
             return Kelvin(context);
         } else if (name.equals(context.getString(R.string.Xpro))) {
             return Xpro(context);
+        } else if (name.equals(context.getString(R.string.Toaster))) {
+            return Toaster(context);
         } else if (name.equals(context.getString(R.string.TealAndOrange))) {
             return TealAndOrange();
         } else if (name.equals(context.getString(R.string.Smooth))) {
             return Smooth();
+        } else if (name.equals(context.getString(R.string.ColorReduction))) {
+            return ColorReduction();
         } else if (name.equals(context.getString(R.string.Random))) {
             return Random();
         } else if (name.equals(context.getString(R.string.Special))) {
@@ -191,6 +207,10 @@ public class Filters {
         } else {
             return NoFilter();
         }
+    }
+
+    private static PhotoFilter ColorReduction() {
+        return new ColorReductionFilter();
     }
 
     /**
@@ -381,24 +401,12 @@ public class Filters {
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
     }
 
-    public static PhotoFilter Sierra() {
-        float[] matrix = new float[] {
-                0.933f, 0f, 0f, 0, 10,
-                0f, 0.871f, 0f, 0, 12,
-                0f, 0f, 0.757f, 0, 27,
-                0, 0, 0, 1, 0
-        };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    public static PhotoFilter Sierra(Context context) {
+        return new ColorCurveFromImageFilter(context, R.drawable.sierra_map);
     }
 
-    public static PhotoFilter Y1977() {
-        float[] matrix = new float[] {
-                0.567f, 0f, 0f, 0, 81,
-                0f, 0.773f, 0f, 0, 57,
-                0f, 0f, 0.580f, 0, 64,
-                0, 0, 0, 1, 0
-        };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+    public static PhotoFilter Y1977(Context context) {
+        return new ColorCurveFromImageFilter(context, R.drawable.y1977map);
     }
 
     public static PhotoFilter TealAndOrange() {
@@ -415,6 +423,10 @@ public class Filters {
 
     public static PhotoFilter Xpro(Context context) {
         return new ColorCurveFromImageFilter(context, R.drawable.xpro_map);
+    }
+
+    public static PhotoFilter Toaster(Context context) {
+        return new ColorCurveFromImageFilter(context, R.drawable.toaster_map);
     }
 
     public static PhotoFilter Random() {
