@@ -12,6 +12,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -78,6 +79,10 @@ public class SmartImage extends ImageView {
         }
     }
 
+    public interface OnSmartViewLoadedListener {
+         void onSmartViewLoaded();
+    }
+
     private static final Executor executor = Executors.newFixedThreadPool(5);
     private Loader loader = null;
     protected AtomicBoolean running = new AtomicBoolean(false);
@@ -98,6 +103,9 @@ public class SmartImage extends ImageView {
     private void setupBitmap(Bitmap bitmap) {
         if (bitmap == null) {
             return;
+        }
+        if (loadedListener != null) {
+            loadedListener.onSmartViewLoaded();
         }
         this.setVisibility(VISIBLE);
         this.setImageBitmap(bitmap);
@@ -132,6 +140,12 @@ public class SmartImage extends ImageView {
             loader = new Loader();
             loader.executeOnExecutor(executor);
         }
+    }
+
+    private OnSmartViewLoadedListener loadedListener;
+
+    public void setOnSmartViewLoadedListener(OnSmartViewLoadedListener loadedListener) {
+        this.loadedListener = loadedListener;
     }
 
     private long calcAvailableMemory() {
