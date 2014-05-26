@@ -3,7 +3,6 @@ package ru.example.PhotoStream.Camera;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -111,19 +110,29 @@ public class CameraPreview extends FrameLayout {
         this.photoFilters = photoFilters;
     }
 
-    private Camera.Size getBestPreviewSize(Camera.Parameters parameters){
-        Camera.Size bestSize = null;
-        List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
+    private Camera.Size getOptimizedPreviewSize(Camera.Parameters parameters){
+        Camera.Size pictureSize = getBestPictureSize(parameters);
+        List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
+        Camera.Size optPreview = previewSizes.get(0);
+        for (int i = 1; i < previewSizes.size(); i++) {
+            Camera.Size current = previewSizes.get(i);
+            if (Math.abs(current.height - pictureSize.height / 5) + Math.abs(current.width - pictureSize.width / 5)
+                    < Math.abs(optPreview.height - pictureSize.height / 5) + Math.abs(optPreview.width - pictureSize.width / 5)) {
+                optPreview = current;
+            }
+        }
+        return optPreview;
+    }
 
-        bestSize = sizeList.get(0);
-
-        for(int i = 1; i < sizeList.size(); i++){
+    private Camera.Size getBestPictureSize(Camera.Parameters parameters){
+        List<Camera.Size> sizeList = parameters.getSupportedPictureSizes();
+        Camera.Size bestSize = sizeList.get(0);
+        for(int i = 1; i < sizeList.size(); i++) {
             if((sizeList.get(i).width * sizeList.get(i).height) >
                     (bestSize.width * bestSize.height)){
                 bestSize = sizeList.get(i);
             }
         }
-
         return bestSize;
     }
 
@@ -139,15 +148,15 @@ public class CameraPreview extends FrameLayout {
                 Console.print(formats.get(i));
             }
             Camera.Parameters params = camera.getParameters();
-            Camera.Size size = getBestPreviewSize(params);
-            params.setPreviewSize(size.width / 3, size.height / 3);
+            Camera.Size size = getBestPictureSize(params);
             params.setPictureSize(size.width, size.height);
+            size = getOptimizedPreviewSize(params);
+            params.setPreviewSize(size.width, size.height);
             camera.setParameters(params);
-
             if (size != null) {
-                Console.print("Current prevew size: " + size.width + " " + size.height);
-                this.width = size.width / 3;
-                this.height = size.height / 3;
+                Console.print("Current preview size: " + size.width + " " + size.height);
+                this.width = size.width;
+                this.height = size.height;
             }
             camera.setPreviewCallback(new Camera.PreviewCallback() {
                 @Override
