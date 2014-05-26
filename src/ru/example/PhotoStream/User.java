@@ -217,6 +217,10 @@ public class User extends AlbumsKeeper {
         requestParams.put("fields", "user_album.*");
 
         albums.clear();
+        Album personalAlbum = Album.build("personal" + uid, uid, AlbumType.USER);
+        personalAlbum.title = "Личный альбом";
+        personalAlbum.isPersonal = true;
+        albums.add(personalAlbum);
         boolean hasMore = true;
         while (hasMore) {
             try {

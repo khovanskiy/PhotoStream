@@ -22,6 +22,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
     private GridView photoList;
     private SwipeRefreshLayout swipeLayout;
     private Feed feed;
+    private boolean updating = false;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -115,7 +116,9 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
     @Override
     public void onRefresh() {
+        feed.clear();
         feed.loadMore();
+        updating = true;
     }
 
     @Override
@@ -130,7 +133,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
                 photoList.setAdapter(photoListAdapter);
             }
             //Console.print("Total photos: " + photos.size());
-            if (photos.size() > photoListAdapter.getCount()) {
+            if (photos.size() > photoListAdapter.getCount() || updating) {
                 photoListAdapter.clear();
 
                 for (int i = 0; i < photos.size(); ++i) {
@@ -139,6 +142,8 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
                 photoListAdapter.notifyDataSetChanged();
             }
+
+            updating = false;
         }
     }
 }

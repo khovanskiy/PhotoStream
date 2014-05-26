@@ -31,12 +31,16 @@ public class Feed extends EventDispatcher {
         protected List<Photo> doInBackground(Void... params) {
             for (Album album : albums) {
                 if (album.hasMore() && album.chunksCount() == 0) {
-                    album.loadNextChunk(api, 1);
+                    album.loadNextChunk(api, 2);
                     heap.addAll(album.getLastChunk());
                 }
             }
             List<Photo> chunk = new ArrayList<>(currentLoadCount);
+
             for (int i = 0; heap.size() > 0 && i < currentLoadCount; ++i) {
+                if (albums.size() == 1) {
+                    Console.print("Heap size : " + heap.size());
+                }
                 Photo photo = heap.poll();
                 chunk.add(photo);
                 Album album = Album.get(photo.album_id);
@@ -74,6 +78,14 @@ public class Feed extends EventDispatcher {
     public Feed(Odnoklassniki api, int loadCount) {
         this.api = api;
         this.currentLoadCount = loadCount;
+    }
+
+    public void clear() {
+        for (Album album : albums) {
+            album.clear();
+        }
+        toDisplay.clear();
+        heap.clear();
     }
 
     public List<Photo> getAvailablePhotos() {
