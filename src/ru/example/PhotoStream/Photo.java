@@ -65,7 +65,7 @@ public class Photo {
     /**
      * Shows if the user has already liked this photo.
      */
-    public String liked_it = "";
+    public Boolean liked_it = false;
 
     /**
      * User id of the photo's owner.
@@ -102,7 +102,7 @@ public class Photo {
      * @param photoId photo's id
      * @return photo
      */
-    public static Photo get(String photoId) {
+    public static synchronized Photo get(String photoId) {
         Photo current = null;
         if (!cache.containsKey(photoId)) {
             current = new Photo();
@@ -151,6 +151,9 @@ public class Photo {
         }
         if (object.has("pic1024x768")) {
             current.pic1024x768 = object.getString("pic1024x768");
+        }
+        if (object.has("liked_it")) {
+            current.liked_it = object.getBoolean("liked_it");
         }
         if (object.has("comments_count")) {
             current.comments_count = object.getInt("comments_count");

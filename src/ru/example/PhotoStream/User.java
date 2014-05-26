@@ -192,8 +192,8 @@ public class User extends AlbumsKeeper {
      * @param userId user id
      * @return user
      */
-    public static User get(String userId) {
-        User current = null;
+    public static synchronized User get(String userId) {
+        User current;
         if (!cache.containsKey(userId)) {
             current = new User();
             cache.put(userId, current);

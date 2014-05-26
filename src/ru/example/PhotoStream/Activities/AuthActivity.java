@@ -29,7 +29,7 @@ public class AuthActivity extends ActionBarActivity implements OkTokenRequestLis
     }
 
     public void onLoginClick(View view) {
-        mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS);
+        mOdnoklassniki.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS, OkScope.PHOTO_CONTENT);
     }
 
     @Override

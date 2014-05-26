@@ -74,7 +74,7 @@ public class Group extends AlbumsKeeper {
      * @param groupId group id
      * @return group
      */
-    public static Group get(String groupId) {
+    public static synchronized Group get(String groupId) {
         Group current;
         if (!cache.containsKey(groupId)) {
             current = new Group();

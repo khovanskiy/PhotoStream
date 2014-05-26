@@ -90,15 +90,17 @@ public class UploadActivity extends ActionBarActivity {
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean) {
                 Toast.makeText(UploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
+                uploadButton.setVisibility(View.GONE);
             } else {
                 Toast.makeText(UploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
+                uploadButton.setEnabled(true);
             }
         }
     }
 
     private Odnoklassniki api;
     private static Bitmap pictureTaken;
-
+    protected Button uploadButton;
     public static void setPicture(Bitmap bitmap) {
          pictureTaken = bitmap;
     }
@@ -112,10 +114,11 @@ public class UploadActivity extends ActionBarActivity {
         getSupportActionBar().setTitle(getString(R.string.uploadActivity_title));
         ImageView photo = (ImageView) findViewById(R.id.uploadactivity_imageview);
         photo.setImageBitmap(pictureTaken);
-        Button uploadButton = (Button) findViewById(R.id.uploadactivity_upload);
+        uploadButton = (Button) findViewById(R.id.uploadactivity_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploadButton.setEnabled(false);
                 Toast.makeText(UploadActivity.this, getString(R.string.uploadStarting), Toast.LENGTH_LONG).show();
                 Loader loader = new Loader(pictureTaken);
                 loader.execute();

@@ -91,7 +91,7 @@ public class Album extends Entry {
      * @return album
      */
 
-    public static Album get(String albumId) {
+    public static synchronized Album get(String albumId) {
         Album current;
         if (!cache.containsKey(albumId)) {
             current = new Album();
@@ -188,6 +188,10 @@ public class Album extends Entry {
             }
             try {
                 String response = api.request("photos.getPhotos", requestParams, "get");
+                if (user_id.equals("561798546393")) {
+                    Console.print("Photo response: " + response);
+                }
+                Console.print("");
                 JSONObject photosObject = new JSONObject(response);
                 JSONArray photos = photosObject.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); ++i) {
