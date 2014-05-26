@@ -8,15 +8,19 @@
       </filter>
     </filters>
   </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: ru.example.PhotoStream" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3c175e0-0003-4108-8061-9b3879b13059" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PhotoStream.iml" afterPath="$PROJECT_DIR$/PhotoStream.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorReductionFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PhotoStream.iws" />
@@ -93,25 +97,100 @@
       <file leaf-file-name="workspace.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="8925">
-              <caret line="27" column="87" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="12342">
+              <caret line="31" column="87" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
               <folding>
-                <marker date="1401100552311" expanded="true" signature="28755:28818" placeholder="..." />
-                <marker date="1401100552311" expanded="true" signature="28755:28803" placeholder="..." />
-                <marker date="1401100552311" expanded="true" signature="28755:28790" placeholder="..." />
+                <marker date="1401101201406" expanded="true" signature="41246:41309" placeholder="..." />
+                <marker date="1401101201406" expanded="true" signature="41246:41294" placeholder="..." />
+                <marker date="1401101201406" expanded="true" signature="41246:41281" placeholder="..." />
+                <marker date="1401101201406" expanded="true" signature="41246:41263" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraPreview.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CameraPreview.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.95" vertical-offset="0" max-vertical-offset="4709">
-              <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2703" max-vertical-offset="4709">
+              <caret line="193" column="48" selection-start-line="193" selection-start-column="17" selection-end-line="193" selection-end-column="17" />
               <folding>
                 <element signature="e#4839#4892#0" expanded="true" />
                 <element signature="e#8077#8130#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ColorReductionFilter.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorReductionFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.37777779" vertical-offset="0" max-vertical-offset="360">
+              <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Filters.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2469" max-vertical-offset="6800">
+              <caret line="212" column="42" selection-start-line="212" selection-start-column="42" selection-end-line="212" selection-end-column="42" />
+              <folding>
+                <element signature="e#458#494#0" expanded="true" />
+                <element signature="e#639#675#0" expanded="true" />
+                <element signature="e#821#858#0" expanded="true" />
+                <element signature="e#1003#1039#0" expanded="true" />
+                <element signature="e#1181#1214#0" expanded="true" />
+                <element signature="e#1359#1395#0" expanded="true" />
+                <element signature="e#1552#1600#0" expanded="true" />
+                <element signature="e#1746#1783#0" expanded="true" />
+                <element signature="e#1926#1960#0" expanded="true" />
+                <element signature="e#2105#2141#0" expanded="true" />
+                <element signature="e#2284#2318#0" expanded="true" />
+                <element signature="e#2461#2495#0" expanded="true" />
+                <element signature="e#2637#2670#0" expanded="true" />
+                <element signature="e#2811#2843#0" expanded="true" />
+                <element signature="e#2985#3018#0" expanded="true" />
+                <element signature="e#3161#3195#0" expanded="true" />
+                <element signature="e#3336#3368#0" expanded="true" />
+                <element signature="e#3512#3547#0" expanded="true" />
+                <element signature="e#3697#3738#0" expanded="true" />
+                <element signature="e#3881#3915#0" expanded="true" />
+                <element signature="e#4041#4042#0" expanded="true" />
+                <element signature="e#4066#4108#0" expanded="true" />
+                <element signature="e#4122#4123#0" expanded="true" />
+                <element signature="e#4226#4227#0" expanded="true" />
+                <element signature="e#4251#4285#0" expanded="true" />
+                <element signature="e#4299#4300#0" expanded="true" />
+                <element signature="e#4404#4405#0" expanded="true" />
+                <element signature="e#4429#4464#0" expanded="true" />
+                <element signature="e#4478#4479#0" expanded="true" />
+                <element signature="e#4871#4907#0" expanded="true" />
+                <element signature="e#4974#5011#0" expanded="true" />
+                <element signature="e#5079#5115#0" expanded="true" />
+                <element signature="e#5182#5215#0" expanded="true" />
+                <element signature="e#5279#5315#0" expanded="true" />
+                <element signature="e#5382#5430#0" expanded="true" />
+                <element signature="e#5509#5543#0" expanded="true" />
+                <element signature="e#5608#5645#0" expanded="true" />
+                <element signature="e#5713#5746#0" expanded="true" />
+                <element signature="e#5810#5844#0" expanded="true" />
+                <element signature="e#5916#5952#0" expanded="true" />
+                <element signature="e#6019#6053#0" expanded="true" />
+                <element signature="e#6118#6150#0" expanded="true" />
+                <element signature="e#6213#6246#0" expanded="true" />
+                <element signature="e#6317#6351#0" expanded="true" />
+                <element signature="e#6423#6455#0" expanded="true" />
+                <element signature="e#6525#6560#0" expanded="true" />
+                <element signature="e#6633#6674#0" expanded="true" />
+                <element signature="e#6746#6780#0" expanded="true" />
+                <element signature="e#6845#6887#0" expanded="true" />
+                <element signature="e#6960#6994#0" expanded="true" />
+                <element signature="e#7059#7094#0" expanded="true" />
+                <element signature="e#7242#7243#0" expanded="true" />
+                <element signature="e#7291#7292#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -131,6 +210,8 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorReductionFilter.java" />
       </list>
     </option>
   </component>
@@ -234,6 +315,32 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Camera" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Filters" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value=".idea" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -262,12 +369,35 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4300be4e65607000" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="default_avd" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
   </component>
   <component name="RunManager" selected="Android Application.PhotoStream">
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
       <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -427,7 +557,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3276923" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40307692" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.40307692" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -493,24 +623,95 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="8925">
-          <caret line="27" column="87" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="391" max-vertical-offset="12342">
+          <caret line="31" column="87" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
           <folding>
-            <marker date="1401100552311" expanded="true" signature="28755:28818" placeholder="..." />
-            <marker date="1401100552311" expanded="true" signature="28755:28803" placeholder="..." />
-            <marker date="1401100552311" expanded="true" signature="28755:28790" placeholder="..." />
+            <marker date="1401101201406" expanded="true" signature="41246:41309" placeholder="..." />
+            <marker date="1401101201406" expanded="true" signature="41246:41294" placeholder="..." />
+            <marker date="1401101201406" expanded="true" signature="41246:41281" placeholder="..." />
+            <marker date="1401101201406" expanded="true" signature="41246:41263" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.95" vertical-offset="0" max-vertical-offset="4709">
-          <caret line="156" column="0" selection-start-line="156" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2703" max-vertical-offset="4709">
+          <caret line="193" column="48" selection-start-line="193" selection-start-column="17" selection-end-line="193" selection-end-column="17" />
           <folding>
             <element signature="e#4839#4892#0" expanded="true" />
             <element signature="e#8077#8130#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/Filters.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2469" max-vertical-offset="6800">
+          <caret line="212" column="42" selection-start-line="212" selection-start-column="42" selection-end-line="212" selection-end-column="42" />
+          <folding>
+            <element signature="e#458#494#0" expanded="true" />
+            <element signature="e#639#675#0" expanded="true" />
+            <element signature="e#821#858#0" expanded="true" />
+            <element signature="e#1003#1039#0" expanded="true" />
+            <element signature="e#1181#1214#0" expanded="true" />
+            <element signature="e#1359#1395#0" expanded="true" />
+            <element signature="e#1552#1600#0" expanded="true" />
+            <element signature="e#1746#1783#0" expanded="true" />
+            <element signature="e#1926#1960#0" expanded="true" />
+            <element signature="e#2105#2141#0" expanded="true" />
+            <element signature="e#2284#2318#0" expanded="true" />
+            <element signature="e#2461#2495#0" expanded="true" />
+            <element signature="e#2637#2670#0" expanded="true" />
+            <element signature="e#2811#2843#0" expanded="true" />
+            <element signature="e#2985#3018#0" expanded="true" />
+            <element signature="e#3161#3195#0" expanded="true" />
+            <element signature="e#3336#3368#0" expanded="true" />
+            <element signature="e#3512#3547#0" expanded="true" />
+            <element signature="e#3697#3738#0" expanded="true" />
+            <element signature="e#3881#3915#0" expanded="true" />
+            <element signature="e#4041#4042#0" expanded="true" />
+            <element signature="e#4066#4108#0" expanded="true" />
+            <element signature="e#4122#4123#0" expanded="true" />
+            <element signature="e#4226#4227#0" expanded="true" />
+            <element signature="e#4251#4285#0" expanded="true" />
+            <element signature="e#4299#4300#0" expanded="true" />
+            <element signature="e#4404#4405#0" expanded="true" />
+            <element signature="e#4429#4464#0" expanded="true" />
+            <element signature="e#4478#4479#0" expanded="true" />
+            <element signature="e#4871#4907#0" expanded="true" />
+            <element signature="e#4974#5011#0" expanded="true" />
+            <element signature="e#5079#5115#0" expanded="true" />
+            <element signature="e#5182#5215#0" expanded="true" />
+            <element signature="e#5279#5315#0" expanded="true" />
+            <element signature="e#5382#5430#0" expanded="true" />
+            <element signature="e#5509#5543#0" expanded="true" />
+            <element signature="e#5608#5645#0" expanded="true" />
+            <element signature="e#5713#5746#0" expanded="true" />
+            <element signature="e#5810#5844#0" expanded="true" />
+            <element signature="e#5916#5952#0" expanded="true" />
+            <element signature="e#6019#6053#0" expanded="true" />
+            <element signature="e#6118#6150#0" expanded="true" />
+            <element signature="e#6213#6246#0" expanded="true" />
+            <element signature="e#6317#6351#0" expanded="true" />
+            <element signature="e#6423#6455#0" expanded="true" />
+            <element signature="e#6525#6560#0" expanded="true" />
+            <element signature="e#6633#6674#0" expanded="true" />
+            <element signature="e#6746#6780#0" expanded="true" />
+            <element signature="e#6845#6887#0" expanded="true" />
+            <element signature="e#6960#6994#0" expanded="true" />
+            <element signature="e#7059#7094#0" expanded="true" />
+            <element signature="e#7242#7243#0" expanded="true" />
+            <element signature="e#7291#7292#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorReductionFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37777779" vertical-offset="0" max-vertical-offset="360">
+          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>

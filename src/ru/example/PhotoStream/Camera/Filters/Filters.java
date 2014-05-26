@@ -131,6 +131,12 @@ public class Filters {
                 return context.getString(R.string.Smooth);
             }
         },
+        ColorReduction {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.ColorReduction);
+            }
+        },
         Random {
             @Override
             public String toString(Context context) {
@@ -192,6 +198,8 @@ public class Filters {
             return TealAndOrange();
         } else if (name.equals(context.getString(R.string.Smooth))) {
             return Smooth();
+        } else if (name.equals(context.getString(R.string.ColorReduction))) {
+            return ColorReduction();
         } else if (name.equals(context.getString(R.string.Random))) {
             return Random();
         } else if (name.equals(context.getString(R.string.Special))) {
@@ -199,6 +207,10 @@ public class Filters {
         } else {
             return NoFilter();
         }
+    }
+
+    private static PhotoFilter ColorReduction() {
+        return new ColorReductionFilter();
     }
 
     /**
