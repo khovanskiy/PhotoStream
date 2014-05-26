@@ -66,10 +66,10 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         Album album = Album.get(photo.album_id);
         if (album.albumType == AlbumType.USER) {
             User user = User.get(album.user_id);
-            getActivity().setTitle(user.name + " - " + album.title);
+            getActivity().setTitle(user.name + " " + album.title);
         } else {
             Group group = Group.get(album.group_id);
-            getActivity().setTitle(group.name + " - " + album.title);
+            getActivity().setTitle(group.name + " " + album.title);
         }
     }
 

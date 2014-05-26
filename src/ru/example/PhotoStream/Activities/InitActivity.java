@@ -1,17 +1,48 @@
 package ru.example.PhotoStream.Activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import org.json.JSONObject;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Loaders.FriendsLoader;
 import ru.example.PhotoStream.Loaders.GroupsLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InitActivity extends ActionBarActivity implements IEventHadler{
+
+    private class GetCurrentUserIdLoader extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+            try {
+                Map<String, String> requestParams = new HashMap<>();
+                String response = api.request("users.getCurrentUser", requestParams, "get");
+                JSONObject userObject = new JSONObject(response);
+                String uid = userObject.getString("uid");
+                return uid;
+            } catch (Exception e) {
+                Log.i("CONSOLE", "Error", e);
+                return "";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            User.currentUID = s;
+            Intent intent = new Intent(InitActivity.this, StreamActivity.class);
+            startActivity(intent);
+        }
+    }
+
 
     private Odnoklassniki api;
     private int semaphore = 0;
@@ -65,8 +96,8 @@ public class InitActivity extends ActionBarActivity implements IEventHadler{
             }
 
             if (semaphore == 0) {
-                Intent intent = new Intent(this, StreamActivity.class);
-                startActivity(intent);
+                GetCurrentUserIdLoader loader = new GetCurrentUserIdLoader();
+                loader.execute();
             }
         }
     }
