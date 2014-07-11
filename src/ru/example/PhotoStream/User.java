@@ -161,6 +161,8 @@ public class User extends AlbumsKeeper {
     public String registered_date = "";
     public String has_service_invisible = "";
 
+    public static String currentUID = "";
+
     private static Map<String, User> cache = new ConcurrentHashMap<>();
     private List<Album> albums = new ArrayList<>();
     private static List<User> friends = new ArrayList<>();
