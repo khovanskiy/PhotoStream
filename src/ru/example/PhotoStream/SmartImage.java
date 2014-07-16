@@ -73,8 +73,8 @@ public class SmartImage extends ImageView {
                 cache.put(path, pointer); // Поместим новый указатель в кеш
             }
             calcAvailableMemory();
-
             updateImageBitmap(pointer);
+            anim(500);
         }
     }
 
@@ -161,23 +161,6 @@ public class SmartImage extends ImageView {
         }
     }
 
-    /*private void setupBitmap(BitmapPointer bitmap) {
-        assert (bitmap != null & bitmap.get() != null);
-
-        if (currentPointer != null) {
-            currentPointer.rel();
-        }
-        currentPointer = bitmap;
-        currentPointer.acc();
-
-        if (loadedListener != null) {
-            loadedListener.onSmartViewUpdated();
-        }
-
-        this.setVisibility(VISIBLE);
-        this.setImageBitmap(bitmap.get());
-    }  */
-
     private void anim(int millisec) {
         final Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
         fadeIn.setInterpolator(new LinearInterpolator());
@@ -191,10 +174,8 @@ public class SmartImage extends ImageView {
      *
      * @param url
      */
-
-    @SuppressLint("Assert")
     public synchronized void loadFromURL(String url) {
-        if (!(url != null)) throw new AssertionError();
+        assert (url != null);
         this.setVisibility(INVISIBLE);
         this.path = url;
 
@@ -205,11 +186,6 @@ public class SmartImage extends ImageView {
             loader = new Loader();
             loader.executeOnExecutor(executor);
         }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
     }
 
     private OnSmartViewLoadedListener loadedListener;
