@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -51,7 +52,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
 
     }
 
-    private class PageAdapter extends FragmentPagerAdapter {
+    private class PageAdapter extends FragmentStatePagerAdapter {
 
         public PageAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);

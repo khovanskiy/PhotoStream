@@ -5,17 +5,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Debug;
-import android.support.v4.util.LruCache;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -80,12 +78,13 @@ public class SmartImage extends ImageView {
     }
 
     public class BitmapPointer implements IResource {
-        private Bitmap bitmap;
-        private int count;
+        private WeakReference<Bitmap> reference;
+        private int count = 0;
+        private int size;
 
         public BitmapPointer(Bitmap bitmap) {
-            this.bitmap = bitmap;
-            this.count = 0;
+            this.reference = new WeakReference<>(bitmap);
+            this.size = bitmap.getRowBytes() * bitmap.getHeight() / 1024;
         }
 
         public void acc() {
@@ -96,17 +95,24 @@ public class SmartImage extends ImageView {
             this.count--;
             if (this.count == 0) {
                 Console.print("Bitmap recycle");
-                bitmap.recycle();
+                Bitmap bitmap = reference.get();
+                if (bitmap != null) {
+                    bitmap.recycle();
+                }
             }
         }
 
         public Bitmap get() {
-            return this.bitmap.isRecycled() ? null : this.bitmap;
+            Bitmap bitmap = reference.get();
+            if (bitmap == null) {
+                return null;
+            }
+            return bitmap.isRecycled() ? null : bitmap;
         }
 
         @Override
         public int size() {
-            return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+            return this.size;
         }
     }
 
