@@ -98,7 +98,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
 
 
     @Override
-    public void onSmartViewLoaded() {
+    public void onSmartViewUpdated() {
         image.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
     }

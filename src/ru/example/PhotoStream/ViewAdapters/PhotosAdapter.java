@@ -65,7 +65,7 @@ public class PhotosAdapter extends BaseAdapter {
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
-            //holder.image.setImageBitmap(null);
+            holder.image.setImageBitmap(null);
         }
         if (isStatic) {
             holder.image.setClickable(false);

@@ -17,10 +17,4 @@ public class ResourceLruCache<K, V extends IResource> extends LruCache<K, V> {
     protected int sizeOf(K key, V value) {
         return value == null ? 0 : value.size();
     }
-
-    @Override
-    protected void entryRemoved(boolean evicted, K key, V oldValue, V newValue) {
-        super.entryRemoved(evicted, key, oldValue, newValue);
-        Console.print("Resource " + key + " has been removed from cache");
-    }
 }

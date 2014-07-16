@@ -1,5 +1,6 @@
 package ru.example.PhotoStream;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +21,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SmartImage extends ImageView {
-    private static ResourceLruCache<String, BitmapPointer> cache = new ResourceLruCache<>();
+    private static ResourceLruCache<String, BitmapPointer> cache = new ResourceLruCache<String, BitmapPointer>() {
+        @Override
+        protected void entryRemoved(boolean evicted, String key, BitmapPointer oldValue, BitmapPointer newValue) {
+            super.entryRemoved(evicted, key, oldValue, newValue);
+            Console.print("Resource [" + oldValue.getCount() + "] " + key + " has been removed from cache");
+        }
+    };
 
     private class Loader extends AsyncTask<Void, Void, Bitmap> {
 
@@ -33,7 +40,7 @@ public class SmartImage extends ImageView {
                     inputStream = new BufferedInputStream(new URL(path).openStream());
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.RGB_565;
-                    options.inTempStorage = new byte[16*1024];
+                    options.inTempStorage = new byte[16 * 1024];
                     bitmap = BitmapFactory.decodeStream(inputStream, null, options);
                 } catch (Exception e) {
                     Console.print(e.getMessage());
@@ -50,31 +57,29 @@ public class SmartImage extends ImageView {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            // Фото загружено
-            if (running.compareAndSet(true, false)) {
-                // А не успели ли уже загрузить наше фото до нас?
-                BitmapPointer pointer = cache.get(path);
-                if (pointer != null && pointer.get() != null) {
-                    // Успели =>
-                    bitmap.recycle(); // Наше уже не нужно
-                } else {
-                    // Не успели =>
-                    // А не произошло ли у нас ошибки при нашей загрузке?
-                    if (bitmap == null) {
-                        calcAvailableMemory();
-                        return;
-                    }
-                    pointer = new BitmapPointer(bitmap); // Новый указатель
-                    cache.put(path, pointer); // Поместим новый указатель в кеш
+            // А не успели ли уже загрузить наше фото до нас?
+            BitmapPointer pointer = cache.get(path);
+            if (pointer != null && pointer.get() != null) {
+                // Успели =>
+                //bitmap.recycle(); // Наше уже не нужно
+            } else {
+                // Не успели =>
+                // А не произошло ли у нас ошибки при нашей загрузке?
+                if (bitmap == null) {
+                    calcAvailableMemory();
+                    return;
                 }
-                setupBitmap(pointer);
+                pointer = new BitmapPointer(bitmap); // Новый указатель
+                cache.put(path, pointer); // Поместим новый указатель в кеш
             }
             calcAvailableMemory();
+
+            updateImageBitmap(pointer);
         }
     }
 
     public interface OnSmartViewLoadedListener {
-         void onSmartViewLoaded();
+        void onSmartViewUpdated();
     }
 
     public class BitmapPointer implements IResource {
@@ -102,6 +107,10 @@ public class SmartImage extends ImageView {
             }
         }
 
+        public int getCount() {
+            return this.count;
+        }
+
         public Bitmap get() {
             Bitmap bitmap = reference.get();
             if (bitmap == null) {
@@ -118,8 +127,7 @@ public class SmartImage extends ImageView {
 
     private static final Executor executor = Executors.newFixedThreadPool(5);
     private Loader loader = null;
-    protected AtomicBoolean running = new AtomicBoolean(false);
-    protected String path;
+    protected String path = "";
     protected BitmapPointer currentPointer = null; // Текущее изображение
 
     public SmartImage(Context context) {
@@ -134,7 +142,26 @@ public class SmartImage extends ImageView {
         super(context, attrs);
     }
 
-    private void setupBitmap(BitmapPointer bitmap) {
+    private void updateImageBitmap(BitmapPointer pointer) {
+        Bitmap bitmap = pointer.get();
+        if (bitmap == null) {
+            return;
+        }
+
+        if (currentPointer != null) {
+            currentPointer.rel();
+        }
+        currentPointer = pointer;
+        currentPointer.acc();
+
+        setImageBitmap(bitmap);
+        setVisibility(VISIBLE);
+        if (loadedListener != null) {
+            loadedListener.onSmartViewUpdated();
+        }
+    }
+
+    /*private void setupBitmap(BitmapPointer bitmap) {
         assert (bitmap != null & bitmap.get() != null);
 
         if (currentPointer != null) {
@@ -144,12 +171,12 @@ public class SmartImage extends ImageView {
         currentPointer.acc();
 
         if (loadedListener != null) {
-            loadedListener.onSmartViewLoaded();
+            loadedListener.onSmartViewUpdated();
         }
 
         this.setVisibility(VISIBLE);
         this.setImageBitmap(bitmap.get());
-    }
+    }  */
 
     private void anim(int millisec) {
         final Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
@@ -165,21 +192,16 @@ public class SmartImage extends ImageView {
      * @param url
      */
 
-    public void loadFromURL(String url) {
-        assert (url != null && !url.equals(""));
-
+    @SuppressLint("Assert")
+    public synchronized void loadFromURL(String url) {
+        if (!(url != null)) throw new AssertionError();
         this.setVisibility(INVISIBLE);
         this.path = url;
 
         BitmapPointer bitmap = cache.get(url);
         if (bitmap != null && bitmap.get() != null) {
-            setupBitmap(bitmap);
+            updateImageBitmap(bitmap);
         } else {
-            if (!running.compareAndSet(false, true)) {
-                if (!loader.isCancelled()) {
-                    loader.cancel(true);
-                }
-            }
             loader = new Loader();
             loader.executeOnExecutor(executor);
         }
