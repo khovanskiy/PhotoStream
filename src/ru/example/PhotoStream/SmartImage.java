@@ -22,23 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SmartImage extends ImageView {
-    private static LruCache<String, Bitmap> cache;
-
-    static {
-        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-
-        // Use 1/8th of the available memory for this memory cache.
-        final int cacheSize = maxMemory / 8;
-
-        cache = new LruCache<String, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
-                // The cache size will be measured in kilobytes rather than
-                // number of items.
-                return bitmap.getByteCount() / 1024;
-            }
-        };
-    }
+    private static ResourceLruCache<String, BitmapPointer> cache = new ResourceLruCache<>();
 
     private class Loader extends AsyncTask<Void, Void, Bitmap> {
 
@@ -68,12 +52,24 @@ public class SmartImage extends ImageView {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
+            // Фото загружено
             if (running.compareAndSet(true, false)) {
-                setupBitmap(bitmap);
-                anim(500);
-                if (cache.get(path) == null) {
-                    cache.put(path, bitmap);
+                // А не успели ли уже загрузить наше фото до нас?
+                BitmapPointer pointer = cache.get(path);
+                if (pointer != null && pointer.get() != null) {
+                    // Успели =>
+                    bitmap.recycle(); // Наше уже не нужно
+                } else {
+                    // Не успели =>
+                    // А не произошло ли у нас ошибки при нашей загрузке?
+                    if (bitmap == null) {
+                        calcAvailableMemory();
+                        return;
+                    }
+                    pointer = new BitmapPointer(bitmap); // Новый указатель
+                    cache.put(path, pointer); // Поместим новый указатель в кеш
                 }
+                setupBitmap(pointer);
             }
             calcAvailableMemory();
         }
@@ -83,10 +79,42 @@ public class SmartImage extends ImageView {
          void onSmartViewLoaded();
     }
 
+    public class BitmapPointer implements IResource {
+        private Bitmap bitmap;
+        private int count;
+
+        public BitmapPointer(Bitmap bitmap) {
+            this.bitmap = bitmap;
+            this.count = 0;
+        }
+
+        public void acc() {
+            this.count++;
+        }
+
+        public void rel() {
+            this.count--;
+            if (this.count == 0) {
+                Console.print("Bitmap recycle");
+                bitmap.recycle();
+            }
+        }
+
+        public Bitmap get() {
+            return this.bitmap.isRecycled() ? null : this.bitmap;
+        }
+
+        @Override
+        public int size() {
+            return bitmap.getRowBytes() * bitmap.getHeight() / 1024;
+        }
+    }
+
     private static final Executor executor = Executors.newFixedThreadPool(5);
     private Loader loader = null;
     protected AtomicBoolean running = new AtomicBoolean(false);
     protected String path;
+    protected BitmapPointer currentPointer = null; // Текущее изображение
 
     public SmartImage(Context context) {
         super(context);
@@ -100,15 +128,21 @@ public class SmartImage extends ImageView {
         super(context, attrs);
     }
 
-    private void setupBitmap(Bitmap bitmap) {
-        if (bitmap == null) {
-            return;
+    private void setupBitmap(BitmapPointer bitmap) {
+        assert (bitmap != null & bitmap.get() != null);
+
+        if (currentPointer != null) {
+            currentPointer.rel();
         }
+        currentPointer = bitmap;
+        currentPointer.acc();
+
         if (loadedListener != null) {
             loadedListener.onSmartViewLoaded();
         }
+
         this.setVisibility(VISIBLE);
-        this.setImageBitmap(bitmap);
+        this.setImageBitmap(bitmap.get());
     }
 
     private void anim(int millisec) {
@@ -126,10 +160,13 @@ public class SmartImage extends ImageView {
      */
 
     public void loadFromURL(String url) {
+        assert (url != null && !url.equals(""));
+
         this.setVisibility(INVISIBLE);
         this.path = url;
-        Bitmap bitmap = cache.get(url);
-        if (bitmap != null) {
+
+        BitmapPointer bitmap = cache.get(url);
+        if (bitmap != null && bitmap.get() != null) {
             setupBitmap(bitmap);
         } else {
             if (!running.compareAndSet(false, true)) {
@@ -142,6 +179,11 @@ public class SmartImage extends ImageView {
         }
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
     private OnSmartViewLoadedListener loadedListener;
 
     public void setOnSmartViewLoadedListener(OnSmartViewLoadedListener loadedListener) {
@@ -150,7 +192,7 @@ public class SmartImage extends ImageView {
 
     private long calcAvailableMemory() {
         long value = Runtime.getRuntime().maxMemory();
-        String type = "";
+        String type;
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             value = (value / 1024) - (Runtime.getRuntime().totalMemory() / 1024);
             type = "JAVA";
@@ -158,7 +200,7 @@ public class SmartImage extends ImageView {
             value = (value / 1024) - (Debug.getNativeHeapAllocatedSize() / 1024);
             type = "NATIVE";
         }
-        Log.i("C_MEMORY", "calcAvailableMemory, size = " + value + ", type = " + type);
+        Console.print("calcAvailableMemory, size = " + value + ", type = " + type);
         return value;
     }
 }

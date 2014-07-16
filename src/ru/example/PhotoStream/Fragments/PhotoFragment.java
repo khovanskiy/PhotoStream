@@ -47,7 +47,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             photo.liked_it = true;
-            likeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_photo_view_like_active, 0, 0, 0);
+            likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_photo_view_like_active, 0, 0, 0);
             likeButton.setBackgroundColor(getResources().getColor(android.R.color.black));
             likeButton.setEnabled(false);
         }
@@ -63,14 +63,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         api = Odnoklassniki.getInstance(getActivity());
-        Album album = Album.get(photo.album_id);
-        if (album.albumType == AlbumType.USER) {
-            User user = User.get(album.user_id);
-            getActivity().setTitle(user.name + " " + album.title);
-        } else {
-            Group group = Group.get(album.group_id);
-            getActivity().setTitle(group.name + " " + album.title);
-        }
+
     }
 
     @Override
@@ -87,12 +80,19 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
 
         image.loadFromURL(photo.pic1024x768);
         likeButton = (Button) viewLayout.findViewById(R.id.photoactivity_page_like);
-        likeButton.setOnClickListener(this);
-        if (photo.liked_it) {
-            likeButton.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_photo_view_like_active, 0, 0, 0);
-            likeButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+        if (photo.user_id.equals(User.currentUID)) {
             likeButton.setEnabled(false);
+            likeButton.setVisibility(View.GONE);
+        } else {
+            likeButton.setOnClickListener(this);
+            if (photo.liked_it) {
+                likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_photo_view_like_active, 0, 0, 0);
+                likeButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+                likeButton.setEnabled(false);
+            }
         }
+
+
         return viewLayout;
     }
 

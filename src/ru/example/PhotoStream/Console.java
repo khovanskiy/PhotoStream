@@ -8,6 +8,6 @@ public class Console {
      * @param string object to write
      */
     public static void print(Object string) {
-        Log.i("CONSOLE", string.toString());
+        Log.d("M_CONSOLE", string.toString());
     }
 }
