@@ -1,6 +1,5 @@
 package ru.example.PhotoStream;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,11 +13,9 @@ import android.widget.ImageView;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SmartImage extends ImageView {
     private static ResourceLruCache<String, BitmapPointer> cache = new ResourceLruCache<String, BitmapPointer>() {
@@ -31,13 +28,19 @@ public class SmartImage extends ImageView {
 
     private class Loader extends AsyncTask<Void, Void, Bitmap> {
 
+        private String path;
+
+        public Loader(String path) {
+            this.path = path;
+        }
+
         @Override
         protected Bitmap doInBackground(Void... params) {
             Bitmap bitmap = null;
             InputStream inputStream = null;
             try {
                 try {
-                    inputStream = new BufferedInputStream(new URL(path).openStream());
+                    inputStream = new BufferedInputStream(new URL(this.path).openStream());
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.RGB_565;
                     options.inTempStorage = new byte[16 * 1024];
@@ -58,7 +61,10 @@ public class SmartImage extends ImageView {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             // А не успели ли уже загрузить наше фото до нас?
-            BitmapPointer pointer = cache.get(path);
+            BitmapPointer pointer = cache.get(this.path);
+            if (pointer != null) {
+                Console.print("Equals bitmaps: " + (pointer.get() == bitmap));
+            }
             if (pointer != null && pointer.get() != null) {
                 // Успели =>
                 bitmap.recycle(); // Наше уже не нужно
@@ -69,7 +75,7 @@ public class SmartImage extends ImageView {
                     calcAvailableMemory();
                     return;
                 }
-                pointer = new BitmapPointer(bitmap); // Новый указатель
+                pointer = new BitmapPointer(this.path, bitmap); // Новый указатель
                 cache.put(path, pointer); // Поместим новый указатель в кеш
             }
             calcAvailableMemory();
@@ -88,12 +94,14 @@ public class SmartImage extends ImageView {
     }
 
     public class BitmapPointer implements IResource {
-        private WeakReference<Bitmap> reference;
+        private Bitmap reference;
+        private String path;
         private int count = 0;
         private int size;
 
-        public BitmapPointer(Bitmap bitmap) {
-            this.reference = new WeakReference<>(bitmap);
+        public BitmapPointer(String path, Bitmap bitmap) {
+            this.reference = bitmap;
+            this.path = path;
             this.size = bitmap.getRowBytes() * bitmap.getHeight() / 1024;
         }
 
@@ -103,21 +111,22 @@ public class SmartImage extends ImageView {
 
         public void rel() {
             this.count--;
-            if (this.count == 0) {
-                Console.print("Bitmap recycle");
-                Bitmap bitmap = reference.get();
-                if (bitmap != null) {
-                    bitmap.recycle();
-                }
-            }
+        }
+
+        public void recycle() {
+            reference.recycle();
         }
 
         public int getCount() {
             return this.count;
         }
 
+        public String getPath() {
+            return this.path;
+        }
+
         public Bitmap get() {
-            Bitmap bitmap = reference.get();
+            Bitmap bitmap = reference;
             if (bitmap == null) {
                 return null;
             }
@@ -128,11 +137,26 @@ public class SmartImage extends ImageView {
         public int size() {
             return this.size;
         }
+
+        @Override
+        public String toString() {
+            String temp = "Bitmap[";
+            Bitmap bitmap = reference;
+            if (bitmap == null) {
+                temp += "null";
+            } else if (bitmap.isRecycled()) {
+                temp += "recycled";
+            } else {
+                temp += bitmap;
+            }
+            temp += " " + count + " " + path + "]";
+            return temp;
+        }
     }
 
     private static final Executor executor = Executors.newFixedThreadPool(5);
     private Loader loader = null;
-    protected String path = "";
+    protected String currentPath = "";
     protected BitmapPointer currentPointer = null; // Текущее изображение
 
     public SmartImage(Context context) {
@@ -155,6 +179,9 @@ public class SmartImage extends ImageView {
 
         if (currentPointer != null) {
             currentPointer.rel();
+            if (currentPointer.getCount() == 0 && cache.get(currentPointer.getPath()) == null) {
+                currentPointer.recycle();
+            }
         }
         currentPointer = pointer;
         currentPointer.acc();
@@ -169,13 +196,13 @@ public class SmartImage extends ImageView {
     public void debug() {
         Console.print("Image info");
         Console.print(loader);
-        Console.print(path);
-        Console.print(currentPointer.getCount());
-        BitmapPointer pointer = cache.get(path);
+        Console.print(currentPath);
+        Console.print("Current: " + currentPointer);
+        BitmapPointer pointer = cache.get(currentPath);
         if (pointer == null) {
-            Console.print("Not in cache");
+            Console.print("Pointer is not in the cache");
         } else {
-            Console.print((pointer == currentPointer) + " " + currentPointer.getCount());
+            Console.print("Pointer: " + pointer);
         }
     }
 
@@ -194,17 +221,17 @@ public class SmartImage extends ImageView {
      */
     public synchronized void loadFromURL(String url) {
         assert (url != null);
-        if (path.equals(url)) {
+        if (currentPath.equals(url)) {
             return;
         }
         this.setVisibility(INVISIBLE);
-        this.path = url;
+        this.currentPath = url;
 
         BitmapPointer bitmap = cache.get(url);
         if (bitmap != null && bitmap.get() != null) {
             updateImageBitmap(bitmap);
         } else {
-            loader = new Loader();
+            loader = new Loader(this.currentPath);
             loader.executeOnExecutor(executor);
         }
     }
