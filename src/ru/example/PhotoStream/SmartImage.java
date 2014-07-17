@@ -61,7 +61,7 @@ public class SmartImage extends ImageView {
             BitmapPointer pointer = cache.get(path);
             if (pointer != null && pointer.get() != null) {
                 // Успели =>
-                //bitmap.recycle(); // Наше уже не нужно
+                bitmap.recycle(); // Наше уже не нужно
             } else {
                 // Не успели =>
                 // А не произошло ли у нас ошибки при нашей загрузке?
@@ -73,6 +73,11 @@ public class SmartImage extends ImageView {
                 cache.put(path, pointer); // Поместим новый указатель в кеш
             }
             calcAvailableMemory();
+            // Актуальны ли это загрузчик?
+            if (loader != this) {
+                // Не актуальный => можно ничего не обновлять
+                return;
+            }
             updateImageBitmap(pointer);
             anim(500);
         }
@@ -161,6 +166,19 @@ public class SmartImage extends ImageView {
         }
     }
 
+    public void debug() {
+        Console.print("Image info");
+        Console.print(loader);
+        Console.print(path);
+        Console.print(currentPointer.getCount());
+        BitmapPointer pointer = cache.get(path);
+        if (pointer == null) {
+            Console.print("Not in cache");
+        } else {
+            Console.print((pointer == currentPointer) + " " + currentPointer.getCount());
+        }
+    }
+
     private void anim(int millisec) {
         final Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
         fadeIn.setInterpolator(new LinearInterpolator());
@@ -176,6 +194,9 @@ public class SmartImage extends ImageView {
      */
     public synchronized void loadFromURL(String url) {
         assert (url != null);
+        if (path.equals(url)) {
+            return;
+        }
         this.setVisibility(INVISIBLE);
         this.path = url;
 

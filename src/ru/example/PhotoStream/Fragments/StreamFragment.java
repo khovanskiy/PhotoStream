@@ -56,10 +56,13 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), PhotoActivity.class);
+        /*Intent intent = new Intent(getActivity(), PhotoActivity.class);
         PhotoActivity.setFeed(feed);
         intent.putExtra("position", position);
-        startActivity(intent);
+        startActivity(intent);*/
+        SmartImage image = (SmartImage) view.findViewById(R.id.streamphotoview_imageView);
+        //image.setVisibility(View.GONE);
+        image.debug();
     }
 
     private void loadMorePhotos() {
