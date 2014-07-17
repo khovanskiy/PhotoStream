@@ -167,9 +167,9 @@ public class Photo {
         if (object.has("mark_bonus_count")) {
             current.mark_bonus_count = object.getInt("mark_bonus_count");
         }
-        if (object.has("mark_avg")) {
-            current.mark_avg = object.getDouble("mark_avg");
-        }
+        /*if (object.has("mark_avg")) {
+            current.mark_avg = object.getString("mark_avg");    // output: 5+
+        }*/
         return current;
     }
 
