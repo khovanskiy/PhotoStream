@@ -36,6 +36,9 @@ public class SmartImage extends ImageView {
 
         @Override
         protected Bitmap doInBackground(Void... params) {
+            if (isCancelled()) {
+                return null;
+            }
             Bitmap bitmap = null;
             InputStream inputStream = null;
             try {
@@ -60,6 +63,9 @@ public class SmartImage extends ImageView {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
+            if (isCancelled()) {
+                return;
+            }
             // А не успели ли уже загрузить наше фото до нас?
             BitmapPointer pointer = cache.get(this.path);
             if (pointer != null) {
@@ -79,7 +85,7 @@ public class SmartImage extends ImageView {
                 cache.put(path, pointer); // Поместим новый указатель в кеш
             }
             calcAvailableMemory();
-            // Актуальны ли это загрузчик?
+            // Актуальный ли это загрузчик?
             if (loader != this) {
                 // Не актуальный => можно ничего не обновлять
                 return;
@@ -232,6 +238,9 @@ public class SmartImage extends ImageView {
         if (bitmap != null && bitmap.get() != null) {
             updateImageBitmap(bitmap);
         } else {
+            if (loader != null) {
+                loader.cancel(true);
+            }
             loader = new Loader(this.currentPath);
             loader.executeOnExecutor(executor);
         }
