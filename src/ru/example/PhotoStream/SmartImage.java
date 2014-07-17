@@ -224,6 +224,7 @@ public class SmartImage extends ImageView {
         if (currentPath.equals(url)) {
             return;
         }
+        this.setImageBitmap(null);
         this.setVisibility(INVISIBLE);
         this.currentPath = url;
 
