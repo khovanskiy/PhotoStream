@@ -89,7 +89,7 @@ public class StreamActivity extends ActionBarActivity {
         {
             case R.id.action_upload:
             {
-                Intent intent = new Intent(this, CameraActivity.class);
+                Intent intent = new Intent(this, PhotoTakerActivity.class);
                 startActivity(intent);
             } break;
         }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent" android:layout_weight="1">
+        <SurfaceView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/phototakeractivity_surfaceview" android:layout_gravity="center"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent" android:layout_weight="0.1">
+        <Space
+                android:layout_width="20px"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"/>
+        <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/phototakeractivity_cameraswitch" android:textColor="@android:color/white" android:checked="false"
+                android:layout_gravity="center_horizontal" android:textOff="Back" android:textOn="Front"/>
+        <Space
+                android:layout_width="20px"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/phototakeractivity_takephotobutton" android:layout_gravity="center_horizontal"
+                android:src="@drawable/photocam"
+                android:background="@android:color/black" android:contentDescription="@string/take_photo"/>
+        <Space
+                android:layout_width="20px"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/gallery"
+                android:layout_gravity="center_horizontal" android:contentDescription="Device pictures"
+                android:id="@+id/phototakeractivity_gallerybutton"/>
+        <Space
+                android:layout_width="20px"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"/>
+    </LinearLayout>
+</LinearLayout>
+

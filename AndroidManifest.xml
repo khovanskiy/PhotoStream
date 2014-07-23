@@ -29,14 +29,20 @@
         <activity android:name=".Activities.InitActivity"
                 android:noHistory="true"/>
         <activity android:name=".Activities.StreamActivity"/>
-        <activity android:name=".Activities.PhotoActivity"/>
         <activity android:name=".Activities.AlbumsActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
                     android:value=".Activities.StreamActivity" />
         </activity>
         <activity android:name=".Activities.AlbumActivity"/>
-        <activity android:name=".Activities.CameraActivity"/>
+        <activity android:name=".Activities.PhotoActivity"/>
         <activity android:name=".Activities.UploadActivity"/>
+        <activity android:name="ru.example.PhotoStream.Activities.PhotoTakerActivity"
+                  android:screenOrientation="landscape"
+                  android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity android:name="ru.example.PhotoStream.Activities.PhotoFilteringActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 </manifest>
