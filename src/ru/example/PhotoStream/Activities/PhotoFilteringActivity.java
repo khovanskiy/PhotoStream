@@ -168,9 +168,9 @@ public class PhotoFilteringActivity extends Activity {
             @Override
             public void onClick(View v) {
                 toLoadButton.setEnabled(false);
-                source = new RawBitmap(image);
-                multiFilter.transformOpaqueRaw(source, source);
-                UploadActivity.setPicture(source.toBitmap());
+                RawBitmap rawBitmap = new RawBitmap(image);
+                multiFilter.transformOpaqueRaw(rawBitmap, rawBitmap);
+                UploadActivity.setPicture(rawBitmap.toBitmap());
                 Intent intent = new Intent(context, UploadActivity.class);
                 startActivity(intent);
             }
