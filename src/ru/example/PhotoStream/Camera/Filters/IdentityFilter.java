@@ -1,22 +1,17 @@
 package ru.example.PhotoStream.Camera.Filters;
 
-import android.graphics.Bitmap;
-import android.widget.ImageView;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
-public class IdentityFilter implements PhotoFilter {
+public class IdentityFilter extends TunablePhotoFilter {
     @Override
-    public synchronized void transformOpaqueRaw(RawBitmap bitmap) {
-
+    public void transformOpaqueRaw(RawBitmap source, RawBitmap destination, double strength) {
+        if (source != destination) {
+            System.arraycopy(source.colors, 0, destination.colors, 0, source.width * source.height);
+        }
     }
 
     @Override
-    public synchronized boolean hasPreviewModification() {
-        return true;
-    }
-
-    @Override
-    public synchronized void modifyPreview(ImageView view) {
-
+    public TunableType getType() {
+        return TunableType.Identity;
     }
 }

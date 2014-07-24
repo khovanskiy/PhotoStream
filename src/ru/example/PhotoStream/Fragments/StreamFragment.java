@@ -60,6 +60,9 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         PhotoActivity.setFeed(feed);
         intent.putExtra("position", position);
         startActivity(intent);
+        //SmartImage image = (SmartImage) view.findViewById(R.id.streamphotoview_imageView);
+        //image.setVisibility(View.GONE);
+        //image.debug();
     }
 
     private void loadMorePhotos() {

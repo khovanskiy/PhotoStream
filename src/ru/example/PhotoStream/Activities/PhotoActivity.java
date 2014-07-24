@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -26,9 +27,32 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PhotoActivity extends ActionBarActivity {
+public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
 
-    private class PageAdapter extends FragmentPagerAdapter {
+    @Override
+    public void onPageScrolled(int i, float v, int i2) {
+
+    }
+
+    @Override
+    public void onPageSelected(int i) {
+        Photo photo = photos.get(i);
+        Album album = Album.get(photo.album_id);
+        if (album.albumType == AlbumType.USER) {
+            User user = User.get(album.user_id);
+            this.setTitle(user.name + " " + album.title);
+        } else {
+            Group group = Group.get(album.group_id);
+            this.setTitle(group.name + " " + album.title);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+
+    private class PageAdapter extends FragmentStatePagerAdapter {
 
         public PageAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -64,7 +88,7 @@ public class PhotoActivity extends ActionBarActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.photoactivity_pager);
         PageAdapter photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
-
+        viewPager.setOnPageChangeListener(this);
         viewPager.setCurrentItem(initPosition);
     }
 

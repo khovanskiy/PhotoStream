@@ -35,7 +35,6 @@
     <string name="NoFilter">Без фильтра</string>
     <string name="Negative">Негатив</string>
     <string name="Grayscale">Серые тона</string>
-    <string name="Contrast">Контрастный</string>
     <string name="Sepia">Сепия</string>
     <string name="Polaroid">Поляроид</string>
     <string name="VintageBlackAndWhite">Старинный ч/б</string>
@@ -56,4 +55,11 @@
 <<<<<<< Temporary merge branch 1
     <string name="Toaster">Toaster</string>
     <string name="ColorReduction">Цветовое сокращение</string>
+    <string name="Brightness">Яркость</string>
+    <string name="Contrast">Контраст</string>
+    <string name="Saturation">Насыщенность</string>
+    <string name="DarkRegions">Тени</string>
+    <string name="LightRegions">Светлые участки</string>
+    <string name="take_photo">Take photo</string>
+    <string name="ToLoad">К загрузке</string>
 </resources>
