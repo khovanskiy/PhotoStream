@@ -52,7 +52,6 @@
     <string name="Smooth">Мягкие цвета</string>
     <string name="Kelvin">Kelvin</string>
     <string name="Xpro">XPro</string>
-<<<<<<< Temporary merge branch 1
     <string name="Toaster">Toaster</string>
     <string name="ColorReduction">Цветовое сокращение</string>
     <string name="Brightness">Яркость</string>
@@ -62,4 +61,12 @@
     <string name="LightRegions">Светлые участки</string>
     <string name="take_photo">Take photo</string>
     <string name="ToLoad">К загрузке</string>
+    <string name="likeButtonText">Класс!</string>
+    <string name="RetinexRed">Retinex red</string>
+    <string name="RetinexBlue">Retinex blue</string>
+    <string name="RetinexGreen">Retinex green</string>
+    <string name="GreyWorld">Grey World</string>
+    <string name="WhitePatch">White Patch</string>
+    <string name="GIMP">GIMP filter</string>
+    <string name="NoWhiteBalance">Без баланса белого</string>
 </resources>

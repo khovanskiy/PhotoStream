@@ -8,15 +8,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import ru.example.PhotoStream.Camera.Filters.WhiteBalanceFactory;
 import ru.example.PhotoStream.R;
 import ru.example.PhotoStream.Camera.Filters.MultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilterFactory;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PhotoFilteringActivity extends Activity {
+    private static final int WHITE_BALANCE_PRIORITY = -1;
     private static final int BRIGHTNESS_PRIORITY = 0;
     private static final int CONTRAST_PRIORITY = 1;
     private static final int LIGHT_REGIONS_PRIORITY = 2;
@@ -32,10 +35,14 @@ public class PhotoFilteringActivity extends Activity {
     private Bitmap currentBitmap, nextBitmap;
     private RawBitmap source, destination;
     private ImageView imageView;
-    private Spinner photoFilterSpinner;
+    private Spinner photoFilterSpinner, whiteBalanceSpinner;
     private Button toLoadButton;
-    private TunablePhotoFilter brightness, contrast, saturation, lightRegions, darkRegions, photoFilter;
-    private SeekBar brightnessBar, contrastBar, saturationBar, lightRegionsBar, darkRegionsBar, photoFilterBar;
+    private TunablePhotoFilter brightness, contrast, saturation, lightRegions,
+            darkRegions;
+    private SeekBar brightnessBar, contrastBar, saturationBar, lightRegionsBar,
+            darkRegionsBar, photoFilterBar, whiteBalanceBar;
+    private HashMap<String, TunablePhotoFilter> whiteBalanceFilters = new HashMap<>();
+
     private MultiFilter multiFilter;
 
     private AtomicBoolean continueRefreshing = new AtomicBoolean(false);
@@ -117,7 +124,6 @@ public class PhotoFilteringActivity extends Activity {
         saturation = TunablePhotoFilterFactory.Saturation();
         lightRegions = TunablePhotoFilterFactory.LightRegions();
         darkRegions = TunablePhotoFilterFactory.DarkRegions();
-        photoFilter = TunablePhotoFilterFactory.NoFilter();
         photoFilterBar = (SeekBar) findViewById(R.id.photofilteringactivity_filterbar);
         photoFilterSpinner = (Spinner) findViewById(R.id.photofilteringactivity_filterspinner);
         TunablePhotoFilterFactory.FilterType[] filterTypes = TunablePhotoFilterFactory.FilterType.values();
@@ -125,8 +131,8 @@ public class PhotoFilteringActivity extends Activity {
         for (int i = 0; i < filterTypes.length; i++) {
             filterNames[i] = filterTypes[i].toString(context);
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, filterNames);
-        photoFilterSpinner.setAdapter(adapter);
+        ArrayAdapter<String> photoFilterAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, filterNames);
+        photoFilterSpinner.setAdapter(photoFilterAdapter);
         photoFilterSpinner.setSelection(0);
         photoFilterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -136,6 +142,33 @@ public class PhotoFilteringActivity extends Activity {
                 filter.setStrength(strength);
                 photoFilterBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(filter, 0, 1));
                 multiFilter.changeFilter(PHOTO_FILTER_PRIORITY, filter);
+                refreshImage();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        whiteBalanceSpinner = (Spinner) findViewById(R.id.photofilteringactivity_whitebalancespinner);
+        whiteBalanceBar = (SeekBar) findViewById(R.id.photofilteringactivity_whitebalancebar);
+        WhiteBalanceFactory.WhiteBalanceType[] whiteBalanceTypes = WhiteBalanceFactory.WhiteBalanceType.values();
+        final String[] whiteBalanceNames = new String[whiteBalanceTypes.length];
+        for (int i = 0; i < whiteBalanceTypes.length; i++) {
+            whiteBalanceNames[i] = whiteBalanceTypes[i].toString(context);
+            whiteBalanceFilters.put(whiteBalanceNames[i], WhiteBalanceFactory.byName(context, whiteBalanceNames[i], source));
+        }
+        ArrayAdapter<String> whiteBalanceAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, whiteBalanceNames);
+        whiteBalanceSpinner.setAdapter(whiteBalanceAdapter);
+        whiteBalanceSpinner.setSelection(0);
+        whiteBalanceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TunablePhotoFilter whiteBalanceFilter = whiteBalanceFilters.get(whiteBalanceNames[position]);
+                double strength = whiteBalanceBar.getProgress() * 1.0 / whiteBalanceBar.getMax();
+                whiteBalanceFilter.setStrength(strength);
+                whiteBalanceBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(whiteBalanceFilter, 0, 1));
+                multiFilter.changeFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilter);
                 refreshImage();
             }
 
@@ -156,13 +189,13 @@ public class PhotoFilteringActivity extends Activity {
         multiFilter.changeFilter(BRIGHTNESS_PRIORITY, brightness);
         multiFilter.changeFilter(LIGHT_REGIONS_PRIORITY, lightRegions);
         multiFilter.changeFilter(DARK_REGIONS_PRIORITY, darkRegions);
-        multiFilter.changeFilter(PHOTO_FILTER_PRIORITY, photoFilter);
+        multiFilter.changeFilter(PHOTO_FILTER_PRIORITY, TunablePhotoFilterFactory.NoFilter());
+        multiFilter.changeFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilters.get(getString(R.string.NoWhiteBalance)));
         brightnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(brightness, -1, 1));
         contrastBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(contrast, -1, 1));
         saturationBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(saturation, -1, 1));
         lightRegionsBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(lightRegions, -1, 1));
         darkRegionsBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(darkRegions, -1, 1));
-        photoFilterBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(photoFilter, 0, 1));
         toLoadButton = (Button) findViewById(R.id.photofilteringactivity_toloadbutton);
         toLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
