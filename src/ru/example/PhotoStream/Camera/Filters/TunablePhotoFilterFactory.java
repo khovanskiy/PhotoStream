@@ -443,4 +443,8 @@ public class TunablePhotoFilterFactory {
         };
         return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
     }
+
+    public static TunablePhotoFilter ColorTemperature(Context context) {
+        return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
+    }
 }

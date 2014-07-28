@@ -69,4 +69,5 @@
     <string name="WhitePatch">White Patch</string>
     <string name="GIMP">GIMP filter</string>
     <string name="NoWhiteBalance">Без баланса белого</string>
+    <string name="Temperature">Тепло</string>
 </resources>

@@ -76,6 +76,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/photofilteringactivity_whitebalancebar" android:max="100" android:progress="100" android:indeterminate="false"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/Temperature"
+                    android:id="@+id/photofilteringactivity_temperaturetext" android:layout_gravity="center_horizontal"/>
+            <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/photofilteringactivity_temperaturebar" android:layout_gravity="center_horizontal" android:max="100"
+                    android:progress="50" android:indeterminate="false"/>
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
