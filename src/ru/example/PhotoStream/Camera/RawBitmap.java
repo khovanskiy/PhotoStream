@@ -100,4 +100,8 @@ public class RawBitmap {
     public void fillBitmap(Bitmap bitmap) {
         bitmap.setPixels(colors, 0, width, 0, 0, width, height);
     }
+
+    public void recycle() {
+        colors = null;
+    }
 }

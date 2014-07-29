@@ -228,8 +228,9 @@ public class PhotoTakerActivity extends Activity {
             BitmapFactory.decodeStream(new FileInputStream(file), null, options);
             int currentSize = options.outWidth * options.outHeight;
             int scale = 1;
-            while (currentSize / (scale * scale) > maxImageSize || options.outHeight / scale > maxHeight
-                    || options.outWidth / scale > maxWidth) {
+            while ((currentSize / (scale * scale) > maxImageSize)
+                    ||  (Math.abs(options.outWidth / scale - maxWidth) + Math.abs(options.outHeight / scale - maxHeight)
+                        >= Math.abs(options.outWidth / (scale * 2) - maxWidth) + Math.abs(options.outHeight / (scale * 2) - maxHeight))) {
                 scale *= 2;
             }
             BitmapFactory.Options newOptions = new BitmapFactory.Options();
