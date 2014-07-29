@@ -28,7 +28,7 @@ import java.io.FileNotFoundException;
 public class PhotoTakerActivity extends Activity {
     private static final int NO_CAMERA = -1;
     private static final int SELECT_PICTURE = 1;
-    private static final int MEMORY_SCALE_DOWN = 4;
+    private static final int MEMORY_SCALE_DOWN = 8;
     private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 10;
     private static final int MAX_WIDTH = 1024;
     private static final int MAX_HEIGHT = 1024;
@@ -228,7 +228,7 @@ public class PhotoTakerActivity extends Activity {
             BitmapFactory.decodeStream(new FileInputStream(file), null, options);
             int currentSize = options.outWidth * options.outHeight;
             int scale = 1;
-            while (currentSize / scale > maxImageSize || options.outHeight / scale > maxHeight
+            while (currentSize / (scale * scale) > maxImageSize || options.outHeight / scale > maxHeight
                     || options.outWidth / scale > maxWidth) {
                 scale *= 2;
             }
