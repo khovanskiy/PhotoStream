@@ -95,6 +95,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/photofilteringactivity_filterbar" android:max="100" android:progress="0" android:indeterminate="false"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/photofilteringactivity_mirrorverticallybutton" android:contentDescription="@string/MirrorVertically"
+                        android:src="@drawable/mirror_vert"/>
+                <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/photofilteringactivity_mirrorhorizontallybutton" android:contentDescription="@string/MirrorHorizontally"
+                        android:src="@drawable/mirror_hor"/>
+                <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/photofilteringactivity_rotateclockwisebutton" android:contentDescription="@string/RotateClockwise"
+                        android:focusableInTouchMode="false" android:src="@drawable/sub_black_rotate_cw"/>
+                <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/photofilteringactivity_rotatecounterclockwisebutton" android:contentDescription="@string/RotateCounterclockwise"
+                        android:src="@drawable/sub_black_rotate_ccw"/>
+            </LinearLayout>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

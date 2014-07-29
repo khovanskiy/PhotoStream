@@ -33,7 +33,7 @@ public class PhotoFilteringActivity extends Activity {
     public static Bitmap image = null;
 
     private Context context;
-    private Bitmap currentBitmap, nextBitmap;
+    private Bitmap currentBitmap, currentBitmapRotated, nextBitmap, nextBitmapRotated;
     private RawBitmap source, destination;
     private ImageView imageView;
     private Button toLoadButton;
@@ -47,13 +47,20 @@ public class PhotoFilteringActivity extends Activity {
     private AtomicBoolean taskIsRunning = new AtomicBoolean(false);
 
     private class ImageRefreshTask extends AsyncTask<Void, Void, Void> {
+        private boolean rotated;
 
         @Override
         protected Void doInBackground(Void... params) {
             while (continueRefreshing.get()) {
                 continueRefreshing.set(false);
                 multiFilter.transformOpaqueRaw(source, destination);
-                destination.fillBitmap(nextBitmap);
+                if (destination.width == source.width) {
+                    destination.fillBitmap(nextBitmap);
+                    rotated = false;
+                } else {
+                    destination.fillBitmap(nextBitmapRotated);
+                    rotated = true;
+                }
                 publishProgress();
             }
             taskIsRunning.set(false);
@@ -62,10 +69,17 @@ public class PhotoFilteringActivity extends Activity {
 
         @Override
         protected void onProgressUpdate(Void... v) {
-            imageView.setImageBitmap(nextBitmap);
+            if (rotated) {
+                imageView.setImageBitmap(nextBitmapRotated);
+            } else {
+                imageView.setImageBitmap(nextBitmap);
+            }
             Bitmap tmp = currentBitmap;
             currentBitmap = nextBitmap;
             nextBitmap = tmp;
+            tmp = currentBitmapRotated;
+            currentBitmapRotated = nextBitmapRotated;
+            nextBitmapRotated = tmp;
         }
     }
 
@@ -113,9 +127,11 @@ public class PhotoFilteringActivity extends Activity {
         context = this;
         imageView = (ImageView) findViewById(R.id.photofilteringactivity_imageView);
         currentBitmap = Bitmap.createScaledBitmap(image, image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, false);
-        nextBitmap = Bitmap.createScaledBitmap(image, image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, false);
+        nextBitmap = Bitmap.createBitmap(image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, Bitmap.Config.ARGB_8888);
+        currentBitmapRotated = Bitmap.createBitmap(image.getHeight() / SCALE_DOWN, image.getWidth() / SCALE_DOWN, Bitmap.Config.ARGB_8888);
+        nextBitmapRotated = Bitmap.createBitmap(image.getHeight() / SCALE_DOWN, image.getWidth() / SCALE_DOWN, Bitmap.Config.ARGB_8888);
         source = new RawBitmap(currentBitmap);
-        destination = new RawBitmap(nextBitmap);
+        destination = new RawBitmap(nextBitmap.getWidth(), nextBitmap.getHeight());
         imageView.setImageBitmap(currentBitmap);
         TunablePhotoFilter brightness = TunablePhotoFilterFactory.Brightness();
         TunablePhotoFilter contrast = TunablePhotoFilterFactory.Contrast();
@@ -130,7 +146,7 @@ public class PhotoFilteringActivity extends Activity {
         for (int i = 0; i < filterTypes.length; i++) {
             filterNames[i] = filterTypes[i].toString(context);
         }
-        ArrayAdapter<String> photoFilterAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, filterNames);
+        ArrayAdapter<String> photoFilterAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, filterNames);
         photoFilterSpinner.setAdapter(photoFilterAdapter);
         photoFilterSpinner.setSelection(0);
         photoFilterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -157,7 +173,7 @@ public class PhotoFilteringActivity extends Activity {
             whiteBalanceNames[i] = whiteBalanceTypes[i].toString(context);
             whiteBalanceFilters.put(whiteBalanceNames[i], WhiteBalanceFactory.byName(context, whiteBalanceNames[i], source));
         }
-        ArrayAdapter<String> whiteBalanceAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, whiteBalanceNames);
+        ArrayAdapter<String> whiteBalanceAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, whiteBalanceNames);
         whiteBalanceSpinner.setAdapter(whiteBalanceAdapter);
         whiteBalanceSpinner.setSelection(0);
         whiteBalanceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -203,11 +219,44 @@ public class PhotoFilteringActivity extends Activity {
             @Override
             public void onClick(View v) {
                 toLoadButton.setEnabled(false);
-                RawBitmap rawBitmap = new RawBitmap(image);
-                multiFilter.transformOpaqueRaw(rawBitmap, rawBitmap);
-                UploadActivity.setPicture(rawBitmap.toBitmap());
+                RawBitmap fullSource = new RawBitmap(image);
+                RawBitmap fullDestination = new RawBitmap(image.getWidth(), image.getHeight());
+                multiFilter.transformOpaqueRaw(fullSource, fullDestination);
+                UploadActivity.setPicture(fullDestination.toBitmap());
                 Intent intent = new Intent(context, UploadActivity.class);
                 startActivity(intent);
+            }
+        });
+        ImageButton mirrorVerticallyButton = (ImageButton) findViewById(R.id.photofilteringactivity_mirrorverticallybutton);
+        mirrorVerticallyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                multiFilter.changeOrientation(MultiFilter.OrientationChange.MirrorVertically);
+                refreshImage();
+            }
+        });
+        ImageButton mirrorHorizontallyButton = (ImageButton) findViewById(R.id.photofilteringactivity_mirrorhorizontallybutton);
+        mirrorHorizontallyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                multiFilter.changeOrientation(MultiFilter.OrientationChange.MirrorHorizontally);
+                refreshImage();
+            }
+        });
+        ImageButton rotateClockwiseButton = (ImageButton) findViewById(R.id.photofilteringactivity_rotateclockwisebutton);
+        rotateClockwiseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                multiFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
+                refreshImage();
+            }
+        });
+        ImageButton rotateCounterclockwiseButton = (ImageButton) findViewById(R.id.photofilteringactivity_rotatecounterclockwisebutton);
+        rotateCounterclockwiseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                multiFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
+                refreshImage();
             }
         });
     }

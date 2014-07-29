@@ -51,6 +51,12 @@ public class RawBitmap {
         }
     }
 
+    public RawBitmap(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.colors = new int[width * height];
+    }
+    /*
     public void fillFrom(byte[] yuv, int width, int height) {
         final int frameSize = width * height;
         int y, u, v, r, g, b;
@@ -69,7 +75,7 @@ public class RawBitmap {
                 this.colors[i * width + j] = Color.argb(255, r, g, b);
             }
         }
-    }
+    }/**/
 
     /**
      * Creates raw bitmap from standard bitmap.

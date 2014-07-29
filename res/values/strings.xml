@@ -70,4 +70,8 @@
     <string name="GIMP">GIMP filter</string>
     <string name="NoWhiteBalance">Без баланса белого</string>
     <string name="Temperature">Тепло</string>
+    <string name="MirrorVertically">Mirror Vertically</string>
+    <string name="MirrorHorizontally">Mirror Horizontally</string>
+    <string name="RotateClockwise">Rotate Clockwise</string>
+    <string name="RotateCounterclockwise">Rotate Counterclockwise</string>
 </resources>
