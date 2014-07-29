@@ -28,7 +28,7 @@ public class PhotoFilteringActivity extends Activity {
     private static final int SATURATION_PRIORITY = 6;
     private static final int PHOTO_FILTER_PRIORITY = 7;
 
-    private static final int SCALE_DOWN = 4;
+    private static final int SCALE_DOWN = 2;
 
     public static Bitmap image = null;
 

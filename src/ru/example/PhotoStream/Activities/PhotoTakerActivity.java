@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.Camera;
@@ -20,11 +21,18 @@ import android.widget.Switch;
 import android.widget.Toast;
 import ru.example.PhotoStream.R;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class PhotoTakerActivity extends Activity {
     private static final int NO_CAMERA = -1;
     private static final int SELECT_PICTURE = 1;
+    private static final int MEMORY_SCALE_DOWN = 4;
+    private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 10;
+    private static final int MAX_WIDTH = 1024;
+    private static final int MAX_HEIGHT = 1024;
 
-    private ImageButton galleryButton, takePhotoButton;
     private Switch cameraSwitch;
     private Camera camera = null;
     private SurfaceView surfaceView;
@@ -85,7 +93,7 @@ public class PhotoTakerActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.phototakeractivity);
         context = this;
-        galleryButton = (ImageButton) findViewById(R.id.phototakeractivity_gallerybutton);
+        ImageButton galleryButton = (ImageButton) findViewById(R.id.phototakeractivity_gallerybutton);
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +104,7 @@ public class PhotoTakerActivity extends Activity {
                         "Select Picture"), SELECT_PICTURE);
             }
         });
-        takePhotoButton = (ImageButton) findViewById(R.id.phototakeractivity_takephotobutton);
+        ImageButton takePhotoButton = (ImageButton) findViewById(R.id.phototakeractivity_takephotobutton);
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +175,8 @@ public class PhotoTakerActivity extends Activity {
                 Toast toast = Toast.makeText(context, selectedImagePath, Toast.LENGTH_LONG);
                 toast.show();
                 try {
-                    PhotoFilteringActivity.image = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+                    File image = new File(selectedImagePath);
+                    PhotoFilteringActivity.image = decodeFile(image, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT);
                     Intent intent = new Intent(context, PhotoFilteringActivity.class);
                     context.startActivity(intent);
                 } catch (Exception ignored) {
@@ -205,5 +214,28 @@ public class PhotoTakerActivity extends Activity {
         if (currentCameraId != NO_CAMERA) {
             startCamera(currentCameraId);
         }
+    }
+
+    private static int getMaxImageSize() {
+        long totalMemory = Runtime.getRuntime().maxMemory();
+        return (int)(totalMemory / (MEMORY_SCALE_DOWN * PIXEL_TOTAL_OVERHEAD_IN_BYTES));
+    }
+
+    private static Bitmap decodeFile(File file, int maxImageSize, int maxWidth, int maxHeight) {
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(file), null, options);
+            int currentSize = options.outWidth * options.outHeight;
+            int scale = 1;
+            while (currentSize / scale > maxImageSize || options.outHeight / scale > maxHeight
+                    || options.outWidth / scale > maxWidth) {
+                scale *= 2;
+            }
+            BitmapFactory.Options newOptions = new BitmapFactory.Options();
+            newOptions.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(file), null, newOptions);
+        } catch (FileNotFoundException ignored) {}
+        return null;
     }
 }
