@@ -28,8 +28,8 @@ import java.io.FileNotFoundException;
 public class PhotoTakerActivity extends Activity {
     private static final int NO_CAMERA = -1;
     private static final int SELECT_PICTURE = 1;
-    private static final int MEMORY_SCALE_DOWN = 8;
-    private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 10;
+    private static final int MEMORY_SCALE_DOWN = 4;
+    private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 22;
     private static final int MAX_WIDTH = 1024;
     private static final int MAX_HEIGHT = 1024;
 
