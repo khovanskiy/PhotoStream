@@ -1,6 +1,7 @@
 package ru.example.PhotoStream.Activities;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,6 +25,7 @@ import ru.example.PhotoStream.R;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class PhotoTakerActivity extends Activity {
     private static final int NO_CAMERA = -1;
@@ -99,6 +101,7 @@ public class PhotoTakerActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent,
                         "Select Picture"), SELECT_PICTURE);
@@ -173,29 +176,17 @@ public class PhotoTakerActivity extends Activity {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-                String selectedImagePath = getPath(selectedImageUri);
-                Toast toast = Toast.makeText(context, selectedImagePath, Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, selectedImageUri.toString(), Toast.LENGTH_LONG);
                 toast.show();
                 try {
-                    File image = new File(selectedImagePath);
-                    PhotoFilteringActivity.setBitmap(decodeFile(image, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                    PhotoFilteringActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri,
+                            getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
                     Intent intent = new Intent(context, PhotoFilteringActivity.class);
                     context.startActivity(intent);
                 } catch (Exception ignored) {
-
                 }
             }
         }
-    }
-
-    public String getPath(Uri uri) {
-        String[] filePathColumn = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getContentResolver().query(uri, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return picturePath;
     }
 
     @Override
@@ -217,11 +208,11 @@ public class PhotoTakerActivity extends Activity {
         return (int)(totalMemory / (MEMORY_SCALE_DOWN * PIXEL_TOTAL_OVERHEAD_IN_BYTES));
     }
 
-    private static Bitmap decodeFile(File file, int maxImageSize, int maxWidth, int maxHeight) {
+    private static Bitmap decodeFile(ContentResolver resolver, Uri uri, int maxImageSize, int maxWidth, int maxHeight) {
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(file), null, options);
+            BitmapFactory.decodeStream(resolver.openInputStream(uri), null, options);
             int currentSize = options.outWidth * options.outHeight;
             int scale = 1;
             while ((currentSize / (scale * scale) > maxImageSize)
@@ -231,7 +222,7 @@ public class PhotoTakerActivity extends Activity {
             }
             BitmapFactory.Options newOptions = new BitmapFactory.Options();
             newOptions.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(file), null, newOptions);
+            return BitmapFactory.decodeStream(resolver.openInputStream(uri), null, newOptions);
         } catch (FileNotFoundException ignored) {}
         return null;
     }
