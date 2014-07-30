@@ -74,4 +74,13 @@
     <string name="MirrorHorizontally">Mirror Horizontally</string>
     <string name="RotateClockwise">Rotate Clockwise</string>
     <string name="RotateCounterclockwise">Rotate Counterclockwise</string>
+    <string name="IncandescentLamp">Лампа накаливания</string>
+    <string name="Sunrise">Восход</string>
+    <string name="FluorescentLampWhite">Люминесцентная лампа (белый)</string>
+    <string name="Midday">Полдень</string>
+    <string name="Cloudy">Облака</string>
+    <string name="Twilight">Сумерки</string>
+    <string name="PolarSky">Полярное небо</string>
+    <string name="FluorescentLampDay">Лампа дневного света</string>
+    <string name="ClearDay">Ясный день</string>
 </resources>
