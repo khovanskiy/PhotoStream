@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 public class PhotoTakerActivity extends Activity {
     private static final int NO_CAMERA = -1;
@@ -112,16 +113,31 @@ public class PhotoTakerActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (camera != null) {
-                    camera.takePicture(null, null, new Camera.PictureCallback() {
+                    Camera.Parameters parameters = camera.getParameters();
+                    List<String> supportedFocusModes = parameters.getSupportedFocusModes();
+                    if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                    } else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                    }
+                    camera.setParameters(parameters);
+                    camera.autoFocus(new Camera.AutoFocusCallback() {
                         @Override
-                        public void onPictureTaken(byte[] data, Camera camera) {
-                            Toast toast = Toast.makeText(context, "The photo has been taken", Toast.LENGTH_LONG);
-                            toast.show();
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                            PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                            bitmap.recycle();
-                            Intent intent = new Intent(context, PhotoFilteringActivity.class);
-                            context.startActivity(intent);
+                        public void onAutoFocus(boolean success, Camera camera) {
+                            if (success) {
+                                camera.takePicture(null, null, new Camera.PictureCallback() {
+                                    @Override
+                                    public void onPictureTaken(byte[] data, Camera camera) {
+                                        Toast toast = Toast.makeText(context, "The photo has been taken", Toast.LENGTH_LONG);
+                                        toast.show();
+                                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                                        PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                                        bitmap.recycle();
+                                        Intent intent = new Intent(context, PhotoFilteringActivity.class);
+                                        context.startActivity(intent);
+                                    }
+                                });
+                            }
                         }
                     });
                 }
@@ -144,24 +160,18 @@ public class PhotoTakerActivity extends Activity {
         surfaceView = (SurfaceView) findViewById(R.id.phototakeractivity_surfaceview);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            private boolean used = false;
-
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-
+                cameraSwitch.setEnabled(true);
+                if (cameraSwitch.isChecked()) {
+                    setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
+                } else {
+                    setCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
+                }
             }
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-                if (!used) {
-                    used = false;
-                    cameraSwitch.setEnabled(true);
-                    if (cameraSwitch.isChecked()) {
-                        setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-                    } else {
-                        setCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
-                    }
-                }
             }
 
             @Override
