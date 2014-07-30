@@ -30,7 +30,11 @@ public class PhotoFilteringActivity extends Activity {
 
     private static final int SCALE_DOWN = 2;
 
-    public static Bitmap image = null;
+    private static Bitmap image = null;
+
+    public static void setBitmap(Bitmap bitmap) {
+        image = bitmap;
+    }
 
     private Context context;
     private Bitmap currentBitmap, currentBitmapRotated, nextBitmap, nextBitmapRotated;

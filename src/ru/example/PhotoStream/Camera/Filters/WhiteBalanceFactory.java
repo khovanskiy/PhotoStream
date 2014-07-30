@@ -26,12 +26,12 @@ public class WhiteBalanceFactory {
                 return context.getString(R.string.GreyWorld);
             }
         },
-        WhitePatch {
+        /*WhitePatch {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.WhitePatch);
             }
-        },
+        },/**/
         GIMP {
             @Override
             public String toString(Context context) {

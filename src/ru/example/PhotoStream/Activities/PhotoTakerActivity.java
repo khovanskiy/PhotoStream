@@ -114,7 +114,9 @@ public class PhotoTakerActivity extends Activity {
                         public void onPictureTaken(byte[] data, Camera camera) {
                             Toast toast = Toast.makeText(context, "The photo has been taken", Toast.LENGTH_LONG);
                             toast.show();
-                            PhotoFilteringActivity.image = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                            PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                            bitmap.recycle();
                             Intent intent = new Intent(context, PhotoFilteringActivity.class);
                             context.startActivity(intent);
                         }
@@ -176,7 +178,7 @@ public class PhotoTakerActivity extends Activity {
                 toast.show();
                 try {
                     File image = new File(selectedImagePath);
-                    PhotoFilteringActivity.image = decodeFile(image, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT);
+                    PhotoFilteringActivity.setBitmap(decodeFile(image, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
                     Intent intent = new Intent(context, PhotoFilteringActivity.class);
                     context.startActivity(intent);
                 } catch (Exception ignored) {
@@ -238,5 +240,16 @@ public class PhotoTakerActivity extends Activity {
             return BitmapFactory.decodeStream(new FileInputStream(file), null, newOptions);
         } catch (FileNotFoundException ignored) {}
         return null;
+    }
+
+    private static Bitmap scaleBitmapDown(Bitmap bitmap, int maxImageSize, int maxWidth, int maxHeight) {
+        int currentSize = bitmap.getWidth() * bitmap.getHeight();
+        int scale = 1;
+        while ((currentSize / (scale * scale) > maxImageSize)
+                ||  (Math.abs(bitmap.getWidth() / scale - maxWidth) + Math.abs(bitmap.getHeight() / scale - maxHeight)
+                >= Math.abs(bitmap.getWidth() / (scale * 2) - maxWidth) + Math.abs(bitmap.getHeight() / (scale * 2) - maxHeight))) {
+            scale *= 2;
+        }
+        return Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, true);
     }
 }
