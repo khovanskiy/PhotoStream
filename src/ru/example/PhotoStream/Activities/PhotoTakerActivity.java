@@ -22,8 +22,6 @@ import android.widget.Switch;
 import android.widget.Toast;
 import ru.example.PhotoStream.R;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
@@ -112,6 +110,7 @@ public class PhotoTakerActivity extends Activity {
         takePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cameraSwitch.setEnabled(false);
                 if (camera != null) {
                     Camera.Parameters parameters = camera.getParameters();
                     List<String> supportedFocusModes = parameters.getSupportedFocusModes();
@@ -124,6 +123,7 @@ public class PhotoTakerActivity extends Activity {
                     camera.autoFocus(new Camera.AutoFocusCallback() {
                         @Override
                         public void onAutoFocus(boolean success, Camera camera) {
+                            cameraSwitch.setEnabled(true);
                             if (success) {
                                 camera.takePicture(null, null, new Camera.PictureCallback() {
                                     @Override
@@ -132,7 +132,7 @@ public class PhotoTakerActivity extends Activity {
                                         toast.show();
                                         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                                         PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                                        bitmap.recycle();
+                                        //bitmap.recycle();
                                         Intent intent = new Intent(context, PhotoFilteringActivity.class);
                                         context.startActivity(intent);
                                     }

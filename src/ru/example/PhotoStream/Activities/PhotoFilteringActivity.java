@@ -226,9 +226,9 @@ public class PhotoFilteringActivity extends Activity {
                 RawBitmap fullSource = new RawBitmap(image);
                 RawBitmap fullDestination = new RawBitmap(image.getWidth(), image.getHeight());
                 multiFilter.transformOpaqueRaw(fullSource, fullDestination);
-                fullSource.recycle();
+                //fullSource.recycle();
                 UploadActivity.setPicture(fullDestination.toBitmap());
-                fullDestination.recycle();
+                //fullDestination.recycle();
                 Intent intent = new Intent(context, UploadActivity.class);
                 startActivity(intent);
             }
