@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-        >
+              android:layout_height="fill_parent" android:orientation="horizontal">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:layout_height="fill_parent" android:layout_weight="1">
+            android:layout_height="fill_parent" android:layout_weight="1" android:background="@android:color/black"
+            android:layout_gravity="center">
         <SurfaceView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -14,41 +14,42 @@
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent" android:layout_weight="0.1">
-        <Space
-                android:layout_width="20px"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"/>
-        <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/phototakeractivity_cameraswitch" android:textColor="@android:color/white" android:checked="false"
-                android:layout_gravity="center_horizontal" android:textOff="Back" android:textOn="Front"/>
-        <Space
-                android:layout_width="20px"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"/>
-        <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/phototakeractivity_takephotobutton" android:layout_gravity="center_horizontal"
-                android:src="@drawable/photocam"
-                android:background="@android:color/black" android:contentDescription="@string/take_photo"/>
-        <Space
-                android:layout_width="20px"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"/>
-        <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gallery"
-                android:layout_gravity="center_horizontal" android:contentDescription="Device pictures"
-                android:id="@+id/phototakeractivity_gallerybutton"/>
-        <Space
-                android:layout_width="20px"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"/>
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" android:background="@android:color/background_light"
+            android:minWidth="100dp">
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp" android:layout_weight="1" android:layout_gravity="center">
+            <ImageButton android:layout_width="fill_parent" android:layout_height="fill_parent"
+                         android:id="@+id/phototakeractivity_cameratogglebutton" android:layout_gravity="center"
+                         android:src="@drawable/camera_toggle_thumb"
+                         android:scaleType="fitCenter" android:background="@android:color/transparent"
+                         android:contentDescription="@string/take_photo" android:padding="5dp"/>
+        </FrameLayout>
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp" android:layout_weight="1" android:padding="5dp"
+                android:layout_gravity="center">
+            <ImageButton
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:id="@+id/phototakeractivity_takephotobutton" android:layout_gravity="center"
+                    android:src="@drawable/camerashot" android:background="@android:color/white"
+                    android:contentDescription="@string/take_photo"
+                    android:scaleType="center"/>
+        </FrameLayout>
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="0dp" android:layout_weight="1" android:layout_gravity="center"
+                android:padding="5dp">
+            <ImageButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/ic_menu_more"
+                    android:layout_gravity="center" android:contentDescription="Device pictures"
+                    android:id="@+id/phototakeractivity_gallerybutton" android:background="@android:color/white"
+                    android:scaleType="center"/>
+        </FrameLayout>
     </LinearLayout>
 </LinearLayout>
 
