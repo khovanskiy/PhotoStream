@@ -4,12 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import ru.example.PhotoStream.Console;
 
 public class ColorCurveFactory {
     public static ColorCurve createFromImage(Context context, int resID) {
         final int[] r = new int[256], g = new int[256], b = new int[256];
         Bitmap bm = BitmapFactory.decodeResource(context.getResources(), resID);
-        if (bm.getHeight() == 1) {
+        Console.print("Try to pick up resource = " + resID + " " + bm + " " + bm.getWidth() + " " + bm.getHeight());
             int[] colors = new int[256];
             bm.getPixels(colors, 0, 256, 0, 0, 256, 1);
             for (int i = 0; i < 256; i++) {
@@ -17,7 +18,6 @@ public class ColorCurveFactory {
                 g[i] = Color.green(colors[i]);
                 b[i] = Color.blue(colors[i]);
             }
-        }
         return new ColorCurve() {
             @Override
             public void fillColors(int[] red, int[] green, int[] blue) {

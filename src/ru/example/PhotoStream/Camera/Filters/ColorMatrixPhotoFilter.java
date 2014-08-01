@@ -6,10 +6,10 @@ import ru.example.PhotoStream.Camera.RawBitmap;
 
 public class ColorMatrixPhotoFilter extends TunablePhotoFilter {
 
-    private ColorMatrix colorMatrix;
+    private float[] m;
 
-    public ColorMatrixPhotoFilter(ColorMatrix colorMatrix) {
-        this.colorMatrix = colorMatrix;
+    public ColorMatrixPhotoFilter(float[] m) {
+        this.m = m;
         setStrength(0);
     }
 
@@ -17,7 +17,6 @@ public class ColorMatrixPhotoFilter extends TunablePhotoFilter {
     public void transformOpaqueRaw(RawBitmap source, RawBitmap destination, double strength) {
         int c, a0, r0, g0, b0;
         float a1, r1, g1, b1;
-        float[] m = colorMatrix.getArray();
         int imageSize = source.height * source.width;
         for (int i = 0; i < imageSize; i++) {
             c = source.colors[i];
