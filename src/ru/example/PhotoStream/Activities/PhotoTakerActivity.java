@@ -11,18 +11,11 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.Toast;
 import ru.example.PhotoStream.R;
 
 import java.io.FileNotFoundException;
-<<<<<<< HEAD
-import java.io.InputStream;
-import java.util.List;
-=======
->>>>>>> origin/final
 
 public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
     private static final int NO_CAMERA = -1;
@@ -98,80 +91,6 @@ public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callba
         ImageButton galleryButton = (ImageButton) findViewById(R.id.phototakeractivity_gallerybutton);
         galleryButton.setOnClickListener(this);
         ImageButton takePhotoButton = (ImageButton) findViewById(R.id.phototakeractivity_takephotobutton);
-<<<<<<< HEAD
-        takePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cameraSwitch.setEnabled(false);
-                if (camera != null) {
-                    Camera.Parameters parameters = camera.getParameters();
-                    List<String> supportedFocusModes = parameters.getSupportedFocusModes();
-                    if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
-                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-                    } else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                        parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-                    }
-                    camera.setParameters(parameters);
-                    camera.autoFocus(new Camera.AutoFocusCallback() {
-                        @Override
-                        public void onAutoFocus(boolean success, Camera camera) {
-                            cameraSwitch.setEnabled(true);
-                            if (success) {
-                                camera.takePicture(null, null, new Camera.PictureCallback() {
-                                    @Override
-                                    public void onPictureTaken(byte[] data, Camera camera) {
-                                        Toast toast = Toast.makeText(context, "The photo has been taken", Toast.LENGTH_LONG);
-                                        toast.show();
-                                        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                        PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                                        //bitmap.recycle();
-                                        Intent intent = new Intent(context, PhotoFilteringActivity.class);
-                                        context.startActivity(intent);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            }
-        });
-        cameraSwitch = (Switch) findViewById(R.id.phototakeractivity_cameraswitch);
-        cameraSwitch.setTextColor(Color.WHITE);
-        cameraSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-                } else {
-                    setCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
-                }
-            }
-        });
-        cameraSwitch.setEnabled(false);
-        currentCameraId = NO_CAMERA;
-        surfaceView = (SurfaceView) findViewById(R.id.phototakeractivity_surfaceview);
-        surfaceHolder = surfaceView.getHolder();
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                cameraSwitch.setEnabled(true);
-                if (cameraSwitch.isChecked()) {
-                    setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-                } else {
-                    setCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
-                }
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
-            }
-        });
-=======
         takePhotoButton.setOnClickListener(this);
         ImageButton cameraToggle = (ImageButton) findViewById(R.id.phototakeractivity_cameratogglebutton);
         cameraToggle.setOnClickListener(this);
@@ -180,7 +99,6 @@ public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callba
         surfaceView = (SurfaceView) findViewById(R.id.phototakeractivity_surfaceview);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
->>>>>>> origin/final
     }
 
     @Override
