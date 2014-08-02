@@ -27,6 +27,8 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        setRetainInstance(true);
+
         api = Odnoklassniki.getInstance(getActivity());
 
         feed = new Feed(api);
