@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
 import ru.example.PhotoStream.Camera.Filters.WhiteBalanceFactory;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 import ru.example.PhotoStream.Camera.Filters.MultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilter;
@@ -129,6 +130,7 @@ public class PhotoFilteringActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photofilteringactivity);
         context = this;
+        Console.print("Filtering photo size = " + image.getWidth() + " " + image.getHeight());
         imageView = (ImageView) findViewById(R.id.photofilteringactivity_imageView);
         currentBitmap = Bitmap.createScaledBitmap(image, image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, false);
         nextBitmap = Bitmap.createBitmap(image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, Bitmap.Config.ARGB_8888);

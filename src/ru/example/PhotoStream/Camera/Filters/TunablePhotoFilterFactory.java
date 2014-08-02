@@ -2,6 +2,7 @@ package ru.example.PhotoStream.Camera.Filters;
 
 import android.content.Context;
 import android.graphics.ColorMatrix;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.Random;
@@ -302,7 +303,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, -1f, 0, 255,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Sepia() {
@@ -312,7 +313,7 @@ public class TunablePhotoFilterFactory {
                 0.272f, 0.534f, 0.131f, 0, 0,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Polaroid() {
@@ -322,7 +323,7 @@ public class TunablePhotoFilterFactory {
                 -0.016f, -0.016f, 1.483f, 0, 0,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter VintageBlackAndWhite() {
@@ -332,7 +333,7 @@ public class TunablePhotoFilterFactory {
                 0.75f, 0.75f, 0.75f, 0, 0,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Grayscale() {
@@ -342,7 +343,7 @@ public class TunablePhotoFilterFactory {
                 0.33f, 0.59f, 0.11f, 0, 0,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Hudson() {
@@ -352,7 +353,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, 1f, 0, 0,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Amaro() {
@@ -362,7 +363,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, 0.902f, 0, 25,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Nashville() {
@@ -372,7 +373,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, 0.565f, 0, 65,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Rise() {
@@ -382,7 +383,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, 0.875f, 0, 32,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Valencia() {
@@ -392,7 +393,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, 0.804f, 0, 28,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Walden() {
@@ -402,7 +403,7 @@ public class TunablePhotoFilterFactory {
                 0f, 0f, 0.533f, 0, 90,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter Sierra(Context context) {
@@ -410,6 +411,7 @@ public class TunablePhotoFilterFactory {
     }
 
     public static TunablePhotoFilter Y1977(Context context) {
+        Console.print("Create Y1977");
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.y1977map));
     }
 
@@ -426,6 +428,7 @@ public class TunablePhotoFilterFactory {
     }
 
     public static TunablePhotoFilter Xpro(Context context) {
+        Console.print("Create XPRO");
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.xpro_map));
     }
 
@@ -441,7 +444,7 @@ public class TunablePhotoFilterFactory {
                 rand.nextFloat() / 2, rand.nextFloat() / 2, rand.nextFloat(), 0, rand.nextInt(100) - 50,
                 0, 0, 0, 1, 0
         };
-        return new ColorMatrixPhotoFilter(new ColorMatrix(matrix));
+        return new ColorMatrixPhotoFilter(matrix);
     }
 
     public static TunablePhotoFilter ColorTemperature(Context context) {
