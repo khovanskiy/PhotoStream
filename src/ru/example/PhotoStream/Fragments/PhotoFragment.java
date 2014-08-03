@@ -103,6 +103,9 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
             dateTime.setText(calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
         }
 
+        TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
+        description.setText(photo.text);
+
         likesCount = (TextView) viewLayout.findViewById(R.id.photoactivity_page_likescount);
         likesCount.setText(photo.like_count + "");
 

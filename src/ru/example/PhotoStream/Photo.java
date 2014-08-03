@@ -12,6 +12,8 @@ public class Photo {
      */
     public String id = "";
 
+    public String text = "";
+
     /**
      * Creation time in milliseconds.
      */
@@ -127,6 +129,9 @@ public class Photo {
             current = Photo.get(object.getString("id"));
         } else {
             throw new JSONException("User object does not have ID");
+        }
+        if (object.has("text")) {
+            current.text = object.getString("text");
         }
         if (object.has("created_ms")) {
             current.created_ms = object.getLong("created_ms");
