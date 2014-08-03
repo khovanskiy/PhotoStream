@@ -60,7 +60,7 @@ public class Photo {
     /**
      * Likes' count.
      */
-    public String like_count = "";
+    public int like_count = 0;
 
     /**
      * Shows if the user has already liked this photo.
@@ -154,6 +154,9 @@ public class Photo {
         }
         if (object.has("liked_it")) {
             current.liked_it = object.getBoolean("liked_it");
+        }
+        if (object.has("like_count")) {
+            current.like_count = object.getInt("like_count");
         }
         if (object.has("comments_count")) {
             current.comments_count = object.getInt("comments_count");
