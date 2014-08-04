@@ -59,16 +59,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+<<<<<<< HEAD
       <file leaf-file-name="UploadActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/UploadActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="528" max-vertical-offset="1819">
               <caret line="77" column="37" selection-start-line="77" selection-start-column="37" selection-end-line="77" selection-end-column="37" />
+=======
+      <file leaf-file-name="Feed.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Feed.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1298" max-vertical-offset="2640">
+              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="uploadactivity.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/res/layout/uploadactivity.xml">
           <provider selected="true" editor-type-id="android-designer">
@@ -77,11 +86,19 @@
           <provider editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+=======
+      <file leaf-file-name="StreamFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="3168">
+              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -97,14 +114,25 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="374" max-vertical-offset="1836">
               <caret line="22" column="78" selection-start-line="22" selection-start-column="72" selection-end-line="22" selection-end-column="72" />
+=======
+      <file leaf-file-name="photoactivity_page.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/photoactivity_page.xml">
+          <provider selected="true" editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1034" max-vertical-offset="2376">
+              <caret line="61" column="12" selection-start-line="61" selection-start-column="12" selection-end-line="61" selection-end-column="12" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotosAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotosAdapter.java">
+      <file leaf-file-name="PhotoFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/PhotoFragment.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1394">
               <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding />
@@ -117,11 +145,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="2040">
               <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+=======
+            <state vertical-scroll-proportion="0.0" vertical-offset="2233" max-vertical-offset="3146">
+              <caret line="120" column="63" selection-start-line="120" selection-start-column="52" selection-end-line="120" selection-end-column="52" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="EventDispatcher.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/EventDispatcher.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -137,26 +170,43 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="2448">
               <caret line="41" column="30" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+=======
+      <file leaf-file-name="PhotoFilteringActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoFilteringActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4529" max-vertical-offset="5456">
+              <caret line="141" column="28" selection-start-line="141" selection-start-column="28" selection-end-line="141" selection-end-column="28" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TunablePhotoFilterFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilterFactory.java">
+      <file leaf-file-name="PhotoTakerActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0" vertical-offset="7038" max-vertical-offset="7803">
               <caret line="414" column="61" selection-start-line="414" selection-start-column="61" selection-end-line="414" selection-end-column="61" />
+=======
+            <state vertical-scroll-proportion="0.41603053" vertical-offset="2994" max-vertical-offset="4862">
+              <caret line="163" column="22" selection-start-line="163" selection-start-column="22" selection-end-line="163" selection-end-column="40" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TunablePhotoFilter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilter.java">
+      <file leaf-file-name="SmartImage.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="765">
               <caret line="12" column="32" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+=======
+            <state vertical-scroll-proportion="0.0" vertical-offset="3938" max-vertical-offset="6094">
+              <caret line="179" column="23" selection-start-line="179" selection-start-column="23" selection-end-line="179" selection-end-column="23" />
+>>>>>>> origin/final
               <folding />
             </state>
           </provider>
@@ -177,17 +227,13 @@
       <list>
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/User.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/InitActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/PhotoFragment.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/SharedPointer.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Console.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ImageCache.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/BitmapLruCache.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/IResource.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ResourceLruCache.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotosAdapter.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/res/layout/photofilteringactivity.xml" />
@@ -196,7 +242,6 @@
         <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/WhiteBalanceFactory.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/CameraPreview.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/phototakeractivity.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoFilteringActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilter.java" />
@@ -204,7 +249,17 @@
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilterFactory.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorCurveFactory.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+=======
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/ResizableImageView.java" />
+        <option value="$PROJECT_DIR$/res/layout/photoactivity_page.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/PhotoFragment.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java" />
+>>>>>>> origin/final
       </list>
     </option>
   </component>
@@ -239,8 +294,13 @@
       <sortByType />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="Scope" />
       <pane id="PackagesPane" />
+=======
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+>>>>>>> origin/final
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -274,6 +334,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Fragments" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -466,19 +548,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -504,6 +573,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -613,12 +695,17 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36525613" sideWeight="0.2796875" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32662538" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35448918" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32756758" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36525613" sideWeight="0.7203125" order="7" side_tool="false" content_ui="tabs" />
+>>>>>>> origin/final
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -668,6 +755,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="765">
@@ -746,6 +834,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> origin/final
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/IResource.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.037478704" vertical-offset="0" max-vertical-offset="587">
@@ -757,6 +847,7 @@
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+<<<<<<< HEAD
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18803419" vertical-offset="0" max-vertical-offset="819">
           <caret line="7" column="87" selection-start-line="7" selection-start-column="87" selection-end-line="7" selection-end-column="112" />
@@ -764,16 +855,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/AlbumsFragment.java">
+=======
+>>>>>>> origin/final
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1056" max-vertical-offset="2882">
-          <caret line="29" column="33" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1616" max-vertical-offset="4158">
-          <caret line="90" column="29" selection-start-line="90" selection-start-column="29" selection-end-line="90" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.18803419" vertical-offset="0" max-vertical-offset="819">
+          <caret line="7" column="87" selection-start-line="7" selection-start-column="87" selection-end-line="7" selection-end-column="112" />
         </state>
       </provider>
     </entry>
@@ -795,13 +881,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="986">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="1768">
-          <caret line="42" column="22" selection-start-line="24" selection-start-column="12" selection-end-line="42" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -834,6 +913,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/res/layout/photoactivity_page.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -863,6 +943,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> origin/final
     <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="970" max-vertical-offset="1479">
@@ -878,6 +960,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/res/layout/photofilteringactivity.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -886,6 +969,12 @@
         <state vertical-scroll-proportion="0.2504065" vertical-offset="0" max-vertical-offset="3234">
           <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
           <folding />
+=======
+    <entry file="file://D:/android-sdk/sdk/sources/android-19/android/view/SurfaceHolder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4097222" vertical-offset="2110" max-vertical-offset="6006">
+          <caret line="129" column="16" selection-start-line="129" selection-start-column="16" selection-end-line="129" selection-end-column="16" />
+>>>>>>> origin/final
         </state>
       </provider>
     </entry>
@@ -909,6 +998,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/authactivity.xml">
+<<<<<<< HEAD
+=======
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+>>>>>>> origin/final
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="704">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -916,6 +1011,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1777" max-vertical-offset="5258">
@@ -923,6 +1019,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> origin/final
     <entry file="file://$PROJECT_DIR$/res/layout/phototakeractivity.xml">
       <provider selected="true" editor-type-id="android-designer">
         <state />
@@ -991,7 +1089,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7781" max-vertical-offset="8932">
           <caret line="414" column="61" selection-start-line="414" selection-start-column="61" selection-end-line="414" selection-end-column="61" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1020,7 +1117,115 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="220" max-vertical-offset="1958">
           <caret line="22" column="78" selection-start-line="22" selection-start-column="72" selection-end-line="22" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/EventDispatcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1054" max-vertical-offset="1672">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotosAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="1364">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/android-support-v4.jar!/android/support/v4/app/Fragment.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17303823" vertical-offset="2620" max-vertical-offset="5962">
+          <caret line="124" column="70" selection-start-line="124" selection-start-column="64" selection-end-line="124" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/photoactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/photofilteringactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="154" max-vertical-offset="3234">
+          <caret line="7" column="9" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/AlbumsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5084112" vertical-offset="0" max-vertical-offset="2882">
+          <caret line="91" column="40" selection-start-line="91" selection-start-column="9" selection-end-line="91" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/login_breen_btn_n.9.png">
+      <provider editor-type-id="images">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="ninepatcheditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/themes.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53108346" vertical-offset="449" max-vertical-offset="1012">
+          <caret line="34" column="60" selection-start-line="34" selection-start-column="60" selection-end-line="34" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5204263" vertical-offset="15" max-vertical-offset="1760">
+          <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+          <folding>
+            <element signature="e#1807#1808#0" expanded="false" />
+            <element signature="e#1853#1854#0" expanded="false" />
+            <element signature="e#2229#2230#0" expanded="false" />
+            <element signature="e#2273#2274#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android-sdk/sdk/sources/android-19/java/util/Date.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5071" max-vertical-offset="16566">
+          <caret line="278" column="29" selection-start-line="278" selection-start-column="29" selection-end-line="278" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android-sdk/sdk/sources/android-19/java/util/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33271027" vertical-offset="20282" max-vertical-offset="29634">
+          <caret line="959" column="13" selection-start-line="959" selection-start-column="13" selection-end-line="959" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SquareTile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37009346" vertical-offset="0" max-vertical-offset="535">
+          <caret line="14" column="46" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ResizableImageView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27353463" vertical-offset="0" max-vertical-offset="902">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -1032,34 +1237,93 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/EventDispatcher.java">
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1054" max-vertical-offset="1672">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2750" max-vertical-offset="5390">
+          <caret line="179" column="23" selection-start-line="179" selection-start-column="23" selection-end-line="179" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/ViewAdapters/PhotosAdapter.java">
+    <entry file="file://$PROJECT_DIR$/res/layout/photoactivity_page.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1034" max-vertical-offset="2376">
+          <caret line="61" column="12" selection-start-line="61" selection-start-column="12" selection-end-line="61" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Photo.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="1364">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+=======
+        <state vertical-scroll-proportion="0.38898757" vertical-offset="2575" max-vertical-offset="4334">
+          <caret line="131" column="49" selection-start-line="131" selection-start-column="9" selection-end-line="131" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android-sdk/sdk/sources/android-19/android/graphics/Bitmap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="13251" max-vertical-offset="33660">
+          <caret line="658" column="25" selection-start-line="658" selection-start-column="25" selection-end-line="658" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/android-sdk/sdk/sources/android-19/java/util/GregorianCalendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="5819" max-vertical-offset="26972">
+          <caret line="292" column="4" selection-start-line="292" selection-start-column="4" selection-end-line="292" selection-end-column="4" />
+>>>>>>> origin/final
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="340" max-vertical-offset="2448">
           <caret line="41" column="30" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3168">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+>>>>>>> origin/final
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.6147309" vertical-offset="336" max-vertical-offset="918">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/PhotoFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2233" max-vertical-offset="3146">
+          <caret line="120" column="63" selection-start-line="120" selection-start-column="52" selection-end-line="120" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoFilteringActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4529" max-vertical-offset="5456">
+          <caret line="141" column="28" selection-start-line="141" selection-start-column="28" selection-end-line="141" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41603053" vertical-offset="2994" max-vertical-offset="4862">
+          <caret line="163" column="22" selection-start-line="163" selection-start-column="22" selection-end-line="163" selection-end-column="40" />
+>>>>>>> origin/final
           <folding />
         </state>
       </provider>

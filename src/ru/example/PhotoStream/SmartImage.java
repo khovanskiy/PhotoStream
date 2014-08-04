@@ -167,14 +167,17 @@ public class SmartImage extends ImageView {
 
     public SmartImage(Context context) {
         super(context);
+        isInEditMode();
     }
 
     public SmartImage(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        isInEditMode();
     }
 
     public SmartImage(Context context, AttributeSet attrs) {
         super(context, attrs);
+        isInEditMode();
     }
 
     private void updateImageBitmap(BitmapPointer pointer) {

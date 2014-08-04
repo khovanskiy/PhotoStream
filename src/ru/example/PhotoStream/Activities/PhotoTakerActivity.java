@@ -225,7 +225,6 @@ public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callba
                 toast.show();
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
                 PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                bitmap.recycle();
                 Intent intent = new Intent(context, PhotoFilteringActivity.class);
                 context.startActivity(intent);
             }

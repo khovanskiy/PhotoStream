@@ -36,7 +36,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int i) {
-        Photo photo = photos.get(i);
+        /*Photo photo = photos.get(i);
         Album album = Album.get(photo.album_id);
         if (album.albumType == AlbumType.USER) {
             User user = User.get(album.user_id);
@@ -44,7 +44,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         } else {
             Group group = Group.get(album.group_id);
             this.setTitle(group.name + " " + album.title);
-        }
+        }*/
     }
 
     @Override

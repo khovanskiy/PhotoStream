@@ -12,6 +12,8 @@ public class Photo {
      */
     public String id = "";
 
+    public String text = "";
+
     /**
      * Creation time in milliseconds.
      */
@@ -60,7 +62,7 @@ public class Photo {
     /**
      * Likes' count.
      */
-    public String like_count = "";
+    public int like_count = 0;
 
     /**
      * Shows if the user has already liked this photo.
@@ -128,6 +130,9 @@ public class Photo {
         } else {
             throw new JSONException("User object does not have ID");
         }
+        if (object.has("text")) {
+            current.text = object.getString("text");
+        }
         if (object.has("created_ms")) {
             current.created_ms = object.getLong("created_ms");
         }
@@ -154,6 +159,9 @@ public class Photo {
         }
         if (object.has("liked_it")) {
             current.liked_it = object.getBoolean("liked_it");
+        }
+        if (object.has("like_count")) {
+            current.like_count = object.getInt("like_count");
         }
         if (object.has("comments_count")) {
             current.comments_count = object.getInt("comments_count");
