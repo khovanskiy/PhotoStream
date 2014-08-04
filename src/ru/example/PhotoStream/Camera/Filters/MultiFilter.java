@@ -25,7 +25,7 @@ public class MultiFilter implements PhotoFilter {
     private ImageOrientation orientation = ImageOrientation.Top;
     private boolean mirrored = false;
 
-    public synchronized void changeFilter(int filterPriority, TunablePhotoFilter photoFilter) {
+    public synchronized void attachFilter(int filterPriority, TunablePhotoFilter photoFilter) {
         filters.put(filterPriority, photoFilter);
     }
 

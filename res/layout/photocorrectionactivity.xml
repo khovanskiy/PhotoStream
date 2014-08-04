@@ -2,14 +2,13 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                         android:layout_width="match_parent" android:layout_height="match_parent"
-                                        android:orientation="horizontal">
+                                        android:orientation="horizontal" android:baselineAligned="false">
     <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
                  android:background="@drawable/abc_ab_bottom_solid_dark_holo" android:layout_weight="1">
-        <TextView
-                android:layout_width="fill_parent"
+        <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sample_big_text"
-                android:id="@+id/textView" android:textColor="@android:color/holo_blue_dark" android:padding="10dp"/>
+                android:id="@+id/photocorrecting_image" android:layout_gravity="center_horizontal|top"/>
     </FrameLayout>
 
     <ScrollView
@@ -40,7 +39,8 @@
             <SeekBar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                    android:id="@+id/photocorrecting_brightnessbar" android:progress="50"/>
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
                           android:layout_height="50dp">
                 <ImageView android:layout_width="30dp" android:layout_height="match_parent"
@@ -51,7 +51,8 @@
                           android:padding="10dp" android:layout_gravity="center_vertical"/>
             </LinearLayout>
             <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
-                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:progress="50"
+                     android:id="@+id/photocorrecting_contrastbar"/>
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
                           android:layout_height="50dp">
                 <ImageView android:layout_width="30dp" android:layout_height="match_parent"
@@ -62,7 +63,8 @@
                           android:padding="10dp" android:layout_gravity="center_vertical"/>
             </LinearLayout>
             <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
-                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:progress="50"
+                     android:id="@+id/photocorrecting_saturationbar"/>
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
                           android:layout_height="50dp">
                 <ImageView android:layout_width="30dp" android:layout_height="match_parent"
@@ -74,7 +76,34 @@
                           android:layout_gravity="center_vertical"/>
             </LinearLayout>
             <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
-                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:progress="50"
+                     android:id="@+id/photocorrecting_darkregionsbar"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="50dp">
+                <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                           android:src="@drawable/tool_highlights" android:paddingLeft="10dp"
+                           android:layout_gravity="center" android:contentDescription="@string/LightRegions"/>
+                <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                          android:text="@string/LightRegions" android:textColor="@android:color/white"
+                          android:layout_weight="1" android:textSize="20dp" android:padding="10dp"
+                          android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:progress="50"
+                     android:id="@+id/photocorrecting_lightregionsbar"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="50dp">
+                <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                           android:src="@drawable/tool_warmth" android:paddingLeft="10dp"
+                           android:layout_gravity="center" android:contentDescription="@string/Temperature"/>
+                <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                          android:text="@string/Temperature" android:textColor="@android:color/white"
+                          android:layout_weight="1" android:textSize="20dp" android:padding="10dp"
+                          android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp" android:progress="50"
+                     android:id="@+id/photocorrecting_temperaturebar"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
