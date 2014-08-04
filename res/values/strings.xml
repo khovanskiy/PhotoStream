@@ -83,4 +83,9 @@
     <string name="PolarSky">Полярное небо</string>
     <string name="FluorescentLampDay">Лампа дневного света</string>
     <string name="ClearDay">Ясный день</string>
+    <string name="sample_big_text">Первое, что мы сделаем — это создадим файлы layout. Нам потребуется основной layout с
+        использованием фрагмента и еще три для «заполнения» самого фрагмента (будут соответствовать трем пунктам меню).
+        Обратите внимание, что мы будем использовать Support Library для поддержки устройств со старыми версиями
+        Андроида.
+    </string>
 </resources>

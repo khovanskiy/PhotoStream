@@ -38,7 +38,7 @@ public class InitActivity extends ActionBarActivity implements IEventHadler{
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             User.currentUID = s;
-            Intent intent = new Intent(InitActivity.this, StreamActivity.class);
+            Intent intent = new Intent(InitActivity.this, PhotoCorrectionActivity.class);
             startActivity(intent);
         }
     }
