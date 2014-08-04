@@ -29,7 +29,7 @@
             <ImageView
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/imageView" android:src="@drawable/tool_brightness" android:paddingLeft="10dp"
+                    android:src="@drawable/tool_brightness" android:paddingLeft="10dp"
                     android:layout_gravity="center"/>
             <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="Яркость"
                       android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
@@ -38,6 +38,26 @@
         <SeekBar
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/seekBar"/>
+                />
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                      android:layout_height="50dp">
+            <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                       android:src="@drawable/tool_contrast" android:paddingLeft="10dp"
+                       android:layout_gravity="center"/>
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="Контрастность"
+                      android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
+                      android:padding="10dp" android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                      android:layout_height="50dp">
+            <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                       android:src="@drawable/tool_saturation" android:paddingLeft="10dp"
+                       android:layout_gravity="center"/>
+            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="Насыщенность"
+                      android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
+                      android:padding="10dp" android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/seekBar"/>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>
