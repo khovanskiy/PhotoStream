@@ -206,6 +206,16 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         horizontalFlipButton.setOnClickListener(this);
         ImageButton verticalFlipButton = (ImageButton) findViewById(R.id.photocorrecting_verticalflip_button);
         verticalFlipButton.setOnClickListener(this);
+
+        TunablePhotoFilterFactory.FilterType[] filterTypes = TunablePhotoFilterFactory.FilterType.values();
+        final String[] filterNames = new String[filterTypes.length];
+        for (int i = 0; i < filterTypes.length; i++) {
+            filterNames[i] = filterTypes[i].toString(this);
+        }
+        //LinearLayout linearLayout = (LinearLayout) findViewById(R.id.photocorrecting_filters_layout);
+        //ArrayAdapter<String> photoFilterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
+        //linearLayout.setAdapter(photoFilterAdapter);
+        //linearLayout.setSelection(0);
     }
 
     private int findScale(Bitmap image) {
