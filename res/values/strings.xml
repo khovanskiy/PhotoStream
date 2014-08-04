@@ -88,4 +88,5 @@
         Обратите внимание, что мы будем использовать Support Library для поддержки устройств со старыми версиями
         Андроида.
     </string>
+    <string name="ImageSettings">Настройки</string>
 </resources>

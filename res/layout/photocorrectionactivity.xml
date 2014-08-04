@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                         android:layout_width="match_parent" android:layout_height="match_parent"
-                                        android:id="@+id/drawerLayout">
-    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
-                 android:background="@drawable/abc_ab_bottom_solid_dark_holo">
+                                        android:orientation="horizontal">
+    <FrameLayout android:layout_width="0dp" android:layout_height="match_parent"
+                 android:background="@drawable/abc_ab_bottom_solid_dark_holo" android:layout_weight="1">
         <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -12,52 +12,69 @@
                 android:id="@+id/textView" android:textColor="@android:color/holo_blue_dark" android:padding="10dp"/>
     </FrameLayout>
 
-    <LinearLayout android:layout_width="240dp"
-                  android:layout_height="match_parent"
-                  android:layout_gravity="start"
-                  android:background="#111" android:orientation="vertical">
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Настройки"
-                android:textColor="@android:color/white" android:singleLine="true" android:textSize="35dp"
-                android:padding="10dp"/>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-            <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/tool_brightness" android:paddingLeft="10dp"
-                    android:layout_gravity="center"/>
-            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="Яркость"
-                      android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
-                      android:padding="10dp" android:layout_gravity="center_vertical"/>
+    <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView" android:background="#111">
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white" android:singleLine="true" android:textSize="30dp"
+                    android:padding="10dp" android:text="@string/ImageSettings"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/tool_brightness" android:paddingLeft="10dp"
+                        android:layout_gravity="center" android:contentDescription="@string/Brightness"/>
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="@string/Brightness"
+                          android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
+                          android:padding="10dp" android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="50dp">
+                <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                           android:src="@drawable/tool_contrast" android:paddingLeft="10dp"
+                           android:layout_gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="@string/Contrast"
+                          android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
+                          android:padding="10dp" android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="50dp">
+                <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                           android:src="@drawable/tool_saturation" android:paddingLeft="10dp"
+                           android:layout_gravity="center"/>
+                <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="@string/Saturation"
+                          android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
+                          android:padding="10dp" android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                          android:layout_height="50dp">
+                <ImageView android:layout_width="30dp" android:layout_height="match_parent"
+                           android:src="@drawable/tool_shadows" android:paddingLeft="10dp"
+                           android:layout_gravity="center" android:contentDescription="@string/DarkRegions"/>
+                <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                          android:text="@string/DarkRegions" android:textColor="@android:color/white"
+                          android:layout_weight="1" android:textSize="20dp" android:padding="10dp"
+                          android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+            <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"
+                     android:layout_marginLeft="5dp" android:layout_marginRight="5dp"/>
         </LinearLayout>
-        <SeekBar
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                />
-        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
-                      android:layout_height="50dp">
-            <ImageView android:layout_width="30dp" android:layout_height="match_parent"
-                       android:src="@drawable/tool_contrast" android:paddingLeft="10dp"
-                       android:layout_gravity="center"/>
-            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="Контрастность"
-                      android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
-                      android:padding="10dp" android:layout_gravity="center_vertical"/>
-        </LinearLayout>
-        <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content"/>
-        <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
-                      android:layout_height="50dp">
-            <ImageView android:layout_width="30dp" android:layout_height="match_parent"
-                       android:src="@drawable/tool_saturation" android:paddingLeft="10dp"
-                       android:layout_gravity="center"/>
-            <TextView android:layout_width="0dp" android:layout_height="match_parent" android:text="Насыщенность"
-                      android:textColor="@android:color/white" android:layout_weight="1" android:textSize="20dp"
-                      android:padding="10dp" android:layout_gravity="center_vertical"/>
-        </LinearLayout>
-        <SeekBar android:layout_width="fill_parent" android:layout_height="wrap_content" android:id="@+id/seekBar"/>
-    </LinearLayout>
-</android.support.v4.widget.DrawerLayout>
+    </ScrollView>
+</LinearLayout>
