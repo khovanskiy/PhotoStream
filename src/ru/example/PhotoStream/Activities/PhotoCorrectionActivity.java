@@ -1,5 +1,6 @@
 package ru.example.PhotoStream.Activities;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -8,9 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.SeekBar;
+import android.widget.*;
 import ru.example.PhotoStream.Camera.Filters.MultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilterFactory;
@@ -20,7 +19,7 @@ import ru.example.PhotoStream.R;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public final class PhotoCorrectionActivity extends ActionBarActivity {
+public final class PhotoCorrectionActivity extends ActionBarActivity implements View.OnClickListener {
 
     private class ImageRefreshTask extends AsyncTask<Void, Void, Void> {
         private boolean rotated;
@@ -196,6 +195,17 @@ public final class PhotoCorrectionActivity extends ActionBarActivity {
         generalFilter.attachFilter(5, temperatureFilter);
         SeekBar temperatureBar = (SeekBar) findViewById(R.id.photocorrecting_temperaturebar);
         temperatureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(temperatureFilter, -1, 1));
+
+        Button uploadButton = (Button) findViewById(R.id.photocorrecting_uploadbutton);
+        uploadButton.setOnClickListener(this);
+        ImageButton clockwiseButton = (ImageButton) findViewById(R.id.photocorrecting_clockwisebutton);
+        clockwiseButton.setOnClickListener(this);
+        ImageButton counterclockwiseButton = (ImageButton) findViewById(R.id.photocorrecting_counterclockwisebutton);
+        counterclockwiseButton.setOnClickListener(this);
+        ImageButton horizontalFlipButton = (ImageButton) findViewById(R.id.photocorrecting_horizontalflip_button);
+        horizontalFlipButton.setOnClickListener(this);
+        ImageButton verticalFlipButton = (ImageButton) findViewById(R.id.photocorrecting_verticalflip_button);
+        verticalFlipButton.setOnClickListener(this);
     }
 
     private int findScale(Bitmap image) {
@@ -210,6 +220,38 @@ public final class PhotoCorrectionActivity extends ActionBarActivity {
         continueRefreshing.set(true);
         if (taskIsRunning.compareAndSet(false, true)) {
             new ImageRefreshTask().execute();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.photocorrecting_counterclockwisebutton: {
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
+                refreshImage();
+            } break;
+            case R.id.photocorrecting_clockwisebutton: {
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
+                refreshImage();
+            } break;
+            case R.id.photocorrecting_horizontalflip_button: {
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.MirrorHorizontally);
+                refreshImage();
+            } break;
+            case R.id.photocorrecting_verticalflip_button: {
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.MirrorVertically);
+                refreshImage();
+            } break;
+            case R.id.photocorrecting_uploadbutton: {
+                RawBitmap fullSource = new RawBitmap(image);
+                RawBitmap fullResult = new RawBitmap(image.getWidth(), image.getHeight());
+                generalFilter.transformOpaqueRaw(fullSource, fullResult);
+                fullSource.recycle();
+                UploadActivity.setPicture(fullResult.toBitmap());
+                fullResult.recycle();
+                Intent intent = new Intent(this, UploadActivity.class);
+                startActivity(intent);
+            } break;
         }
     }
 }
