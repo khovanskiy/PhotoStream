@@ -1,10 +1,15 @@
 package ru.example.PhotoStream.Activities;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import ru.example.PhotoStream.Camera.Filters.MultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilter;
@@ -19,6 +24,13 @@ public final class PhotoCorrectionActivity extends ActionBarActivity {
 
     private class ImageRefreshTask extends AsyncTask<Void, Void, Void> {
         private boolean rotated;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Console.print("VISIBLE");
+            progressBar.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -50,6 +62,13 @@ public final class PhotoCorrectionActivity extends ActionBarActivity {
             tmp = currentBitmapRotated;
             currentBitmapRotated = nextBitmapRotated;
             nextBitmapRotated = tmp;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            progressBar.setVisibility(View.GONE);
+            Console.print("GONE");
         }
     }
 
@@ -89,6 +108,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity {
     protected AtomicBoolean continueRefreshing = new AtomicBoolean(false);
     protected AtomicBoolean taskIsRunning = new AtomicBoolean(false);
 
+    private ProgressBar progressBar;
     private ImageView imageView;
 
     private Bitmap currentBitmap;
@@ -104,8 +124,13 @@ public final class PhotoCorrectionActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.photocorrectionactivity);
 
+        progressBar = (ProgressBar) findViewById(R.id.photocorrecting_progressBar);
+        progressBar.setVisibility(View.GONE);
         imageView = (ImageView) findViewById(R.id.photocorrecting_image);
 
         /**
