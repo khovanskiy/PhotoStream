@@ -450,4 +450,14 @@ public class TunablePhotoFilterFactory {
     public static TunablePhotoFilter ColorTemperature(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
     }
+
+    public static TunablePhotoFilter Exposure() {
+        float[] matrix = new float[] {
+                2f, 0f, 0f, 0, 0,
+                0f, 2f, 0f, 0, 0,
+                0f, 0f, 2f, 0, 0,
+                0, 0, 0, 1, 0
+        };
+        return new ColorMatrixPhotoFilter(matrix);
+    }
 }
