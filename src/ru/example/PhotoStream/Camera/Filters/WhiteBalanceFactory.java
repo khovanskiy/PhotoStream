@@ -2,6 +2,7 @@ package ru.example.PhotoStream.Camera.Filters;
 
 import android.content.Context;
 import android.graphics.Color;
+import ru.example.PhotoStream.Camera.Algorithms;
 import ru.example.PhotoStream.Camera.RawBitmap;
 import ru.example.PhotoStream.R;
 
@@ -26,7 +27,7 @@ public class WhiteBalanceFactory {
                 return context.getString(R.string.GreyWorld);
             }
         },
-        /*WhitePatch {
+        WhitePatch {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.WhitePatch);
@@ -96,7 +97,7 @@ public class WhiteBalanceFactory {
         public abstract String toString(Context context);
     }
 
-    private static final double WHITE_PATCH_PERCENTAGE = 0.1;
+    private static final double WHITE_PATCH_PERCENTAGE = 0.05;
     private static final double GIMP_PERCENTAGE = 0.0005;
 
     public static TunablePhotoFilter byName(Context context, String name, RawBitmap rawBitmap) {
@@ -148,35 +149,25 @@ public class WhiteBalanceFactory {
 
     public static TunablePhotoFilter whitePatch(RawBitmap rawBitmap) {
         int imageSize = rawBitmap.width * rawBitmap.height;
-        Integer[] colors = new Integer[imageSize];
+        float[] hsv = new float[3];
+        float[] values = new float[imageSize];
         for (int i = 0; i < imageSize; i++) {
-            colors[i] = rawBitmap.colors[i];
+            Color.colorToHSV(rawBitmap.colors[i], hsv);
+            values[i] = hsv[2];
         }
-        Arrays.sort(colors, new Comparator<Integer>() {
-            private float[] hsv = new float[3];
-            private float v1, v2;
-            @Override
-            public int compare(Integer lhs, Integer rhs) {
-                Color.colorToHSV(lhs, hsv);
-                v1 = hsv[2];
-                Color.colorToHSV(rhs, hsv);
-                v2 = hsv[2];
-                if (v1 < v2) {
-                    return 1;
-                } else if (v1 == v2) {
-                    return 0;
-                } else {
-                    return -1;
-                }
-            }
-        });
+        int pivotIndex = (int)(imageSize * WHITE_PATCH_PERCENTAGE);
+        Algorithms.orderStatistics(values, pivotIndex);
+        float threshold = values[pivotIndex - 1];
         int color;
         long red = 0, green = 0, blue = 0;
-        for (int i = 0; i < imageSize * WHITE_PATCH_PERCENTAGE; i++) {
+        for (int i = 0; i < imageSize; i++) {
             color = rawBitmap.colors[i];
-            red += Color.red(color);
-            green += Color.green(color);
-            blue += Color.blue(color);
+            Color.colorToHSV(color, hsv);
+            if (hsv[2] >= threshold) {
+                red += Color.red(color);
+                green += Color.green(color);
+                blue += Color.blue(color);
+            }
         }
         double rAvg = red * 1.0 / (imageSize * WHITE_PATCH_PERCENTAGE);
         double gAvg = green * 1.0 / (imageSize * WHITE_PATCH_PERCENTAGE);
