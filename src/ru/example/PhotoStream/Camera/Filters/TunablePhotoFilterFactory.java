@@ -132,6 +132,12 @@ public class TunablePhotoFilterFactory {
                 return context.getString(R.string.ColorReduction);
             }
         },
+        EightBit {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.EightBit);
+            }
+        },
         Random {
             @Override
             public String toString(Context context) {
@@ -189,9 +195,15 @@ public class TunablePhotoFilterFactory {
             return ColorReduction();
         } else if (name.equals(context.getString(R.string.Random))) {
             return Random();
+        } else if (name.equals(context.getString(R.string.EightBit))) {
+            return EightBit();
         } else {
             return NoFilter();
         }
+    }
+
+    public static TunablePhotoFilter EightBit() {
+        return new ColorCurveFilter(ColorCurveFactory.createEightBit());
     }
 
     public static TunablePhotoFilter Contrast() {
