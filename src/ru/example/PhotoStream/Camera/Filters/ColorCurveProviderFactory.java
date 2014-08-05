@@ -96,4 +96,24 @@ public class ColorCurveProviderFactory {
             }
         };
     }
+
+    public static ColorCurveProvider exposureProvider() {
+        return new ColorCurveProvider() {
+            @Override
+            public ColorCurve getColorCurve(double strength) {
+                final double k = strength + 1;
+                return new ColorCurve() {
+                    @Override
+                    public void fillColors(int[] red, int[] green, int[] blue) {
+                        for (int i = 0; i < 256; i++) {
+                            red[i] = (int)(k * i);
+                            red[i] = Math.max(0, Math.min(255, red[i]));
+                            green[i] = red[i];
+                            blue[i] = red[i];
+                        }
+                    }
+                };
+            }
+        };
+    }
 }

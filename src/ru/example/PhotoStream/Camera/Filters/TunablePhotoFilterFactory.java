@@ -452,12 +452,6 @@ public class TunablePhotoFilterFactory {
     }
 
     public static TunablePhotoFilter Exposure() {
-        float[] matrix = new float[] {
-                2f, 0f, 0f, 0, 0,
-                0f, 2f, 0f, 0, 0,
-                0f, 0f, 2f, 0, 0,
-                0, 0, 0, 1, 0
-        };
-        return new ColorMatrixPhotoFilter(matrix);
+        return new ColorCurveFilter(ColorCurveProviderFactory.exposureProvider());
     }
 }
