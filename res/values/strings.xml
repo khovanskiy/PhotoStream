@@ -90,5 +90,5 @@
     </string>
     <string name="ImageSettings">Настройки</string>
     <string name="ImageFilters">Фильтры</string>
-    <string name="FilterPower">Мощность</string>
+    <string name="FilterPower">Сила фильтра</string>
 </resources>

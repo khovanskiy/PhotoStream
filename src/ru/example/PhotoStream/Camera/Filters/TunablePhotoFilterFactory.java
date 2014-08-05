@@ -17,23 +17,10 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.NoFilter);
             }
-        },
-        Negative {
+
             @Override
-            public String toString(Context context) {
-                return context.getString(R.string.Negative);
-            }
-        },
-        Grayscale {
-            @Override
-            public String toString(Context context) {
-                return context.getString(R.string.Grayscale);
-            }
-        },
-        Sepia {
-            @Override
-            public String toString(Context context) {
-                return context.getString(R.string.Sepia);
+            public int getIconResource() {
+                return R.drawable.filter_normal;
             }
         },
         Polaroid {
@@ -53,11 +40,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Nashville);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_nashville;
+            }
         },
         Sierra {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Sierra);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_sierra;
             }
         },
         Valencia {
@@ -65,17 +62,32 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Valencia);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_valencia;
+            }
         },
         Walden {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Walden);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_walden;
+            }
         },
         Hudson {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Hudson);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_hudson;
             }
         },
         Amaro {
@@ -94,11 +106,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Rise);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_rise;
+            }
         },
         Y1977 {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Y1977);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_1977;
             }
         },
         Kelvin {
@@ -106,11 +128,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Kelvin);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_kelvin;
+            }
         },
         XPro {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Xpro);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_xproii;
             }
         },
         Toaster {
@@ -118,11 +150,34 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Toaster);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_toaster;
+            }
         },
         TealAndOrange {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.TealAndOrange);
+            }
+        },
+        Negative {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Negative);
+            }
+        },
+        Grayscale {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Grayscale);
+            }
+        },
+        Sepia {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Sepia);
             }
         },
         Smooth {
@@ -136,13 +191,14 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.ColorReduction);
             }
-        },
+        };
+        /*
         Random {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Random);
             }
-        };
+        }; */
 
         public abstract String toString(Context context);
         public int getIconResource() {
