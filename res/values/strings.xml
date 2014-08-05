@@ -85,4 +85,5 @@
     <string name="ClearDay">Ясный день</string>
     <string name="AddComment">Добавить комментарий</string>
     <string name="Exposure">Выдержка</string>
+    <string name="Sharpness">Резкость</string>
 </resources>
