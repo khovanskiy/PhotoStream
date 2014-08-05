@@ -28,11 +28,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Polaroid);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_polaroid;
+            }
         },
         VintageBlackAndWhite {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.VintageBlackAndWhite);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_vintage;
             }
         },
         Nashville {
@@ -161,11 +171,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.TealAndOrange);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_tealandorange;
+            }
         },
         Negative {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Negative);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_negative;
             }
         },
         Grayscale {
@@ -173,11 +193,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Grayscale);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_grayscale;
+            }
         },
         Sepia {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Sepia);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_sepia;
             }
         },
         Smooth {
@@ -185,11 +215,21 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Smooth);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_smooth;
+            }
         },
         ColorReduction {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.ColorReduction);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_colorreduction;
             }
         };
         /*
