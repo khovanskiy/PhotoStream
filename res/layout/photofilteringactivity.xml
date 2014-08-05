@@ -117,6 +117,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/photofilteringactivity_filterbar" android:max="100" android:progress="0" android:indeterminate="false"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/Vignette"
+                    android:layout_gravity="center_horizontal"/>
+            <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/photofilteringactivity_vignettebar" android:layout_gravity="center_horizontal" android:max="100"
+                    android:progress="0" android:indeterminate="false"/>
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"

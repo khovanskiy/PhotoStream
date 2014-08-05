@@ -442,4 +442,8 @@ public class TunablePhotoFilterFactory {
     public static TunablePhotoFilter Exposure() {
         return new ColorCurveFilter(ColorCurveProviderFactory.exposureProvider());
     }
+
+    public static TunablePhotoFilter Vignette() {
+        return new VignetteFilter();
+    }
 }

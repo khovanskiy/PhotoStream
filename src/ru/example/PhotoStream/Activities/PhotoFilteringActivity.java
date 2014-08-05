@@ -30,6 +30,7 @@ public class PhotoFilteringActivity extends Activity {
     private static final int SATURATION_PRIORITY = 7;
     private static final int SHARPNESS_PRIORITY = 8;
     private static final int PHOTO_FILTER_PRIORITY = 9;
+    private static final int VIGNETTE_PRIORITY = 10;
 
     private static final int SCALE_DOWN = 2;
 
@@ -149,6 +150,7 @@ public class PhotoFilteringActivity extends Activity {
         TunablePhotoFilter colorTemperature = TunablePhotoFilterFactory.ColorTemperature(context);
         TunablePhotoFilter exposure = TunablePhotoFilterFactory.Exposure();
         TunablePhotoFilter sharpness = TunablePhotoFilterFactory.Sharpness();
+        TunablePhotoFilter vignette = TunablePhotoFilterFactory.Vignette();
         photoFilterBar = (SeekBar) findViewById(R.id.photofilteringactivity_filterbar);
         Spinner photoFilterSpinner = (Spinner) findViewById(R.id.photofilteringactivity_filterspinner);
         TunablePhotoFilterFactory.FilterType[] filterTypes = TunablePhotoFilterFactory.FilterType.values();
@@ -210,6 +212,7 @@ public class PhotoFilteringActivity extends Activity {
         SeekBar colorTemperatureBar = (SeekBar) findViewById(R.id.photofilteringactivity_temperaturebar);
         SeekBar exposureBar = (SeekBar) findViewById(R.id.photofilteringactivity_exposurebar);
         SeekBar sharpnessBar = (SeekBar) findViewById(R.id.photofilteringactivity_sharpnessbar);
+        SeekBar vignetteBar = (SeekBar) findViewById(R.id.photofilteringactivity_vignettebar);
         photoFilterBar = (SeekBar) findViewById(R.id.photofilteringactivity_filterbar);
         multiFilter = new MultiFilter();
         multiFilter.changeFilter(SATURATION_PRIORITY, saturation);
@@ -222,6 +225,7 @@ public class PhotoFilteringActivity extends Activity {
         multiFilter.changeFilter(COLOR_TEMPERATURE_PRIORITY, colorTemperature);
         multiFilter.changeFilter(EXPOSURE_PRIORITY, exposure);
         multiFilter.changeFilter(SHARPNESS_PRIORITY, sharpness);
+        multiFilter.changeFilter(VIGNETTE_PRIORITY, vignette);
         brightnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(brightness, -1, 1));
         contrastBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(contrast, -1, 1));
         saturationBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(saturation, -1, 1));
@@ -230,6 +234,7 @@ public class PhotoFilteringActivity extends Activity {
         colorTemperatureBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(colorTemperature, -1, 1));
         exposureBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(exposure, -1, 1));
         sharpnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(sharpness, -1, 1));
+        vignetteBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(vignette, 0, 1));
         toLoadButton = (Button) findViewById(R.id.photofilteringactivity_toloadbutton);
         toLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
