@@ -12,6 +12,17 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent" android:layout_weight="1">
+            <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp" android:measureAllChildren="false"
+                    android:background="#000">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent" android:id="@+id/photocorrecting_filters_view">
+                </LinearLayout>
+            </HorizontalScrollView>
             <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -71,20 +82,6 @@
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:orientation="vertical">
-                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                              android:textColor="@android:color/white" android:singleLine="true" android:textSize="30dp"
-                              android:padding="10dp" android:text="@string/ImageFilters"/>
-                    <HorizontalScrollView
-                            android:layout_width="220dp"
-                            android:layout_height="wrap_content"
-                            android:padding="5dp" android:measureAllChildren="false"
-                            >
-                        <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="wrap_content"
-                                android:layout_height="fill_parent" android:id="@+id/photocorrecting_filters_view">
-                        </LinearLayout>
-                    </HorizontalScrollView>
                     <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
                                   android:layout_height="50dp" android:id="@+id/linearLayout">
                         <ImageView android:layout_width="30dp" android:layout_height="match_parent"
@@ -99,11 +96,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/photocorrecting_filterpowerbar" android:progress="100"/>
-                    <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@android:color/white" android:singleLine="true" android:textSize="30dp"
-                            android:padding="10dp" android:text="@string/ImageSettings"/>
                     <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
