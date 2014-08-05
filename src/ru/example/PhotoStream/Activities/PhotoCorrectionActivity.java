@@ -1,11 +1,14 @@
 package ru.example.PhotoStream.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +21,7 @@ import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.zip.Inflater;
 
 public final class PhotoCorrectionActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -27,7 +31,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Console.print("VISIBLE");
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -67,7 +70,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressBar.setVisibility(View.GONE);
-            Console.print("GONE");
         }
     }
 
@@ -84,8 +86,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            double strength = minStrength + progress * (maxStrength - minStrength) / seekBar.getMax();
-            filter.setStrength(strength);
+            filter.setStrength(calculateStrength(seekBar, minStrength, maxStrength));
             refreshImage();
         }
 
@@ -96,8 +97,22 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            double strength = minStrength + seekBar.getProgress() * (maxStrength - minStrength) / seekBar.getMax();
-            filter.setStrength(strength);
+            filter.setStrength(calculateStrength(seekBar, minStrength, maxStrength));
+            refreshImage();
+        }
+    }
+
+    private class FilterClickListener implements View.OnClickListener {
+
+        private TunablePhotoFilter filter;
+
+        public FilterClickListener(TunablePhotoFilter filter) {
+             this.filter = filter;
+        }
+
+        @Override
+        public void onClick(View v) {
+            setCurrentFilter(filter);
             refreshImage();
         }
     }
@@ -119,6 +134,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
     private RawBitmap result;
 
     private MultiFilter generalFilter = new MultiFilter();
+    private TunablePhotoFilter currentFilter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,11 +223,29 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         ImageButton verticalFlipButton = (ImageButton) findViewById(R.id.photocorrecting_verticalflip_button);
         verticalFlipButton.setOnClickListener(this);
 
+        LinearLayout filtersView = (LinearLayout) findViewById(R.id.photocorrecting_filters_view);
+        LayoutInflater inflater = this.getLayoutInflater();
         TunablePhotoFilterFactory.FilterType[] filterTypes = TunablePhotoFilterFactory.FilterType.values();
-        final String[] filterNames = new String[filterTypes.length];
-        for (int i = 0; i < filterTypes.length; i++) {
-            filterNames[i] = filterTypes[i].toString(this);
+
+        setCurrentFilter(TunablePhotoFilterFactory.getFilterByName(this, filterTypes[0].toString(this)));
+
+        for (int i = 0; i < filterTypes.length; ++i) {
+            int imageResource = filterTypes[i].getIconResource();
+            View filterBadge = inflater.inflate(R.layout.filterbadgeview, filtersView, false);
+            ImageView filterImage = (ImageView) filterBadge.findViewById(R.id.filterbadgeview_image);
+            filterImage.setImageResource(imageResource);
+
+            String label = filterTypes[i].toString(this);
+            TextView filterLabel = (TextView) filterBadge.findViewById(R.id.filterbadgeview_label);
+            filterLabel.setText(label);
+
+            TunablePhotoFilter filter = TunablePhotoFilterFactory.getFilterByName(this, label);
+            filterBadge.setOnClickListener(new FilterClickListener(filter));
+
+            filtersView.addView(filterBadge);
         }
+
+        assert (currentFilter != null);
         //LinearLayout linearLayout = (LinearLayout) findViewById(R.id.photocorrecting_filters_layout);
         //ArrayAdapter<String> photoFilterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
         //linearLayout.setAdapter(photoFilterAdapter);
@@ -220,6 +254,18 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
 
     private int findScale(Bitmap image) {
         return 2;
+    }
+
+    private void setCurrentFilter(TunablePhotoFilter filter) {
+        currentFilter = filter;
+        SeekBar filterPowerBar = (SeekBar) findViewById(R.id.photocorrecting_filterpowerbar);
+        filter.setStrength(calculateStrength(filterPowerBar, 0, 1));
+        filterPowerBar.setOnSeekBarChangeListener(new SeekBarChangeListener(currentFilter, 0, 1));
+        generalFilter.attachFilter(100, currentFilter);
+    }
+
+    private double calculateStrength(SeekBar seekBar, double min, double max) {
+        return min + seekBar.getProgress() * (max - min) / seekBar.getMax();
     }
 
     public static void setBitmap(Bitmap bitmap) {

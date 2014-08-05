@@ -83,6 +83,11 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.Amaro);
             }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_amaro;
+            }
         },
         Rise {
             @Override
@@ -140,6 +145,9 @@ public class TunablePhotoFilterFactory {
         };
 
         public abstract String toString(Context context);
+        public int getIconResource() {
+            return R.drawable.filter_amaro;
+        }
     }
 
     /**
