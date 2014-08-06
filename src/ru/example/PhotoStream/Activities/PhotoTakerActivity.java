@@ -17,7 +17,7 @@ import ru.example.PhotoStream.R;
 
 import java.io.FileNotFoundException;
 
-public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
+public final class PhotoTakerActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
     private static final int NO_CAMERA = -1;
     private static final int SELECT_PICTURE = 1;
     private static final int MEMORY_SCALE_DOWN = 4;
@@ -108,8 +108,8 @@ public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callba
                 Uri selectedImageUri = data.getData();
                 Toast.makeText(context, selectedImageUri.toString(), Toast.LENGTH_LONG).show();
                 try {
-                    PhotoFilteringActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                    Intent intent = new Intent(context, PhotoFilteringActivity.class);
+                    PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                    Intent intent = new Intent(context, PhotoCorrectionActivity.class);
                     context.startActivity(intent);
                 } catch (Exception ignored) {
                 }
@@ -224,8 +224,8 @@ public class PhotoTakerActivity extends Activity implements SurfaceHolder.Callba
                 Toast toast = Toast.makeText(context, "The photo has been taken", Toast.LENGTH_LONG);
                 toast.show();
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                PhotoFilteringActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                Intent intent = new Intent(context, PhotoFilteringActivity.class);
+                PhotoCorrectionActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                Intent intent = new Intent(context, PhotoCorrectionActivity.class);
                 context.startActivity(intent);
             }
         });

@@ -42,14 +42,14 @@ public class PhotoFilteringActivity extends Activity {
 
     private Context context;
     private Bitmap currentBitmap, currentBitmapRotated, nextBitmap, nextBitmapRotated;
-    private RawBitmap source, destination;
+    private RawBitmap source, result;
     private ImageView imageView;
     private Button toLoadButton;
     private SeekBar photoFilterBar;
     private SeekBar whiteBalanceBar;
     private HashMap<String, TunablePhotoFilter> whiteBalanceFilters = new HashMap<>();
 
-    private MultiFilter multiFilter;
+    private MultiFilter generalFilter;
 
     private AtomicBoolean continueRefreshing = new AtomicBoolean(false);
     private AtomicBoolean taskIsRunning = new AtomicBoolean(false);
@@ -61,12 +61,12 @@ public class PhotoFilteringActivity extends Activity {
         protected Void doInBackground(Void... params) {
             while (continueRefreshing.get()) {
                 continueRefreshing.set(false);
-                multiFilter.transformOpaqueRaw(source, destination);
-                if (destination.width == source.width) {
-                    destination.fillBitmap(nextBitmap);
+                generalFilter.transformOpaqueRaw(source, result);
+                if (result.width == source.width) {
+                    result.fillBitmap(nextBitmap);
                     rotated = false;
                 } else {
-                    destination.fillBitmap(nextBitmapRotated);
+                    result.fillBitmap(nextBitmapRotated);
                     rotated = true;
                 }
                 publishProgress();
@@ -135,12 +135,15 @@ public class PhotoFilteringActivity extends Activity {
         context = this;
         Console.print("Filtering photo size = " + image.getWidth() + " " + image.getHeight());
         imageView = (ImageView) findViewById(R.id.photofilteringactivity_imageView);
+
         currentBitmap = Bitmap.createScaledBitmap(image, image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, false);
         nextBitmap = Bitmap.createBitmap(image.getWidth() / SCALE_DOWN, image.getHeight() / SCALE_DOWN, Bitmap.Config.ARGB_8888);
         currentBitmapRotated = Bitmap.createBitmap(image.getHeight() / SCALE_DOWN, image.getWidth() / SCALE_DOWN, Bitmap.Config.ARGB_8888);
         nextBitmapRotated = Bitmap.createBitmap(image.getHeight() / SCALE_DOWN, image.getWidth() / SCALE_DOWN, Bitmap.Config.ARGB_8888);
+
         source = new RawBitmap(currentBitmap);
-        destination = new RawBitmap(nextBitmap.getWidth(), nextBitmap.getHeight());
+        result = new RawBitmap(nextBitmap.getWidth(), nextBitmap.getHeight());
+
         imageView.setImageBitmap(currentBitmap);
         TunablePhotoFilter brightness = TunablePhotoFilterFactory.Brightness();
         TunablePhotoFilter contrast = TunablePhotoFilterFactory.Contrast();
@@ -168,7 +171,7 @@ public class PhotoFilteringActivity extends Activity {
                 double strength = photoFilterBar.getProgress() * 1.0 / photoFilterBar.getMax();
                 filter.setStrength(strength);
                 photoFilterBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(filter, 0, 1));
-                multiFilter.changeFilter(PHOTO_FILTER_PRIORITY, filter);
+                generalFilter.attachFilter(PHOTO_FILTER_PRIORITY, filter);
                 refreshImage();
             }
 
@@ -195,7 +198,7 @@ public class PhotoFilteringActivity extends Activity {
                 double strength = whiteBalanceBar.getProgress() * 1.0 / whiteBalanceBar.getMax();
                 whiteBalanceFilter.setStrength(strength);
                 whiteBalanceBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(whiteBalanceFilter, 0, 1));
-                multiFilter.changeFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilter);
+                generalFilter.attachFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilter);
                 refreshImage();
             }
 
@@ -214,18 +217,18 @@ public class PhotoFilteringActivity extends Activity {
         SeekBar sharpnessBar = (SeekBar) findViewById(R.id.photofilteringactivity_sharpnessbar);
         SeekBar vignetteBar = (SeekBar) findViewById(R.id.photofilteringactivity_vignettebar);
         photoFilterBar = (SeekBar) findViewById(R.id.photofilteringactivity_filterbar);
-        multiFilter = new MultiFilter();
-        multiFilter.changeFilter(SATURATION_PRIORITY, saturation);
-        multiFilter.changeFilter(CONTRAST_PRIORITY, contrast);
-        multiFilter.changeFilter(BRIGHTNESS_PRIORITY, brightness);
-        multiFilter.changeFilter(LIGHT_REGIONS_PRIORITY, lightRegions);
-        multiFilter.changeFilter(DARK_REGIONS_PRIORITY, darkRegions);
-        multiFilter.changeFilter(PHOTO_FILTER_PRIORITY, TunablePhotoFilterFactory.NoFilter());
-        multiFilter.changeFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilters.get(getString(R.string.NoWhiteBalance)));
-        multiFilter.changeFilter(COLOR_TEMPERATURE_PRIORITY, colorTemperature);
-        multiFilter.changeFilter(EXPOSURE_PRIORITY, exposure);
-        multiFilter.changeFilter(SHARPNESS_PRIORITY, sharpness);
-        multiFilter.changeFilter(VIGNETTE_PRIORITY, vignette);
+        generalFilter = new MultiFilter();
+        generalFilter.attachFilter(SATURATION_PRIORITY, saturation);
+        generalFilter.attachFilter(CONTRAST_PRIORITY, contrast);
+        generalFilter.attachFilter(BRIGHTNESS_PRIORITY, brightness);
+        generalFilter.attachFilter(LIGHT_REGIONS_PRIORITY, lightRegions);
+        generalFilter.attachFilter(DARK_REGIONS_PRIORITY, darkRegions);
+        generalFilter.attachFilter(PHOTO_FILTER_PRIORITY, TunablePhotoFilterFactory.NoFilter());
+        generalFilter.attachFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilters.get(getString(R.string.NoWhiteBalance)));
+        generalFilter.attachFilter(COLOR_TEMPERATURE_PRIORITY, colorTemperature);
+        generalFilter.attachFilter(EXPOSURE_PRIORITY, exposure);
+        generalFilter.attachFilter(SHARPNESS_PRIORITY, sharpness);
+        generalFilter.attachFilter(VIGNETTE_PRIORITY, vignette);
         brightnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(brightness, -1, 1));
         contrastBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(contrast, -1, 1));
         saturationBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(saturation, -1, 1));
@@ -242,7 +245,7 @@ public class PhotoFilteringActivity extends Activity {
                 toLoadButton.setEnabled(false);
                 RawBitmap fullSource = new RawBitmap(image);
                 RawBitmap fullDestination = new RawBitmap(image.getWidth(), image.getHeight());
-                multiFilter.transformOpaqueRaw(fullSource, fullDestination);
+                generalFilter.transformOpaqueRaw(fullSource, fullDestination);
                 //fullSource.recycle();
                 UploadActivity.setPicture(fullDestination.toBitmap());
                 //fullDestination.recycle();
@@ -254,7 +257,7 @@ public class PhotoFilteringActivity extends Activity {
         mirrorVerticallyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multiFilter.changeOrientation(MultiFilter.OrientationChange.MirrorVertically);
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.MirrorVertically);
                 refreshImage();
             }
         });
@@ -262,7 +265,7 @@ public class PhotoFilteringActivity extends Activity {
         mirrorHorizontallyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multiFilter.changeOrientation(MultiFilter.OrientationChange.MirrorHorizontally);
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.MirrorHorizontally);
                 refreshImage();
             }
         });
@@ -270,7 +273,7 @@ public class PhotoFilteringActivity extends Activity {
         rotateClockwiseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multiFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
                 refreshImage();
             }
         });
@@ -278,7 +281,7 @@ public class PhotoFilteringActivity extends Activity {
         rotateCounterclockwiseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                multiFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
+                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
                 refreshImage();
             }
         });

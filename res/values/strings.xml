@@ -83,9 +83,17 @@
     <string name="PolarSky">Полярное небо</string>
     <string name="FluorescentLampDay">Лампа дневного света</string>
     <string name="ClearDay">Ясный день</string>
-    <string name="AddComment">Добавить комментарий</string>
+    <string name="sample_big_text">Первое, что мы сделаем — это создадим файлы layout. Нам потребуется основной layout с
+        использованием фрагмента и еще три для «заполнения» самого фрагмента (будут соответствовать трем пунктам меню).
+        Обратите внимание, что мы будем использовать Support Library для поддержки устройств со старыми версиями
+        Андроида.
+    </string>
+    <string name="ImageSettings">Настройки</string>
+    <string name="ImageFilters">Фильтры</string>
+    <string name="FilterPower">Сила фильтра</string>
     <string name="Exposure">Выдержка</string>
     <string name="Sharpness">Резкость</string>
     <string name="Vignette">Виньетка</string>
+    <string name="AddComment">Добавить комментарий</string>
     <string name="EightBit">8 бит</string>
 </resources>
