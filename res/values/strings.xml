@@ -53,7 +53,7 @@
     <string name="Kelvin">Kelvin</string>
     <string name="Xpro">XPro</string>
     <string name="Toaster">Toaster</string>
-    <string name="ColorReduction">Цветовое сокращение</string>
+    <string name="ColorReduction">16 бит</string>
     <string name="Brightness">Яркость</string>
     <string name="Contrast">Контраст</string>
     <string name="Saturation">Насыщенность</string>
@@ -91,4 +91,9 @@
     <string name="ImageSettings">Настройки</string>
     <string name="ImageFilters">Фильтры</string>
     <string name="FilterPower">Сила фильтра</string>
+    <string name="Exposure">Выдержка</string>
+    <string name="Sharpness">Резкость</string>
+    <string name="Vignette">Виньетка</string>
+    <string name="AddComment">Добавить комментарий</string>
+    <string name="EightBit">8 бит</string>
 </resources>

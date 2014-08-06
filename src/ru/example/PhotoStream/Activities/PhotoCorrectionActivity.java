@@ -188,11 +188,20 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         SeekBar saturationBar = (SeekBar) findViewById(R.id.photocorrecting_saturationbar);
         saturationBar.setOnSeekBarChangeListener(new SeekBarChangeListener(saturationFilter, -1, 1));
 
+
+        /**
+         *  Exposure
+         */
+        TunablePhotoFilter exposureFilter = TunablePhotoFilterFactory.Exposure();
+        generalFilter.attachFilter(3, exposureFilter);
+        SeekBar exposureBar = (SeekBar) findViewById(R.id.photocorrecting_exposurebar);
+        exposureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(exposureFilter, -1, 1));
+
         /**
          * Shadows
          */
         TunablePhotoFilter darkRegionsFilter = TunablePhotoFilterFactory.DarkRegions();
-        generalFilter.attachFilter(3, darkRegionsFilter);
+        generalFilter.attachFilter(4, darkRegionsFilter);
         SeekBar darkRegionsBar = (SeekBar) findViewById(R.id.photocorrecting_darkregionsbar);
         darkRegionsBar.setOnSeekBarChangeListener(new SeekBarChangeListener(darkRegionsFilter, -1, 1));
 
@@ -200,7 +209,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
          * Light regions
          */
         TunablePhotoFilter lightRegionsFilter = TunablePhotoFilterFactory.LightRegions();
-        generalFilter.attachFilter(4, lightRegionsFilter);
+        generalFilter.attachFilter(5, lightRegionsFilter);
         SeekBar lightRegionsBar = (SeekBar) findViewById(R.id.photocorrecting_lightregionsbar);
         lightRegionsBar.setOnSeekBarChangeListener(new SeekBarChangeListener(lightRegionsFilter, -1, 1));
 
@@ -208,9 +217,25 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
          * Temperature
          */
         TunablePhotoFilter temperatureFilter = TunablePhotoFilterFactory.ColorTemperature(this);
-        generalFilter.attachFilter(5, temperatureFilter);
+        generalFilter.attachFilter(6, temperatureFilter);
         SeekBar temperatureBar = (SeekBar) findViewById(R.id.photocorrecting_temperaturebar);
         temperatureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(temperatureFilter, -1, 1));
+
+        /**
+         * Sharpness
+         */
+        TunablePhotoFilter sharpnessFilter = TunablePhotoFilterFactory.Sharpness();
+        generalFilter.attachFilter(7, sharpnessFilter);
+        SeekBar sharpnessBar = (SeekBar) findViewById(R.id.photocorrecting_sharpnessbar);
+        sharpnessBar.setOnSeekBarChangeListener(new SeekBarChangeListener(sharpnessFilter, -1, 1));
+
+        /**
+         * Vignette
+         */
+        TunablePhotoFilter vignetteFilter = TunablePhotoFilterFactory.Vignette();
+        generalFilter.attachFilter(101, vignetteFilter);
+        SeekBar vignetteBar = (SeekBar) findViewById(R.id.photocorrecting_vignettebar);
+        vignetteBar.setOnSeekBarChangeListener(new SeekBarChangeListener(vignetteFilter, 0, 1));
 
         Button uploadButton = (Button) findViewById(R.id.photocorrecting_uploadbutton);
         uploadButton.setOnClickListener(this);
@@ -246,10 +271,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         }
 
         assert (currentFilter != null);
-        //LinearLayout linearLayout = (LinearLayout) findViewById(R.id.photocorrecting_filters_layout);
-        //ArrayAdapter<String> photoFilterAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, filterNames);
-        //linearLayout.setAdapter(photoFilterAdapter);
-        //linearLayout.setSelection(0);
     }
 
     private int findScale(Bitmap image) {

@@ -231,6 +231,12 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_colorreduction;
             }
+        },
+        EightBit {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.EightBit);
+            }
         };
         /*
         Random {
@@ -242,7 +248,7 @@ public class TunablePhotoFilterFactory {
 
         public abstract String toString(Context context);
         public int getIconResource() {
-            return R.drawable.filter_amaro;
+            return R.drawable.filter_normal;
         }
     }
 
@@ -293,19 +299,15 @@ public class TunablePhotoFilterFactory {
             return ColorReduction();
         } else if (name.equals(context.getString(R.string.Random))) {
             return Random();
-        } else if (name.equals(context.getString(R.string.Brightness))) {
-            return Brightness();
-        } else if (name.equals(context.getString(R.string.Contrast))) {
-            return Contrast();
-        } else if (name.equals(context.getString(R.string.Saturation))) {
-            return Saturation();
-        } else if (name.equals(context.getString(R.string.DarkRegions))) {
-            return DarkRegions();
-        } else if (name.equals(context.getString(R.string.LightRegions))) {
-            return LightRegions();
+        } else if (name.equals(context.getString(R.string.EightBit))) {
+            return EightBit();
         } else {
             return NoFilter();
         }
+    }
+
+    public static TunablePhotoFilter EightBit() {
+        return new ColorCurveFilter(ColorCurveFactory.createEightBit());
     }
 
     public static TunablePhotoFilter Contrast() {
@@ -373,8 +375,8 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter Sharpen() {
-        return new Convolution3Filter(new float[][]{{-1, -1, -1}, {-1, 9, -1}, {-1, -1, -1}}, 0);
+    public static TunablePhotoFilter Sharpness() {
+        return new Convolution3Filter(new float[][]{{-1f/16, -1f/8, -1f/16}, {-1f/8, 7f/4, -1f/8}, {-1f/16, -1f/8, -1f/16}}, 0);
     }
 
     /**
@@ -515,7 +517,6 @@ public class TunablePhotoFilterFactory {
     }
 
     public static TunablePhotoFilter Y1977(Context context) {
-        Console.print("Create Y1977");
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.y1977map));
     }
 
@@ -532,7 +533,6 @@ public class TunablePhotoFilterFactory {
     }
 
     public static TunablePhotoFilter Xpro(Context context) {
-        Console.print("Create XPRO");
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.xpro_map));
     }
 
@@ -553,5 +553,13 @@ public class TunablePhotoFilterFactory {
 
     public static TunablePhotoFilter ColorTemperature(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
+    }
+
+    public static TunablePhotoFilter Exposure() {
+        return new ColorCurveFilter(ColorCurveProviderFactory.exposureProvider());
+    }
+
+    public static TunablePhotoFilter Vignette() {
+        return new VignetteFilter();
     }
 }

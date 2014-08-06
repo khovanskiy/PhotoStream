@@ -22,12 +22,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class PhotoFilteringActivity extends Activity {
     private static final int WHITE_BALANCE_PRIORITY = 0;
     private static final int COLOR_TEMPERATURE_PRIORITY = 1;
-    private static final int BRIGHTNESS_PRIORITY = 2;
-    private static final int CONTRAST_PRIORITY = 3;
-    private static final int LIGHT_REGIONS_PRIORITY = 4;
-    private static final int DARK_REGIONS_PRIORITY = 5;
-    private static final int SATURATION_PRIORITY = 6;
-    private static final int PHOTO_FILTER_PRIORITY = 7;
+    private static final int EXPOSURE_PRIORITY = 2;
+    private static final int BRIGHTNESS_PRIORITY = 3;
+    private static final int CONTRAST_PRIORITY = 4;
+    private static final int LIGHT_REGIONS_PRIORITY = 5;
+    private static final int DARK_REGIONS_PRIORITY = 6;
+    private static final int SATURATION_PRIORITY = 7;
+    private static final int SHARPNESS_PRIORITY = 8;
+    private static final int PHOTO_FILTER_PRIORITY = 9;
+    private static final int VIGNETTE_PRIORITY = 10;
 
     private static final int SCALE_DOWN = 2;
 
@@ -148,6 +151,9 @@ public class PhotoFilteringActivity extends Activity {
         TunablePhotoFilter lightRegions = TunablePhotoFilterFactory.LightRegions();
         TunablePhotoFilter darkRegions = TunablePhotoFilterFactory.DarkRegions();
         TunablePhotoFilter colorTemperature = TunablePhotoFilterFactory.ColorTemperature(context);
+        TunablePhotoFilter exposure = TunablePhotoFilterFactory.Exposure();
+        TunablePhotoFilter sharpness = TunablePhotoFilterFactory.Sharpness();
+        TunablePhotoFilter vignette = TunablePhotoFilterFactory.Vignette();
 
         photoFilterBar = (SeekBar) findViewById(R.id.photofilteringactivity_filterbar);
         Spinner photoFilterSpinner = (Spinner) findViewById(R.id.photofilteringactivity_filterspinner);
@@ -208,6 +214,9 @@ public class PhotoFilteringActivity extends Activity {
         SeekBar lightRegionsBar = (SeekBar) findViewById(R.id.photofilteringactivity_lightregionsbar);
         SeekBar darkRegionsBar = (SeekBar) findViewById(R.id.photofilteringactivity_darkregionsbar);
         SeekBar colorTemperatureBar = (SeekBar) findViewById(R.id.photofilteringactivity_temperaturebar);
+        SeekBar exposureBar = (SeekBar) findViewById(R.id.photofilteringactivity_exposurebar);
+        SeekBar sharpnessBar = (SeekBar) findViewById(R.id.photofilteringactivity_sharpnessbar);
+        SeekBar vignetteBar = (SeekBar) findViewById(R.id.photofilteringactivity_vignettebar);
         photoFilterBar = (SeekBar) findViewById(R.id.photofilteringactivity_filterbar);
 
         generalFilter = new MultiFilter();
@@ -219,6 +228,9 @@ public class PhotoFilteringActivity extends Activity {
         generalFilter.attachFilter(PHOTO_FILTER_PRIORITY, TunablePhotoFilterFactory.NoFilter());
         generalFilter.attachFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilters.get(getString(R.string.NoWhiteBalance)));
         generalFilter.attachFilter(COLOR_TEMPERATURE_PRIORITY, colorTemperature);
+        generalFilter.attachFilter(EXPOSURE_PRIORITY, exposure);
+        generalFilter.attachFilter(SHARPNESS_PRIORITY, sharpness);
+        generalFilter.attachFilter(VIGNETTE_PRIORITY, vignette);
 
         brightnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(brightness, -1, 1));
         contrastBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(contrast, -1, 1));
@@ -226,6 +238,9 @@ public class PhotoFilteringActivity extends Activity {
         lightRegionsBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(lightRegions, -1, 1));
         darkRegionsBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(darkRegions, -1, 1));
         colorTemperatureBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(colorTemperature, -1, 1));
+        exposureBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(exposure, -1, 1));
+        sharpnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(sharpness, -1, 1));
+        vignetteBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(vignette, 0, 1));
         toLoadButton = (Button) findViewById(R.id.photofilteringactivity_toloadbutton);
         toLoadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,9 +249,9 @@ public class PhotoFilteringActivity extends Activity {
                 RawBitmap fullSource = new RawBitmap(image);
                 RawBitmap fullDestination = new RawBitmap(image.getWidth(), image.getHeight());
                 generalFilter.transformOpaqueRaw(fullSource, fullDestination);
-                fullSource.recycle();
+                //fullSource.recycle();
                 UploadActivity.setPicture(fullDestination.toBitmap());
-                fullDestination.recycle();
+                //fullDestination.recycle();
                 Intent intent = new Intent(context, UploadActivity.class);
                 startActivity(intent);
             }
