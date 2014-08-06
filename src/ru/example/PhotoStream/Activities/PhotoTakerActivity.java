@@ -26,12 +26,15 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 22;
     private static final int MAX_WIDTH = 1024;
     private static final int MAX_HEIGHT = 1024;
+
     private Camera camera = null;
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private int currentCameraId;
     private Context context;
+
     private boolean isFrontCamera = false;
+    private boolean isPreviewRunning = false;
 
     private void stopCamera() {
         if (camera != null) {
@@ -71,7 +74,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     }
 
     private void setCamera(int cameraFacing) {
-        //stopCamera();
         int cameraNumber = Camera.getNumberOfCameras();
         currentCameraId = NO_CAMERA;
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -111,34 +113,18 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-                Toast.makeText(context, selectedImageUri.toString(), Toast.LENGTH_LONG).show();
-                try {
-                    PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                    Intent intent = new Intent(context, PhotoCorrectionActivity.class);
-                    context.startActivity(intent);
-                } catch (Exception ignored) {
-                }
+
+                PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                Intent intent = new Intent(context, PhotoCorrectionActivity.class);
+                Console.printAvailableMemory();
+                context.startActivity(intent);
             }
         }
     }
 
-    /*@Override
-    public void onPause() {
-        super.onPause();
-        stopCamera();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (currentCameraId != NO_CAMERA) {
-            startCamera(currentCameraId);
-        }
-    }*/
-
     private static int findScale(int currentSize, int maxSize, int currentWidth, int currentHeight, int minWidth, int minHeight) {
         int currentScale = 1;
-        while (currentSize / (currentScale * currentScale) > maxSize || currentWidth / currentScale > 2 * minWidth || currentHeight / currentScale > 2 * minHeight) {
+        while (/*currentSize / (currentScale * currentScale) > maxSize ||*/ currentWidth / currentScale > 2 * minWidth || currentHeight / currentScale > 2 * minHeight) {
             currentScale <<= 1;
         }
         return currentScale;
@@ -154,25 +140,18 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(resolver.openInputStream(uri), null, options);
-            BitmapFactory.Options newOptions = new BitmapFactory.Options();
-            newOptions.inSampleSize = findScale(options.outWidth * options.outHeight, maxImageSize, options.outWidth, options.outHeight, maxWidth, maxHeight);
-            return BitmapFactory.decodeStream(resolver.openInputStream(uri), null, newOptions);
+
+            options.inPreferredConfig = Bitmap.Config.RGB_565;
+            options.inJustDecodeBounds = false;
+            options.inSampleSize = findScale(options.outWidth * options.outHeight, maxImageSize, options.outWidth, options.outHeight, maxWidth, maxHeight);
+            return BitmapFactory.decodeStream(resolver.openInputStream(uri), null, options);
         } catch (FileNotFoundException ignored) {
         }
         return null;
     }
 
-    private static Bitmap scaleBitmapDown(Bitmap bitmap, int maxImageSize, int maxWidth, int maxHeight) {
-        int scale = findScale(bitmap.getWidth() * bitmap.getHeight(), maxImageSize, bitmap.getWidth(), bitmap.getHeight(), maxWidth, maxHeight);
-        return Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, true);
-    }
-
-    //private boolean used = false;
-    private boolean isPreviewRunning = false;
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Console.print("Surface created");
         if (isFrontCamera) {
             setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
         } else {
@@ -187,15 +166,13 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         }
         try {
             camera.startPreview();
-        } catch(Exception e) {
-            //Log.d(APP, "Cannot start preview", e);
+        } catch (Exception e) {
         }
         isPreviewRunning = true;
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Console.print("Surface destroyed");
         if (isPreviewRunning) {
             stopCamera();
             isPreviewRunning = false;
@@ -238,11 +215,19 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         camera.takePicture(null, null, new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
-                Toast toast = Toast.makeText(context, "The photo has been taken", Toast.LENGTH_LONG);
-                toast.show();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                PhotoCorrectionActivity.setBitmap(scaleBitmapDown(bitmap, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeByteArray(data, 0, data.length, options);
+
+                options.inSampleSize = findScale(options.outWidth * options.outHeight, getMaxImageSize(), options.outWidth, options.outHeight, MAX_WIDTH, MAX_HEIGHT);
+                //Console.print("Scale picture = " + options.outWidth + " " + options.outHeight + " " + options.inSampleSize);
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                options.inJustDecodeBounds = false;
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
+
+                PhotoCorrectionActivity.setBitmap(bitmap);
                 Intent intent = new Intent(context, PhotoCorrectionActivity.class);
+                Console.printAvailableMemory();
                 context.startActivity(intent);
             }
         });
