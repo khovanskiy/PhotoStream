@@ -71,7 +71,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     }
 
     private void setCamera(int cameraFacing) {
-        stopCamera();
+        //stopCamera();
         int cameraNumber = Camera.getNumberOfCameras();
         currentCameraId = NO_CAMERA;
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -122,7 +122,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         }
     }
 
-    @Override
+    /*@Override
     public void onPause() {
         super.onPause();
         stopCamera();
@@ -134,7 +134,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         if (currentCameraId != NO_CAMERA) {
             startCamera(currentCameraId);
         }
-    }
+    }*/
 
     private static int findScale(int currentSize, int maxSize, int currentWidth, int currentHeight, int minWidth, int minHeight) {
         int currentScale = 1;
@@ -167,29 +167,39 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         return Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale, bitmap.getHeight() / scale, true);
     }
 
-    private boolean used = false;
+    //private boolean used = false;
+    private boolean isPreviewRunning = false;
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Console.print("Surface created");
-        camera = Camera.open();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        if (!used) {
-            used = false;
-            if (isFrontCamera) {
-                setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
-            } else {
-                setCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
-            }
+        if (isFrontCamera) {
+            setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
+        } else {
+            setCamera(Camera.CameraInfo.CAMERA_FACING_BACK);
         }
     }
 
     @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        if (isPreviewRunning) {
+            camera.stopPreview();
+        }
+        try {
+            camera.startPreview();
+        } catch(Exception e) {
+            //Log.d(APP, "Cannot start preview", e);
+        }
+        isPreviewRunning = true;
+    }
+
+    @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-          Console.print("Surface destroyed");
+        Console.print("Surface destroyed");
+        if (isPreviewRunning) {
+            stopCamera();
+            isPreviewRunning = false;
+        }
     }
 
     @Override
@@ -203,6 +213,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             break;
             case R.id.phototakeractivity_cameratogglebutton: {
                 isFrontCamera = !isFrontCamera;
+                stopCamera();
                 if (isFrontCamera) {
                     setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
                 } else {
