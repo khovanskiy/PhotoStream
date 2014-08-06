@@ -27,7 +27,7 @@ public class Convolution3Filter extends TunablePhotoFilter {
                 matrix[i][j] = (float) (this.matrix[i][j] * strength);
             }
         }
-        matrix[1][1] += (1 - strength);
+        matrix[1][1] = (float)((this.matrix[1][1] - 1) * strength + 1);
         int h = source.height, w = source.width;
         int[] last = new int[w], cur = new int[w];
         int c1, c2, c3;

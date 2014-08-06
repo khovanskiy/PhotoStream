@@ -9,6 +9,7 @@ public abstract class TunablePhotoFilter implements PhotoFilter {
         Convolution,
         Identity,
         Saturation,
+        Vignette,
     }
     /**
      * Strength of applying filter. Should be from -1.0 to 1.0 inclusive.

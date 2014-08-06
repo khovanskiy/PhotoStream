@@ -10,11 +10,11 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.Switch;
 import android.widget.Toast;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.io.FileNotFoundException;
@@ -35,6 +35,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     private void stopCamera() {
         if (camera != null) {
+            Console.print("Release camera");
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -43,6 +44,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     private void startCamera(int cameraId) {
         try {
+            Console.print("Open camera");
             camera = Camera.open(cameraId);
             camera.setPreviewDisplay(surfaceHolder);
             Camera.Size size = camera.getParameters().getPreviewSize();
@@ -64,6 +66,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             currentCameraId = cameraId;
         } catch (Exception e) {
             Toast.makeText(context, "Failed to open camera", Toast.LENGTH_SHORT).show();
+            Log.i("M_CONSOLE", e.getMessage(), e);
         }
     }
 
@@ -168,7 +171,8 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
+        Console.print("Surface created");
+        camera = Camera.open();
     }
 
     @Override
@@ -185,7 +189,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+          Console.print("Surface destroyed");
     }
 
     @Override

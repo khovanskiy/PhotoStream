@@ -10,6 +10,10 @@
             android:id="@+id/uploadactivity_imageview" android:layout_gravity="center"
             android:adjustViewBounds="true" />
     </FrameLayout>
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/uploadactivity_commenttext" android:textColor="@android:color/white" android:hint="@string/AddComment"/>
     <FrameLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="2" android:layout_margin="10dp">
         <Button
             android:layout_width="wrap_content"

@@ -43,6 +43,19 @@ public class ColorCurveFactory {
         };
     }
 
+    public static ColorCurve createEightBit() {
+        return new ColorCurve() {
+            @Override
+            public void fillColors(int[] red, int[] green, int[] blue) {
+                for (int i = 0; i < 256; i++) {
+                    red[i] = ((i + 25) / 51) * 51;
+                    green[i] = red[i];
+                    blue[i] = red[i];
+                }
+            }
+        };
+    }
+
     public static ColorCurve createSmooth() {
         return new ColorCurve() {
             @Override

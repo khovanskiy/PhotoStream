@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import org.apache.http.HttpResponse;
@@ -75,6 +76,10 @@ public class UploadActivity extends ActionBarActivity {
                 requestParameters.clear();
                 requestParameters.put("photo_id", photoId);
                 requestParameters.put("token", token);
+                String comment = photoComment.getText().toString();
+                if (!comment.isEmpty()) {
+                    requestParameters.put("comment", comment);
+                }
                 response = new JSONObject(api.request("photosV2.commit", requestParameters, "get"));
                 if (response.getJSONArray("photos").getJSONObject(0).getString("status").equals("SUCCESS")) {
                     return true;
@@ -88,6 +93,7 @@ public class UploadActivity extends ActionBarActivity {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            photoComment.setEnabled(true);
             if (aBoolean) {
                 Toast.makeText(UploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
                 uploadButton.setVisibility(View.GONE);
@@ -101,6 +107,8 @@ public class UploadActivity extends ActionBarActivity {
     private Odnoklassniki api;
     private static Bitmap pictureTaken;
     protected Button uploadButton;
+    private EditText photoComment;
+
     public static void setPicture(Bitmap bitmap) {
          pictureTaken = bitmap;
     }
@@ -119,10 +127,12 @@ public class UploadActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 uploadButton.setEnabled(false);
+                photoComment.setEnabled(false);
                 Toast.makeText(UploadActivity.this, getString(R.string.uploadStarting), Toast.LENGTH_LONG).show();
                 Loader loader = new Loader(pictureTaken);
                 loader.execute();
             }
         });
+        photoComment = (EditText) findViewById(R.id.uploadactivity_commenttext);
     }
 }
