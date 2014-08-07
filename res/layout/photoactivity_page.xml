@@ -50,10 +50,14 @@
                 <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" android:layout_gravity="center">
-                    <ru.example.PhotoStream.ResizableImageView android:layout_width="fill_parent" android:layout_height="wrap_content"
-                                                       android:id="@+id/photoactivity_page_image"
-                                                       android:scaleType="centerCrop" android:adjustViewBounds="true"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                    <ru.example.PhotoStream.ResizableImageView
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/photoactivity_page_image"
+                            android:scaleType="centerCrop"
+                            android:adjustViewBounds="true"/>
                     <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"

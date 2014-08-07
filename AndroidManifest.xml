@@ -36,13 +36,18 @@
         </activity>
         <activity android:name=".Activities.AlbumActivity"/>
         <activity android:name=".Activities.PhotoActivity"/>
-        <activity android:name=".Activities.UploadActivity"/>
+
         <activity android:name="ru.example.PhotoStream.Activities.PhotoTakerActivity"
                   android:screenOrientation="landscape"
-                  android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name="ru.example.PhotoStream.Activities.PhotoCorrectionActivity"
+                  android:screenOrientation="landscape"
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name="ru.example.PhotoStream.Activities.PhotoFilteringActivity"
-                  android:screenOrientation="portrait"
+                  android:screenOrientation="landscape"
+                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".Activities.UploadActivity"
+                  android:screenOrientation="landscape"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 </manifest>

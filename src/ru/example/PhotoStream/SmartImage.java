@@ -46,7 +46,6 @@ public class SmartImage extends ImageView {
                     inputStream = new BufferedInputStream(new URL(this.path).openStream());
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.RGB_565;
-                    options.inTempStorage = new byte[16 * 1024];
                     bitmap = BitmapFactory.decodeStream(inputStream, null, options);
                 } catch (Exception e) {
                     Console.print(e.getMessage());
@@ -68,9 +67,6 @@ public class SmartImage extends ImageView {
             }
             // А не успели ли уже загрузить наше фото до нас?
             BitmapPointer pointer = cache.get(this.path);
-            if (pointer != null) {
-                Console.print("Equals bitmaps: " + (pointer.get() == bitmap));
-            }
             if (pointer != null && pointer.get() != null) {
                 // Успели =>
                 bitmap.recycle(); // Наше уже не нужно
@@ -78,13 +74,11 @@ public class SmartImage extends ImageView {
                 // Не успели =>
                 // А не произошло ли у нас ошибки при нашей загрузке?
                 if (bitmap == null) {
-                    calcAvailableMemory();
                     return;
                 }
                 pointer = new BitmapPointer(this.path, bitmap); // Новый указатель
                 cache.put(path, pointer); // Поместим новый указатель в кеш
             }
-            calcAvailableMemory();
             // Актуальный ли это загрузчик?
             if (loader != this) {
                 // Не актуальный => можно ничего не обновлять
@@ -253,19 +247,5 @@ public class SmartImage extends ImageView {
 
     public void setOnSmartViewLoadedListener(OnSmartViewLoadedListener loadedListener) {
         this.loadedListener = loadedListener;
-    }
-
-    private long calcAvailableMemory() {
-        long value = Runtime.getRuntime().maxMemory();
-        String type;
-        if (android.os.Build.VERSION.SDK_INT >= 11) {
-            value = (value / 1024) - (Runtime.getRuntime().totalMemory() / 1024);
-            type = "JAVA";
-        } else {
-            value = (value / 1024) - (Debug.getNativeHeapAllocatedSize() / 1024);
-            type = "NATIVE";
-        }
-        Console.print("calcAvailableMemory, size = " + value + ", type = " + type);
-        return value;
     }
 }
