@@ -237,12 +237,6 @@ public class TunablePhotoFilterFactory {
             public String toString(Context context) {
                 return context.getString(R.string.EightBit);
             }
-        },
-        EightBit {
-            @Override
-            public String toString(Context context) {
-                return context.getString(R.string.EightBit);
-            }
         };
         /*
         Random {

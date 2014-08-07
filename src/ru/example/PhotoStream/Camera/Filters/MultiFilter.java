@@ -7,6 +7,12 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class MultiFilter implements PhotoFilter {
+
+    @Override
+    public void transformOpaqueRaw(RawBitmap source, RawBitmap destination) {
+        transformOpaqueRaw(source, destination, Integer.MAX_VALUE - 1);
+    }
+
     private static enum ImageOrientation {
         Top,
         Left,
@@ -29,8 +35,8 @@ public class MultiFilter implements PhotoFilter {
         filters.put(filterPriority, photoFilter);
     }
 
-    public synchronized Collection<TunablePhotoFilter> getAllFilters() {
-        return filters.values();
+    public synchronized Collection<TunablePhotoFilter> getAllFilters(int maxPriority) {
+        return filters.headMap(maxPriority + 1).values();
     }
 
     public synchronized void changeOrientation(OrientationChange change) {
@@ -166,11 +172,10 @@ public class MultiFilter implements PhotoFilter {
         }
     }
 
-    @Override
-    public void transformOpaqueRaw(RawBitmap source, RawBitmap destination) {
+    public void transformOpaqueRaw(RawBitmap source, RawBitmap destination, int maxPriority) {
         copyWithOrientation(source, destination);
         ColorCurveFilter colorCurveFilter = null;
-        for (TunablePhotoFilter filter: getAllFilters()) {
+        for (TunablePhotoFilter filter: getAllFilters(maxPriority)) {
             if (filter.getType() == TunablePhotoFilter.TunableType.ColorCurve) {
                 if (colorCurveFilter == null) {
                     colorCurveFilter = (ColorCurveFilter) filter;
