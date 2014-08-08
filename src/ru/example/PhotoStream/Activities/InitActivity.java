@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InitActivity extends ActionBarActivity implements IEventHadler{
+public class InitActivity extends ActionBarActivity implements IEventHadler, TLoader.Callback<List<Group>> {
 
     private class GetCurrentUserIdLoader extends AsyncTask<Void, Void, String> {
 
@@ -54,7 +54,7 @@ public class InitActivity extends ActionBarActivity implements IEventHadler{
         api = Odnoklassniki.getInstance(this);
 
         GroupsLoader groupsLoader = new GroupsLoader(api);
-        groupsLoader.addEventListener(this);
+        groupsLoader.attachLoadedCallback(this);
         groupsLoader.execute();
 
         FriendsLoader friendsLoader = new FriendsLoader(api);
@@ -63,18 +63,19 @@ public class InitActivity extends ActionBarActivity implements IEventHadler{
     }
 
     @Override
-    public void handleEvent(Event e) {
-        if (e.type == Event.GROUPS_LOADED) {
-            e.target.removeEventListener(this);
-            List<Group> groups = (List<Group>) e.data.get("groups");
-            semaphore += groups.size();
+    public void onDataLoaded(List<Group> groups) {
+        semaphore += groups.size();
 
-            for (Group group : groups) {
-                AlbumsLoader loader = new AlbumsLoader(api, group);
-                loader.addEventListener(this);
-                loader.execute();
-            }
-        } else if (e.type == Event.FRIENDS_LOADED) {
+        for (Group group : groups) {
+            AlbumsLoader loader = new AlbumsLoader(api, group);
+            loader.addEventListener(this);
+            loader.execute();
+        }
+    }
+
+    @Override
+    public void handleEvent(Event e) {
+        if (e.type == Event.FRIENDS_LOADED) {
             e.target.removeEventListener(this);
             List<User> friends = (List<User>) e.data.get("friends");
             semaphore += friends.size() + 1;

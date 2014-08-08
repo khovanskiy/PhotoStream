@@ -188,10 +188,6 @@ public class Album extends Entry {
             }
             try {
                 String response = api.request("photos.getPhotos", requestParams, "get");
-                if (user_id.equals("561798546393")) {
-                    Console.print("Photo response: " + response);
-                }
-                Console.print("");
                 JSONObject photosObject = new JSONObject(response);
                 JSONArray photos = photosObject.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); ++i) {

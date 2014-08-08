@@ -58,7 +58,7 @@ public class Feed extends EventDispatcher {
                 toDisplay.add(photo);
             }
             dispatchEvent(new Event(Feed.this, Event.COMPLETE));
-            running.compareAndSet(true, false);
+            isRunning.compareAndSet(true, false);
         }
     }
 
@@ -69,7 +69,7 @@ public class Feed extends EventDispatcher {
     protected List<Photo> toDisplay = new ArrayList<>();
     protected Odnoklassniki api;
     protected int currentLoadCount;
-    protected AtomicBoolean running = new AtomicBoolean(false);
+    protected AtomicBoolean isRunning = new AtomicBoolean(false);
 
     public Feed(Odnoklassniki api) {
         this(api, DEFAULT_LOAD_COUNT);
@@ -93,7 +93,7 @@ public class Feed extends EventDispatcher {
     }
 
     public void loadMore() {
-        if (running.compareAndSet(false, true)) {
+        if (isRunning.compareAndSet(false, true)) {
             Loader loader = new Loader();
             loader.execute();
         }
