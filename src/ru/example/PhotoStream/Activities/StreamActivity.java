@@ -30,8 +30,8 @@ public class StreamActivity extends ActionBarActivity {
             titles[0] = R.string.my_groups;
             fragments[1] = new StreamFragment();
             titles[1] = R.string.photoStream;
-            fragments[2] = new StreamFragment();//FriendsFragment();
-            titles[2] = R.string.my_friends;
+            //fragments[2] = new StreamFragment();//FriendsFragment();
+            //titles[2] = R.string.my_friends;
         }
 
         @Override
@@ -50,8 +50,8 @@ public class StreamActivity extends ActionBarActivity {
         }
     }
 
-    protected final static int MAX_PAGES = 3;
-    protected final static int DEFAULT_PAGE_ID = 1;
+    protected final static int MAX_PAGES = 2;
+    protected final static int DEFAULT_PAGE_ID = 0;
     protected final IFragmentSwitcher[] fragments = new IFragmentSwitcher[MAX_PAGES];
     protected final int[] titles = new int[MAX_PAGES];
 

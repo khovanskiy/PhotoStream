@@ -36,15 +36,18 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
         Bundle bundle = getArguments();
         if (bundle == null) {
-            /*List<User> users = User.getAllUsers();
+            List<User> users = User.getAllUsers();
             for (User user : users) {
-                feed.addAll(user.getAlbums());
+                //feed.addAll(user.getAlbums());
             }
             List<Group> groups = Group.getAllGroups();
+            int p =0;
             for (Group group : groups) {
-                //feed.addAll(group.getAlbums());
-            } */
-            feed.addAll(User.get("").getAlbums());
+                feed.addAll(group.getAlbums());
+                           p++;
+                if (p == 10) {break;}
+            }
+            //feed.addAll(User.get("").getAlbums());
         } else if (bundle.getString("aid") != null) {
             feed.add(Album.get(bundle.getString("aid", "")));
         } else if (bundle.getString("uid") != null) {

@@ -80,6 +80,7 @@ public class Album extends Entry {
     public List<Chunk> chunks = new ArrayList<>();
     private boolean hasMore = true;
     private Photo lastLoadedPhoto = null;
+    private Photo firstLoadedPhoto = null;
 
     private boolean running = false;
 
@@ -158,11 +159,10 @@ public class Album extends Entry {
         return current;
     }
 
+    boolean cleared = false;
+
     public void clear() {
-        lastAnchor = "";
-        hasMore = true;
-        lastLoadedPhoto = null;
-        chunks.clear();
+        cleared = true;
     }
 
     @Override
@@ -185,11 +185,11 @@ public class Album extends Entry {
             requestParams.put("aid", objectId);
         }
         requestParams.put("count", count + "");
-        try {
+        /*try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         if (hasMore) {
             Chunk chunk = new Chunk();
             chunk.anchor = lastAnchor;
@@ -204,6 +204,9 @@ public class Album extends Entry {
                     Photo photo = Photo.build(photos.getJSONObject(i));
                     photo.album_id = objectId;
                     chunk.photos.add(photo);
+                    if (firstLoadedPhoto == null) {
+                        firstLoadedPhoto = photo;
+                    }
                     lastLoadedPhoto = photo;
                 }
                 hasMore = photosObject.getBoolean("hasMore");

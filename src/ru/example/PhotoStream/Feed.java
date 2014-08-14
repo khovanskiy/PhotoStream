@@ -65,7 +65,6 @@ public class Feed extends EventDispatcher {
                         }
                     }
                 }
-
                 for (int i = 0; heap.size() > 0 && i < currentLoadCount; ++i) {
                     Photo photo = heap.poll();
                     chunk.add(photo);
@@ -75,23 +74,30 @@ public class Feed extends EventDispatcher {
                         if (album.getLastLoadedPhoto() == photo) {
                             continue;
                         }
+                        Console.print("Lock by #"+cuid+" album " + album.title);
                         boolean shouldBeUpdatedOwn = true;
                         while (album.isRunning()) {
+                            Console.print("#"+cuid+" wait album " + album.title);
                             shouldBeUpdatedOwn = false;
                             album.wait();
                         }
-                        if (shouldBeUpdatedOwn && album.hasMore()) {
+                        if (holder.chunksAdded == album.chunksCount() && shouldBeUpdatedOwn && album.hasMore()) {
+                            Console.print("#"+cuid+" update album " + album.title);
                             album.loadNextChunk(api);
                         }
                         if (holder.chunksAdded < album.chunksCount()) {
-                            heap.addAll(album.getChunk(holder.chunksAdded));
+                            List<Photo> photos = album.getChunk(holder.chunksAdded);
+                            Console.print("#"+cuid+" adds chunk [" + photos.size() + "]from album " + album.title);
+                            heap.addAll(photos);
                             ++holder.chunksAdded;
                         }
                         if (shouldBeUpdatedOwn) {
+                            Console.print("#"+cuid+" notify about from album " + album.title);
                             album.notifyAll();
                         }
                     }
                 }
+                Console.print("After major-phase #"+cuid+" heap = " + heap.size() + " " + toDisplay.size());
             }
             catch (Exception e) {
                 Log.d("FEED_CONSOLE", e.getMessage(), e);
@@ -118,8 +124,11 @@ public class Feed extends EventDispatcher {
     protected int currentLoadCount;
     protected AtomicBoolean isRunning = new AtomicBoolean(false);
 
+    static int uids = 0;
+    int cuid;
     public Feed(Odnoklassniki api) {
         this(api, DEFAULT_LOAD_COUNT);
+        cuid = uids++;
     }
 
     public Feed(Odnoklassniki api, int loadCount) {
@@ -130,8 +139,7 @@ public class Feed extends EventDispatcher {
     public void clear() {
         for (Map.Entry<String, AlbumHolder> entry : albums.entrySet()) {
             AlbumHolder holder = entry.getValue();
-            Album album = holder.getAlbum();
-            album.clear();
+            holder.getAlbum().clear();
         }
         toDisplay.clear();
         heap.clear();

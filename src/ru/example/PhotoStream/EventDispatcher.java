@@ -20,9 +20,9 @@ public class EventDispatcher implements IEventDispatcher {
             return;
         }
         if (recuirsion_count == 0) {
-            listeners.add(new Pair<IEventHadler, Boolean>(listener, true));
+            listeners.add(new Pair<>(listener, true));
         } else {
-            nn.push(new Pair<IEventHadler, Boolean>(listener, true));
+            nn.push(new Pair<>(listener, true));
         }
     }
 
