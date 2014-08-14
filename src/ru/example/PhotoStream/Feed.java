@@ -129,7 +129,7 @@ public class Feed extends EventDispatcher {
                 toDisplay.add(photo);
             }
             dispatchEvent(new Event(Feed.this, Event.COMPLETE));
-            isRunning.compareAndSet(true, false);
+            isRunning.set(false);
         }
 
     }

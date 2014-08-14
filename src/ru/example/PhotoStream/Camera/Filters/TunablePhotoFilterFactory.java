@@ -229,13 +229,18 @@ public class TunablePhotoFilterFactory {
 
             @Override
             public int getIconResource() {
-                return R.drawable.filter_colorreduction;
+                return R.drawable.filter_16;
             }
         },
         EightBit {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.EightBit);
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable.filter_8;
             }
         };
         /*
