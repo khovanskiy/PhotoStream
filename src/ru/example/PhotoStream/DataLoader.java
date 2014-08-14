@@ -62,26 +62,6 @@ public abstract class DataLoader extends AsyncTask<Void, Void, List<?>> implemen
         return result;
     }
 
-    protected Photo getPhoto(String photo_id, String gid) {
-        Map<String, String> requestParams = new HashMap<String, String>();
-        if (photo_id != null) {
-            requestParams.put("photo_id", photo_id);
-        }
-        if (gid != null) {
-            requestParams.put("gid", gid);
-            requestParams.put("fields", "group_photo.*");
-        }
-        Photo result = null;
-        try {
-            String response = api.request("photos.getPhotoInfo", requestParams, "get");
-            JSONObject photosObject = new JSONObject(response);
-            result = Photo.build(photosObject.getJSONObject("photo"));
-        } catch (Exception e) {
-            Console.print("Error " + e.getMessage());
-        }
-        return result;
-    }
-
     @Override
     public void addEventListener(IEventHadler listener) {
         eventDispatcher.addEventListener(listener);

@@ -11,10 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Group extends AlbumsKeeper {
-    /**
-     * Group's id.
-     */
-    public String uid = "";
 
     /**
      * Group's title.
@@ -82,7 +78,7 @@ public class Group extends AlbumsKeeper {
         } else {
             current = cache.get(groupId);
         }
-        current.uid = groupId;
+        current.objectId = groupId;
         return current;
     }
 
@@ -123,7 +119,7 @@ public class Group extends AlbumsKeeper {
     @Override
     public void loadAlbums(Odnoklassniki api) {
         Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("gid", uid);
+        requestParams.put("gid", objectId);
         requestParams.put("fields", "group_album.*");
 
         albums.clear();

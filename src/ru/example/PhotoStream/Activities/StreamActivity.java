@@ -26,11 +26,11 @@ public class StreamActivity extends ActionBarActivity {
         public PageAdapter(FragmentManager fragmentManager, Context context) {
             super(fragmentManager);
             this.context = context;
-            fragments[0] = new GroupsFragment();
+            fragments[0] = new StreamFragment();//GroupsFragment();
             titles[0] = R.string.my_groups;
             fragments[1] = new StreamFragment();
             titles[1] = R.string.photoStream;
-            fragments[2] = new FriendsFragment();
+            fragments[2] = new StreamFragment();//FriendsFragment();
             titles[2] = R.string.my_friends;
         }
 

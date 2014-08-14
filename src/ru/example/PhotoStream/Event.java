@@ -18,6 +18,6 @@ public class Event {
     public Event(IEventDispatcher target, String type) {
         this.target = target;
         this.type = type;
-        this.data = new HashMap<String, Object>();
+        this.data = new HashMap<>();
     }
 }

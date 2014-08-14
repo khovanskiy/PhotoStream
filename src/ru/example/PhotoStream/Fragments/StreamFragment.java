@@ -36,14 +36,15 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
         Bundle bundle = getArguments();
         if (bundle == null) {
-            List<User> users = User.getAllUsers();
+            /*List<User> users = User.getAllUsers();
             for (User user : users) {
                 feed.addAll(user.getAlbums());
             }
             List<Group> groups = Group.getAllGroups();
             for (Group group : groups) {
-                feed.addAll(group.getAlbums());
-            }
+                //feed.addAll(group.getAlbums());
+            } */
+            feed.addAll(User.get("").getAlbums());
         } else if (bundle.getString("aid") != null) {
             feed.add(Album.get(bundle.getString("aid", "")));
         } else if (bundle.getString("uid") != null) {
@@ -62,9 +63,6 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         PhotoActivity.setFeed(feed);
         intent.putExtra("position", position);
         startActivity(intent);
-        //SmartImage image = (SmartImage) view.findViewById(R.id.streamphotoview_imageView);
-        //image.setVisibility(View.GONE);
-        //image.debug();
     }
 
     private void loadMorePhotos() {

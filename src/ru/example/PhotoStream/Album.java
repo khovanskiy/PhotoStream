@@ -8,6 +8,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Album extends Entry {
 
@@ -27,7 +28,7 @@ public class Album extends Entry {
     /**
      * Album's id or empty string if album is private.
      */
-    public String aid = "";
+    //public String aid = "";
 
     /**
      * User's id or empty string if this is current user's or group's album.
@@ -80,8 +81,14 @@ public class Album extends Entry {
     private boolean hasMore = true;
     private Photo lastLoadedPhoto = null;
 
+    private boolean running = false;
+
     private Album() {
 
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     /**
@@ -99,7 +106,7 @@ public class Album extends Entry {
         } else {
             current = cache.get(albumId);
         }
-        current.aid = albumId;
+        current.objectId = albumId;
         return current;
     }
 
@@ -129,9 +136,7 @@ public class Album extends Entry {
         } else {
             throw new JSONException("Album object does not have ID");
         }
-        Album current = get(currentId);
-        current.aid = currentId;
-
+        Album current = Album.get(currentId);
         if (object.has("title")) {
             current.title = object.getString("title");
         }
@@ -167,6 +172,7 @@ public class Album extends Entry {
 
     @Override
     public boolean loadNextChunk(Odnoklassniki api, int count) {
+        running = true;
         Map<String, String> requestParams = new HashMap<>();
         if (albumType == AlbumType.USER) {
             requestParams.put("fid", user_id);
@@ -176,10 +182,14 @@ public class Album extends Entry {
             requestParams.put("fields", "group_photo.*");
         }
         if (!isPersonal) {
-            requestParams.put("aid", aid);
+            requestParams.put("aid", objectId);
         }
         requestParams.put("count", count + "");
-
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (hasMore) {
             Chunk chunk = new Chunk();
             chunk.anchor = lastAnchor;
@@ -192,7 +202,7 @@ public class Album extends Entry {
                 JSONArray photos = photosObject.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); ++i) {
                     Photo photo = Photo.build(photos.getJSONObject(i));
-                    photo.album_id = aid;
+                    photo.album_id = objectId;
                     chunk.photos.add(photo);
                     lastLoadedPhoto = photo;
                 }
@@ -205,8 +215,10 @@ public class Album extends Entry {
                 hasMore = false;
             }
             chunks.add(chunk);
+            running = false;
             return true;
         }
+        running = false;
         return false;
     }
 

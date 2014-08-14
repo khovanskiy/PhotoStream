@@ -128,7 +128,7 @@ public class GroupsFragment extends IFragmentSwitcher implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AlbumsActivity.class);
         Group obj = (Group) groupsList.getItemAtPosition(position);
-        intent.putExtra("gid", obj.uid);
+        intent.putExtra("gid", obj.getId());
         startActivity(intent);
     }
 

@@ -133,7 +133,7 @@ public class AlbumsFragment extends IFragmentSwitcher implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AlbumActivity.class);
         Album obj = (Album) albumsList.getItemAtPosition(position);
-        intent.putExtra("aid", obj.aid);
+        intent.putExtra("aid", obj.getId());
         startActivity(intent);
     }
 

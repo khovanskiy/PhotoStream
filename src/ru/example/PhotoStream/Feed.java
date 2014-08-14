@@ -1,12 +1,10 @@
 package ru.example.PhotoStream;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Feed extends EventDispatcher {
@@ -26,28 +24,77 @@ public class Feed extends EventDispatcher {
         }
     }
 
+    private class AlbumHolder {
+
+        private Album album;
+        public int chunksAdded;
+
+        public AlbumHolder(Album album) {
+            this.album = album;
+        }
+
+        public Album getAlbum() {
+            return album;
+        }
+
+    }
+
     private class Loader extends AsyncTask<Void, Void, List<Photo>> {
         @Override
         protected List<Photo> doInBackground(Void... params) {
-            for (Album album : albums) {
-                if (album.hasMore() && album.chunksCount() == 0) {
-                    album.loadNextChunk(api, 2);
-                    heap.addAll(album.getLastChunk());
+            List<Photo> chunk = new ArrayList<>(currentLoadCount);
+            try {
+                for (Map.Entry<String, AlbumHolder> entry : albums.entrySet()) {
+                    AlbumHolder holder = entry.getValue();
+                    Album album = holder.getAlbum();
+                    synchronized (album) {
+                        boolean shouldBeUpdatedOwn = true;
+                        while (album.isRunning()) {
+                            shouldBeUpdatedOwn = false;
+                            album.wait();
+                        }
+                        if (shouldBeUpdatedOwn && album.hasMore() && album.chunksCount() == 0) {
+                            album.loadNextChunk(api);
+                        }
+                        if (holder.chunksAdded < album.chunksCount()) {
+                            heap.addAll(album.getChunk(holder.chunksAdded));
+                            ++holder.chunksAdded;
+                        }
+                        if (shouldBeUpdatedOwn) {
+                            album.notifyAll();
+                        }
+                    }
+                }
+
+                for (int i = 0; heap.size() > 0 && i < currentLoadCount; ++i) {
+                    Photo photo = heap.poll();
+                    chunk.add(photo);
+                    AlbumHolder holder = albums.get(photo.album_id);
+                    Album album = holder.getAlbum();
+                    synchronized (album) {
+                        if (album.getLastLoadedPhoto() == photo) {
+                            continue;
+                        }
+                        boolean shouldBeUpdatedOwn = true;
+                        while (album.isRunning()) {
+                            shouldBeUpdatedOwn = false;
+                            album.wait();
+                        }
+                        if (shouldBeUpdatedOwn && album.hasMore()) {
+                            album.loadNextChunk(api);
+                        }
+                        if (holder.chunksAdded < album.chunksCount()) {
+                            heap.addAll(album.getChunk(holder.chunksAdded));
+                            ++holder.chunksAdded;
+                        }
+                        if (shouldBeUpdatedOwn) {
+                            album.notifyAll();
+                        }
+                    }
                 }
             }
-            List<Photo> chunk = new ArrayList<>(currentLoadCount);
-
-            for (int i = 0; heap.size() > 0 && i < currentLoadCount; ++i) {
-                if (albums.size() == 1) {
-                    Console.print("Heap size : " + heap.size());
-                }
-                Photo photo = heap.poll();
-                chunk.add(photo);
-                Album album = Album.get(photo.album_id);
-                if (album.hasMore() && album.getLastLoadedPhoto() == photo) {
-                    album.loadNextChunk(api);
-                    heap.addAll(album.getLastChunk());
-                }
+            catch (Exception e) {
+                Log.d("FEED_CONSOLE", e.getMessage(), e);
             }
             return chunk;
         }
@@ -64,7 +111,7 @@ public class Feed extends EventDispatcher {
 
     public final static int DEFAULT_LOAD_COUNT = 100;
 
-    protected List<Album> albums = new ArrayList<>();
+    protected Map<String, AlbumHolder> albums = new HashMap<>();
     protected PriorityQueue<Photo> heap = new PriorityQueue<>(1, new PhotoByUploadTimeComparator());
     protected List<Photo> toDisplay = new ArrayList<>();
     protected Odnoklassniki api;
@@ -81,7 +128,9 @@ public class Feed extends EventDispatcher {
     }
 
     public void clear() {
-        for (Album album : albums) {
+        for (Map.Entry<String, AlbumHolder> entry : albums.entrySet()) {
+            AlbumHolder holder = entry.getValue();
+            Album album = holder.getAlbum();
             album.clear();
         }
         toDisplay.clear();
@@ -106,9 +155,6 @@ public class Feed extends EventDispatcher {
     }
 
     public void add(Album album) {
-        albums.add(album);
-        for (int i = 0; i < album.chunksCount(); ++i) {
-            heap.addAll(album.getChunk(i));
-        }
+        albums.put(album.getId(), new AlbumHolder(album));
     }
 }
