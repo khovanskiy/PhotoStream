@@ -77,7 +77,7 @@ public class GroupsFragment extends IFragmentSwitcher implements AdapterView.OnI
             List<Album> albums = group.getAlbums();
             int count = 0;
             photosAdapter.clear();
-            loop:
+            /*loop:
             for (Album album : albums) {
                 for (int j = 0; j < album.chunksCount(); ++j) {
                     List<Photo> photos = album.getChunk(j);
@@ -89,7 +89,7 @@ public class GroupsFragment extends IFragmentSwitcher implements AdapterView.OnI
                         }
                     }
                 }
-            }
+            }*/
             photosAdapter.notifyDataSetChanged();
             return view;
         }

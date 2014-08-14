@@ -78,7 +78,7 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
             int count = 0;
             photosAdapter.clear();
             loop:
-            for (Album album : albums) {
+            /*for (Album album : albums) {
                 for (int j = 0; j < album.chunksCount(); ++j) {
                     List<Photo> photos = album.getChunk(j);
                     for (int k = 0; k < photos.size(); ++k) {
@@ -89,7 +89,7 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
                         }
                     }
                 }
-            }
+            }*/
             photosAdapter.notifyDataSetChanged();
             return view;
         }
