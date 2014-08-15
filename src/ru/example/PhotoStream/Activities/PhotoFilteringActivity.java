@@ -228,9 +228,6 @@ public class PhotoFilteringActivity extends Activity {
         generalFilter.attachFilter(PHOTO_FILTER_PRIORITY, TunablePhotoFilterFactory.NoFilter());
         generalFilter.attachFilter(WHITE_BALANCE_PRIORITY, whiteBalanceFilters.get(getString(R.string.NoWhiteBalance)));
         generalFilter.attachFilter(COLOR_TEMPERATURE_PRIORITY, colorTemperature);
-        generalFilter.attachFilter(EXPOSURE_PRIORITY, exposure);
-        generalFilter.attachFilter(SHARPNESS_PRIORITY, sharpness);
-        generalFilter.attachFilter(VIGNETTE_PRIORITY, vignette);
 
         brightnessBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(brightness, -1, 1));
         contrastBar.setOnSeekBarChangeListener(new MySeekBarChangeListener(contrast, -1, 1));

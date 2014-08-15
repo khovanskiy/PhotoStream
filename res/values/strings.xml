@@ -88,7 +88,6 @@
         Обратите внимание, что мы будем использовать Support Library для поддержки устройств со старыми версиями
         Андроида.
     </string>
-    <string name="ImageSettings">Настройки</string>
     <string name="ImageFilters">Фильтры</string>
     <string name="FilterPower">Сила фильтра</string>
     <string name="Exposure">Выдержка</string>
@@ -96,4 +95,8 @@
     <string name="Vignette">Виньетка</string>
     <string name="AddComment">Добавить комментарий</string>
     <string name="EightBit">8 бит</string>
+    <string name="take_video">Сделать видео</string>
+    <string name="videouploadactivity_title">Загрузка видео</string>
+    <string name="AddVideoTitle">Название видео</string>
+    <string name="NoTitle">Без названия</string>
 </resources>

@@ -49,5 +49,6 @@
         <activity android:name=".Activities.UploadActivity"
                   android:screenOrientation="landscape"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".Activities.VideoUploadActivity"/>
     </application>
 </manifest>

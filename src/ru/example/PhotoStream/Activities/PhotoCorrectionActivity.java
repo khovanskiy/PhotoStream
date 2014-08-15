@@ -1,13 +1,11 @@
 package ru.example.PhotoStream.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -17,11 +15,10 @@ import ru.example.PhotoStream.Camera.Filters.MultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilterFactory;
 import ru.example.PhotoStream.Camera.RawBitmap;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.zip.Inflater;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class PhotoCorrectionActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -37,7 +34,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         @Override
         protected Void doInBackground(Void... params) {
             while (continueRefreshing.compareAndSet(true, false)) {
-                generalFilter.transformOpaqueRaw(source, result);
+                generalFilter.transformOpaqueRaw(source, result, filterPriority.get());
                 if (result.width == source.width) {
                     result.fillBitmap(nextBitmap);
                     rotated = false;
@@ -77,17 +74,19 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         private TunablePhotoFilter filter;
         private final double minStrength;
         private final double maxStrength;
+        private final int refreshPriority;
 
-        public SeekBarChangeListener(TunablePhotoFilter filter, double minStrength, double maxStrength) {
+        public SeekBarChangeListener(TunablePhotoFilter filter, double minStrength, double maxStrength, int refreshPriority) {
             this.filter = filter;
             this.minStrength = minStrength;
             this.maxStrength = maxStrength;
+            this.refreshPriority = refreshPriority;
         }
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             filter.setStrength(calculateStrength(seekBar, minStrength, maxStrength));
-            refreshImage();
+            refreshImage(refreshPriority);
         }
 
         @Override
@@ -98,7 +97,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
             filter.setStrength(calculateStrength(seekBar, minStrength, maxStrength));
-            refreshImage();
+            refreshImage(MAX_PRIORITY);
         }
     }
 
@@ -113,14 +112,28 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         @Override
         public void onClick(View v) {
             setCurrentFilter(filter);
-            refreshImage();
+            refreshImage(MAX_PRIORITY);
         }
     }
+
+    private static final int WHITE_BALANCE_PRIORITY = 0;
+    private static final int COLOR_TEMPERATURE_PRIORITY = 1;
+    private static final int EXPOSURE_PRIORITY = 2;
+    private static final int BRIGHTNESS_PRIORITY = 3;
+    private static final int CONTRAST_PRIORITY = 4;
+    private static final int LIGHT_REGIONS_PRIORITY = 5;
+    private static final int DARK_REGIONS_PRIORITY = 6;
+    private static final int SATURATION_PRIORITY = 7;
+    private static final int SHARPNESS_PRIORITY = 101;
+    private static final int PHOTO_FILTER_PRIORITY = 100;
+    private static final int VIGNETTE_PRIORITY = 102;
+    private static final int MAX_PRIORITY = 1000;
 
     private static Bitmap image = null;
 
     protected AtomicBoolean continueRefreshing = new AtomicBoolean(false);
     protected AtomicBoolean taskIsRunning = new AtomicBoolean(false);
+    protected AtomicInteger filterPriority = new AtomicInteger(0);
 
     private ProgressBar progressBar;
     private ImageView imageView;
@@ -168,74 +181,74 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
          * Brightness
          */
         TunablePhotoFilter brightnessFilter = TunablePhotoFilterFactory.Brightness();
-        generalFilter.attachFilter(0, brightnessFilter);
+        generalFilter.attachFilter(BRIGHTNESS_PRIORITY, brightnessFilter);
         SeekBar brightnessBar = (SeekBar) findViewById(R.id.photocorrecting_brightnessbar);
-        brightnessBar.setOnSeekBarChangeListener(new SeekBarChangeListener(brightnessFilter, -1, 1));
+        brightnessBar.setOnSeekBarChangeListener(new SeekBarChangeListener(brightnessFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
         /**
          * Contrast
          */
         TunablePhotoFilter contrastFilter = TunablePhotoFilterFactory.Contrast();
-        generalFilter.attachFilter(1, contrastFilter);
+        generalFilter.attachFilter(CONTRAST_PRIORITY, contrastFilter);
         SeekBar contrastBar = (SeekBar) findViewById(R.id.photocorrecting_contrastbar);
-        contrastBar.setOnSeekBarChangeListener(new SeekBarChangeListener(contrastFilter, -1, 1));
+        contrastBar.setOnSeekBarChangeListener(new SeekBarChangeListener(contrastFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
         /**
          * Saturation
          */
         TunablePhotoFilter saturationFilter = TunablePhotoFilterFactory.Saturation();
-        generalFilter.attachFilter(2, saturationFilter);
+        generalFilter.attachFilter(SATURATION_PRIORITY, saturationFilter);
         SeekBar saturationBar = (SeekBar) findViewById(R.id.photocorrecting_saturationbar);
-        saturationBar.setOnSeekBarChangeListener(new SeekBarChangeListener(saturationFilter, -1, 1));
+        saturationBar.setOnSeekBarChangeListener(new SeekBarChangeListener(saturationFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
 
         /**
          *  Exposure
          */
         TunablePhotoFilter exposureFilter = TunablePhotoFilterFactory.Exposure();
-        generalFilter.attachFilter(3, exposureFilter);
+        generalFilter.attachFilter(EXPOSURE_PRIORITY, exposureFilter);
         SeekBar exposureBar = (SeekBar) findViewById(R.id.photocorrecting_exposurebar);
-        exposureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(exposureFilter, -1, 1));
+        exposureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(exposureFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
         /**
          * Shadows
          */
         TunablePhotoFilter darkRegionsFilter = TunablePhotoFilterFactory.DarkRegions();
-        generalFilter.attachFilter(4, darkRegionsFilter);
+        generalFilter.attachFilter(DARK_REGIONS_PRIORITY, darkRegionsFilter);
         SeekBar darkRegionsBar = (SeekBar) findViewById(R.id.photocorrecting_darkregionsbar);
-        darkRegionsBar.setOnSeekBarChangeListener(new SeekBarChangeListener(darkRegionsFilter, -1, 1));
+        darkRegionsBar.setOnSeekBarChangeListener(new SeekBarChangeListener(darkRegionsFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
         /**
          * Light regions
          */
         TunablePhotoFilter lightRegionsFilter = TunablePhotoFilterFactory.LightRegions();
-        generalFilter.attachFilter(5, lightRegionsFilter);
+        generalFilter.attachFilter(LIGHT_REGIONS_PRIORITY, lightRegionsFilter);
         SeekBar lightRegionsBar = (SeekBar) findViewById(R.id.photocorrecting_lightregionsbar);
-        lightRegionsBar.setOnSeekBarChangeListener(new SeekBarChangeListener(lightRegionsFilter, -1, 1));
+        lightRegionsBar.setOnSeekBarChangeListener(new SeekBarChangeListener(lightRegionsFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
         /**
          * Temperature
          */
         TunablePhotoFilter temperatureFilter = TunablePhotoFilterFactory.ColorTemperature(this);
-        generalFilter.attachFilter(6, temperatureFilter);
+        generalFilter.attachFilter(COLOR_TEMPERATURE_PRIORITY, temperatureFilter);
         SeekBar temperatureBar = (SeekBar) findViewById(R.id.photocorrecting_temperaturebar);
-        temperatureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(temperatureFilter, -1, 1));
+        temperatureBar.setOnSeekBarChangeListener(new SeekBarChangeListener(temperatureFilter, -1, 1, PHOTO_FILTER_PRIORITY));
 
         /**
          * Sharpness
          */
         TunablePhotoFilter sharpnessFilter = TunablePhotoFilterFactory.Sharpness();
-        generalFilter.attachFilter(7, sharpnessFilter);
+        generalFilter.attachFilter(SHARPNESS_PRIORITY, sharpnessFilter);
         SeekBar sharpnessBar = (SeekBar) findViewById(R.id.photocorrecting_sharpnessbar);
-        sharpnessBar.setOnSeekBarChangeListener(new SeekBarChangeListener(sharpnessFilter, -1, 1));
+        sharpnessBar.setOnSeekBarChangeListener(new SeekBarChangeListener(sharpnessFilter, -1, 1, SHARPNESS_PRIORITY));
 
         /**
          * Vignette
          */
         TunablePhotoFilter vignetteFilter = TunablePhotoFilterFactory.Vignette();
-        generalFilter.attachFilter(101, vignetteFilter);
+        generalFilter.attachFilter(VIGNETTE_PRIORITY, vignetteFilter);
         SeekBar vignetteBar = (SeekBar) findViewById(R.id.photocorrecting_vignettebar);
-        vignetteBar.setOnSeekBarChangeListener(new SeekBarChangeListener(vignetteFilter, 0, 1));
+        vignetteBar.setOnSeekBarChangeListener(new SeekBarChangeListener(vignetteFilter, 0, 1, VIGNETTE_PRIORITY));
 
         Button uploadButton = (Button) findViewById(R.id.photocorrecting_uploadbutton);
         uploadButton.setOnClickListener(this);
@@ -281,8 +294,8 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         currentFilter = filter;
         SeekBar filterPowerBar = (SeekBar) findViewById(R.id.photocorrecting_filterpowerbar);
         filter.setStrength(calculateStrength(filterPowerBar, 0, 1));
-        filterPowerBar.setOnSeekBarChangeListener(new SeekBarChangeListener(currentFilter, 0, 1));
-        generalFilter.attachFilter(100, currentFilter);
+        filterPowerBar.setOnSeekBarChangeListener(new SeekBarChangeListener(currentFilter, 0, 1, PHOTO_FILTER_PRIORITY));
+        generalFilter.attachFilter(PHOTO_FILTER_PRIORITY, currentFilter);
     }
 
     private double calculateStrength(SeekBar seekBar, double min, double max) {
@@ -293,7 +306,8 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         image = bitmap;
     }
 
-    private void refreshImage() {
+    private void refreshImage(int priority) {
+        filterPriority.set(priority);
         continueRefreshing.set(true);
         if (taskIsRunning.compareAndSet(false, true)) {
             new ImageRefreshTask().execute();
@@ -305,19 +319,19 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
         switch (v.getId()) {
             case R.id.photocorrecting_counterclockwisebutton: {
                 generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
-                refreshImage();
+                refreshImage(MAX_PRIORITY);
             } break;
             case R.id.photocorrecting_clockwisebutton: {
                 generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
-                refreshImage();
+                refreshImage(MAX_PRIORITY);
             } break;
             case R.id.photocorrecting_horizontalflip_button: {
                 generalFilter.changeOrientation(MultiFilter.OrientationChange.MirrorHorizontally);
-                refreshImage();
+                refreshImage(MAX_PRIORITY);
             } break;
             case R.id.photocorrecting_verticalflip_button: {
                 generalFilter.changeOrientation(MultiFilter.OrientationChange.MirrorVertically);
-                refreshImage();
+                refreshImage(MAX_PRIORITY);
             } break;
             case R.id.photocorrecting_uploadbutton: {
                 RawBitmap fullSource = new RawBitmap(image);

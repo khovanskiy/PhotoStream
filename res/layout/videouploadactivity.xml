@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:background="@android:color/black">
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp" android:layout_weight="8">
+        <VideoView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/videouploadactivity_video" android:layout_gravity="center"/>
+    </FrameLayout>
+    <EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textColor="@android:color/white" android:hint="@string/AddVideoTitle"
+              android:id="@+id/videouploadactivity_title"/>
+    <EditText android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textColor="@android:color/white"
+              android:hint="@string/AddComment" android:id="@+id/videouploadactivity_commenttext"/>
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp" android:layout_weight="2" android:layout_margin="10dp">
+        <Button style="@style/LoginButton" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="@string/uploadToAlbum" android:id="@+id/videouploadactivity_upload"
+                android:layout_gravity="center_horizontal"/>
+    </FrameLayout>
+</LinearLayout>
