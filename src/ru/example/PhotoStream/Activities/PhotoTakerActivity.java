@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.*;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import java.io.FileNotFoundException;
 public final class PhotoTakerActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
     private static final int NO_CAMERA = -1;
     private static final int SELECT_PICTURE = 1;
+    private static final int TAKE_VIDEO = 2;
     private static final int MEMORY_SCALE_DOWN = 4;
     private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 22;
     private static final int MAX_WIDTH = 1024;
@@ -113,11 +115,15 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-
                 PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
                 Intent intent = new Intent(context, PhotoCorrectionActivity.class);
                 Console.printAvailableMemory();
                 context.startActivity(intent);
+            } else if (requestCode == TAKE_VIDEO) {
+                Uri videoUri = data.getData();
+                VideoUploadActivity.setVideoUri(videoUri);
+                Intent intent = new Intent(this, VideoUploadActivity.class);
+                startActivity(intent);
             }
         }
     }
@@ -204,6 +210,13 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+            }
+            break;
+            case R.id.phototakeractivity_takevideobutton: {
+                Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takeVideoIntent, TAKE_VIDEO);
+                }
             }
             break;
         }

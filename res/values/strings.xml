@@ -95,4 +95,8 @@
     <string name="Vignette">Виньетка</string>
     <string name="AddComment">Добавить комментарий</string>
     <string name="EightBit">8 бит</string>
+    <string name="take_video">Сделать видео</string>
+    <string name="videouploadactivity_title">Загрузка видео</string>
+    <string name="AddVideoTitle">Название видео</string>
+    <string name="NoTitle">Без названия</string>
 </resources>
