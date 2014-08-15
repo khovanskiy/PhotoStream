@@ -19,6 +19,7 @@ import ru.example.PhotoStream.Fragments.FriendsFragment;
 import ru.example.PhotoStream.Fragments.GroupsFragment;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
 import ru.example.PhotoStream.Fragments.StreamFragment;
+import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
@@ -27,15 +28,19 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener {
+public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, IEventHadler {
 
     @Override
-    public void onPageScrolled(int i, float v, int i2) {
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
 
     @Override
-    public void onPageSelected(int i) {
+    public void onPageSelected(int position) {
+        Console.print("Page selected " + photos.size() + " " + position);
+        if (photos.size() == position + 1) {
+            feed.loadMore();
+        }
         /*Photo photo = photos.get(i);
         Album album = Album.get(photo.album_id);
         if (album.albumType == AlbumType.USER) {
@@ -48,8 +53,15 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     }
 
     @Override
-    public void onPageScrollStateChanged(int i) {
+    public void onPageScrollStateChanged(int state) {
 
+    }
+
+    @Override
+    public void handleEvent(Event e) {
+        if (e.type == Event.COMPLETE) {
+            photoListAdapter.notifyDataSetChanged();
+        }
     }
 
     private class PageAdapter extends FragmentStatePagerAdapter {
@@ -77,16 +89,18 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     private static Feed feed;
     protected Odnoklassniki api;
     protected List<Photo> photos;
+    protected PageAdapter photoListAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photoactivity);
         api = Odnoklassniki.getInstance(this);
+        feed.addEventListener(this);
         photos = feed.getAvailablePhotos();
 
         int initPosition = getIntent().getIntExtra("position", 0);
         ViewPager viewPager = (ViewPager) findViewById(R.id.photoactivity_pager);
-        PageAdapter photoListAdapter = new PageAdapter(getSupportFragmentManager());
+        photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
         viewPager.setOnPageChangeListener(this);
         viewPager.setCurrentItem(initPosition);
