@@ -96,6 +96,8 @@ public class Photo {
 
     private static Map<String, Photo> cache = new ConcurrentHashMap<>();
 
+    private String maxSize = "";
+
     private Photo() {
     }
 
@@ -140,22 +142,22 @@ public class Photo {
             current.album_id = object.getString("album_id");
         }
         if (object.has("pic50x50")) {
-            current.pic50x50 = object.getString("pic50x50");
+            current.maxSize = current.pic50x50 = object.getString("pic50x50");
         }
         if (object.has("pic128x128")) {
-            current.pic128x128 = object.getString("pic128x128");
+            current.maxSize = current.pic128x128 = object.getString("pic128x128");
         }
         if (object.has("pic180min")) {
-            current.pic180min = object.getString("pic180min");
+            current.maxSize = current.pic180min = object.getString("pic180min");
         }
         if (object.has("pic190x190")) {
-            current.pic190x190 = object.getString("pic190x190");
+            current.maxSize = current.pic190x190 = object.getString("pic190x190");
         }
         if (object.has("pic640x480")) {
-            current.pic640x480 = object.getString("pic640x480");
+            current.maxSize = current.pic640x480 = object.getString("pic640x480");
         }
         if (object.has("pic1024x768")) {
-            current.pic1024x768 = object.getString("pic1024x768");
+            current.maxSize = current.pic1024x768 = object.getString("pic1024x768");
         }
         if (object.has("liked_it")) {
             current.liked_it = object.getBoolean("liked_it");
@@ -179,6 +181,10 @@ public class Photo {
             current.mark_avg = object.getString("mark_avg");    // output: 5+
         }*/
         return current;
+    }
+
+    public String getMaxAvailablePic() {
+        return maxSize;
     }
 
     @Override

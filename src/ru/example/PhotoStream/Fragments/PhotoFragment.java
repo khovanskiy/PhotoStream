@@ -116,7 +116,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         image.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
 
-        image.loadFromURL(photo.pic1024x768);
+        image.loadFromURL(photo.getMaxAvailablePic());
         likeButton = (Button) viewLayout.findViewById(R.id.photoactivity_page_like);
         if (photo.user_id.equals(User.currentUID)) {
             likeButton.setEnabled(false);
