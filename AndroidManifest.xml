@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="ru.example.PhotoStream">
+          package="ru.example.PhotoStream" android:versionCode="25" android:versionName="2.07">
     <uses-sdk android:minSdkVersion="14"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -48,7 +48,7 @@
         <activity android:name="ru.example.PhotoStream.Activities.PhotoFilteringActivity"
                   android:screenOrientation="landscape"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".Activities.UploadActivity"
+        <activity android:name=".Activities.PhotoUploadActivity"
                   android:screenOrientation="landscape"
                   android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".Activities.VideoUploadActivity"/>

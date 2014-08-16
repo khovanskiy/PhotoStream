@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,7 +34,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UploadActivity extends ActionBarActivity {
+public class PhotoUploadActivity extends ActionBarActivity {
 
     private class Loader extends AsyncTask<Void, Void, Boolean> {
 
@@ -95,10 +97,10 @@ public class UploadActivity extends ActionBarActivity {
         protected void onPostExecute(Boolean aBoolean) {
             photoComment.setEnabled(true);
             if (aBoolean) {
-                Toast.makeText(UploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
                 uploadButton.setVisibility(View.GONE);
             } else {
-                Toast.makeText(UploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
+                Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
                 uploadButton.setEnabled(true);
             }
         }
@@ -116,23 +118,26 @@ public class UploadActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.uploadactivity);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.photouploadactivity);
         api = Odnoklassniki.getInstance(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getSupportActionBar().setTitle(getString(R.string.uploadActivity_title));
-        ImageView photo = (ImageView) findViewById(R.id.uploadactivity_imageview);
+        ImageView photo = (ImageView) findViewById(R.id.photoupload_imageview);
         photo.setImageBitmap(pictureTaken);
-        uploadButton = (Button) findViewById(R.id.uploadactivity_upload);
+        uploadButton = (Button) findViewById(R.id.photoupload_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadButton.setEnabled(false);
                 photoComment.setEnabled(false);
-                Toast.makeText(UploadActivity.this, getString(R.string.uploadStarting), Toast.LENGTH_LONG).show();
+                Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadStarting), Toast.LENGTH_LONG).show();
                 Loader loader = new Loader(pictureTaken);
                 loader.execute();
             }
         });
-        photoComment = (EditText) findViewById(R.id.uploadactivity_commenttext);
+        photoComment = (EditText) findViewById(R.id.photoupload_commenttext);
     }
 }

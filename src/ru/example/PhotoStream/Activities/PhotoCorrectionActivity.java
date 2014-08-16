@@ -338,9 +338,9 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
                 RawBitmap fullResult = new RawBitmap(image.getWidth(), image.getHeight());
                 generalFilter.transformOpaqueRaw(fullSource, fullResult);
                 fullSource.recycle();
-                UploadActivity.setPicture(fullResult.toBitmap());
+                PhotoUploadActivity.setPicture(fullResult.toBitmap());
                 fullResult.recycle();
-                Intent intent = new Intent(this, UploadActivity.class);
+                Intent intent = new Intent(this, PhotoUploadActivity.class);
                 startActivity(intent);
             } break;
         }
