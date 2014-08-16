@@ -56,7 +56,7 @@ public class VideoUploadActivity extends ActionBarActivity {
                     read += inputStream.read(result, read, length - read);
                 }
                 return result;
-            } catch (IOException ignored) {
+            } catch (IOException ignorfed) {
             } finally {
                 try {
                     inputStream.close();
@@ -133,8 +133,9 @@ public class VideoUploadActivity extends ActionBarActivity {
         api = Odnoklassniki.getInstance(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getSupportActionBar().setTitle(getString(R.string.videouploadactivity_title));
-        final VideoView videoView = (VideoView) findViewById(R.id.videouploadactivity_video);
-        videoView.setVideoURI(videoUri);
+
+        /*final VideoView videoView = (VideoView) findViewById(R.id.videouploadactivity_video);
+        videoView.setVideoPath(videoUri.getPath());
         videoView.start();
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -152,7 +153,17 @@ public class VideoUploadActivity extends ActionBarActivity {
                 }
                 return false;
             }
-        });
+        });*/
+
+        VideoView video = (VideoView) findViewById(R.id.videouploadactivity_video);
+        MediaController mediaController = new MediaController(this);
+        mediaController.setAnchorView(video);
+        video.setMediaController(mediaController);
+        video.setKeepScreenOn(true);
+        //Uri videoUri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.start);
+        video.setVideoURI(videoUri);
+        video.start();
+
         videoComment = (EditText) findViewById(R.id.videouploadactivity_commenttext);
         videoTitle = (EditText) findViewById(R.id.videouploadactivity_title);
         uploadButton = (Button) findViewById(R.id.videouploadactivity_upload);
