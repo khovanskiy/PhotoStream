@@ -3,23 +3,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content" android:minHeight="100dp" android:layout_margin="3dp"
-              android:padding="3dp">
-    <LinearLayout
-            android:orientation="vertical"
+              android:layout_height="wrap_content"
+              android:minHeight="100dp"
+              android:layout_margin="3dp"
+        >
+    <ru.example.PhotoStream.SquareTile
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:background="@android:color/white" android:padding="3dp"
-            android:layout_margin="3dp">
-        <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="35dp"
-                android:text=""
-                android:id="@+id/badgeview_title" android:minHeight="35dp"
-                android:gravity="center_vertical" android:singleLine="true"
-                android:textColor="@android:color/holo_green_dark" android:textSize="20dp" android:padding="3dp"/>
-        <GridView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/friendsbadgeview_grid" android:numColumns="3"/>
-    </LinearLayout>
+            android:layout_height="fill_parent"
+            android:scaleType="centerCrop"
+            android:id="@+id/badgeview_image"
+            />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/badgeview_title"
+            android:minHeight="35dp"
+            android:gravity="center_vertical"
+            android:singleLine="false"
+            android:textColor="@android:color/background_light"
+            android:textSize="15dp"
+            android:padding="5dp"
+            android:layout_gravity="bottom"
+            android:shadowColor="@android:color/black"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            />
 </FrameLayout>

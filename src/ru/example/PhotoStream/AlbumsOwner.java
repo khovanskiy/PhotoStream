@@ -5,7 +5,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class AlbumsKeeper extends ApiObject implements Serializable {
+public abstract class AlbumsOwner extends OKApiObject implements Serializable {
     /**
      * Returns loaded albums.
      * @return list of albums
@@ -17,4 +17,13 @@ public abstract class AlbumsKeeper extends ApiObject implements Serializable {
      * @param api
      */
     public abstract void loadAlbums(Odnoklassniki api);
+
+    public abstract String getName();
+
+    /**
+     * Gets owner`s avatar URL
+     *
+     * @return avatar URL
+     */
+    public abstract String getAvatarId();
 }

@@ -1,16 +1,12 @@
 package ru.example.PhotoStream;
 
-import android.util.Log;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Album extends ApiObject {
+public class Album extends OKApiObject {
 
     /**
      * Album's id or empty string if album is private.

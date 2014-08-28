@@ -99,4 +99,5 @@
     <string name="videouploadactivity_title">Загрузка видео</string>
     <string name="AddVideoTitle">Название видео</string>
     <string name="NoTitle">Без названия</string>
+    <string name="friends_and_groups">Друзья и группы</string>
 </resources>

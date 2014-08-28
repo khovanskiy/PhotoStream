@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class Group extends AlbumsKeeper {
+public class Group extends AlbumsOwner {
 
     /**
      * Group's title.
@@ -141,5 +141,15 @@ public class Group extends AlbumsKeeper {
                 hasMore = false;
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getAvatarId() {
+        return photo_id;
     }
 }

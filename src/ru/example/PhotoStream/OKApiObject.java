@@ -1,6 +1,6 @@
 package ru.example.PhotoStream;
 
-public abstract class ApiObject {
+public abstract class OKApiObject {
 
     protected String objectId;
 

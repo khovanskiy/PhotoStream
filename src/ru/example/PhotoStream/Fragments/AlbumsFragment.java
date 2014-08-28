@@ -56,7 +56,8 @@ public class AlbumsFragment extends IFragmentSwitcher implements AdapterView.OnI
             Album album = albums.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.badgeview, parent, false);
-            GridView photosList = (GridView) view.findViewById(R.id.friendsbadgeview_grid);
+            assert(false);
+            GridView photosList = (GridView) view.findViewById(R.id.badgeview_image);
             PhotosAdapter photosAdapter = (PhotosAdapter) photosList.getAdapter();
             if (photosAdapter == null) {
                 photosAdapter = new PhotosAdapter(context, true);
@@ -94,7 +95,7 @@ public class AlbumsFragment extends IFragmentSwitcher implements AdapterView.OnI
 
     private GridView albumsList;
     protected final static int PREVIEWS_PER_BADGE = 3;
-    private AlbumsKeeper currentKeeper;
+    private AlbumsOwner currentKeeper;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

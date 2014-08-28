@@ -1,10 +1,9 @@
 package ru.example.PhotoStream.Tasks;
 
-import android.util.Log;
 import org.json.JSONArray;
 import ru.example.PhotoStream.Console;
+import ru.example.PhotoStream.Group;
 import ru.example.PhotoStream.Photo;
-import ru.example.PhotoStream.User;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
@@ -13,38 +12,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-public class GetUsersTask implements Callable<List<User>> {
+public class GetGroupsTask implements Callable<List<Group>> {
 
     private final Odnoklassniki api;
+
     private final String[] uids;
 
-    public GetUsersTask(Odnoklassniki api, String... uids) {
+    public GetGroupsTask(Odnoklassniki api, String... uids) {
         this.api = api;
         this.uids = uids;
     }
 
     @Override
-    public List<User> call() {
+    public List<Group> call() throws Exception {
         final int MAX_REQUEST = 100;
-        List<User> result = new ArrayList<>();
+        List<Group> result = new ArrayList<>();
         Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("fields", "uid, first_name, last_name, name, photo_id");
+        requestParams.put("fields", "group.*");
         for (int i = 0; i < uids.length / MAX_REQUEST + 1; ++i) {
             StringBuilder builder = new StringBuilder();
             for (int j = i * MAX_REQUEST; j < Math.min((i + 1) * MAX_REQUEST, uids.length); ++j) {
                 builder.append(",").append(uids[j]);
             }
+            if (builder.length() == 0) {
+                break;
+            }
             requestParams.put("uids", builder.substring(1));
             try {
-                JSONArray friendInfoArray = new JSONArray(api.request("users.getInfo", requestParams, "get"));
-                for (int j = 0; j < friendInfoArray.length(); ++j) {
-                    User user = User.build(friendInfoArray.getJSONObject(j));
-                    Callable<Photo> callable = new GetPhotoTask(api, user.getAvatarId(), user);
+                JSONArray groupInfoArray = new JSONArray(api.request("group.getInfo", requestParams, "get"));
+                for (int j = 0; j < groupInfoArray.length(); ++j) {
+                    Group group = Group.build(groupInfoArray.getJSONObject(j));
+                    Callable<Photo> callable = new GetPhotoTask(api, group.getAvatarId(), group);
                     callable.call();
-                    result.add(user);
+                    result.add(group);
                 }
             } catch (Exception e) {
-                Log.d("TASK_ERROR", e.getMessage(), e);
+                Console.print(e.getMessage());
             }
         }
         return result;

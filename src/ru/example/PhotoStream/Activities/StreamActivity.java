@@ -26,12 +26,8 @@ public class StreamActivity extends ActionBarActivity {
         public PageAdapter(FragmentManager fragmentManager, Context context) {
             super(fragmentManager);
             this.context = context;
-            fragments[0] = new GroupsFragment();
-            titles[0] = R.string.my_groups;
-            fragments[1] = new StreamFragment();
-            titles[1] = R.string.photoStream;
-            fragments[2] = new FriendsFragment();
-            titles[2] = R.string.my_friends;
+            fragments[0] = new StreamFragment();
+            titles[0] = R.string.photoStream;
         }
 
         @Override
@@ -50,8 +46,8 @@ public class StreamActivity extends ActionBarActivity {
         }
     }
 
-    protected final static int MAX_PAGES = 3;
-    protected final static int DEFAULT_PAGE_ID = 1;
+    protected final static int MAX_PAGES = 1;
+    protected final static int DEFAULT_PAGE_ID = 0;
     protected final IFragmentSwitcher[] fragments = new IFragmentSwitcher[MAX_PAGES];
     protected final int[] titles = new int[MAX_PAGES];
 

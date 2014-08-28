@@ -1,6 +1,5 @@
 package ru.example.PhotoStream;
 
-import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,16 +9,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class User extends AlbumsKeeper {
-    /**
-     * User's id or empty string if this is current user.
-     */
-    public String uid = "";
-
-    /**
-     * User's locale.
-     */
-    public String locale = "";
+public class User extends AlbumsOwner {
 
     /**
      * User's first name.
@@ -37,129 +27,9 @@ public class User extends AlbumsKeeper {
     public String name = "";
 
     /**
-     * User's gender.
-     */
-    public String gender = "";
-
-    /**
-     * User's age.
-     */
-    public String age = "";
-
-    /**
-     * User's birthday.
-     */
-    public String birthday = "";
-
-    /**
-     * Shows of user set email.
-     */
-    public String has_email = "";
-
-    /**
-     * User's location.
-     */
-    public String location = "";
-
-    /**
-     * User's home city.
-     */
-    public String city = "";
-
-    /**
-     * User's home country.
-     */
-    public String country = "";
-
-    /**
-     * User's current location.
-     */
-    public String current_location = "";
-
-    /**
-     * User's current status.
-     */
-    public String current_status = "";
-
-    /**
-     * User's current status id.
-     */
-    public String current_status_id = "";
-
-    /**
-     * User's current status setting date.
-     */
-    public String current_status_date = "";
-
-    /**
-     * Shows if user is online.
-     */
-    public String online = "";
-
-    /**
-     * User's last online time in milliseconds.
-     */
-    public String last_online = "";
-
-    /**
      * User's title photo's id.
      */
     public String photo_id = "";
-
-    /**
-     * User's title photo's 50x50 url.
-     */
-    public String pic50x50 = "";
-
-    /**
-     * User's title photo's 128x128 url.
-     */
-    public String pic128x128 = "";
-
-    /**
-     * User's title photo's 128 max size url.
-     */
-    public String pic128max = "";
-
-    /**
-     * User's title photo's 180 min size url.
-     */
-    public String pic180min = "";
-
-    /**
-     * User's title photo's 240 min size url.
-     */
-    public String pic240min = "";
-
-    /**
-     * User's title photo's 320 min size url.
-     */
-    public String pic320min = "";
-
-    /**
-     * User's title photo's 190x190 url.
-     */
-    public String pic190x190 = "";
-
-    /**
-     * User's title photo's 640x480 url.
-     */
-    public String pic640x480 = "";
-
-    /**
-     * User's title photo's 1024x768 url.
-     */
-    public String pic1024x768 = "";
-    public String url_profile = "";
-    public String url_chat = "";
-    public String url_profile_mobile = "";
-    public String url_chat_mobile = "";
-    public String can_vcall = "";
-    public String can_vmail = "";
-    public String allows_anonym_access = "";
-    public String allows_messaging_only_for_friends = "";
-    public String registered_date = "";
-    public String has_service_invisible = "";
 
     public static String currentUID = "";
 
@@ -203,7 +73,7 @@ public class User extends AlbumsKeeper {
         } else {
             current = cache.get(userId);
         }
-        current.uid = userId;
+        current.objectId = userId;
         return current;
     }
 
@@ -215,11 +85,11 @@ public class User extends AlbumsKeeper {
     @Override
     public void loadAlbums(Odnoklassniki api) {
         Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("fid", uid);
+        requestParams.put("fid", objectId);
         requestParams.put("fields", "user_album.*");
 
         albums.clear();
-        Album personalAlbum = Album.build("personal" + uid, uid, AlbumType.USER);
+        Album personalAlbum = Album.build("personal" + objectId, objectId, AlbumType.USER);
         personalAlbum.title = "Личный альбом";
         personalAlbum.isPersonal = true;
         albums.add(personalAlbum);
@@ -227,7 +97,6 @@ public class User extends AlbumsKeeper {
         while (hasMore) {
             try {
                 String response = api.request("photos.getAlbums", requestParams, "post");
-                Console.print("Response " + response);
                 JSONObject albumsObject = new JSONObject(response);
                 JSONArray array = albumsObject.getJSONArray("albums");
                 for (int i = 0; i < array.length(); ++i) {
@@ -238,10 +107,19 @@ public class User extends AlbumsKeeper {
                 hasMore = albumsObject.getBoolean("hasMore");
                 requestParams.put("pagingAnchor", albumsObject.getString("pagingAnchor"));
             } catch (Exception e) {
-                Log.i("CONSOLE", e.toString(), e);
                 hasMore = false;
             }
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getAvatarId() {
+        return photo_id;
     }
 
     /**
@@ -257,10 +135,6 @@ public class User extends AlbumsKeeper {
         } else {
             throw new JSONException("User object does not have ID");
         }
-
-        if (object.has("locale")) {
-            current.locale = object.getString("locale");
-        }
         if (object.has("first_name")) {
             current.first_name = object.getString("first_name");
         }
@@ -270,21 +144,10 @@ public class User extends AlbumsKeeper {
         if (object.has("name")) {
             current.name = object.getString("name");
         }
-        if (object.has("pic50x50")) {
-            current.pic50x50 = object.getString("pic50x50");
+        if (object.has("photo_id")) {
+            current.photo_id = object.getString("photo_id");
         }
-        if (object.has("pic128x128")) {
-            current.pic128x128 = object.getString("pic128x128");
-        }
-        if (object.has("pic190x190")) {
-            current.pic190x190 = object.getString("pic190x190");
-        }
-        if (object.has("pic640x480")) {
-            current.pic640x480 = object.getString("pic640x480");
-        }
-        if (object.has("pic1024x768")) {
-            current.pic1024x768 = object.getString("pic1024x768");
-        }
+        Console.print("User " + current.name + " " + current.photo_id);
         return current;
     }
 }

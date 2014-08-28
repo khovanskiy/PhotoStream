@@ -56,7 +56,7 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
             User user = users.get(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View view = inflater.inflate(R.layout.badgeview, parent, false);
-            GridView photosList = (GridView) view.findViewById(R.id.friendsbadgeview_grid);
+            GridView photosList = (GridView) view.findViewById(R.id.badgeview_image);//error
             PhotosAdapter photosAdapter = (PhotosAdapter) photosList.getAdapter();
             if (photosAdapter == null) {
                 photosAdapter = new PhotosAdapter(context, true);
@@ -123,7 +123,7 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), AlbumsActivity.class);
         User obj = (User) badgesGrid.getItemAtPosition(position);
-        intent.putExtra("uid", obj.uid);
+        intent.putExtra("uid", obj.getId());
         startActivity(intent);
     }
 
@@ -138,7 +138,7 @@ public class FriendsFragment extends IFragmentSwitcher implements AdapterView.On
         usersAdapter.clear();
         List<User> groups = User.getAllUsers();
         for (User user : groups) {
-            if (!user.uid.equals("")) {
+            if (!user.getId().equals("")) {
                 usersAdapter.add(user);
             }
         }

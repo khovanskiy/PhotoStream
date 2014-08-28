@@ -1,32 +1,26 @@
 package ru.example.PhotoStream.Loaders;
 
 
-import ru.example.PhotoStream.AlbumsKeeper;
-import ru.example.PhotoStream.DataLoader;
-import ru.example.PhotoStream.Event;
+import ru.example.PhotoStream.Album;
+import ru.example.PhotoStream.AlbumsOwner;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
-public class AlbumsLoader extends DataLoader {
+public class AlbumsLoader implements Callable<List<Album>> {
 
-    private AlbumsKeeper entry;
+    private Odnoklassniki api;
+    private AlbumsOwner entry;
 
-    public AlbumsLoader(Odnoklassniki api, AlbumsKeeper entry) {
-        super(api);
+    public AlbumsLoader(Odnoklassniki api, AlbumsOwner entry) {
+        this.api = api;
         this.entry = entry;
     }
 
     @Override
-    protected List<?> doInBackground(Void... params) {
+    public List<Album> call() throws Exception {
         entry.loadAlbums(api);
         return entry.getAlbums();
-    }
-
-    @Override
-    protected void onPostExecute(List<?> data) {
-        Event e = new Event(this, Event.ALBUMS_LOADED);
-        e.data.put("albums", data);
-        dispatchEvent(e);
     }
 }

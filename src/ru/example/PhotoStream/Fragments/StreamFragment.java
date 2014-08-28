@@ -11,10 +11,14 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import ru.example.PhotoStream.Activities.PhotoActivity;
 import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class StreamFragment extends IFragmentSwitcher implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
@@ -35,24 +39,37 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         feed.addEventListener(this);
 
         Bundle bundle = getArguments();
+        MultiTask<String> service = new MultiTask<String>() {
+            @Override
+            protected void onPostExecute(Map<String, Future<?>> data) {
+                for (Map.Entry<String, Future<?>> entry : data.entrySet()) {
+                    Future<List<Album>> futureAlbums = (Future<List<Album>>) entry.getValue();
+                    try {
+                        feed.addAll(futureAlbums.get());
+                    } catch (Exception e) {
+                    }
+                }
+                loadMorePhotos();
+            }
+        };
         if (bundle == null) {
             List<User> users = User.getAllUsers();
             for (User user : users) {
-                feed.addAll(user.getAlbums());
+                service.put(user.getId(), new AlbumsLoader(api, user));
             }
             List<Group> groups = Group.getAllGroups();
             for (Group group : groups) {
                 feed.addAll(group.getAlbums());
+                service.put(group.getId(), new AlbumsLoader(api, group));
             }
-        } else if (bundle.getString("aid") != null) {
+        }/* else if (bundle.getString("aid") != null) {
             feed.add(Album.get(bundle.getString("aid", "")));
         } else if (bundle.getString("uid") != null) {
             feed.addAll(User.get(bundle.getString("uid", "")).getAlbums());
         } else {
             feed.addAll(Group.get(bundle.getString("gid", "")).getAlbums());
-        }
-
-        loadMorePhotos();
+        } */
+        service.execute();
     }
 
 
@@ -134,7 +151,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
                 photoListAdapter = new PhotosAdapter(getActivity());
                 photoList.setAdapter(photoListAdapter);
             }
-            //Console.print("Total photos: " + photos.size());
+            Console.print("Total photos: " + photos.size());
             if (photos.size() > photoListAdapter.getCount() || updating) {
                 photoListAdapter.clear();
 

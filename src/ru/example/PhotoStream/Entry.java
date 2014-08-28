@@ -4,7 +4,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
 
-public abstract class Entry extends ApiObject {
+public abstract class Entry extends OKApiObject {
 
     private final static int DEFAULT_CHUNK_SIZE = 10;
 
