@@ -3,10 +3,42 @@ package ru.example.PhotoStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Photo {
+
+    public static class Size {
+
+        private final int width;
+        private final int height;
+        private final String url;
+
+        public Size(int width, int height, String url) {
+            this.width = width;
+            this.height = height;
+            this.url = url;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+    }
+
+    private static final Size DEFAULT_SIZE = new Size(0, 0, "");
+
+    private List<Size> sizes = new ArrayList<>(3);
+
     /**
      * Photo's id.
      */
@@ -40,11 +72,6 @@ public class Photo {
     public String pic190x190 = "";
 
     /**
-     * Url of version with min size 180.
-     */
-    public String pic180min = "";
-
-    /**
      * Url of 640x480 version.
      */
     public String pic640x480 = "";
@@ -73,26 +100,6 @@ public class Photo {
      * User id of the photo's owner.
      */
     public String user_id = "";
-
-    /**
-     * Marks' count.
-     */
-    public int mark_count = 0;
-
-    /**
-     * Marks' bonus count.
-     */
-    public int mark_bonus_count = 0;
-
-    /**
-     * Average mark.
-     */
-    public double mark_avg = 0.0;
-
-    /**
-     * User's mark of this photo.
-     */
-    public String viewer_mark = "";
 
     private static Map<String, Photo> cache = new ConcurrentHashMap<>();
 
@@ -142,22 +149,24 @@ public class Photo {
             current.album_id = object.getString("album_id");
         }
         if (object.has("pic50x50")) {
-            current.maxSize = current.pic50x50 = object.getString("pic50x50");
+            current.pic50x50 = object.getString("pic50x50");
+            current.sizes.add(new Size(50, 50, current.pic50x50));
         }
         if (object.has("pic128x128")) {
-            current.maxSize = current.pic128x128 = object.getString("pic128x128");
-        }
-        if (object.has("pic180min")) {
-            current.maxSize = current.pic180min = object.getString("pic180min");
+            current.pic128x128 = object.getString("pic128x128");
+            current.sizes.add(new Size(128, 128, current.pic128x128));
         }
         if (object.has("pic190x190")) {
-            current.maxSize = current.pic190x190 = object.getString("pic190x190");
+            current.pic190x190 = object.getString("pic190x190");
+            current.sizes.add(new Size(190, 190, current.pic190x190));
         }
         if (object.has("pic640x480")) {
-            current.maxSize = current.pic640x480 = object.getString("pic640x480");
+            current.pic640x480 = object.getString("pic640x480");
+            current.sizes.add(new Size(640, 480, current.pic640x480));
         }
         if (object.has("pic1024x768")) {
-            current.maxSize = current.pic1024x768 = object.getString("pic1024x768");
+            current.pic1024x768 = object.getString("pic1024x768");
+            current.sizes.add(new Size(1024, 768, current.pic1024x768));
         }
         if (object.has("liked_it")) {
             current.liked_it = object.getBoolean("liked_it");
@@ -171,20 +180,42 @@ public class Photo {
         if (object.has("user_id")) {
             current.user_id = object.getString("user_id");
         }
-        if (object.has("mark_count")) {
-            current.mark_count = object.getInt("mark_count");
-        }
-        if (object.has("mark_bonus_count")) {
-            current.mark_bonus_count = object.getInt("mark_bonus_count");
-        }
         /*if (object.has("mark_avg")) {
             current.mark_avg = object.getString("mark_avg");    // output: 5+
         }*/
         return current;
     }
 
-    public String getMaxAvailablePic() {
-        return maxSize;
+    public Size findBestSize(int targetWidth, int targetHeight) {
+        final float k = 0.75f;
+        for (int i = 0; i < sizes.size(); ++i) {
+            if (sizes.get(i).getWidth() >= targetWidth && sizes.get(i).getWidth() >= targetHeight * k ||
+                    sizes.get(i).getWidth() >= targetWidth * k && sizes.get(i).getWidth() >= targetHeight) {
+                return sizes.get(i);
+            }
+        }
+        return null;
+    }
+
+    public Size getMaxSize() {
+        if (sizes.size() == 0) {
+            return null;
+        }
+        /*int j = 0;
+        long maxPoints = sizes.get(0).getWidth() * sizes.get(0).getHeight();
+        for (int i = 1; i < sizes.size(); ++i) {
+            long currentPoints = sizes.get(i).getWidth() * sizes.get(i).getHeight();
+            if (currentPoints >= maxPoints) {
+                j = i;
+                maxPoints = currentPoints;
+            }
+        }
+        return sizes.get(j);*/
+        return sizes.get(sizes.size() - 1);
+    }
+
+    public boolean hasAnySize() {
+        return sizes.size() != 0;
     }
 
     @Override

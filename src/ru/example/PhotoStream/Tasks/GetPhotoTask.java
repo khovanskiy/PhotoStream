@@ -1,9 +1,7 @@
 package ru.example.PhotoStream.Tasks;
 
-import android.util.Log;
 import org.json.JSONObject;
 import ru.example.PhotoStream.AlbumsOwner;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.Group;
 import ru.example.PhotoStream.Photo;
 import ru.ok.android.sdk.Odnoklassniki;

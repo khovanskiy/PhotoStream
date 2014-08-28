@@ -6,13 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.widget.*;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Activities.AlbumActivity;
-import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,9 +54,9 @@ public class AlbumsFragment extends IFragmentSwitcher implements AdapterView.OnI
             View view = inflater.inflate(R.layout.badgeview, parent, false);
             assert(false);
             GridView photosList = (GridView) view.findViewById(R.id.badgeview_image);
-            PhotosAdapter photosAdapter = (PhotosAdapter) photosList.getAdapter();
+            ArrayAdapter photosAdapter = (ArrayAdapter) photosList.getAdapter();
             if (photosAdapter == null) {
-                photosAdapter = new PhotosAdapter(context, true);
+                photosAdapter = new ArrayAdapter(context, R.layout.streamphotoview);
                 photosList.setAdapter(photosAdapter);
             }
             photosList.setNumColumns(PREVIEWS_PER_BADGE);

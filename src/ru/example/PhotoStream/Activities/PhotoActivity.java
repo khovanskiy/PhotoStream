@@ -1,31 +1,16 @@
 package ru.example.PhotoStream.Activities;
 
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import ru.example.PhotoStream.*;
-import ru.example.PhotoStream.Fragments.FriendsFragment;
-import ru.example.PhotoStream.Fragments.GroupsFragment;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
-import ru.example.PhotoStream.Fragments.StreamFragment;
-import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, IEventHadler {

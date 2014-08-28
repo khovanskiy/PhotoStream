@@ -1,5 +1,7 @@
 package ru.example.PhotoStream.Fragments;
 
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,25 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import ru.example.PhotoStream.Activities.PhotoActivity;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
-import ru.example.PhotoStream.ViewAdapters.PhotosAdapter;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class StreamFragment extends IFragmentSwitcher implements IEventHadler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
+    private class ViewHolder {
+        SmartImage image;
+    }
+
     private Odnoklassniki api;
-    private GridView photoList;
+    private ArrayAdapter<Photo> photoListAdapter;
+    private GridView photosGrid;
     private SwipeRefreshLayout swipeLayout;
     private Feed feed;
     private boolean updating = false;
+    private int targetSize;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -34,6 +41,31 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         setRetainInstance(true);
 
         api = Odnoklassniki.getInstance(getActivity());
+
+        photoListAdapter = new ArrayAdapter<Photo>(getActivity(), R.layout.streamphotoview) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Photo photo = getItem(position);
+                ViewHolder holder;
+                if (convertView == null) {
+                    LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = inflater.inflate(R.layout.streamphotoview, parent, false);
+                    holder = new ViewHolder();
+                    holder.image = (SmartImage) convertView.findViewById(R.id.streamphotoview_imageView);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                    //holder.image.setImageBitmap(null);
+                }
+                if (photo.hasAnySize()) {
+                    holder.image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
+                }
+                return convertView;
+            }
+        };
+
+        photosGrid.setAdapter(photoListAdapter);
 
         feed = new Feed(api);
         feed.addEventListener(this);
@@ -55,11 +87,10 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         if (bundle == null) {
             List<User> users = User.getAllUsers();
             for (User user : users) {
-                service.put(user.getId(), new AlbumsLoader(api, user));
+                //service.put(user.getId(), new AlbumsLoader(api, user));
             }
             List<Group> groups = Group.getAllGroups();
             for (Group group : groups) {
-                feed.addAll(group.getAlbums());
                 service.put(group.getId(), new AlbumsLoader(api, group));
             }
         }/* else if (bundle.getString("aid") != null) {
@@ -69,6 +100,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         } else {
             feed.addAll(Group.get(bundle.getString("gid", "")).getAlbums());
         } */
+        swipeLayout.setRefreshing(true);
         service.execute();
     }
 
@@ -82,10 +114,11 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
     }
 
     private void loadMorePhotos() {
-        if (swipeLayout.isRefreshing()) {
+        if (updating) {
             return;
         }
         swipeLayout.setRefreshing(true);
+        updating = true;
         feed.loadMore();
     }
 
@@ -94,14 +127,11 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         View view = inflater.inflate(R.layout.substreamactivity, container, false);
         swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorScheme(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        photoList = (GridView) view.findViewById(R.id.substreamactivity_photolist);
-        photoList.addOnLayoutChangeListener(this);
-        photoList.setOnScrollListener(this);
-        photoList.setOnItemClickListener(this);
+        swipeLayout.setColorScheme(android.R.color.black, android.R.color.white, android.R.color.black, android.R.color.white);
+        photosGrid = (GridView) view.findViewById(R.id.substreamactivity_photolist);
+        photosGrid.addOnLayoutChangeListener(this);
+        photosGrid.setOnScrollListener(this);
+        photosGrid.setOnItemClickListener(this);
         return view;
     }
 
@@ -113,8 +143,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         int currentWidth = right - left;
         int currentHeight = bottom - top;
         if (oldWidth != currentWidth || oldHeight != currentHeight) {
-            int columns = (int) Math.ceil(currentWidth / 180.0);
-            photoList.setNumColumns(columns);
+            targetSize = currentWidth / photosGrid.getNumColumns();
         }
     }
 
@@ -136,8 +165,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
     @Override
     public void onRefresh() {
         feed.clear();
-        feed.loadMore();
-        updating = true;
+        loadMorePhotos();
     }
 
     @Override
@@ -146,19 +174,10 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
             swipeLayout.setRefreshing(false);
             List<Photo> photos = feed.getAvailablePhotos();
 
-            PhotosAdapter photoListAdapter = (PhotosAdapter) photoList.getAdapter();
-            if (photoListAdapter == null) {
-                photoListAdapter = new PhotosAdapter(getActivity());
-                photoList.setAdapter(photoListAdapter);
-            }
-            Console.print("Total photos: " + photos.size());
+            Console.print("Total photos: " + photos.size() + " " + photoListAdapter.getCount() + " " + updating);
             if (photos.size() > photoListAdapter.getCount() || updating) {
                 photoListAdapter.clear();
-
-                for (int i = 0; i < photos.size(); ++i) {
-                    photoListAdapter.addPhoto(photos.get(i));
-                }
-
+                photoListAdapter.addAll(photos);
                 photoListAdapter.notifyDataSetChanged();
             }
 

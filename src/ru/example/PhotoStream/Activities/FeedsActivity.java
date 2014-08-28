@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-public class FeedsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class FeedsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
 
     private class GroupsLoading implements Callable<List<Group>> {
 
@@ -99,6 +100,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     private Odnoklassniki api;
     private ArrayAdapter<AlbumsOwner> feeds;
     private GridView feedsGrid;
+    private int targetSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,23 +116,46 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View view = inflater.inflate(R.layout.badgeview, parent, false);
                 SmartImage image = (SmartImage) view.findViewById(R.id.badgeview_image);
-                String p = Photo.get(owner.getAvatarId()).pic50x50;
-                image.loadFromURL(p);
+                Photo photo = Photo.get(owner.getAvatarId());
+                if (photo.hasAnySize()) {
+                    image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
+                }
 
                 TextView title = (TextView) view.findViewById(R.id.badgeview_title);
                 title.setText(owner.getName());
                 return view;
             }
         };
-
         feedsGrid = (GridView) findViewById(R.id.feedsactivity_grid);
-        feedsGrid.setOnItemClickListener(this);
-        feedsGrid.setAdapter(feeds);
 
+        feedsGrid.setOnItemClickListener(this);
+        feedsGrid.addOnLayoutChangeListener(this);
+        feedsGrid.setAdapter(feeds);
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        int oldWidth = oldRight - oldLeft;
+        int oldHeight = oldBottom - oldTop;
+        int currentWidth = right - left;
+        int currentHeight = bottom - top;
+        if (oldWidth != currentWidth || oldHeight != currentHeight) {
+            targetSize = currentWidth / feedsGrid.getNumColumns();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         MultiTask<String> executor = new MultiTask<String>() {
             @Override
             protected void onPostExecute(Map<String, Future<?>> data) {
-                Console.print("onPostExecute");
+                feeds.clear();
                 Future<List<User>> futureUsers = (Future<List<User>>) data.get("friends");
                 Future<List<Group>> futureGroups = (Future<List<Group>>) data.get("groups");
                 Future<User> futureCurrentUser = (Future<User>) data.get("current");

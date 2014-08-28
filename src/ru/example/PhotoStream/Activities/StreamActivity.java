@@ -12,8 +12,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import ru.example.PhotoStream.Fragments.FriendsFragment;
-import ru.example.PhotoStream.Fragments.GroupsFragment;
 import ru.example.PhotoStream.Fragments.StreamFragment;
 import ru.example.PhotoStream.IFragmentSwitcher;
 import ru.example.PhotoStream.R;
