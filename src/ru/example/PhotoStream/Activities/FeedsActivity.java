@@ -162,14 +162,18 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 try {
                     User currentUser = futureCurrentUser.get();
                     User.currentUID = currentUser.getId();
-                    feeds.add(currentUser);
-
                     List<Group> groups = futureGroups.get();
-                    feeds.addAll(groups);
-
                     List<User> users = futureUsers.get();
-                    feeds.addAll(users);
 
+                    Selection selection = Selection.build("global", getResources().getString(R.string.all_photos));
+                    selection.addAll(groups);
+                    selection.addAll(users);
+                    selection.add(currentUser);
+
+                    feeds.add(currentUser);
+                    feeds.addAll(groups);
+                    feeds.addAll(users);
+                    feeds.add(selection);
                 } catch (Exception e) {
                     Log.d("M_CONSOLE", e.getMessage(), e);
                 }
@@ -190,7 +194,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         if (albumsOwner instanceof User) {
             Console.print("FID: " + albumsOwner.getName() + " " + albumsOwner.getId());
             intent.putExtra("fid", albumsOwner.getId());
-        } else {
+        } else if (albumsOwner instanceof Group) {
             intent.putExtra("gid", albumsOwner.getId());
         }
         startActivity(intent);

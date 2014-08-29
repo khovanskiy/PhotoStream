@@ -7,6 +7,7 @@
     <string name="sample">Пример</string>
     <string name="album">Альбом</string>
     <string name="albums">Альбомы</string>
+    <string name="all_photos">Все фотографии</string>
     <string name="photoStream">Фотографии</string>
     <string name="my_albums">Мои альбомы</string>
     <string name="my_friends">Мои друзья</string>
