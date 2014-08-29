@@ -1,14 +1,19 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="fill_parent" android:background="@android:color/background_dark">
     <view android:layout_width="fill_parent"
           android:layout_height="fill_parent"
-          class="android.support.v4.view.ViewPager" android:id="@+id/streamactivity_pager"
+          class="android.support.v4.view.ViewPager" android:id="@+id/stream_activity_pager"
             >
-        <view class="android.support.v4.view.PagerTabStrip" android:id="@+id/streamactivity_pagertabstrip"
-              android:layout_width="fill_parent"
-              android:layout_height="40dp" android:textColor="#717171" android:paddingBottom="5dp"
-              android:paddingTop="5dp"/>
     </view>
-</LinearLayout>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp" android:layout_gravity="bottom">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:id="@+id/stream_activity_button" android:layout_gravity="center" android:src="@drawable/photocam"
+                android:background="@android:color/transparent"/>
+    </FrameLayout>
+</FrameLayout>

@@ -64,12 +64,11 @@ public class Feed extends EventDispatcher {
             Map<String, String> requestParams = new HashMap<>();
             if (album.albumType == AlbumType.USER) {
                 requestParams.put("fid", album.user_id);
+                requestParams.put("fields", "photo.id, photo.created_ms, photo.user_id, photo.text, photo.pic50x50, photo.pic128x128, photo.pic190x190, photo.pic640x480, photo.pic1024x768, photo.liked_it, photo.like_count, photo.comments_count");
             } else if (album.albumType == AlbumType.GROUP) {
                 requestParams.put("gid", album.group_id);
+                requestParams.put("fields", "group_photo.id, group_photo.created_ms, group_photo.user_id, group_photo.text, group_photo.pic50x50, group_photo.pic128x128, group_photo.pic190x190, group_photo.pic640x480, group_photo.pic1024x768, group_photo.liked_it, group_photo.like_count, group_photo.comments_count");
             }
-            //requestParams.put("fields", "photo.id, photo.created_ms, photo.user_id, photo.text, photo.pic50x50, photo.pic128x128, photo.pic190x190, photo.pic640x480, photo.pic1024x768, photo.liked_it, photo.like_count, photo.comments_count");
-            requestParams.put("fields", "group_photo.id, group_photo.created_ms, group_photo.user_id, group_photo.text, group_photo.pic50x50, group_photo.pic128x128, group_photo.pic190x190, group_photo.pic640x480, group_photo.pic1024x768, group_photo.liked_it, group_photo.like_count, group_photo.comments_count");
-
             if (!album.isPersonal) {
                 requestParams.put("aid", album.objectId);
             }
@@ -111,7 +110,7 @@ public class Feed extends EventDispatcher {
             for (Map.Entry<String, AlbumHolder> entry : albums.entrySet()) {
                 AlbumHolder album = entry.getValue();
                 if (album.hasMore() && album.getPhotosCount() == 0) {
-                    heap.addAll(album.loadNextChunk(api, 2));
+                    heap.addAll(album.loadNextChunk(api, 1));
                 }
             }
             for (int i = 0; heap.size() > 0 && i < currentLoadCount; ++i) {
@@ -136,7 +135,7 @@ public class Feed extends EventDispatcher {
 
     }
 
-    public final static int DEFAULT_LOAD_COUNT = 10;
+    public final static int DEFAULT_LOAD_COUNT = 100;
     private final static int DEFAULT_CHUNK_SIZE = 10;
 
     protected Map<String, AlbumHolder> albums = new HashMap<>();

@@ -38,7 +38,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setRetainInstance(true);
+        //setRetainInstance(true);
 
         api = Odnoklassniki.getInstance(getActivity());
 
@@ -87,19 +87,22 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
         if (bundle == null) {
             List<User> users = User.getAllUsers();
             for (User user : users) {
-                //service.put(user.getId(), new AlbumsLoader(api, user));
+                service.put(user.getId(), new AlbumsLoader(api, user));
             }
             List<Group> groups = Group.getAllGroups();
             for (Group group : groups) {
                 service.put(group.getId(), new AlbumsLoader(api, group));
             }
-        }/* else if (bundle.getString("aid") != null) {
+        } else if (bundle.getString("aid") != null) {
             feed.add(Album.get(bundle.getString("aid", "")));
-        } else if (bundle.getString("uid") != null) {
-            feed.addAll(User.get(bundle.getString("uid", "")).getAlbums());
+        } else if (bundle.getString("fid") != null) {
+            User user = User.get(bundle.getString("fid", ""));
+            Console.print("Loading: " + user.getName() + " " + user.getId());
+            service.put(user.getId(), new AlbumsLoader(api, user));
         } else {
-            feed.addAll(Group.get(bundle.getString("gid", "")).getAlbums());
-        } */
+            Group group = Group.get(bundle.getString("gid", ""));
+            service.put(group.getId(), new AlbumsLoader(api, group));
+        }
         swipeLayout.setRefreshing(true);
         service.execute();
     }
