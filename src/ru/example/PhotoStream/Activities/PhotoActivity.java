@@ -13,7 +13,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 import java.util.List;
 
 
-public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, IEventHadler {
+public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, IEventHandler {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

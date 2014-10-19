@@ -5,17 +5,17 @@ import java.util.Vector;
 
 public class EventDispatcher implements IEventDispatcher {
     private int recuirsion_count;
-    private Vector<Pair<IEventHadler, Boolean>> listeners;
-    private Stack<Pair<IEventHadler, Boolean>> nn;
+    private Vector<Pair<IEventHandler, Boolean>> listeners;
+    private Stack<Pair<IEventHandler, Boolean>> nn;
 
     public EventDispatcher() {
         recuirsion_count = 0;
-        listeners = new Vector<Pair<IEventHadler, Boolean>>();
-        nn = new Stack<Pair<IEventHadler, Boolean>>();
+        listeners = new Vector<Pair<IEventHandler, Boolean>>();
+        nn = new Stack<Pair<IEventHandler, Boolean>>();
     }
 
     @Override
-    public void addEventListener(IEventHadler listener) {
+    public void addEventListener(IEventHandler listener) {
         if (listener == null) {
             return;
         }
@@ -27,7 +27,7 @@ public class EventDispatcher implements IEventDispatcher {
     }
 
     @Override
-    public void removeEventListener(IEventHadler listener) {
+    public void removeEventListener(IEventHandler listener) {
         if (listener == null) {
             return;
         }
@@ -53,7 +53,7 @@ public class EventDispatcher implements IEventDispatcher {
         }
 
         ++recuirsion_count;
-        for (Pair<IEventHadler, Boolean> i : listeners) {
+        for (Pair<IEventHandler, Boolean> i : listeners) {
             if (i.second) {
                 i.first.handleEvent(event);
             }
@@ -61,7 +61,7 @@ public class EventDispatcher implements IEventDispatcher {
         --recuirsion_count;
 
         if (recuirsion_count == 0) {
-            for (Pair<IEventHadler, Boolean> i : listeners) {
+            for (Pair<IEventHandler, Boolean> i : listeners) {
                 if (!i.second) {
                     listeners.remove(i.first);
                 }

@@ -10,6 +10,7 @@ public class Event {
     public static final String CREATE = "create";
     public static final String CHANGE = "change";
     public static final String ERROR = "error";
+    public static final String PHOTO_CHANGED = "photoChanged";
 
     public final IEventDispatcher target;
     public final String type;
