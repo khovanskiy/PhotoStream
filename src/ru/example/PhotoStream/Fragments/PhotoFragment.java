@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.w3c.dom.Text;
@@ -74,7 +75,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         Bundle args = getArguments();
         photo = Photo.get(args.getString("photoId"));
 
-        View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
+        final View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
         TextView header = (TextView) viewLayout.findViewById(R.id.photoactivity_page_header);
         Album album = Album.get(photo.album_id);
         if (album.albumType == AlbumType.USER) {
@@ -114,6 +115,25 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         image.setOnSmartViewLoadedListener(this);
 
         image.setVisibility(View.GONE);
+        image.setOnClickListener(new View.OnClickListener() {
+            private boolean state = false;
+            @Override
+            public void onClick(View v) {
+                LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
+                LinearLayout footer = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_footer);
+                TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
+                if (state) {
+                    header.setVisibility(View.VISIBLE);
+                    footer.setVisibility(View.VISIBLE);
+                    description.setVisibility(View.VISIBLE);
+                } else {
+                    header.setVisibility(View.GONE);
+                    footer.setVisibility(View.GONE);
+                    description.setVisibility(View.GONE);
+                }
+                state = !state;
+            }
+        });
         progressBar.setVisibility(View.VISIBLE);
 
         image.loadFromURL(photo.getMaxSize().getUrl());
