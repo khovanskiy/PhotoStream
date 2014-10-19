@@ -72,6 +72,13 @@ public class StreamActivity extends ActionBarActivity implements View.OnClickLis
 
         pager.setAdapter(adapter);
         pager.setCurrentItem(DEFAULT_PAGE_ID);
+
+        Intent intent = getIntent();
+        if (intent.hasExtra("forwarding")) {
+            Intent forwardingIntent = new Intent(this, PhotoActivity.class);
+            forwardingIntent.putExtra("position", intent.getIntExtra("position", 0));
+            startActivity(forwardingIntent);
+        }
     }
 
     @Override

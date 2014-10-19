@@ -1,5 +1,6 @@
 package ru.example.PhotoStream.Activities;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -210,6 +211,9 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         executor.put("groups", new GroupsLoading(api));
         executor.put("current", new GetCurrentUserTask(api));
         executor.execute();
+
+        //ActionBar actionBar = getSupportActionBar();
+
     }
 
     @Override
@@ -252,16 +256,15 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
             pos = 0;
         }
         PhotoActivity.setFeed(currentFeeds.get(albumsOwner));
-        Intent intent = new Intent(this, PhotoActivity.class);
-        intent.putExtra("position", pos);
-        startActivity(intent);
-        /*Intent intent = new Intent(this, StreamActivity.class);
+        Intent intent = new Intent(this, StreamActivity.class);
         if (albumsOwner instanceof User) {
             Console.print("FID: " + albumsOwner.getName() + " " + albumsOwner.getId());
             intent.putExtra("fid", albumsOwner.getId());
         } else if (albumsOwner instanceof Group) {
             intent.putExtra("gid", albumsOwner.getId());
         }
-        startActivity(intent); /**/
+        intent.putExtra("position", pos);
+        intent.putExtra("forwarding", true);
+        startActivity(intent);
     }
 }
