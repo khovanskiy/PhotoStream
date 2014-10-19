@@ -15,18 +15,13 @@ public class PhotoShifter extends EventDispatcher implements IEventHandler {
     private int lastSize = 0;
     private boolean hasMore = true;
     private boolean toChange = false;
+    private Timer timer;
 
     public PhotoShifter(Feed feed) {
         this.feed = feed;
         this.feed.addEventListener(this);
         this.feed.loadMore();
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                changePhoto();
-            }
-        }, (long) random.nextInt(MAX_INITIAL_DELAY), REFRESH_DELAY);
+        start();
     }
 
     @Override
@@ -60,5 +55,21 @@ public class PhotoShifter extends EventDispatcher implements IEventHandler {
         } else {
             nextPosition();
         }
+    }
+
+    public synchronized void pause() {
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+    public synchronized void start() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                changePhoto();
+            }
+        }, (long) random.nextInt(MAX_INITIAL_DELAY), REFRESH_DELAY);
     }
 }

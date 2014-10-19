@@ -102,6 +102,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     private ArrayAdapter<AlbumsOwner> feeds;
     private Map<AlbumsOwner, Photo> currentPhotos = new HashMap<>();
     private Map<AlbumsOwner, Feed> currentFeeds = new HashMap<>();
+    private Map<AlbumsOwner, PhotoShifter> photoShifters = new HashMap<>();
     private GridView feedsGrid;
     private int targetSize;
 
@@ -143,27 +144,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         feedsGrid.setOnItemClickListener(this);
         feedsGrid.addOnLayoutChangeListener(this);
         feedsGrid.setAdapter(feeds);
-    }
 
-    @Override
-    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        return super.onCreateView(parent, name, context, attrs);
-    }
-
-    @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        int oldWidth = oldRight - oldLeft;
-        int oldHeight = oldBottom - oldTop;
-        int currentWidth = right - left;
-        int currentHeight = bottom - top;
-        if (oldWidth != currentWidth || oldHeight != currentHeight) {
-            targetSize = currentWidth / feedsGrid.getNumColumns();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         MultiTask<String> executor = new MultiTask<String>() {
             @Override
             protected void onPostExecute(Map<String, Future<?>> data) {
@@ -192,6 +173,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                                     currentFeeds.put(albumsOwner, feed);
                                     feed.addAll(albums);
                                     PhotoShifter photoShifter = new PhotoShifter(feed);
+                                    photoShifters.put(albumsOwner, photoShifter);
                                     photoShifter.addEventListener(new IEventHandler() {
                                         @Override
                                         public void handleEvent(Event e) {
@@ -228,6 +210,38 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         executor.put("groups", new GroupsLoading(api));
         executor.put("current", new GetCurrentUserTask(api));
         executor.execute();
+    }
+
+    @Override
+    public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+        return super.onCreateView(parent, name, context, attrs);
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        int oldWidth = oldRight - oldLeft;
+        int oldHeight = oldBottom - oldTop;
+        int currentWidth = right - left;
+        int currentHeight = bottom - top;
+        if (oldWidth != currentWidth || oldHeight != currentHeight) {
+            targetSize = currentWidth / feedsGrid.getNumColumns();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        for (PhotoShifter photoShifter: photoShifters.values()) {
+            photoShifter.start();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        for (PhotoShifter photoShifter: photoShifters.values()) {
+            photoShifter.pause();
+        }
     }
 
     @Override
