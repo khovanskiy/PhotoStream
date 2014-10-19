@@ -247,13 +247,21 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AlbumsOwner albumsOwner = feeds.getItem(position);
-        Intent intent = new Intent(this, StreamActivity.class);
+        int pos = photoShifters.get(albumsOwner).getPosition();
+        if (pos == -1) {
+            pos = 0;
+        }
+        PhotoActivity.setFeed(currentFeeds.get(albumsOwner));
+        Intent intent = new Intent(this, PhotoActivity.class);
+        intent.putExtra("position", pos);
+        startActivity(intent);
+        /*Intent intent = new Intent(this, StreamActivity.class);
         if (albumsOwner instanceof User) {
             Console.print("FID: " + albumsOwner.getName() + " " + albumsOwner.getId());
             intent.putExtra("fid", albumsOwner.getId());
         } else if (albumsOwner instanceof Group) {
             intent.putExtra("gid", albumsOwner.getId());
         }
-        startActivity(intent);
+        startActivity(intent); /**/
     }
 }

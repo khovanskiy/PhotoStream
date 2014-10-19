@@ -72,4 +72,8 @@ public class PhotoShifter extends EventDispatcher implements IEventHandler {
             }
         }, (long) random.nextInt(MAX_INITIAL_DELAY), REFRESH_DELAY);
     }
+
+    public synchronized int getPosition() {
+        return currentPosition;
+    }
 }
