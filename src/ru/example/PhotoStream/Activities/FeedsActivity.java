@@ -16,6 +16,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Tasks.GetCurrentUserTask;
 import ru.example.PhotoStream.Tasks.GetGroupsTask;
 import ru.example.PhotoStream.Tasks.GetUsersTask;
@@ -99,14 +100,25 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
 
     private Odnoklassniki api;
     private ArrayAdapter<AlbumsOwner> feeds;
+    private Map<AlbumsOwner, Photo> currentPhotos = new HashMap<>();
+    private Map<AlbumsOwner, Feed> currentFeeds = new HashMap<>();
     private GridView feedsGrid;
     private int targetSize;
+
+    private synchronized Photo getAlbumsOwnerPhoto(AlbumsOwner albumsOwner) {
+        return currentPhotos.get(albumsOwner);
+    }
+
+    private synchronized void setAlbumsOwnerPhoto(AlbumsOwner albumsOwner, Photo photo) {
+        currentPhotos.put(albumsOwner, photo);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedsactivity);
         api = Odnoklassniki.getInstance(this);
+
 
         feeds = new ArrayAdapter<AlbumsOwner>(this, R.layout.badgeview) {
 
@@ -116,7 +128,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 View view = inflater.inflate(R.layout.badgeview, parent, false);
                 SmartImage image = (SmartImage) view.findViewById(R.id.badgeview_image);
-                Photo photo = Photo.get(owner.getAvatarId());
+                Photo photo = getAlbumsOwnerPhoto(owner);
                 if (photo.hasAnySize()) {
                     image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
                 }
@@ -165,15 +177,46 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                     List<Group> groups = futureGroups.get();
                     List<User> users = futureUsers.get();
 
-                    Selection selection = Selection.build("global", getResources().getString(R.string.all_photos));
-                    selection.addAll(groups);
-                    selection.addAll(users);
-                    selection.add(currentUser);
-
-                    feeds.add(currentUser);
-                    feeds.addAll(groups);
-                    feeds.addAll(users);
-                    feeds.add(selection);
+                    List<AlbumsOwner> albumsOwners = new ArrayList<>();
+                    albumsOwners.add(currentUser);
+                    albumsOwners.addAll(groups);
+                    albumsOwners.addAll(users);
+                    MultiTask<AlbumsOwner> albumLoader = new MultiTask<AlbumsOwner>() {
+                        @Override
+                        protected void onPostExecute(Map<AlbumsOwner, Future<?>> data) {
+                            for (final AlbumsOwner albumsOwner: data.keySet()) {
+                                Future<List<Album>> future = (Future<List<Album>>) data.get(albumsOwner);
+                                try {
+                                    List<Album> albums = future.get();
+                                    Feed feed = new LineFeed(api);
+                                    currentFeeds.put(albumsOwner, feed);
+                                    feed.addAll(albums);
+                                    PhotoShifter photoShifter = new PhotoShifter(feed);
+                                    photoShifter.addEventListener(new IEventHandler() {
+                                        @Override
+                                        public void handleEvent(Event e) {
+                                            Photo photo = (Photo)e.data.get("photo");
+                                            setAlbumsOwnerPhoto(albumsOwner, photo);
+                                            FeedsActivity.this.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    feeds.notifyDataSetChanged();
+                                                }
+                                            });
+                                        }
+                                    });
+                                } catch (Exception e) {
+                                    Log.d("M_CONSOLE", e.getMessage(), e);
+                                }
+                            }
+                        }
+                    };
+                    for (AlbumsOwner albumsOwner: albumsOwners) {
+                        setAlbumsOwnerPhoto(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
+                        albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
+                    }
+                    albumLoader.execute();
+                    feeds.addAll(albumsOwners);
                 } catch (Exception e) {
                     Log.d("M_CONSOLE", e.getMessage(), e);
                 }
