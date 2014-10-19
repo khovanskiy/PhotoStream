@@ -171,9 +171,9 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                     selection.add(currentUser);
 
                     feeds.add(currentUser);
+                    feeds.add(selection);
                     feeds.addAll(groups);
                     feeds.addAll(users);
-                    feeds.add(selection);
                 } catch (Exception e) {
                     Log.d("M_CONSOLE", e.getMessage(), e);
                 }

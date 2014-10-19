@@ -1,7 +1,5 @@
 package ru.example.PhotoStream;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.ArrayList;
