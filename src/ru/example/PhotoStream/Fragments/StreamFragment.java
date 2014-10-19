@@ -67,7 +67,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHadler, S
 
         photosGrid.setAdapter(photoListAdapter);
 
-        feed = new Feed(api);
+        feed = new LineFeed(api);
         feed.addEventListener(this);
 
         Bundle bundle = getArguments();
