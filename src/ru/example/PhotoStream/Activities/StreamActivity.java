@@ -54,8 +54,8 @@ public class StreamActivity extends ActionBarActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.streamactivity);
 
-        ImageButton button = (ImageButton) findViewById(R.id.stream_activity_button);
-        button.setOnClickListener(this);
+        //ImageButton button = (ImageButton) findViewById(R.id.stream_activity_button);
+        //button.setOnClickListener(this);
 
         ViewPager pager = (ViewPager) findViewById(R.id.stream_activity_pager);
         FragmentPagerAdapter adapter = new PageAdapter(getSupportFragmentManager(), this);
@@ -90,11 +90,6 @@ public class StreamActivity extends ActionBarActivity implements View.OnClickLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_upload: {
-                Intent intent = new Intent(this, PhotoTakerActivity.class);
-                startActivity(intent);
-            }
-            break;
             case R.id.action_back: {
                 finish();
             }
@@ -104,12 +99,12 @@ public class StreamActivity extends ActionBarActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        /*switch (v.getId()) {
             case R.id.stream_activity_button: {
                 Intent intent = new Intent(this, PhotoTakerActivity.class);
                 startActivity(intent);
             }
             break;
-        }
+        }*/
     }
 }

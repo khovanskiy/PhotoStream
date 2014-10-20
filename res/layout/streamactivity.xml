@@ -6,7 +6,7 @@
           class="android.support.v4.view.ViewPager" android:id="@+id/stream_activity_pager"
             >
     </view>
-    <FrameLayout
+    <!--<FrameLayout
             android:layout_width="match_parent"
             android:layout_height="100dp" android:layout_gravity="bottom">
         <ImageButton
@@ -15,5 +15,5 @@
                 android:scaleType="center"
                 android:id="@+id/stream_activity_button" android:layout_gravity="center" android:src="@drawable/photocam"
                 android:background="@android:color/transparent"/>
-    </FrameLayout>
+    </FrameLayout>-->
 </FrameLayout>

@@ -7,13 +7,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.example.PhotoStream.*;
@@ -86,7 +81,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         }
 
         protected List<String> getFriendIDs() {
-            List<String> result = new ArrayList<String>();
+            List<String> result = new ArrayList<>();
             try {
                 JSONArray friendIDs = new JSONArray(api.request("friends.get", null, "get"));
                 for (int i = 0; i < friendIDs.length(); i++) {
@@ -120,6 +115,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedsactivity);
         api = Odnoklassniki.getInstance(this);
+
 
 
         feeds = new ArrayAdapter<AlbumsOwner>(this, R.layout.badgeview) {
@@ -233,6 +229,24 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.feeds_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_upload: {
+                Intent intent = new Intent(this, PhotoTakerActivity.class);
+                startActivity(intent);
+            }
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         for (PhotoShifter photoShifter: photoShifters.values()) {
@@ -251,20 +265,31 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AlbumsOwner albumsOwner = feeds.getItem(position);
-        int pos = photoShifters.get(albumsOwner).getPosition();
-        if (pos == -1) {
-            pos = 0;
+        try {
+            int pos = photoShifters.get(albumsOwner).getPosition();
+            if (pos == -1) {
+                pos = 0;
+            }
+            PhotoActivity.setFeed(currentFeeds.get(albumsOwner));
+            Intent intent = new Intent(this, StreamActivity.class);
+            if (albumsOwner instanceof User) {
+                //Console.print("FID: " + albumsOwner.getName() + " " + albumsOwner.getId());
+                intent.putExtra("fid", albumsOwner.getId());
+            } else if (albumsOwner instanceof Group) {
+                intent.putExtra("gid", albumsOwner.getId());
+            }
+            intent.putExtra("position", pos);
+            intent.putExtra("forwarding", true);
+            startActivity(intent);
+        } catch (Exception e) {
+            Log.d("CONSOLE", e.getMessage(), e);
+            Console.print(albumsOwner);
+            Console.print(albumsOwner.getName());
+            Console.print(photoShifters.size());
+            Console.print(photoShifters.toString());
         }
-        PhotoActivity.setFeed(currentFeeds.get(albumsOwner));
-        Intent intent = new Intent(this, StreamActivity.class);
-        if (albumsOwner instanceof User) {
-            Console.print("FID: " + albumsOwner.getName() + " " + albumsOwner.getId());
-            intent.putExtra("fid", albumsOwner.getId());
-        } else if (albumsOwner instanceof Group) {
-            intent.putExtra("gid", albumsOwner.getId());
+        finally {
+
         }
-        intent.putExtra("position", pos);
-        intent.putExtra("forwarding", true);
-        startActivity(intent);
     }
 }
