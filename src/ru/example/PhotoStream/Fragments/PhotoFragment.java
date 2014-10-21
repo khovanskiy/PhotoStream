@@ -8,10 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import org.w3c.dom.Text;
 import ru.example.PhotoStream.*;
 import ru.ok.android.sdk.Odnoklassniki;
@@ -62,6 +59,19 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
     protected TextView likesCount;
     protected ProgressBar progressBar;
     protected SmartImage image;
+    protected boolean state = true;
+
+    private void checkState(View viewLayout) {
+        LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
+        LinearLayout footer = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_footer);
+        if (state) {
+            header.setVisibility(View.VISIBLE);
+            footer.setVisibility(View.VISIBLE);
+        } else {
+            header.setVisibility(View.GONE);
+            footer.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -72,9 +82,11 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey("state")) {
+            state = savedInstanceState.getBoolean("state");
+        }
         Bundle args = getArguments();
         photo = Photo.get(args.getString("photoId"));
-
         final View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
         TextView header = (TextView) viewLayout.findViewById(R.id.photoactivity_page_header);
         Album album = Album.get(photo.album_id);
@@ -103,10 +115,13 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
             calendar.setTimeInMillis(photo.created_ms);
             dateTime.setText(calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR));
         }
-
-        TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
-        description.setText(photo.text);
-
+        if (photo.text.isEmpty()) {
+            ScrollView descriptionScroll = (ScrollView) viewLayout.findViewById(R.id.photoactivity_page_description_scroll);
+            descriptionScroll.setVisibility(View.GONE);
+        } else {
+            TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
+            description.setText(photo.text);
+        }
         likesCount = (TextView) viewLayout.findViewById(R.id.photoactivity_page_likescount);
         likesCount.setText(photo.like_count + "");
 
@@ -116,24 +131,13 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
 
         image.setVisibility(View.GONE);
         image.setOnClickListener(new View.OnClickListener() {
-            private boolean state = false;
             @Override
             public void onClick(View v) {
-                LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
-                LinearLayout footer = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_footer);
-                TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
-                if (state) {
-                    header.setVisibility(View.VISIBLE);
-                    footer.setVisibility(View.VISIBLE);
-                    description.setVisibility(View.VISIBLE);
-                } else {
-                    header.setVisibility(View.GONE);
-                    footer.setVisibility(View.GONE);
-                    description.setVisibility(View.GONE);
-                }
                 state = !state;
+                checkState(viewLayout);
             }
         });
+        checkState(viewLayout);
         progressBar.setVisibility(View.VISIBLE);
 
         image.loadFromURL(photo.getMaxSize().getUrl());
@@ -149,8 +153,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
                 likeButton.setEnabled(false);
             }
         }
-
-
         return viewLayout;
     }
 
@@ -167,5 +169,11 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
             LikeAdder adder = new LikeAdder();
             adder.execute();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("state", state);
     }
 }
