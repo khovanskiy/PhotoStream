@@ -49,6 +49,12 @@ public class StreamActivity extends ActionBarActivity implements View.OnClickLis
     protected final IFragmentSwitcher[] fragments = new IFragmentSwitcher[MAX_PAGES];
     protected final int[] titles = new int[MAX_PAGES];
 
+    protected static boolean forwarding = false;
+
+    public static void setForwarding(boolean b) {
+        forwarding = b;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +80,8 @@ public class StreamActivity extends ActionBarActivity implements View.OnClickLis
         pager.setCurrentItem(DEFAULT_PAGE_ID);
 
         Intent intent = getIntent();
-        if (intent.hasExtra("forwarding")) {
+        if (forwarding) {
+            forwarding = false;
             Intent forwardingIntent = new Intent(this, PhotoActivity.class);
             forwardingIntent.putExtra("position", intent.getIntExtra("position", 0));
             startActivity(forwardingIntent);

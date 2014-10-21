@@ -18,10 +18,7 @@ import ru.example.PhotoStream.Tasks.GetGroupsTask;
 import ru.example.PhotoStream.Tasks.GetUsersTask;
 import ru.ok.android.sdk.Odnoklassniki;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class FeedsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, View.OnLayoutChangeListener {
@@ -96,9 +93,9 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
 
     private Odnoklassniki api;
     private ArrayAdapter<AlbumsOwner> feeds;
-    private Map<AlbumsOwner, Photo> currentPhotos = new HashMap<>();
-    private Map<AlbumsOwner, Feed> currentFeeds = new HashMap<>();
-    private Map<AlbumsOwner, PhotoShifter> photoShifters = new HashMap<>();
+    private static Map<AlbumsOwner, Photo> currentPhotos = new HashMap<>();
+    private static Map<AlbumsOwner, Feed> currentFeeds = new HashMap<>();
+    private static Map<AlbumsOwner, PhotoShifter> photoShifters = new HashMap<>();
     private GridView feedsGrid;
     private int targetSize;
 
@@ -115,8 +112,6 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.feedsactivity);
         api = Odnoklassniki.getInstance(this);
-
-
 
         feeds = new ArrayAdapter<AlbumsOwner>(this, R.layout.badgeview) {
 
@@ -191,11 +186,16 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                         }
                     };
                     for (AlbumsOwner albumsOwner: albumsOwners) {
-                        setAlbumsOwnerPhoto(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
-                        albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
+                        if (!currentFeeds.containsKey(albumsOwner)) {
+                            setAlbumsOwnerPhoto(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
+                            albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
+                        }
                     }
                     albumLoader.execute();
                     feeds.addAll(albumsOwners);
+                    Set<AlbumsOwner> previous = currentFeeds.keySet();
+                    previous.removeAll(albumsOwners);
+                    feeds.addAll(previous);
                 } catch (Exception e) {
                     Log.d("M_CONSOLE", e.getMessage(), e);
                 }
@@ -207,9 +207,6 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         executor.put("groups", new GroupsLoading(api));
         executor.put("current", new GetCurrentUserTask(api));
         executor.execute();
-
-        //ActionBar actionBar = getSupportActionBar();
-
     }
 
     @Override
@@ -279,7 +276,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 intent.putExtra("gid", albumsOwner.getId());
             }
             intent.putExtra("position", pos);
-            intent.putExtra("forwarding", true);
+            StreamActivity.setForwarding(true);
             startActivity(intent);
         } catch (Exception e) {
             Log.d("CONSOLE", e.getMessage(), e);
