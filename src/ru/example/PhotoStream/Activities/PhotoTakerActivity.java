@@ -28,6 +28,11 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 22;
     private static final int MAX_WIDTH = 1024;
     private static final int MAX_HEIGHT = 1024;
+    private static boolean moveBack = false;
+
+    public static void setMoveBack(boolean b) {
+        moveBack = b;
+    }
 
     private Camera camera = null;
     private SurfaceView surfaceView;
@@ -244,5 +249,14 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 context.startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (moveBack) {
+            moveBack = false;
+            onBackPressed();
+        }
     }
 }

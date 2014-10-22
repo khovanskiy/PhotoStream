@@ -99,6 +99,12 @@ public class PhotoUploadActivity extends ActionBarActivity {
             if (aBoolean) {
                 Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
                 uploadButton.setVisibility(View.GONE);
+                PhotoCorrectionActivity.setMoveBack(true);
+                PhotoTakerActivity.setMoveBack(true);
+                FeedsActivity.setForwardToUser(true);
+                FeedsActivity.setStrictReload(true);
+                pictureTaken.recycle();
+                onBackPressed();
             } else {
                 Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
                 uploadButton.setEnabled(true);

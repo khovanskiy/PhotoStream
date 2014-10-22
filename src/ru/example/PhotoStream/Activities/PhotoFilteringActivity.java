@@ -31,6 +31,11 @@ public class PhotoFilteringActivity extends Activity {
     private static final int SHARPNESS_PRIORITY = 8;
     private static final int PHOTO_FILTER_PRIORITY = 9;
     private static final int VIGNETTE_PRIORITY = 10;
+    private static boolean moveBack = false;
+
+    public static void setMoveBack(boolean b) {
+        moveBack = b;
+    }
 
     private static final int SCALE_DOWN = 2;
 
@@ -291,5 +296,9 @@ public class PhotoFilteringActivity extends Activity {
     public void onResume() {
         super.onResume();
         toLoadButton.setEnabled(true);
+        if (moveBack) {
+            moveBack = false;
+            onBackPressed();
+        }
     }
 }

@@ -3,6 +3,7 @@ package ru.example.PhotoStream.Activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -130,6 +131,11 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
     private static final int MAX_PRIORITY = 1000;
 
     private static Bitmap image = null;
+    private static boolean moveBack = false;
+
+    public static void setMoveBack(boolean b) {
+        moveBack = b;
+    }
 
     protected AtomicBoolean continueRefreshing = new AtomicBoolean(false);
     protected AtomicBoolean taskIsRunning = new AtomicBoolean(false);
@@ -340,9 +346,19 @@ public final class PhotoCorrectionActivity extends ActionBarActivity implements 
                 fullSource.recycle();
                 PhotoUploadActivity.setPicture(fullResult.toBitmap());
                 fullResult.recycle();
+                image.recycle();
                 Intent intent = new Intent(this, PhotoUploadActivity.class);
                 startActivity(intent);
             } break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (moveBack) {
+            moveBack = false;
+            onBackPressed();
         }
     }
 }

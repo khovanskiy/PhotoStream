@@ -91,6 +91,17 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         }
     }
 
+    private static boolean forwardToUser = false;
+    private static boolean strictReload = false;
+
+    public static void setForwardToUser(boolean b) {
+        forwardToUser = b;
+    }
+
+    public static void setStrictReload(boolean b) {
+        strictReload = b;
+    }
+
     private Odnoklassniki api;
     private ArrayAdapter<AlbumsOwner> feeds;
     private static Map<AlbumsOwner, Photo> currentPhotos = new HashMap<>();
@@ -186,10 +197,13 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                         }
                     };
                     for (AlbumsOwner albumsOwner: albumsOwners) {
-                        if (!currentFeeds.containsKey(albumsOwner)) {
+                        if (strictReload || !currentFeeds.containsKey(albumsOwner)) {
                             setAlbumsOwnerPhoto(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
                             albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
                         }
+                    }
+                    if (strictReload) {
+                        strictReload = false;
                     }
                     albumLoader.execute();
                     feeds.addAll(albumsOwners);
@@ -246,8 +260,14 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     protected void onResume() {
         super.onResume();
-        for (PhotoShifter photoShifter: photoShifters.values()) {
-            photoShifter.start();
+        if (forwardToUser) {
+            forwardToUser = false;
+
+            onItemClick(null, null, 0, 0);
+        } else {
+            for (PhotoShifter photoShifter : photoShifters.values()) {
+                photoShifter.start();
+            }
         }
     }
 
