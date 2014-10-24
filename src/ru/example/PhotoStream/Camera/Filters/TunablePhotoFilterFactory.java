@@ -22,6 +22,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_normal;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return NoFilter();
+            }
         },
         Polaroid {
             @Override
@@ -32,6 +37,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_polaroid;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Polaroid();
             }
         },
         VintageBlackAndWhite {
@@ -44,6 +54,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_vintage;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return VintageBlackAndWhite();
+            }
         },
         Nashville {
             @Override
@@ -54,6 +69,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_nashville;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Nashville();
             }
         },
         Sierra {
@@ -66,6 +86,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_sierra;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Sierra(context);
+            }
         },
         Valencia {
             @Override
@@ -76,6 +101,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_valencia;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Valencia();
             }
         },
         Walden {
@@ -88,6 +118,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_walden;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Walden();
+            }
         },
         Hudson {
             @Override
@@ -98,6 +133,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_hudson;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Hudson();
             }
         },
         Amaro {
@@ -110,6 +150,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_amaro;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Amaro();
+            }
         },
         Rise {
             @Override
@@ -120,6 +165,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_rise;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Rise();
             }
         },
         Y1977 {
@@ -132,6 +182,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_1977;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Y1977(context);
+            }
         },
         Kelvin {
             @Override
@@ -142,6 +197,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_kelvin;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Kelvin(context);
             }
         },
         XPro {
@@ -154,6 +214,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_xproii;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Xpro(context);
+            }
         },
         Toaster {
             @Override
@@ -164,6 +229,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_toaster;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Toaster(context);
             }
         },
         TealAndOrange {
@@ -176,6 +246,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_tealandorange;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return TealAndOrange();
+            }
         },
         Negative {
             @Override
@@ -186,6 +261,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_negative;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Negative();
             }
         },
         Grayscale {
@@ -198,6 +278,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_grayscale;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Grayscale();
+            }
         },
         Sepia {
             @Override
@@ -208,6 +293,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_sepia;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Sepia();
             }
         },
         Smooth {
@@ -220,6 +310,11 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_smooth;
             }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Smooth();
+            }
         },
         ColorReduction {
             @Override
@@ -230,6 +325,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getIconResource() {
                 return R.drawable.filter_16;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return ColorReduction();
             }
         },
         EightBit {
@@ -242,100 +342,226 @@ public class TunablePhotoFilterFactory {
             public int getIconResource() {
                 return R.drawable.filter_8;
             }
-        };
-        /*
-        Random {
+
             @Override
-            public String toString(Context context) {
-                return context.getString(R.string.Random);
+            public TunablePhotoFilter getFilter(Context context) {
+                return EightBit();
             }
-        }; */
+        };
 
         public abstract String toString(Context context);
         public int getIconResource() {
             return R.drawable.filter_normal;
         }
-    }
-
-    /**
-     * Returns {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter} by its name or identity filter if this filter wasn't found.
-     *
-     * @param name photo filter name
-     * @return photo filter
-     */
-    public static TunablePhotoFilter getFilterByName(Context context, String name) {
-        if (name.equals(context.getString(R.string.Negative))) {
-            return Negative();
-        } else if (name.equals(context.getString(R.string.Grayscale))) {
-            return Grayscale();
-        } else if (name.equals(context.getString(R.string.Sepia))) {
-            return Sepia();
-        } else if (name.equals(context.getString(R.string.Polaroid))) {
-            return Polaroid();
-        } else if (name.equals(context.getString(R.string.VintageBlackAndWhite))) {
-            return VintageBlackAndWhite();
-        } else if (name.equals(context.getString(R.string.Hudson))) {
-            return Hudson();
-        } else if (name.equals(context.getString(R.string.Nashville))) {
-            return Nashville();
-        } else if (name.equals(context.getString(R.string.Amaro))) {
-            return Amaro();
-        } else if (name.equals(context.getString(R.string.Sierra))) {
-            return Sierra(context);
-        } else if (name.equals(context.getString(R.string.Valencia))) {
-            return Valencia();
-        } else if (name.equals(context.getString(R.string.Walden))) {
-            return Walden();
-        } else if (name.equals(context.getString(R.string.Rise))) {
-            return Rise();
-        } else if (name.equals(context.getString(R.string.Y1977))) {
-            return Y1977(context);
-        } else if (name.equals(context.getString(R.string.Kelvin))) {
-            return Kelvin(context);
-        } else if (name.equals(context.getString(R.string.Xpro))) {
-            return Xpro(context);
-        } else if (name.equals(context.getString(R.string.Toaster))) {
-            return Toaster(context);
-        } else if (name.equals(context.getString(R.string.TealAndOrange))) {
-            return TealAndOrange();
-        } else if (name.equals(context.getString(R.string.Smooth))) {
-            return Smooth();
-        } else if (name.equals(context.getString(R.string.ColorReduction))) {
-            return ColorReduction();
-        } else if (name.equals(context.getString(R.string.Random))) {
-            return Random();
-        } else if (name.equals(context.getString(R.string.EightBit))) {
-            return EightBit();
-        } else {
-            return NoFilter();
+        public abstract TunablePhotoFilter getFilter(Context context);
+        public int getPriority() {
+            return 100;
+        }
+        public int getMaxUpdatePriority() {
+            return 100;
         }
     }
 
-    public static TunablePhotoFilter EightBit() {
+    public static enum SettingsFilterType {
+        ColorTemperature {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Temperature);
+            }
+
+            @Override
+            public int getPriority() {
+                return 1;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return ColorTemperature(context);
+            }
+        },
+
+        Exposure {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Temperature);
+            }
+
+            @Override
+            public int getPriority() {
+                return 2;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Exposure();
+            }
+        },
+
+        Brightness {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Brightness);
+            }
+
+            @Override
+            public int getPriority() {
+                return 3;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Brightness();
+            }
+        },
+
+        Contrast {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Contrast);
+            }
+
+            @Override
+            public int getPriority() {
+                return 4;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Contrast();
+            }
+        },
+
+        LightRegions {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.LightRegions);
+            }
+
+            @Override
+            public int getPriority() {
+                return 5;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return LightRegions();
+            }
+        },
+
+        DarkRegions {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.DarkRegions);
+            }
+
+            @Override
+            public int getPriority() {
+                return 6;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return DarkRegions();
+            }
+        },
+
+        Saturation {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Saturation);
+            }
+
+            @Override
+            public int getPriority() {
+                return 7;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Saturation();
+            }
+        },
+
+        Sharpness {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Sharpness);
+            }
+
+            @Override
+            public int getPriority() {
+                return 101;
+            }
+
+            @Override
+            public int getMaxUpdatePriority() {
+                return 101;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Sharpness();
+            }
+        },
+
+        Vignette {
+            @Override
+            public String toString(Context context) {
+                return context.getString(R.string.Vignette);
+            }
+
+            @Override
+            public int getPriority() {
+                return 102;
+            }
+
+            @Override
+            public int getMaxUpdatePriority() {
+                return 102;
+            }
+
+            @Override
+            public TunablePhotoFilter getFilter(Context context) {
+                return Vignette();
+            }
+        };
+
+        public abstract String toString(Context context);
+        public abstract int getPriority();
+        public int getIconResource() {
+            return R.drawable.filter_normal;
+        }
+        public abstract TunablePhotoFilter getFilter(Context context);
+        public int getMaxUpdatePriority() {
+            return 100;
+        }
+    }
+
+    private static TunablePhotoFilter EightBit() {
         return new ColorCurveFilter(ColorCurveFactory.createEightBit());
     }
 
-    public static TunablePhotoFilter Contrast() {
+    private static TunablePhotoFilter Contrast() {
         return new ColorCurveFilter(ColorCurveProviderFactory.contrastProvider());
     }
 
-    public static TunablePhotoFilter Brightness() {
+    private static TunablePhotoFilter Brightness() {
         return new ColorCurveFilter(ColorCurveProviderFactory.brightnessProvider());
     }
 
-    public static TunablePhotoFilter Saturation() {
+    private static TunablePhotoFilter Saturation() {
         return new SaturationFilter();
     }
 
-    public static TunablePhotoFilter LightRegions() {
+    private static TunablePhotoFilter LightRegions() {
         return new ColorCurveFilter(ColorCurveProviderFactory.lightRegionsProvider());
     }
 
-    public static TunablePhotoFilter DarkRegions() {
+    private static TunablePhotoFilter DarkRegions() {
         return new ColorCurveFilter(ColorCurveProviderFactory.darkRegionsProvider());
     }
 
-    public static TunablePhotoFilter ColorReduction() {
+    private static TunablePhotoFilter ColorReduction() {
         return new ColorCurveFilter(ColorCurveFactory.createColorReduction());
     }
 
@@ -344,7 +570,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter NoFilter() {
+    private static TunablePhotoFilter NoFilter() {
         return new IdentityFilter();
     }
 
@@ -353,7 +579,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter Emboss() {
+    private static TunablePhotoFilter Emboss() {
         return new Convolution3Filter(new float[][]{{-2, -1, 0}, {-1, 1, 1}, {0, 1, 2}}, 0);
     }
 
@@ -362,7 +588,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter Blur() {
+    private static TunablePhotoFilter Blur() {
         return new Convolution3Filter(new float[][]{{1f / 16, 1f / 8, 1f / 16}, {1f / 8, 1f / 4, 1f / 8}, {1f / 16, 1f / 8, 1f / 16}}, 0);
     }
 
@@ -371,7 +597,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter Glow() {
+    private static TunablePhotoFilter Glow() {
         return new Convolution3Filter(new float[][]{{1f / 16, 1f / 8, 1f / 16}, {1f / 8, 5f / 4, 1f / 8}, {1f / 16, 1f / 8, 1f / 16}}, 0);
     }
 
@@ -380,7 +606,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter Sharpness() {
+    private static TunablePhotoFilter Sharpness() {
         return new Convolution3Filter(new float[][]{{-1f/16, -1f/8, -1f/16}, {-1f/8, 7f/4, -1f/8}, {-1f/16, -1f/8, -1f/16}}, 0);
     }
 
@@ -389,7 +615,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter EdgesNegative() {
+    private static TunablePhotoFilter EdgesNegative() {
         return new Convolution3Filter(new float[][]{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}, 0);
     }
 
@@ -398,7 +624,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter EdgesPositive() {
+    private static TunablePhotoFilter EdgesPositive() {
         return new Convolution3Filter(new float[][]{{1, 1, 1}, {1, -7, 1}, {1, 1, 1}}, 0);
     }
 
@@ -407,7 +633,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    public static TunablePhotoFilter Negative() {
+    private static TunablePhotoFilter Negative() {
         float[] matrix = new float[] {
                 -1f, 0f, 0f, 0, 255,
                 0f, -1f, 0f, 0, 255,
@@ -417,7 +643,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Sepia() {
+    private static TunablePhotoFilter Sepia() {
         float[] matrix = new float[] {
                 0.393f, 0.769f, 0.180f, 0, 0,
                 0.349f, 0.686f, 0.168f, 0, 0,
@@ -427,7 +653,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Polaroid() {
+    private static TunablePhotoFilter Polaroid() {
         float[] matrix = new float[] {
                 1.438f, -0.062f, -0.062f, 0, 0,
                 -0.122f, 1.378f, -0.122f, 0, 0,
@@ -437,7 +663,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter VintageBlackAndWhite() {
+    private static TunablePhotoFilter VintageBlackAndWhite() {
         float[] matrix = new float[] {
                 0.75f, 0.75f, 0.75f, 0, 0,
                 0.75f, 0.75f, 0.75f, 0, 0,
@@ -447,7 +673,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Grayscale() {
+    private static TunablePhotoFilter Grayscale() {
         float[] matrix = new float[] {
                 0.33f, 0.59f, 0.11f, 0, 0,
                 0.33f, 0.59f, 0.11f, 0, 0,
@@ -457,7 +683,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Hudson() {
+    private static TunablePhotoFilter Hudson() {
         float[] matrix = new float[] {
                 0.859f, 0f, 0f, 0, 36,
                 0f, 1f, 0f, 0, 0,
@@ -467,7 +693,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Amaro() {
+    private static TunablePhotoFilter Amaro() {
         float[] matrix = new float[] {
                 0.898f, 0f, 0f, 0, 26,
                 0f, 1f, 0f, 0, 0,
@@ -477,7 +703,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Nashville() {
+    private static TunablePhotoFilter Nashville() {
         float[] matrix = new float[] {
                 1f, 0f, 0f, 0, 0,
                 0f, 0.906f, 0f, 0, 0,
@@ -487,7 +713,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Rise() {
+    private static TunablePhotoFilter Rise() {
         float[] matrix = new float[] {
                 0.914f, 0f, 0f, 0, 22,
                 0f, 0.914f, 0f, 0, 22,
@@ -497,7 +723,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Valencia() {
+    private static TunablePhotoFilter Valencia() {
         float[] matrix = new float[] {
                 0.824f, 0f, 0f, 0, 30,
                 0f, 1f, 0f, 0, 0,
@@ -507,7 +733,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Walden() {
+    private static TunablePhotoFilter Walden() {
         float[] matrix = new float[] {
                 0.949f, 0f, 0f, 0, 11,
                 0f, 0.812f, 0f, 0, 39,
@@ -517,35 +743,35 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter Sierra(Context context) {
+    private static TunablePhotoFilter Sierra(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.sierra_map));
     }
 
-    public static TunablePhotoFilter Y1977(Context context) {
+    private static TunablePhotoFilter Y1977(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.y1977map));
     }
 
-    public static TunablePhotoFilter TealAndOrange() {
+    private static TunablePhotoFilter TealAndOrange() {
         return new ColorCurveFilter(ColorCurveFactory.createTealAndOrange());
     }
 
-    public static TunablePhotoFilter Smooth() {
+    private static TunablePhotoFilter Smooth() {
         return new ColorCurveFilter(ColorCurveFactory.createSmooth());
     }
 
-    public static TunablePhotoFilter Kelvin(Context context) {
+    private static TunablePhotoFilter Kelvin(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
     }
 
-    public static TunablePhotoFilter Xpro(Context context) {
+    private static TunablePhotoFilter Xpro(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.xpro_map));
     }
 
-    public static TunablePhotoFilter Toaster(Context context) {
+    private static TunablePhotoFilter Toaster(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.toaster_map));
     }
 
-    public static TunablePhotoFilter Random() {
+    private static TunablePhotoFilter Random() {
         Random rand = new Random();
         float[] matrix = new float[] {
                 rand.nextFloat(), rand.nextFloat() / 2, rand.nextFloat() / 2, 0, rand.nextInt(100) - 50,
@@ -556,15 +782,15 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    public static TunablePhotoFilter ColorTemperature(Context context) {
+    private static TunablePhotoFilter ColorTemperature(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
     }
 
-    public static TunablePhotoFilter Exposure() {
+    private static TunablePhotoFilter Exposure() {
         return new ColorCurveFilter(ColorCurveProviderFactory.exposureProvider());
     }
 
-    public static TunablePhotoFilter Vignette() {
+    private static TunablePhotoFilter Vignette() {
         return new VignetteFilter();
     }
 }

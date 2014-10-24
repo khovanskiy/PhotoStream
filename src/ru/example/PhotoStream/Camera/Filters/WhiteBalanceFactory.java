@@ -8,6 +8,7 @@ import ru.example.PhotoStream.R;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * Created by Genyaz on 25.07.2014.
@@ -20,11 +21,21 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.NoWhiteBalance);
             }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return TunablePhotoFilterFactory.FilterType.NoFilter.getFilter(null);
+            }
         },
         GreyWorld {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.GreyWorld);
+            }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return greyWorld(rawBitmap);
             }
         },
         WhitePatch {
@@ -32,11 +43,21 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.WhitePatch);
             }
-        },/**/
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return whitePatch(rawBitmap);
+            }
+        },
         GIMP {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.GIMP);
+            }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return gimp(rawBitmap);
             }
         },
         IncandescentLamp {
@@ -44,11 +65,21 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.IncandescentLamp);
             }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(2800);
+            }
         },
         Sunrise {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Sunrise);
+            }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(3400);
             }
         },
         FluorescentLampWhite {
@@ -56,11 +87,21 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.FluorescentLampWhite);
             }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(4000);
+            }
         },
         Midday {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Midday);
+            }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(5000);
             }
         },
         FluorescentLampDay {
@@ -68,11 +109,21 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.FluorescentLampDay);
             }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(6000);
+            }
         },
         Cloudy {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Cloudy);
+            }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(7000);
             }
         },
         ClearDay {
@@ -80,11 +131,21 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.ClearDay);
             }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(7500);
+            }
         },
         Twilight {
             @Override
             public String toString(Context context) {
                 return context.getString(R.string.Twilight);
+            }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(8000);
             }
         },
         PolarSky {
@@ -92,46 +153,44 @@ public class WhiteBalanceFactory {
             public String toString(Context context) {
                 return context.getString(R.string.PolarSky);
             }
+
+            @Override
+            protected TunablePhotoFilter createFilter(RawBitmap rawBitmap) {
+                return kelvin(15000);
+            }
         };
 
+        protected abstract TunablePhotoFilter createFilter(RawBitmap rawBitmap);
         public abstract String toString(Context context);
+        public int getPriority() {
+            return 0;
+        }
+        public int getIconResource() {
+            return R.drawable.filter_normal;
+        }
+
+        private static HashMap<RawBitmap, HashMap<Integer, TunablePhotoFilter>> map = new HashMap<>();
+
+        public TunablePhotoFilter getFilter(RawBitmap rawBitmap) {
+            if (!map.containsKey(rawBitmap)) {
+                map.put(rawBitmap, new HashMap<Integer, TunablePhotoFilter>());
+            }
+            HashMap<Integer, TunablePhotoFilter> rawMap = map.get(rawBitmap);
+            if (!rawMap.containsKey(ordinal())) {
+                rawMap.put(ordinal(), createFilter(rawBitmap));
+            }
+            return rawMap.get(ordinal());
+        }
+
+        public int getMaxUpdatePriority() {
+            return 0;
+        }
     }
 
     private static final double WHITE_PATCH_PERCENTAGE = 0.05;
     private static final double GIMP_PERCENTAGE = 0.0005;
 
-    public static TunablePhotoFilter byName(Context context, String name, RawBitmap rawBitmap) {
-        if (name.equals(context.getString(R.string.GreyWorld))) {
-            return greyWorld(rawBitmap);
-        } else if (name.equals(context.getString(R.string.WhitePatch))) {
-            return whitePatch(rawBitmap);
-        } else if (name.equals(context.getString(R.string.GIMP))) {
-            return gimp(rawBitmap);
-        } else if (name.equals(context.getString(R.string.IncandescentLamp))) {
-            return kelvin(2800);
-        } else if (name.equals(context.getString(R.string.Sunrise))) {
-            return kelvin(3400);
-        } else if (name.equals(context.getString(R.string.FluorescentLampWhite))) {
-            return kelvin(4000);
-        } else if (name.equals(context.getString(R.string.Midday))) {
-            return kelvin(5000);
-        } else if (name.equals(context.getString(R.string.FluorescentLampDay))) {
-            return kelvin(6000);
-        } else if (name.equals(context.getString(R.string.Cloudy))) {
-            return kelvin(7000);
-        } else if (name.equals(context.getString(R.string.ClearDay))) {
-            return kelvin(7500);
-        } else if (name.equals(context.getString(R.string.Twilight))) {
-            return kelvin(8000);
-        } else if (name.equals(context.getString(R.string.PolarSky))) {
-            return kelvin(15000);
-        }
-        else {
-            return new IdentityFilter();
-        }
-    }
-
-    public static TunablePhotoFilter greyWorld(RawBitmap rawBitmap) {
+    private static TunablePhotoFilter greyWorld(RawBitmap rawBitmap) {
         int imageSize = rawBitmap.width * rawBitmap.height;
         int color;
         long red = 0, green = 0, blue = 0;
@@ -147,7 +206,7 @@ public class WhiteBalanceFactory {
         return scaleByRGB(rAvg, gAvg, bAvg);
     }
 
-    public static TunablePhotoFilter whitePatch(RawBitmap rawBitmap) {
+    private static TunablePhotoFilter whitePatch(RawBitmap rawBitmap) {
         int imageSize = rawBitmap.width * rawBitmap.height;
         float[] hsv = new float[3];
         float[] values = new float[imageSize];
@@ -175,7 +234,7 @@ public class WhiteBalanceFactory {
         return scaleByRGB(rAvg, gAvg, bAvg);
     }
 
-    public static TunablePhotoFilter gimp(RawBitmap rawBitmap) {
+    private static TunablePhotoFilter gimp(RawBitmap rawBitmap) {
         int imageSize = rawBitmap.width * rawBitmap.height;
         int c;
         int[] rCount = new int[256], gCount = new int[256], bCount = new int[256];
@@ -236,7 +295,7 @@ public class WhiteBalanceFactory {
         });
     }
 
-    public static TunablePhotoFilter kelvin(int temperature) {
+    private static TunablePhotoFilter kelvin(int temperature) {
         temperature /= 100;
         double red, green, blue;
         if (temperature <= 66) {
