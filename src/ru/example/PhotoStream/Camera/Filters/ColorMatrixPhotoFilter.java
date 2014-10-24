@@ -1,7 +1,6 @@
 package ru.example.PhotoStream.Camera.Filters;
 
 import android.graphics.Color;
-import android.graphics.ColorMatrix;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
 public class ColorMatrixPhotoFilter extends TunablePhotoFilter {

@@ -1,13 +1,11 @@
 package ru.example.PhotoStream.Activities;
 
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
 import org.apache.http.HttpResponse;

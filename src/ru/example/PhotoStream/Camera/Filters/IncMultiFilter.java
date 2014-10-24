@@ -5,9 +5,6 @@ import ru.example.PhotoStream.Camera.RawBitmap;
 
 import java.util.HashMap;
 
-/**
- * Created by Genyaz on 23.10.2014.
- */
 public class IncMultiFilter implements PhotoFilter {
     public static class FilterHandler {
         private final TunablePhotoFilter photoFilter;

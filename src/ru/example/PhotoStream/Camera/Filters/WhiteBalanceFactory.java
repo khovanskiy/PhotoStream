@@ -6,16 +6,11 @@ import ru.example.PhotoStream.Camera.Algorithms;
 import ru.example.PhotoStream.Camera.RawBitmap;
 import ru.example.PhotoStream.R;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 
-/**
- * Created by Genyaz on 25.07.2014.
- */
 public class WhiteBalanceFactory {
 
-    public static enum WhiteBalanceType {
+    public static enum WhiteBalanceType implements FilterDescription {
         NoWhiteBalance {
             @Override
             public String toString(Context context) {

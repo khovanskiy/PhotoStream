@@ -101,8 +101,6 @@ public class PhotoUploadActivity extends ActionBarActivity {
                 uploadButton.setVisibility(View.GONE);
                 PhotoCorrectionActivity.setMoveBack(true);
                 PhotoTakerActivity.setMoveBack(true);
-                FeedsActivity.setForwardToUser(true);
-                FeedsActivity.setStrictReload(true);
                 pictureTaken.recycle();
                 onBackPressed();
             } else {

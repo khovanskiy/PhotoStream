@@ -3,9 +3,6 @@ package ru.example.PhotoStream.Camera.Filters;
 import android.graphics.Color;
 import ru.example.PhotoStream.Camera.RawBitmap;
 
-/**
- * Created by Genyaz on 05.08.2014.
- */
 public class VignetteFilter extends TunablePhotoFilter {
     @Override
     protected void transformOpaqueRaw(RawBitmap source, RawBitmap destination, double strength) {

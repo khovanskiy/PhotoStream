@@ -1,8 +1,6 @@
 package ru.example.PhotoStream.Camera.Filters;
 
 import android.content.Context;
-import android.graphics.ColorMatrix;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.Random;
@@ -11,7 +9,7 @@ public class TunablePhotoFilterFactory {
     /**
      * Enumerates available {@link ru.example.PhotoStream.Camera.Filters.PhotoFilter}s.
      */
-    public static enum FilterType {
+    public static enum FilterType implements FilterDescription {
         NoFilter {
             @Override
             public String toString(Context context) {
@@ -349,7 +347,6 @@ public class TunablePhotoFilterFactory {
             }
         };
 
-        public abstract String toString(Context context);
         public int getIconResource() {
             return R.drawable.filter_normal;
         }
@@ -362,7 +359,7 @@ public class TunablePhotoFilterFactory {
         }
     }
 
-    public static enum SettingsFilterType {
+    public static enum SettingsFilterType implements FilterDescription {
         ColorTemperature {
             @Override
             public String toString(Context context) {
@@ -526,8 +523,6 @@ public class TunablePhotoFilterFactory {
             }
         };
 
-        public abstract String toString(Context context);
-        public abstract int getPriority();
         public int getIconResource() {
             return R.drawable.filter_normal;
         }
