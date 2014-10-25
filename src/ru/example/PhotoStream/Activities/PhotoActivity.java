@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
 import ru.ok.android.sdk.Odnoklassniki;
+import uk.co.senab.photoview.HackyViewPager;
 
 import java.util.List;
 
@@ -60,7 +61,13 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
             Photo photo = photos.get(position);
             Bundle bundle = new Bundle();
             bundle.putString("photoId", photo.id);
-            Fragment fr = new PhotoFragment();
+            PhotoFragment fr = new PhotoFragment();
+            fr.setViewPagerLockListener(new PhotoFragment.OnViewPagerLock() {
+                @Override
+                public void setLocked(boolean isLocked) {
+                    viewPager.setLocked(isLocked);
+                }
+            });
             fr.setArguments(bundle);
             return fr;
         }
@@ -75,6 +82,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     protected Odnoklassniki api;
     protected List<Photo> photos;
     protected PageAdapter photoListAdapter;
+    protected HackyViewPager viewPager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +92,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         photos = feed.getAvailablePhotos();
 
         int initPosition = getIntent().getIntExtra("position", 0);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.photoactivity_pager);
+        viewPager = (HackyViewPager) findViewById(R.id.photoactivity_pager);
         photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
         viewPager.setOnPageChangeListener(this);

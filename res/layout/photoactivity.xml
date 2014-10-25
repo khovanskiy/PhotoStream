@@ -5,7 +5,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@android:color/white">
-    <android.support.v4.view.ViewPager
+    <uk.co.senab.photoview.HackyViewPager
             android:id="@+id/photoactivity_pager"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
