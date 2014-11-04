@@ -372,6 +372,11 @@ public class TunablePhotoFilterFactory {
             }
 
             @Override
+            public int getIconResource() {
+                return R.drawable._0004_f_temperature;
+            }
+
+            @Override
             public TunablePhotoFilter getFilter(Context context) {
                 return ColorTemperature(context);
             }
@@ -380,12 +385,17 @@ public class TunablePhotoFilterFactory {
         Exposure {
             @Override
             public String toString(Context context) {
-                return context.getString(R.string.Temperature);
+                return context.getString(R.string.Exposure);
             }
 
             @Override
             public int getPriority() {
                 return 2;
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable._0003_f_exposure;
             }
 
             @Override
@@ -406,6 +416,11 @@ public class TunablePhotoFilterFactory {
             }
 
             @Override
+            public int getIconResource() {
+                return R.drawable._0007_f_brightness;
+            }
+
+            @Override
             public TunablePhotoFilter getFilter(Context context) {
                 return Brightness();
             }
@@ -420,6 +435,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getPriority() {
                 return 4;
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable._0005_f_contrast;
             }
 
             @Override
@@ -440,6 +460,11 @@ public class TunablePhotoFilterFactory {
             }
 
             @Override
+            public int getIconResource() {
+                return R.drawable._0001_f_lights;
+            }
+
+            @Override
             public TunablePhotoFilter getFilter(Context context) {
                 return LightRegions();
             }
@@ -457,6 +482,11 @@ public class TunablePhotoFilterFactory {
             }
 
             @Override
+            public int getIconResource() {
+                return R.drawable._0002_f_shadows;
+            }
+
+            @Override
             public TunablePhotoFilter getFilter(Context context) {
                 return DarkRegions();
             }
@@ -471,6 +501,11 @@ public class TunablePhotoFilterFactory {
             @Override
             public int getPriority() {
                 return 7;
+            }
+
+            @Override
+            public int getIconResource() {
+                return R.drawable._0000_f_saturation;
             }
 
             @Override
@@ -496,6 +531,11 @@ public class TunablePhotoFilterFactory {
             }
 
             @Override
+            public int getIconResource() {
+                return R.drawable._0008_f_sharpen;
+            }
+
+            @Override
             public TunablePhotoFilter getFilter(Context context) {
                 return Sharpness();
             }
@@ -518,17 +558,31 @@ public class TunablePhotoFilterFactory {
             }
 
             @Override
+            public int getIconResource() {
+                return R.drawable._0006_f_vignette;
+            }
+
+            @Override
             public TunablePhotoFilter getFilter(Context context) {
                 return Vignette();
             }
+
+            @Override
+            public double getMinStrength() {
+                return 0;
+            }
         };
 
-        public int getIconResource() {
-            return R.drawable.filter_normal;
-        }
+        public abstract int getIconResource();
         public abstract TunablePhotoFilter getFilter(Context context);
         public int getMaxUpdatePriority() {
             return 100;
+        }
+        public double getMinStrength() {
+            return -1;
+        }
+        public double getMaxStrength() {
+            return 1;
         }
     }
 

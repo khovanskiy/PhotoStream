@@ -5,6 +5,7 @@
         <item name="android:actionMenuTextAppearance">@style/MyActionBarTitleText</item>
         <item name="android:actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>
         <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>
+        <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
     </style>
     <style name="MyActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@android:color/background_dark</item>
@@ -41,5 +42,16 @@
         <item name="android:shadowDx">1.0</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">2.0</item>
+    </style>
+    <style name="CustomTabWidget" parent="@android:style/Widget.TabWidget">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/CustomTabWidgetText</item>
+    </style>
+    <style name="CustomTabWidgetText"
+           parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 </resources>

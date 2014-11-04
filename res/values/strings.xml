@@ -101,4 +101,6 @@
     <string name="AddVideoTitle">Название видео</string>
     <string name="NoTitle">Без названия</string>
     <string name="friends_and_groups">Друзья и группы</string>
+    <string name="Settings">Настройки</string>
+    <string name="Rotation">Поворот</string>
 </resources>
