@@ -50,7 +50,7 @@ public class PhotoUploadActivity extends ActionBarActivity {
             Map<String, String> requestParameters = new HashMap<>();
             try {
                 JSONObject response = new JSONObject(api.request("photosV2.getUploadUrl", requestParameters, "get"));
-                Console.print("Photo response: " + response);
+                //Console.print("Photo response: " + response);
                 String photoId = response.getJSONArray("photo_ids").getString(0);
                 URL url = new URL(response.getString("upload_url"));
                 HttpClient httpclient = new DefaultHttpClient();

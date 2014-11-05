@@ -29,7 +29,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
                     requestParams.put("gid", album.group_id);
                 }
                 String responseString = api.request("photos.addPhotoLike", requestParams, "get");
-                Console.print("Like response: " + responseString);
+                //Console.print("Like response: " + responseString);
                 if (responseString.equals("true")) {
                     return true;
                 } else {

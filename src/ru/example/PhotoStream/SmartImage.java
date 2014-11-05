@@ -4,10 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Debug;
 import android.util.AttributeSet;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
@@ -17,14 +17,34 @@ import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class SmartImage extends ImageView {
+public class SmartImage extends ImageView implements Animation.AnimationListener {
     private static ResourceLruCache<String, BitmapPointer> cache = new ResourceLruCache<String, BitmapPointer>() {
         @Override
         protected void entryRemoved(boolean evicted, String key, BitmapPointer oldValue, BitmapPointer newValue) {
             super.entryRemoved(evicted, key, oldValue, newValue);
-            Console.print("Resource [" + oldValue.getCount() + "] " + key + " has been removed from cache");
+            //Console.print("Resource [" + oldValue.getCount() + "] " + key + " has been removed from cache");
         }
     };
+
+    protected Bitmap tmp;
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        Animation anim_in  = AnimationUtils.loadAnimation(context, R.anim.fadein);
+        setImageBitmap(tmp);
+        tmp = null;
+        startAnimation(anim_in);
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
+    }
 
     private class Loader extends AsyncTask<Void, Void, Bitmap> {
 
@@ -85,7 +105,6 @@ public class SmartImage extends ImageView {
                 return;
             }
             updateImageBitmap(pointer);
-            anim(500);
         }
     }
 
@@ -158,21 +177,27 @@ public class SmartImage extends ImageView {
     private Loader loader = null;
     protected String currentPath = "";
     protected BitmapPointer currentPointer = null; // Текущее изображение
+    protected Context context;
 
     public SmartImage(Context context) {
         super(context);
+        this.context = context;
     }
 
     public SmartImage(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.context = context;
     }
 
     public SmartImage(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
     }
 
     private void updateImageBitmap(BitmapPointer pointer) {
-        Bitmap bitmap = pointer.get();
+        boolean firstCall = currentPointer == null;
+
+        final Bitmap bitmap = pointer.get();
         if (bitmap == null) {
             return;
         }
@@ -185,9 +210,16 @@ public class SmartImage extends ImageView {
         }
         currentPointer = pointer;
         currentPointer.acc();
-
-        setImageBitmap(bitmap);
-        setVisibility(VISIBLE);
+        if (firstCall) {
+            setImageBitmap(bitmap);
+            Animation anim_in  = AnimationUtils.loadAnimation(context, R.anim.fadein);
+            startAnimation(anim_in);
+        } else {
+            tmp = bitmap;
+            Animation anim_out = AnimationUtils.loadAnimation(context, R.anim.fadeout);
+            anim_out.setAnimationListener(this);
+            startAnimation(anim_out);
+        }
         if (loadedListener != null) {
             loadedListener.onSmartViewUpdated();
         }
@@ -206,14 +238,6 @@ public class SmartImage extends ImageView {
         }
     }
 
-    private void anim(int millisec) {
-        final Animation fadeIn = new AlphaAnimation(0.0f, 1.0f);
-        fadeIn.setInterpolator(new LinearInterpolator());
-        fadeIn.setDuration(millisec);
-        fadeIn.setRepeatCount(0);
-        this.startAnimation(fadeIn);
-    }
-
     /**
      * Loads image from requested url or retrieves it from the cache and then displays it.
      *
@@ -224,8 +248,6 @@ public class SmartImage extends ImageView {
         if (currentPath.equals(url)) {
             return;
         }
-        this.setImageBitmap(null);
-        this.setVisibility(INVISIBLE);
         this.currentPath = url;
 
         BitmapPointer bitmap = cache.get(url);

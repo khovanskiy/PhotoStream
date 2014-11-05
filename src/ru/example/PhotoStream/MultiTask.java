@@ -26,7 +26,7 @@ public class MultiTask<Key> extends AsyncTask<Void, Void, Map<Key, Future<?>>> {
             } catch (Exception e) {
             }
         }
-        Console.print("Multi Done");
+        //Console.print("Multi Done");
         return futures;
     }
 

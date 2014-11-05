@@ -76,7 +76,7 @@ public class VideoUploadActivity extends ActionBarActivity {
             requestParameters.put("file_size", videoFile.length() + "");
             try {
                 JSONObject response = new JSONObject(api.request("video.getUploadUrl", requestParameters, "get"));
-                Console.print("Video response: " + response);
+                //Console.print("Video response: " + response);
                 String videoId = response.getString("video_id");
                 URL url = new URL(response.getString("upload_url"));
                 HttpClient httpclient = new DefaultHttpClient();

@@ -64,7 +64,7 @@ public class AlbumHolder {
             }
             try {
                 String response = api.request("photos.getPhotos", requestParams, "get");
-                Console.print("Photo: " + response);
+                //Console.print("Photo: " + response);
                 JSONObject photosObject = new JSONObject(response);
                 JSONArray photos = photosObject.getJSONArray("photos");
                 for (int i = 0; i < photos.length(); ++i) {

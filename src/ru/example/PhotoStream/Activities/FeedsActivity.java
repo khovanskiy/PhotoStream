@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.AttributeSet;
@@ -95,7 +96,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     private Odnoklassniki api;
     private ArrayAdapter<AlbumsOwner> feedsAdapter;
     private static List<AlbumsOwner> albumsOwners;
-    private static Map<AlbumsOwner, Photo> photos;
+    private Map<AlbumsOwner, Photo> photos;
     private static Map<AlbumsOwner, Feed> feeds;
     private static Map<AlbumsOwner, PhotoShifter> photoShifters;
     private static Map<AlbumsOwner, IEventHandler> listeners;
@@ -116,32 +117,39 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         lockOrientation();
         setContentView(R.layout.feedsactivity);
         api = Odnoklassniki.getInstance(this);
-
+        photos = new HashMap<>();
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        targetSize = size.x / 3;
         feedsAdapter = new ArrayAdapter<AlbumsOwner>(this, R.layout.badgeview) {
+            private Map<Integer, View> existingViews = new HashMap<>();
+
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 AlbumsOwner owner = getItem(position);
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.badgeview, parent, false);
+                if (!existingViews.containsKey(position)) {
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    existingViews.put(position, inflater.inflate(R.layout.badgeview, parent, false));
+                }
+                View view = existingViews.get(position);
                 SmartImage image = (SmartImage) view.findViewById(R.id.badgeview_image);
                 Photo photo = getAlbumsOwnerPhoto(owner);
-                if (photo.hasAnySize()) {
+                if (photo != null && photo.hasAnySize()) {
                     image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
                 }
-
                 TextView title = (TextView) view.findViewById(R.id.badgeview_title);
                 title.setText(owner.getName());
                 return view;
             }
         };
-        feedsGrid = (GridView) findViewById(R.id.feedsactivity_grid);
 
+        feedsGrid = (GridView) findViewById(R.id.feedsactivity_grid);
         feedsGrid.setOnItemClickListener(this);
         feedsGrid.addOnLayoutChangeListener(this);
         feedsGrid.setAdapter(feedsAdapter);
         if (savedInstanceState == null || !savedInstanceState.containsKey("orientationChanged")) {
             albumsOwners = new ArrayList<>();
-            photos = new HashMap<>();
             feeds = new HashMap<>();
             photoShifters = new HashMap<>();
             listeners = new HashMap<>();
@@ -212,7 +220,8 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
             executor.execute();
         } else {
             for (final AlbumsOwner albumsOwner: albumsOwners) {
-                photoShifters.get(albumsOwner).removeEventListener(listeners.get(albumsOwner));
+                PhotoShifter photoShifter = photoShifters.get(albumsOwner);
+                photoShifter.removeEventListener(listeners.get(albumsOwner));
                 IEventHandler handler = new IEventHandler() {
                     @Override
                     public void handleEvent(Event e) {
@@ -227,7 +236,8 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                     }
                 };
                 listeners.put(albumsOwner, handler);
-                photoShifters.get(albumsOwner).addEventListener(handler);
+                photoShifter.addEventListener(handler);
+                photoShifter.immediateGet();
             }
             feedsAdapter.addAll(albumsOwners);
             feedsAdapter.notifyDataSetChanged();

@@ -97,7 +97,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
             feed.add(Album.get(bundle.getString("aid", "")));
         } else if (bundle.getString("fid") != null) {
             User user = User.get(bundle.getString("fid", ""));
-            Console.print("Loading: " + user.getName() + " " + user.getId());
+            //Console.print("Loading: " + user.getName() + " " + user.getId());
             service.put(user.getId(), new AlbumsLoader(api, user));
         } else {
             Group group = Group.get(bundle.getString("gid", ""));
@@ -177,7 +177,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
             swipeLayout.setRefreshing(false);
             List<Photo> photos = feed.getAvailablePhotos();
 
-            Console.print("Total photos: " + photos.size() + " " + photoListAdapter.getCount() + " " + updating);
+            //Console.print("Total photos: " + photos.size() + " " + photoListAdapter.getCount() + " " + updating);
             if (photos.size() > photoListAdapter.getCount() || updating) {
                 photoListAdapter.clear();
                 photoListAdapter.addAll(photos);

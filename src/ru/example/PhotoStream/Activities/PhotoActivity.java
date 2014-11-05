@@ -23,7 +23,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
 
     @Override
     public void onPageSelected(int position) {
-        Console.print("Page selected " + photos.size() + " " + position);
+        //Console.print("Page selected " + photos.size() + " " + position);
         if (photos.size() == position + 1) {
             feed.loadMore();
         }

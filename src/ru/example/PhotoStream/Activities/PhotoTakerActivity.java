@@ -45,7 +45,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     private void stopCamera() {
         if (camera != null) {
-            Console.print("Release camera");
+            //Console.print("Release camera");
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -54,7 +54,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     private void startCamera(int cameraId) {
         try {
-            Console.print("Open camera");
+            //Console.print("Open camera");
             camera = Camera.open(cameraId);
             camera.setPreviewDisplay(surfaceHolder);
             Camera.Size size = camera.getParameters().getPreviewSize();
@@ -122,7 +122,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 Uri selectedImageUri = data.getData();
                 PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
                 Intent intent = new Intent(context, PhotoCorrectionActivity.class);
-                Console.printAvailableMemory();
+                //Console.printAvailableMemory();
                 context.startActivity(intent);
             } else if (requestCode == TAKE_VIDEO) {
                 Uri videoUri = data.getData();
@@ -245,7 +245,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
                 PhotoCorrectionActivity.setBitmap(bitmap);
                 Intent intent = new Intent(context, PhotoCorrectionActivity.class);
-                Console.printAvailableMemory();
+                //Console.printAvailableMemory();
                 context.startActivity(intent);
             }
         });

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Фотострим OK</string>
+    <string name="app_name">OK Поток</string>
     <string name="loading">Идет загрузка…</string>
     <string name="login">Войти</string>
     <string name="owner">Владелец</string>
@@ -100,7 +100,7 @@
     <string name="videouploadactivity_title">Загрузка видео</string>
     <string name="AddVideoTitle">Название видео</string>
     <string name="NoTitle">Без названия</string>
-    <string name="friends_and_groups">Друзья и группы</string>
+    <string name="friends_and_groups">ДРУЗЬЯ И ГРУППЫ</string>
     <string name="Settings">Настройки</string>
     <string name="Rotation">Поворот</string>
 </resources>

@@ -147,7 +147,7 @@ public class User extends AlbumsOwner {
         if (object.has("photo_id")) {
             current.photo_id = object.getString("photo_id");
         }
-        Console.print("User " + current.name + " " + current.photo_id);
+        //Console.print("User " + current.name + " " + current.photo_id);
         return current;
     }
 }

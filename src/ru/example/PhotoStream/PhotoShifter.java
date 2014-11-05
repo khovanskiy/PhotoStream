@@ -7,8 +7,8 @@ import java.util.*;
  */
 public class PhotoShifter extends EventDispatcher implements IEventHandler {
     private static Random random = new Random(System.currentTimeMillis());
-    private static int MAX_INITIAL_DELAY = 5000;
-    private static long REFRESH_DELAY = 5000;
+    private static int MAX_INITIAL_DELAY = 10000;
+    private static long REFRESH_DELAY = 10000;
     private Feed feed;
     private List<Photo> currentPhotos = new ArrayList<>();
     private int currentPosition = -1;
@@ -71,6 +71,14 @@ public class PhotoShifter extends EventDispatcher implements IEventHandler {
                 changePhoto();
             }
         }, (long) random.nextInt(MAX_INITIAL_DELAY), REFRESH_DELAY);
+    }
+
+    public synchronized void immediateGet() {
+        if (currentPosition != -1) {
+            Event event = new Event(PhotoShifter.this, Event.PHOTO_CHANGED);
+            event.data.put("photo", currentPhotos.get(currentPosition));
+            dispatchEvent(event);
+        }
     }
 
     public synchronized int getPosition() {
