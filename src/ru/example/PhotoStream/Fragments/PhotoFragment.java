@@ -46,16 +46,16 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             photo.liked_it = true;
-            likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_photo_view_like_active, 0, 0, 0);
-            likeButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+            photo.like_count++;
+            likeButton.setImageResource(R.drawable._0001_big_liked);
             likeButton.setEnabled(false);
-            likesCount.setText((photo.like_count + 1) + "");
+            likesCount.setText(photo.like_count + "");
         }
     }
 
     protected Odnoklassniki api;
     protected Photo photo;
-    protected Button likeButton;
+    protected ImageButton likeButton;
     protected TextView likesCount;
     protected ProgressBar progressBar;
     protected SmartImage image;
@@ -65,10 +65,8 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
 
     private synchronized void checkState(final View viewLayout) {
         LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
-        LinearLayout footer = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_footer);
         if (state) {
             header.setVisibility(View.VISIBLE);
-            footer.setVisibility(View.VISIBLE);
             if (photoViewAttacher != null) {
                 photoViewAttacher.setZoomable(true);
                 photoViewAttacher.cleanup();
@@ -76,7 +74,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
             onViewPagerLock.setLocked(false);
         } else {
             header.setVisibility(View.GONE);
-            footer.setVisibility(View.GONE);
             photoViewAttacher = new PhotoViewAttacher(image);
             photoViewAttacher.setZoomable(true);
             onViewPagerLock.setLocked(true);
@@ -105,17 +102,19 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         Bundle args = getArguments();
         photo = Photo.get(args.getString("photoId"));
         final View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
-        TextView header = (TextView) viewLayout.findViewById(R.id.photoactivity_page_header);
+        TextView userName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_user);
+        TextView albumName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_album);
         Album album = Album.get(photo.album_id);
         if (album.albumType == AlbumType.USER) {
             User user = User.get(album.user_id);
-            header.setText(user.name + " " + album.title);
+            userName.setText(user.name);
         } else {
             Group group = Group.get(album.group_id);
-            header.setText(group.name + " " + album.title);
+            userName.setText(group.name);
         }
+        albumName.setText(album.title);
 
-        Date now = new Date();
+        /*Date now = new Date();
         long diff = (now.getTime() - photo.created_ms) / 1000;
 
         TextView dateTime = (TextView) viewLayout.findViewById(R.id.photoactivity_page_datetime);
@@ -138,7 +137,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         } else {
             TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
             description.setText(photo.text);
-        }
+        }/**/
         likesCount = (TextView) viewLayout.findViewById(R.id.photoactivity_page_likescount);
         likesCount.setText(photo.like_count + "");
 
@@ -157,18 +156,23 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         });
         checkState(viewLayout);
         image.loadFromURL(photo.getMaxSize().getUrl());
-        likeButton = (Button) viewLayout.findViewById(R.id.photoactivity_page_like);
+        likeButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_like);
         if (photo.user_id.equals(User.currentUID)) {
             likeButton.setEnabled(false);
-            likeButton.setVisibility(View.GONE);
         } else {
             likeButton.setOnClickListener(this);
             if (photo.liked_it) {
-                likeButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_photo_view_like_active, 0, 0, 0);
-                likeButton.setBackgroundColor(getResources().getColor(android.R.color.black));
+                likeButton.setImageResource(R.drawable._0001_big_liked);
                 likeButton.setEnabled(false);
             }
         }
+        ImageButton backButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         return viewLayout;
     }
 
