@@ -97,6 +97,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         viewPager.setAdapter(photoListAdapter);
         viewPager.setOnPageChangeListener(this);
         viewPager.setCurrentItem(initPosition);
+        getActionBar().hide();
     }
 
     public static void setFeed(Feed newFeed) {
