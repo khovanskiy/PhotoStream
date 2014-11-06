@@ -4,21 +4,26 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.res.Configuration;
+import android.graphics.*;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+import ru.example.PhotoStream.Camera.SurfaceGridView;
 import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 public final class PhotoTakerActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
     private static final int NO_CAMERA = -1;
@@ -39,9 +44,14 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private SurfaceHolder surfaceHolder;
     private int currentCameraId;
     private Context context;
+    private OrientationEventListener orientationEventListener;
+    private SurfaceGridView gridView;
+    private ImageButton flashButton;
 
     private boolean isFrontCamera = false;
+    private boolean flashOn = false;
     private boolean isPreviewRunning = false;
+    private boolean gridOn = false;
 
     private void stopCamera() {
         if (camera != null) {
@@ -61,7 +71,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             float aspectRatio = (float) size.width / size.height;
             int newWidth;
             int newHeight;
-            if (surfaceView.getWidth() / surfaceView.getHeight() < aspectRatio) {
+            if (surfaceView.getWidth() / surfaceView.getHeight() > aspectRatio) {
                 newWidth = Math.round(surfaceView.getHeight() * aspectRatio);
                 newHeight = surfaceView.getHeight();
             } else {
@@ -74,6 +84,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             surfaceView.setLayoutParams(layoutParams);
             camera.startPreview();
             currentCameraId = cameraId;
+            updateCameraButton();
         } catch (Exception e) {
             Toast.makeText(context, "Failed to open camera", Toast.LENGTH_SHORT).show();
             Log.i("M_CONSOLE", e.getMessage(), e);
@@ -96,23 +107,69 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.phototakeractivity);
         context = this;
 
-        ImageButton galleryButton = (ImageButton) findViewById(R.id.phototakeractivity_gallerybutton);
+        ImageButton galleryButton = (ImageButton) findViewById(R.id.phototaker_gallery);
         galleryButton.setOnClickListener(this);
-        ImageButton takePhotoButton = (ImageButton) findViewById(R.id.phototakeractivity_takephotobutton);
+        ImageButton takePhotoButton = (ImageButton) findViewById(R.id.phototaker_take_photo);
         takePhotoButton.setOnClickListener(this);
-        ImageButton cameraToggle = (ImageButton) findViewById(R.id.phototakeractivity_cameratogglebutton);
+        ImageButton cameraToggle = (ImageButton) findViewById(R.id.phototaker_camera_change);
         cameraToggle.setOnClickListener(this);
+        ImageButton backButton = (ImageButton) findViewById(R.id.phototaker_back);
+        backButton.setOnClickListener(this);
+        ImageButton gridButton = (ImageButton) findViewById(R.id.phototaker_grid_button);
+        gridButton.setOnClickListener(this);
+        flashButton = (ImageButton) findViewById(R.id.phototaker_flash_type_change);
+        flashButton.setOnClickListener(this);
+
+        if (canToggleCamera()) {
+            cameraToggle.setImageResource(R.drawable._0008_camera_rotate_camera);
+            cameraToggle.setClickable(true);
+        } else {
+            cameraToggle.setImageResource(R.drawable._0007_camera_rotate_camera_disable);
+            cameraToggle.setClickable(false);
+        }
 
         currentCameraId = NO_CAMERA;
         surfaceView = (SurfaceView) findViewById(R.id.phototakeractivity_surfaceview);
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
+
+        orientationEventListener = new OrientationEventListener(this) {
+            private static final int ORIENTATION_PORTRAIT_NORMAL =  1;
+            private static final int ORIENTATION_PORTRAIT_INVERTED =  2;
+            private static final int ORIENTATION_LANDSCAPE_NORMAL =  3;
+            private static final int ORIENTATION_LANDSCAPE_INVERTED =  4;
+
+            private final boolean defaultLandscape = getDeviceDefaultOrientation() == Configuration.ORIENTATION_LANDSCAPE;
+            private int lastOrientation = -1;
+
+            @Override
+            public synchronized void onOrientationChanged(int orientation) {
+                int currentOrientation;
+                if (orientation >= 315 || orientation < 45) {
+                    currentOrientation = ORIENTATION_PORTRAIT_NORMAL;
+                }
+                else if (orientation < 315 && orientation >= 225) {
+                    currentOrientation = ORIENTATION_LANDSCAPE_NORMAL;
+                }
+                else if (orientation < 225 && orientation >= 135) {
+                    currentOrientation = ORIENTATION_PORTRAIT_INVERTED;
+                }
+                else { // orientation <135 || orientation > 45
+                    currentOrientation = ORIENTATION_LANDSCAPE_INVERTED;
+                }
+                if (lastOrientation == -1 || (lastOrientation % 2 != currentOrientation % 2)) {
+                    rotateAll(defaultLandscape ^ (currentOrientation == ORIENTATION_LANDSCAPE_INVERTED
+                            || currentOrientation == ORIENTATION_LANDSCAPE_NORMAL));
+                }
+                lastOrientation = currentOrientation;
+            }
+        };
+        gridView = (SurfaceGridView) findViewById(R.id.phototaker_grid);
     }
 
     @Override
@@ -193,13 +250,13 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.phototakeractivity_takephotobutton: {
+            case R.id.phototaker_take_photo: {
                 if (camera != null) {
                     camera.autoFocus(this);
                 }
             }
             break;
-            case R.id.phototakeractivity_cameratogglebutton: {
+            case R.id.phototaker_camera_change: {
                 isFrontCamera = !isFrontCamera;
                 stopCamera();
                 if (isFrontCamera) {
@@ -209,7 +266,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 }
             }
             break;
-            case R.id.phototakeractivity_gallerybutton: {
+            case R.id.phototaker_gallery: {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -217,13 +274,23 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
             }
             break;
-            case R.id.phototakeractivity_takevideobutton: {
-                Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(takeVideoIntent, TAKE_VIDEO);
-                }
+            case R.id.phototaker_back: {
+                onBackPressed();
             }
             break;
+            case R.id.phototaker_grid_button: {
+                gridOn = !gridOn;
+                if (gridOn) {
+                    gridView.setVisible();
+                    ((ImageButton)v).setImageResource(R.drawable._0005_camera_grid_off);
+                } else {
+                    gridView.setInvisible();
+                    ((ImageButton)v).setImageResource(R.drawable._0006_camera_grid_on);
+                }
+            } break;
+            case R.id.phototaker_flash_type_change: {
+                nextFlashMode();
+            } break;
         }
     }
 
@@ -258,5 +325,95 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             moveBack = false;
             onBackPressed();
         }
+        orientationEventListener.enable();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        orientationEventListener.disable();
+    }
+
+    private synchronized void rotateAll(boolean landscape) {
+        rotate(R.id.phototaker_camera_change, landscape);
+        rotate(R.id.phototaker_take_photo, landscape);
+        rotate(R.id.phototaker_gallery, landscape);
+        rotate(R.id.phototaker_back, landscape);
+        rotate(R.id.phototaker_flash_type_change, landscape);
+        rotate(R.id.phototaker_grid_button, landscape);
+    }
+
+    private void rotate(int id, boolean landscape) {
+        Animation animation;
+        if (landscape) {
+            animation = AnimationUtils.loadAnimation(context, R.anim.rotateright);
+        } else {
+            animation = AnimationUtils.loadAnimation(context, R.anim.rotateleft);
+        }
+        findViewById(id).startAnimation(animation);
+    }
+
+    private int getDeviceDefaultOrientation() {
+
+        WindowManager windowManager =  (WindowManager) getSystemService(WINDOW_SERVICE);
+
+        Configuration config = getResources().getConfiguration();
+
+        int rotation = windowManager.getDefaultDisplay().getRotation();
+
+        if ( ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) &&
+                config.orientation == Configuration.ORIENTATION_LANDSCAPE)
+                || ((rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) &&
+                config.orientation == Configuration.ORIENTATION_PORTRAIT)) {
+            return Configuration.ORIENTATION_LANDSCAPE;
+        } else {
+            return Configuration.ORIENTATION_PORTRAIT;
+        }
+    }
+
+    private boolean canToggleCamera() {
+        return Camera.getNumberOfCameras() > 1;
+    }
+
+    private void nextFlashMode() {
+        Camera.Parameters parameters = camera.getParameters();
+        List<String> supportedFlashModes = parameters.getSupportedFlashModes();
+        String currentMode = parameters.getFlashMode();
+        switch (currentMode) {
+            case Camera.Parameters.FLASH_MODE_AUTO: {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            } break;
+            case Camera.Parameters.FLASH_MODE_ON: {
+                if (supportedFlashModes.contains(Camera.Parameters.FLASH_MODE_AUTO)) {
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+                } else {
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                }
+            } break;
+            case Camera.Parameters.FLASH_MODE_OFF:
+            default: {
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            } break;
+        }
+        camera.setParameters(parameters);
+        updateCameraButton();
+    }
+
+    private void updateCameraButton() {
+        String flashMode = camera.getParameters().getFlashMode();
+        if (flashMode == null) {
+            flashButton.setClickable(false);
+            flashButton.setImageResource(R.drawable._0009_camera_flash_disable);
+        } else if (flashMode.equals(Camera.Parameters.FLASH_MODE_AUTO)) {
+            flashButton.setClickable(true);
+            flashButton.setImageResource(R.drawable._0010_camera_flash_auto);
+        } else if (flashMode.equals(Camera.Parameters.FLASH_MODE_OFF)) {
+            flashButton.setClickable(true);
+            flashButton.setImageResource(R.drawable._0012_camera_flash_off);
+        } else if (flashMode.equals(Camera.Parameters.FLASH_MODE_ON)) {
+            flashButton.setClickable(true);
+            flashButton.setImageResource(R.drawable._0011_camera_flash_on);
+        }
+    }
+
 }
