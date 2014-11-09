@@ -401,6 +401,7 @@ public class IncMultiFilter {
     public synchronized Bitmap getFilteredImage() {
         RawBitmap s = new RawBitmap(source), d = new RawBitmap(source.getWidth(), source.getHeight());
         multiFilter.transformOpaqueRaw(s, d, MAX_UPDATE_PRIORITY);
+        s.recycle();
         return d.toBitmap();
     }
 
@@ -422,5 +423,19 @@ public class IncMultiFilter {
         if (taskIsRunning.compareAndSet(false, true)) {
             new ImageRefreshTask().execute();
         }
+    }
+
+    public boolean sameBitmap(Bitmap bitmap) {
+        return bitmap == source;
+    }
+
+    public void recycle() {
+        while (taskIsRunning.get());
+        currentBitmap.recycle();
+        currentBitmapRotated.recycle();
+        nextBitmap.recycle();
+        nextBitmapRotated.recycle();
+        rawResult.recycle();
+        rawSource.recycle();
     }
 }

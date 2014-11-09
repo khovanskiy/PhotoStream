@@ -94,7 +94,7 @@
     <string name="Exposure">Выдержка</string>
     <string name="Sharpness">Резкость</string>
     <string name="Vignette">Виньетка</string>
-    <string name="AddComment">Добавить комментарий</string>
+    <string name="AddComment">Добавьте описание к фото</string>
     <string name="EightBit">8 бит</string>
     <string name="take_video">Сделать видео</string>
     <string name="videouploadactivity_title">Загрузка видео</string>
@@ -103,4 +103,7 @@
     <string name="friends_and_groups">ДРУЗЬЯ И ГРУППЫ</string>
     <string name="Settings">Настройки</string>
     <string name="Rotation">Поворот</string>
+    <string name="Editing">Редактирование</string>
+    <string name="Description">Описание к фото</string>
+    <string name="UploadPhoto">Загрузить фото</string>
 </resources>

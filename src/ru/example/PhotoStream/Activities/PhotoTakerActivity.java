@@ -9,17 +9,15 @@ import android.graphics.*;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import ru.example.PhotoStream.Camera.SurfaceGridView;
 import ru.example.PhotoStream.Console;
+import ru.example.PhotoStream.PortraitLandscapeListener;
 import ru.example.PhotoStream.R;
 
 import java.io.FileNotFoundException;
@@ -49,7 +47,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private ImageButton flashButton;
 
     private boolean isFrontCamera = false;
-    private boolean flashOn = false;
     private boolean isPreviewRunning = false;
     private boolean gridOn = false;
 
@@ -138,35 +135,10 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
 
-        orientationEventListener = new OrientationEventListener(this) {
-            private static final int ORIENTATION_PORTRAIT_NORMAL =  1;
-            private static final int ORIENTATION_PORTRAIT_INVERTED =  2;
-            private static final int ORIENTATION_LANDSCAPE_NORMAL =  3;
-            private static final int ORIENTATION_LANDSCAPE_INVERTED =  4;
-
-            private final boolean defaultLandscape = getDeviceDefaultOrientation() == Configuration.ORIENTATION_LANDSCAPE;
-            private int lastOrientation = -1;
-
+        orientationEventListener = new PortraitLandscapeListener(this) {
             @Override
-            public synchronized void onOrientationChanged(int orientation) {
-                int currentOrientation;
-                if (orientation >= 315 || orientation < 45) {
-                    currentOrientation = ORIENTATION_PORTRAIT_NORMAL;
-                }
-                else if (orientation < 315 && orientation >= 225) {
-                    currentOrientation = ORIENTATION_LANDSCAPE_NORMAL;
-                }
-                else if (orientation < 225 && orientation >= 135) {
-                    currentOrientation = ORIENTATION_PORTRAIT_INVERTED;
-                }
-                else { // orientation <135 || orientation > 45
-                    currentOrientation = ORIENTATION_LANDSCAPE_INVERTED;
-                }
-                if (lastOrientation == -1 || (lastOrientation % 2 != currentOrientation % 2)) {
-                    rotateAll(defaultLandscape ^ (currentOrientation == ORIENTATION_LANDSCAPE_INVERTED
-                            || currentOrientation == ORIENTATION_LANDSCAPE_NORMAL));
-                }
-                lastOrientation = currentOrientation;
+            public void onOrientationChange(boolean landscape) {
+                rotateAll(landscape);
             }
         };
         gridView = (SurfaceGridView) findViewById(R.id.phototaker_grid);
@@ -351,24 +323,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             animation = AnimationUtils.loadAnimation(context, R.anim.rotateleft);
         }
         findViewById(id).startAnimation(animation);
-    }
-
-    private int getDeviceDefaultOrientation() {
-
-        WindowManager windowManager =  (WindowManager) getSystemService(WINDOW_SERVICE);
-
-        Configuration config = getResources().getConfiguration();
-
-        int rotation = windowManager.getDefaultDisplay().getRotation();
-
-        if ( ((rotation == Surface.ROTATION_0 || rotation == Surface.ROTATION_180) &&
-                config.orientation == Configuration.ORIENTATION_LANDSCAPE)
-                || ((rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270) &&
-                config.orientation == Configuration.ORIENTATION_PORTRAIT)) {
-            return Configuration.ORIENTATION_LANDSCAPE;
-        } else {
-            return Configuration.ORIENTATION_PORTRAIT;
-        }
     }
 
     private boolean canToggleCamera() {

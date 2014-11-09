@@ -9,10 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.*;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
@@ -101,7 +98,6 @@ public class PhotoUploadActivity extends ActionBarActivity {
                 uploadButton.setVisibility(View.GONE);
                 PhotoCorrectionActivity.setMoveBack(true);
                 PhotoTakerActivity.setMoveBack(true);
-                pictureTaken.recycle();
                 onBackPressed();
             } else {
                 Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
@@ -111,7 +107,7 @@ public class PhotoUploadActivity extends ActionBarActivity {
     }
 
     private Odnoklassniki api;
-    private static Bitmap pictureTaken;
+    private static Bitmap pictureTaken = null;
     protected Button uploadButton;
     private EditText photoComment;
 
@@ -143,5 +139,25 @@ public class PhotoUploadActivity extends ActionBarActivity {
             }
         });
         photoComment = (EditText) findViewById(R.id.photoupload_commenttext);
+        ImageButton backButton = (ImageButton) findViewById(R.id.photoupload_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+    public static void clearBitmap() {
+        if (pictureTaken != null) {
+            pictureTaken.recycle();
+            pictureTaken = null;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        clearBitmap();
+        super.onBackPressed();
     }
 }

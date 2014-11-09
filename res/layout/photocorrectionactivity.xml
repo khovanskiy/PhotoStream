@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                        android:layout_width="match_parent" android:layout_height="match_parent"
-                                        android:orientation="vertical" android:baselineAligned="false"
-                                        android:background="@android:color/black">
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:baselineAligned="false"
+                                        android:background="@android:color/black"
+                                        android:id="@+id/photocorrecting_relative">
 
     <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/photocorrecting_image" android:layout_centerVertical="true"/>
+            android:id="@+id/photocorrecting_image"
+            android:layout_centerVertical="true"/>
     <TabHost
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:id="@+id/tabHost" android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content"
+            android:id="@+id/tabHost"
+            android:layout_alignParentBottom="true">
         <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -19,7 +25,8 @@
             <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/tabbackgroundselector">
             </TabWidget>
             <FrameLayout
                     android:id="@android:id/tabcontent"
@@ -27,13 +34,16 @@
                     android:layout_height="wrap_content" android:background="#80000000">
                 <FrameLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" android:id="@+id/photocorrecting_filters_tab"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/photocorrecting_filters_tab"
                         android:layout_gravity="center_horizontal">
                     <HorizontalScrollView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:id="@+id/photocorrecting_filters_scrollview">
+                            android:id="@+id/photocorrecting_filters_scrollview"
+                            android:scrollbarSize="2dp"
+                            android:fillViewport="true">
                         <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="fill_parent"
@@ -85,7 +95,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:id="@+id/photocorrecting_settings_scrollview">
+                            android:id="@+id/photocorrecting_settings_scrollview"
+                            android:scrollbarSize="2dp"
+                            android:fillViewport="true">
                         <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="fill_parent"
@@ -158,4 +170,38 @@
             </FrameLayout>
         </LinearLayout>
     </TabHost>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="false" android:layout_marginLeft="0dp" android:layout_marginBottom="0dp"
+            android:layout_alignParentTop="true" android:background="#cc000000">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/photocorrecting_back" android:layout_gravity="left" android:src="@drawable/_0003_back"
+                android:background="@color/transparent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Editing"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:fontFamily="sans-serif"
+                android:layout_gravity="center_vertical|left"/>
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/photocorrecting_upload"
+                android:layout_gravity="center_vertical|right"
+                android:background="@color/transparent"
+                android:src="@drawable/_0001_accept"
+                android:layout_marginRight="8dp"/>
+    </LinearLayout>
+
 </RelativeLayout>

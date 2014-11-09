@@ -1,20 +1,16 @@
 package ru.example.PhotoStream.Activities;
 
-import android.content.pm.ActivityInfo;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Layout;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.*;
-import org.w3c.dom.Text;
 import ru.example.PhotoStream.Camera.Filters.IncMultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilterFactory;
 import ru.example.PhotoStream.Camera.RawBitmap;
+import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.ArrayList;
@@ -30,22 +26,29 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         moveBack = b;
     }
 
+    public static void clearBitmap() {
+        if (image != null) {
+            image.recycle();
+            image = null;
+        }
+    }
+
     public static void setBitmap(Bitmap bitmap) {
         image = bitmap;
     }
 
     private ImageView imageView;
-    private TabHost tabHost;
     private FrameLayout filtersFrame, settingsFrame;
+    private Context context;
 
     private List<View> filterBadges = new ArrayList<>();
 
-    private IncMultiFilter generalFilter;
+    private static IncMultiFilter generalFilter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        context = this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.photocorrectionactivity);
@@ -53,15 +56,17 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         generalFilter = new IncMultiFilter(this, image);
         generalFilter.setOnImageChangedListener(this);
         generalFilter.setOnImageChangingListener(this);
-        generalFilter.getPhotoFilterHandler().setStrength(0);
-        tabHost = (TabHost) findViewById(R.id.tabHost);
+        generalFilter.getPhotoFilterHandler().discardChanges();
+        final TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
+        tabHost.getTabWidget().setShowDividers(TabWidget.SHOW_DIVIDER_MIDDLE);
+        tabHost.getTabWidget().setDividerDrawable(R.drawable.photocorrection_tab_divider);
         TabHost.TabSpec tabSpec = tabHost.newTabSpec("filters");
-        tabSpec.setIndicator(getString(R.string.ImageFilters));
+        tabSpec.setIndicator(createTabView(this, getString(R.string.ImageFilters)));
         tabSpec.setContent(R.id.photocorrecting_filters_tab);
         tabHost.addTab(tabSpec);
         tabSpec = tabHost.newTabSpec("settings");
-        tabSpec.setIndicator(getString(R.string.Settings));
+        tabSpec.setIndicator(createTabView(this, getString(R.string.Settings)));
         tabSpec.setContent(R.id.photocorrecting_settings_tab);
         tabHost.addTab(tabSpec);
         filtersFrame = (FrameLayout) findViewById(R.id.photocorrecting_filters_tab);
@@ -70,8 +75,10 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
         LinearLayout layout = (LinearLayout) findViewById(R.id.photocorrecting_filters_layout);
         LayoutInflater inflater = getLayoutInflater();
+        TunablePhotoFilterFactory.FilterType initFilterType = generalFilter.getPhotoFilterType();
         for (final TunablePhotoFilterFactory.FilterType filterType: TunablePhotoFilterFactory.FilterType.values()) {
             View view = inflater.inflate(R.layout.filterbadgeview, layout, false);
+            view.setSelected(filterType == initFilterType);
             ImageView badgeImage = (ImageView) view.findViewById(R.id.filterbadgeview_image);
             badgeImage.setImageResource(filterType.getIconResource());
             TextView badgeTitle = (TextView) view.findViewById(R.id.filterbadgeview_label);
@@ -86,10 +93,10 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             });
         }
         layout = (LinearLayout) findViewById(R.id.photocorrecting_settings_layout);
-        View rotationBadge = inflater.inflate(R.layout.filterbadgeview, layout, false);
-        ImageView rotationBadgeView = (ImageView) rotationBadge.findViewById(R.id.filterbadgeview_image);
+        View rotationBadge = inflater.inflate(R.layout.settingbagdeview, layout, false);
+        ImageView rotationBadgeView = (ImageView) rotationBadge.findViewById(R.id.settingbadgeview_image);
         rotationBadgeView.setImageResource(R.drawable._0009_f_rotates);
-        TextView rotationLabel = (TextView) rotationBadge.findViewById(R.id.filterbadgeview_label);
+        TextView rotationLabel = (TextView) rotationBadge.findViewById(R.id.settingbadgeview_label);
         rotationLabel.setText(getString(R.string.Rotation));
         layout.addView(rotationBadge);
         rotationBadge.setOnClickListener(new View.OnClickListener() {
@@ -99,10 +106,10 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             }
         });
         for (final TunablePhotoFilterFactory.SettingsFilterType filterType: TunablePhotoFilterFactory.SettingsFilterType.values()) {
-            View view = inflater.inflate(R.layout.filterbadgeview, layout, false);
-            ImageView badgeImage = (ImageView) view.findViewById(R.id.filterbadgeview_image);
+            View view = inflater.inflate(R.layout.settingbagdeview, layout, false);
+            ImageView badgeImage = (ImageView) view.findViewById(R.id.settingbadgeview_image);
             badgeImage.setImageResource(filterType.getIconResource());
-            TextView badgeTitle = (TextView) view.findViewById(R.id.filterbadgeview_label);
+            TextView badgeTitle = (TextView) view.findViewById(R.id.settingbadgeview_label);
             badgeTitle.setText(filterType.toString(this));
             layout.addView(view);
             view.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +119,29 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
                 }
             });
         }
+        ImageButton backButton = (ImageButton) findViewById(R.id.photocorrecting_back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        ImageButton uploadButton = (ImageButton) findViewById(R.id.photocorrecting_upload);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhotoUploadActivity.setPicture(generalFilter.getFilteredImage());
+                Intent intent = new Intent(context, PhotoUploadActivity.class);
+                startActivity(intent);
+            }
+        });
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                rollChangesBack();
+            }
+        });
+
     }
 
     private void switchFilterFrame(View v) {
@@ -279,6 +309,19 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             moveBack = false;
             onBackPressed();
         }
+        if (generalFilter != null) {
+            generalFilter.setOnImageChangedListener(this);
+            generalFilter.setOnImageChangingListener(this);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (generalFilter != null) {
+            generalFilter.setOnImageChangedListener(null);
+            generalFilter.setOnImageChangingListener(null);
+        }
     }
 
     @Override
@@ -295,5 +338,48 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
     @Override
     public void onImageChanging() {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!rollChangesBack()) {
+            imageView.setVisibility(View.GONE);
+            imageView.setImageResource(R.drawable._0000_close);
+            clearBitmap();
+            generalFilter.setOnImageChangingListener(null);
+            generalFilter.setOnImageChangingListener(null);
+            generalFilter.recycle();
+            generalFilter = null;
+            super.onBackPressed();
+        }
+    }
+
+    private boolean rollChangesBack() {
+        ImageButton filterDiscard = (ImageButton) findViewById(R.id.photocorrecting_filters_discard);
+        if (findViewById(R.id.photocorrecting_filters_editing).getVisibility() == View.VISIBLE) {
+            filterDiscard.performClick();
+            switchFilterFrame(findViewById(R.id.photocorrecting_filters_scrollview));
+            return true;
+        }
+        ImageButton settingDiscard = (ImageButton) findViewById(R.id.photocorrecting_settings_discard);
+        if (findViewById(R.id.photocorrecting_settings_editing).getVisibility() == View.VISIBLE) {
+            settingDiscard.performClick();
+            switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
+            return true;
+        }
+        ImageButton rotationDiscard = (ImageButton) findViewById(R.id.photocorrecting_rotation_discard);
+        if (findViewById(R.id.photocorrecting_rotation_editing).getVisibility() == View.VISIBLE) {
+            rotationDiscard.performClick();
+            switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
+            return true;
+        }
+        return false;
+    }
+
+    private static View createTabView(final Context context, final String text) {
+        View view = LayoutInflater.from(context).inflate(R.layout.photocorrecting_tab, null);
+        TextView tv = (TextView) view.findViewById(R.id.photocorrecting_tab_text);
+        tv.setText(text);
+        return view;
     }
 }

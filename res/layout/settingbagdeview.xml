@@ -7,22 +7,16 @@
               android:layout_marginLeft="6dp"
               android:layout_marginTop="5dp"
               android:layout_marginRight="6dp"
-              android:layout_marginBottom="4dp">
-
+              android:layout_marginBottom="6dp">
     <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:id="@+id/filterbadgeview_image"
+            android:id="@+id/settingbadgeview_image"
             android:clickable="false"/>
-    <ImageView
-            android:layout_width="60dp"
-            android:layout_height="2dp"
-            android:background="@drawable/filterbadgeselector"
-            />
     <TextView
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/filterbadgeview_label"
+            android:id="@+id/settingbadgeview_label"
             android:clickable="false"
             android:textColor="@android:color/white"
             android:singleLine="true"

@@ -48,14 +48,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5ab1b2dd-7584-4270-8213-6289beaf087e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/SurfaceGridView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/anim/rotateleft.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/anim/rotateright.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/PortraitLandscapeListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/filterbadgeselector.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/photocorrecting_tab.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/photocorrection_tab_divider.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/settingbagdeview.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/tabbackgroundselector.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/tabtextselector.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/drawable/uploadbuttonbackground.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IncMultiFilter.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IncMultiFilter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/badgeview.xml" afterPath="$PROJECT_DIR$/res/layout/badgeview.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/feeds_activity_actions.xml" afterPath="$PROJECT_DIR$/res/menu/feeds_activity_actions.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/phototakeractivity.xml" afterPath="$PROJECT_DIR$/res/layout/phototakeractivity.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoUploadActivity.java" afterPath="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoUploadActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/colors.xml" afterPath="$PROJECT_DIR$/res/values/colors.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/filterbadgeview.xml" afterPath="$PROJECT_DIR$/res/layout/filterbadgeview.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/photocorrectionactivity.xml" afterPath="$PROJECT_DIR$/res/layout/photocorrectionactivity.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/photouploadactivity.xml" afterPath="$PROJECT_DIR$/res/layout/photouploadactivity.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/themes.xml" afterPath="$PROJECT_DIR$/res/values/themes.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -80,65 +90,93 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="phototakeractivity.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/res/layout/phototakeractivity.xml">
-          <provider selected="true" editor-type-id="android-designer">
-            <state />
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="1598">
-              <caret line="76" column="43" selection-start-line="76" selection-start-column="43" selection-end-line="76" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SurfaceGridView.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/SurfaceGridView.java">
+      <file leaf-file-name="PhotoCorrectionActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21731123" vertical-offset="409" max-vertical-offset="1156">
-              <caret line="31" column="56" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="6579">
+              <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#460#461#0" expanded="true" />
-                <element signature="e#490#491#0" expanded="true" />
-                <element signature="e#571#572#0" expanded="true" />
-                <element signature="e#618#619#0" expanded="true" />
-                <element signature="e#685#686#0" expanded="true" />
-                <element signature="e#722#723#0" expanded="true" />
+                <element signature="e#2363#2395#0" expanded="true" />
+                <element signature="e#2593#2621#0" expanded="true" />
+                <element signature="e#3991#4173#0" expanded="true" />
+                <element signature="e#4158#4159#0" expanded="true" />
+                <element signature="e#4669#4697#0" expanded="true" />
+                <element signature="e#4780#4932#0" expanded="true" />
+                <element signature="e#4921#4922#0" expanded="true" />
+                <element signature="e#5540#5724#0" expanded="true" />
+                <element signature="e#5709#5710#0" expanded="true" />
+                <element signature="e#5863#6012#0" expanded="true" />
+                <element signature="e#6001#6002#0" expanded="true" />
+                <element signature="e#6147#6464#0" expanded="true" />
+                <element signature="e#6453#6454#0" expanded="true" />
+                <element signature="e#6507#6676#0" expanded="true" />
+                <element signature="e#6665#6666#0" expanded="true" />
+                <element signature="e#8947#9223#0" expanded="true" />
+                <element signature="e#9208#9209#0" expanded="true" />
+                <element signature="e#9377#9655#0" expanded="true" />
+                <element signature="e#9640#9641#0" expanded="true" />
+                <element signature="e#11153#11408#0" expanded="true" />
+                <element signature="e#11397#11398#0" expanded="true" />
+                <element signature="e#11555#11812#0" expanded="true" />
+                <element signature="e#11801#11802#0" expanded="true" />
+                <element signature="e#12181#12405#0" expanded="true" />
+                <element signature="e#12394#12395#0" expanded="true" />
+                <element signature="e#12546#12763#0" expanded="true" />
+                <element signature="e#12752#12753#0" expanded="true" />
+                <element signature="e#12905#13123#0" expanded="true" />
+                <element signature="e#13112#13113#0" expanded="true" />
+                <element signature="e#13271#13491#0" expanded="true" />
+                <element signature="e#13480#13481#0" expanded="true" />
+                <element signature="e#13634#13884#0" expanded="true" />
+                <element signature="e#13873#13874#0" expanded="true" />
+                <element signature="e#14033#14292#0" expanded="true" />
+                <element signature="e#14281#14282#0" expanded="true" />
+                <element signature="e#15109#15253#0" expanded="true" />
+                <element signature="e#15242#15243#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotoTakerActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java">
+      <file leaf-file-name="photocorrection_tab_divider.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/drawable/photocorrection_tab_divider.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="6140" max-vertical-offset="6749">
-              <caret line="307" column="24" selection-start-line="307" selection-start-column="24" selection-end-line="307" selection-end-column="24" />
-              <folding>
-                <element signature="e#15215#15216#0" expanded="true" />
-                <element signature="e#15269#15270#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1054">
-              <caret line="46" column="93" selection-start-line="46" selection-start-column="93" selection-end-line="46" selection-end-column="93" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
+              <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SmartImage.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/SmartImage.java">
+      <file leaf-file-name="colors.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/colors.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2397" max-vertical-offset="4148">
-              <caret line="194" column="12" selection-start-line="181" selection-start-column="4" selection-end-line="194" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+              <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="uploadbuttonbackground.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/drawable/uploadbuttonbackground.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+              <caret line="7" column="40" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="photocorrecting_tab.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/layout/photocorrecting_tab.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.67523366" vertical-offset="0" max-vertical-offset="442">
+              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -157,36 +195,13 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/LineFeed.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Feed.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/IEventHadler.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/IEventHandler.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Event.java" />
-        <option value="$PROJECT_DIR$/res/layout/streamactivity.xml" />
-        <option value="$PROJECT_DIR$/res/menu/stream_activity_actions.xml" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/StreamActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoFilteringActivity.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/WhiteBalanceFactory.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/SaturationFilter.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/FilterDescription.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/ColorMatrixPhotoFilter.java" />
-        <option value="$PROJECT_DIR$/photoView/src/uk/co/senab/photoview/gestures/CupcakeGestureDetector.java" />
-        <option value="$PROJECT_DIR$/photoView/src/HackyViewPager.java" />
-        <option value="$PROJECT_DIR$/res/layout/photoactivity.xml" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/MultiFilter.java" />
-        <option value="$PROJECT_DIR$/res/layout/photocorrectionactivity.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/VignetteFilter.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilterFactory.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IncMultiFilter.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/res/color/white.xml" />
-        <option value="$PROJECT_DIR$/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Console.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumHolder.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/MultiTask.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/User.java" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoUploadActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/VideoUploadActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java" />
         <option value="$PROJECT_DIR$/res/anim/fade_in.xml" />
@@ -201,13 +216,36 @@
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/badgeview.xml" />
         <option value="$PROJECT_DIR$/res/menu/feeds_activity_actions.xml" />
-        <option value="$PROJECT_DIR$/res/values/themes.xml" />
         <option value="$PROJECT_DIR$/res/anim/rotateright.xml" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/res/anim/rotateleft.xml" />
         <option value="$PROJECT_DIR$/res/layout/phototakeractivity.xml" />
-        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java" />
         <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/SurfaceGridView.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/PortraitLandcapeListener.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/PortraitLandscapeListener.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/TabHost.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/HackyTabHost.java" />
+        <option value="$PROJECT_DIR$/res/anim/layout_rotation.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/HackyLinearLayout.java" />
+        <option value="$PROJECT_DIR$/res/drawable/filterbadgeselector.xml" />
+        <option value="$PROJECT_DIR$/res/layout/filterbadgeview.xml" />
+        <option value="$PROJECT_DIR$/res/layout/settingbagdeview.xml" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/res/drawable/uploadbuttonshape.xml" />
+        <option value="$PROJECT_DIR$/res/drawable/uploadbuttonbackground.xml" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IncMultiFilter.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoUploadActivity.java" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/photouploadactivity.xml" />
+        <option value="$PROJECT_DIR$/res/drawable/tabbackgroundselector.xml" />
+        <option value="$PROJECT_DIR$/res/drawable/tabtextselector.xml" />
+        <option value="$PROJECT_DIR$/res/layout/photocorrectionactivity.xml" />
+        <option value="$PROJECT_DIR$/res/layout/photocorrection_tab.xml" />
+        <option value="$PROJECT_DIR$/res/values/themes.xml" />
+        <option value="$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java" />
+        <option value="$PROJECT_DIR$/res/drawable/photocorrection_tab_divider.xml" />
+        <option value="$PROJECT_DIR$/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/res/layout/photocorrecting_tab.xml" />
       </list>
     </option>
   </component>
@@ -262,7 +300,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -334,6 +371,60 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PhotoStream" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -381,6 +472,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -400,8 +492,8 @@
     <property name="FullScreen" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="419" />
-    <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="166" />
+    <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="326" />
+    <property name="UI_DESIGNER_EDITOR_MODE.PaletteToolWindowManager.WIDTH" value="228" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -451,19 +543,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -489,6 +568,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -593,34 +685,34 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17130308" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20790629" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47692308" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47230768" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25076923" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12153846" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22153845" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29648608" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3246154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16615385" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16153847" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.13692307" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -628,13 +720,13 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962137" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29648608" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3246154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3246154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -647,8 +739,8 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25076923" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0046153846" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -672,13 +764,13 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java</url>
-          <line>108</line>
+          <url>file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java</url>
+          <line>49</line>
           <properties />
-          <option name="timeStamp" value="61" />
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="62" />
+      <option name="time" value="79" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -686,185 +778,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/photoView/src/uk/co/senab/photoview/gestures/EclairGestureDetector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.120983" vertical-offset="695" max-vertical-offset="1224">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/photoView/src/uk/co/senab/photoview/HackyViewPager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
-          <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/android-support-v4.jar!/android/support/v4/app/Fragment.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4103" max-vertical-offset="4624">
-          <caret line="248" column="9" selection-start-line="248" selection-start-column="9" selection-end-line="248" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/filterbadgeview.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="408">
-          <caret line="9" column="51" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/photocorrectionactivity.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="139" max-vertical-offset="1139">
-          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/VignetteFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/TunablePhotoFilterFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6220" max-vertical-offset="10982">
-          <caret line="571" column="20" selection-start-line="571" selection-start-column="20" selection-end-line="571" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3763" max-vertical-offset="4352">
-          <caret line="291" column="11" selection-start-line="291" selection-start-column="11" selection-end-line="291" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IncMultiFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3576" max-vertical-offset="6902">
-          <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-hdpi/ic_action_new_picture.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-hdpi/ic_action_camera.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/drawable-hdpi/actionbar_logo.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/stream_activity_actions.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1887">
-          <caret line="102" column="53" selection-start-line="102" selection-start-column="53" selection-end-line="102" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13934426" vertical-offset="0" max-vertical-offset="366">
-          <caret line="3" column="51" selection-start-line="3" selection-start-column="51" selection-end-line="3" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/AlbumHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="699" max-vertical-offset="1292">
-          <caret line="66" column="18" selection-start-line="66" selection-start-column="18" selection-end-line="66" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/MultiTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="195" max-vertical-offset="561">
-          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2116" max-vertical-offset="2482">
-          <caret line="149" column="10" selection-start-line="149" selection-start-column="10" selection-end-line="149" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoUploadActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="184" max-vertical-offset="1938">
-          <caret line="52" column="18" selection-start-line="52" selection-start-column="18" selection-end-line="52" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Fragments/StreamFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1209" max-vertical-offset="2941">
-          <caret line="99" column="14" selection-start-line="99" selection-start-column="14" selection-end-line="99" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Console.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="578">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Tasks/GetGroupsTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="64" max-vertical-offset="867">
-          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Учеба/2 курс/Семестр 3/Курс мобильной разработки/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-19/com/android/internal/os/ZygoteInit.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13073">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/VideoUploadActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="677" max-vertical-offset="2550">
-          <caret line="78" column="18" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/PhotoShifter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="900" max-vertical-offset="1496">
-          <caret line="80" column="9" selection-start-line="80" selection-start-column="9" selection-end-line="80" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/EventDispatcher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="1292">
@@ -929,7 +842,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2193" max-vertical-offset="3196">
           <caret line="146" column="27" selection-start-line="146" selection-start-column="27" selection-end-line="146" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -944,35 +856,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/FeedsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1621" max-vertical-offset="4981">
-          <caret line="132" column="76" selection-start-line="132" selection-start-column="76" selection-end-line="132" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/menu/feeds_activity_actions.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
-          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/themes.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="271" max-vertical-offset="1088">
-          <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4010067" vertical-offset="968" max-vertical-offset="1564">
           <caret line="91" column="19" selection-start-line="91" selection-start-column="19" selection-end-line="91" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -991,7 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
           <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -999,7 +885,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="238">
           <caret line="5" column="38" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1007,7 +892,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
           <caret line="7" column="31" selection-start-line="7" selection-start-column="31" selection-end-line="7" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1015,7 +899,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
           <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1023,7 +906,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2397" max-vertical-offset="4148">
           <caret line="194" column="12" selection-start-line="181" selection-start-column="4" selection-end-line="194" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1034,22 +916,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6749522" vertical-offset="72" max-vertical-offset="646">
           <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="441" max-vertical-offset="1054">
-          <caret line="46" column="93" selection-start-line="46" selection-start-column="93" selection-end-line="46" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Учеба/2 курс/Семестр 3/Курс мобильной разработки/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-16/android/app/ActivityThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18461539" vertical-offset="35043" max-vertical-offset="77826">
-          <caret line="2242" column="0" selection-start-line="2242" selection-start-column="0" selection-end-line="2242" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1065,30 +931,305 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java">
+    <entry file="jar://$PROJECT_DIR$/libs/android-support-v7-appcompat.jar!/android/support/v7/app/ActionBarActivity.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6140" max-vertical-offset="6749">
-          <caret line="307" column="24" selection-start-line="307" selection-start-column="24" selection-end-line="307" selection-end-column="24" />
-          <folding>
-            <element signature="e#15215#15216#0" expanded="true" />
-            <element signature="e#15269#15270#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.17634855" vertical-offset="0" max-vertical-offset="1717">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/FeedsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3866" max-vertical-offset="5338">
+          <caret line="267" column="21" selection-start-line="267" selection-start-column="5" selection-end-line="267" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/menu/stream_activity_actions.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <caret line="5" column="28" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/menu/feeds_activity_actions.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2107438" vertical-offset="0" max-vertical-offset="484">
+          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/PortraitLandscapeListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.6673077" vertical-offset="170" max-vertical-offset="1292">
+          <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/SurfaceGridView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21731123" vertical-offset="409" max-vertical-offset="1156">
+        <state vertical-scroll-proportion="0.02946593" vertical-offset="409" max-vertical-offset="1054">
           <caret line="31" column="56" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="543">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="680">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Учеба/2 курс/Семестр 3/Курс мобильной разработки/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-19/android/view/View.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="169131" max-vertical-offset="322830">
+          <caret line="10300" column="0" selection-start-line="10300" selection-start-column="0" selection-end-line="10300" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Group.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2499">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Учеба/2 курс/Семестр 3/Курс мобильной разработки/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-19/com/android/internal/os/ZygoteInit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13073">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/filterbadgeselector.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14049587" vertical-offset="0" max-vertical-offset="484">
+          <caret line="4" column="72" selection-start-line="4" selection-start-column="72" selection-end-line="4" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/settingbagdeview.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6666665" vertical-offset="0" max-vertical-offset="544">
+          <caret line="9" column="48" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1452" max-vertical-offset="1938">
+          <caret line="96" column="54" selection-start-line="96" selection-start-column="54" selection-end-line="96" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="519" max-vertical-offset="1003">
+          <caret line="49" column="64" selection-start-line="49" selection-start-column="64" selection-end-line="49" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Algorithms.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2499">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoUploadActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1705" max-vertical-offset="2176">
+          <caret line="109" column="45" selection-start-line="109" selection-start-column="45" selection-end-line="109" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Camera/Filters/IncMultiFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6244" max-vertical-offset="7089">
+          <caret line="403" column="20" selection-start-line="403" selection-start-column="20" selection-end-line="403" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoTakerActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4086" max-vertical-offset="5933">
+          <caret line="284" column="29" selection-start-line="284" selection-start-column="29" selection-end-line="284" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/photouploadactivity.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4955157" vertical-offset="102" max-vertical-offset="1139">
+          <caret line="19" column="78" selection-start-line="19" selection-start-column="69" selection-end-line="19" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Учеба/2 курс/Семестр 3/Курс мобильной разработки/android-sdk_r22.0.5-windows/android-sdk-windows/sources/android-16/android/app/ActivityThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327338" vertical-offset="34954" max-vertical-offset="77826">
+          <caret line="2242" column="0" selection-start-line="2242" selection-start-column="0" selection-end-line="2242" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/login_breen_btn_n.9.png">
+      <provider editor-type-id="images">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="ninepatcheditor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/filterbadgeview.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6666665" vertical-offset="0" max-vertical-offset="646">
+          <caret line="9" column="47" selection-start-line="9" selection-start-column="47" selection-end-line="9" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/photocorrectionactivity.xml">
+      <provider selected="true" editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="260" max-vertical-offset="3621">
+          <caret line="23" column="57" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/tabtextselector.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <caret line="3" column="55" selection-start-line="3" selection-start-column="55" selection-end-line="3" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/themes.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="650" max-vertical-offset="1105">
+          <caret line="56" column="52" selection-start-line="56" selection-start-column="52" selection-end-line="56" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/tabbackgroundselector.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="374">
+          <caret line="14" column="46" selection-start-line="14" selection-start-column="46" selection-end-line="14" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ru/example/PhotoStream/Activities/PhotoCorrectionActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="6579">
+          <caret line="69" column="31" selection-start-line="69" selection-start-column="31" selection-end-line="69" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#460#461#0" expanded="true" />
-            <element signature="e#490#491#0" expanded="true" />
-            <element signature="e#571#572#0" expanded="true" />
-            <element signature="e#618#619#0" expanded="true" />
-            <element signature="e#685#686#0" expanded="true" />
-            <element signature="e#722#723#0" expanded="true" />
+            <element signature="e#2363#2395#0" expanded="true" />
+            <element signature="e#2593#2621#0" expanded="true" />
+            <element signature="e#3991#4173#0" expanded="true" />
+            <element signature="e#4158#4159#0" expanded="true" />
+            <element signature="e#4669#4697#0" expanded="true" />
+            <element signature="e#4780#4932#0" expanded="true" />
+            <element signature="e#4921#4922#0" expanded="true" />
+            <element signature="e#5540#5724#0" expanded="true" />
+            <element signature="e#5709#5710#0" expanded="true" />
+            <element signature="e#5863#6012#0" expanded="true" />
+            <element signature="e#6001#6002#0" expanded="true" />
+            <element signature="e#6147#6464#0" expanded="true" />
+            <element signature="e#6453#6454#0" expanded="true" />
+            <element signature="e#6507#6676#0" expanded="true" />
+            <element signature="e#6665#6666#0" expanded="true" />
+            <element signature="e#8947#9223#0" expanded="true" />
+            <element signature="e#9208#9209#0" expanded="true" />
+            <element signature="e#9377#9655#0" expanded="true" />
+            <element signature="e#9640#9641#0" expanded="true" />
+            <element signature="e#11153#11408#0" expanded="true" />
+            <element signature="e#11397#11398#0" expanded="true" />
+            <element signature="e#11555#11812#0" expanded="true" />
+            <element signature="e#11801#11802#0" expanded="true" />
+            <element signature="e#12181#12405#0" expanded="true" />
+            <element signature="e#12394#12395#0" expanded="true" />
+            <element signature="e#12546#12763#0" expanded="true" />
+            <element signature="e#12752#12753#0" expanded="true" />
+            <element signature="e#12905#13123#0" expanded="true" />
+            <element signature="e#13112#13113#0" expanded="true" />
+            <element signature="e#13271#13491#0" expanded="true" />
+            <element signature="e#13480#13481#0" expanded="true" />
+            <element signature="e#13634#13884#0" expanded="true" />
+            <element signature="e#13873#13874#0" expanded="true" />
+            <element signature="e#14033#14292#0" expanded="true" />
+            <element signature="e#14281#14282#0" expanded="true" />
+            <element signature="e#15109#15253#0" expanded="true" />
+            <element signature="e#15242#15243#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/photocorrection_tab_divider.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="187">
+          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/drawable/uploadbuttonbackground.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+          <caret line="7" column="40" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/photocorrecting_tab.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67523366" vertical-offset="0" max-vertical-offset="442">
+          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>

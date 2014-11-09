@@ -46,11 +46,8 @@
                   android:screenOrientation="landscape"
                   android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"/>
         <activity android:name="ru.example.PhotoStream.Activities.PhotoCorrectionActivity"
-                  android:screenOrientation="landscape"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".Activities.PhotoUploadActivity"
-                  android:screenOrientation="landscape"
-                  android:configChanges="keyboardHidden|orientation|screenSize"/>
+                  android:label="@string/Editing"/>
+        <activity android:name=".Activities.PhotoUploadActivity"/>
         <activity android:name=".Activities.VideoUploadActivity"/>
     </application>
 </manifest>

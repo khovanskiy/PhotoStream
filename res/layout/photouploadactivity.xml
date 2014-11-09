@@ -1,10 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
-    <FrameLayout android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="8"
-                 android:background="@android:color/background_dark">
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="8"
+                 android:background="@android:color/background_dark" android:layout_alignParentLeft="true"
+                 android:layout_marginLeft="0dp" android:layout_alignParentTop="true" android:layout_marginTop="0dp">
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -14,17 +15,48 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:id="@+id/photoupload_commenttext" android:textColor="@android:color/black" android:hint="@string/AddComment"
-                android:layout_weight="1" android:layout_gravity="center"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/uploadToAlbum"
-            android:id="@+id/photoupload_upload" android:layout_gravity="center"
-            style="@style/LoginButton"/>
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="false" android:layout_marginLeft="0dp" android:layout_marginBottom="0dp"
+            android:layout_alignParentTop="true" android:background="#cc000000"
+            android:id="@+id/photoupload_header">
+        <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/photoupload_back" android:layout_gravity="left" android:src="@drawable/_0003_back"
+                android:background="@color/transparent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Description"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:fontFamily="sans-serif"
+                android:layout_gravity="center_vertical|left"/>
     </LinearLayout>
-</LinearLayout>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/photoupload_header"
+            android:background="#b3000000" android:visibility="visible"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/photoupload_commenttext" android:textColor="@android:color/white" android:hint="@string/AddComment"
+            android:layout_weight="1" android:layout_gravity="center" android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/photoupload_upload"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/uploadbuttonbackground"
+        android:layout_marginBottom="20dp"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:fontFamily="sans-serif"
+        android:text="@string/UploadPhoto"
+        android:textColor="@color/white" android:layout_centerHorizontal="true" android:paddingLeft="50dp"
+        android:paddingTop="10dp" android:paddingRight="50dp" android:paddingBottom="10dp"/>
+</RelativeLayout>

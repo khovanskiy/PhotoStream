@@ -2,4 +2,15 @@
 <resources>
     <item name="white" type="color">#FFFFFF</item>
     <item name="transparent" type="color">#00000000</item>
+    <item name="special1" type="color">#33b5e5</item>
+    <item name="grey1" type="color">#b3000000</item>
+    <item name="grey2" type="color">#cc000000</item>
+    <item name="grey3" type="color">#33FFFFFF</item>
+    <item name="grey_text" type="color">#AAA</item>
+    <drawable name="white_d">#FFF</drawable>
+    <drawable name="transparent_d">#00000000</drawable>
+    <drawable name="special1_d">#33b5e5</drawable>
+    <drawable name="grey1_d">#b3000000</drawable>
+    <drawable name="grey2_d" >#cc000000</drawable>
+    <drawable name="grey_text_d">#AAA</drawable>
 </resources>
