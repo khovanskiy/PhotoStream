@@ -96,20 +96,12 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     private Odnoklassniki api;
     private ArrayAdapter<AlbumsOwner> feedsAdapter;
     private static List<AlbumsOwner> albumsOwners;
-    private Map<AlbumsOwner, Photo> photos;
+    private ConcurrentHashMap<AlbumsOwner, Photo> photos;
     private static Map<AlbumsOwner, Feed> feeds;
     private static Map<AlbumsOwner, PhotoShifter> photoShifters;
     private static Map<AlbumsOwner, IEventHandler> listeners;
     private GridView feedsGrid;
     private int targetSize;
-
-    private synchronized Photo getAlbumsOwnerPhoto(AlbumsOwner albumsOwner) {
-        return photos.get(albumsOwner);
-    }
-
-    private synchronized void setAlbumsOwnerPhoto(AlbumsOwner albumsOwner, Photo photo) {
-        photos.put(albumsOwner, photo);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +109,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         lockOrientation();
         setContentView(R.layout.feedsactivity);
         api = Odnoklassniki.getInstance(this);
-        photos = new HashMap<>();
+        photos = new ConcurrentHashMap<>();
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -134,7 +126,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 }
                 View view = existingViews.get(position);
                 SmartImage image = (SmartImage) view.findViewById(R.id.badgeview_image);
-                Photo photo = getAlbumsOwnerPhoto(owner);
+                Photo photo = photos.get(owner);
                 if (photo != null && photo.hasAnySize()) {
                     image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
                 }
@@ -175,7 +167,12 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                                     Future<List<Album>> future = (Future<List<Album>>) data.get(albumsOwner);
                                     try {
                                         List<Album> albums = future.get();
-                                        Feed feed = new LineFeed(api);
+                                        Feed feed;
+                                        if (albumsOwner instanceof Group) {
+                                            feed = new LineFeed(api);
+                                        } else {
+                                            feed = new SortedFilteredFeed(api);
+                                        }
                                         feeds.put(albumsOwner, feed);
                                         feed.addAll(albums);
                                         PhotoShifter photoShifter = new PhotoShifter(feed);
@@ -184,7 +181,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                                             @Override
                                             public void handleEvent(Event e) {
                                                 Photo photo = (Photo)e.data.get("photo");
-                                                setAlbumsOwnerPhoto(albumsOwner, photo);
+                                                photos.put(albumsOwner, photo);
                                                 FeedsActivity.this.runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
@@ -202,7 +199,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                             }
                         };
                         for (AlbumsOwner albumsOwner: albumsOwners) {
-                            setAlbumsOwnerPhoto(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
+                            photos.put(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
                             albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
                         }
                         albumLoader.execute();
@@ -226,7 +223,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                     @Override
                     public void handleEvent(Event e) {
                         Photo photo = (Photo)e.data.get("photo");
-                        setAlbumsOwnerPhoto(albumsOwner, photo);
+                        photos.put(albumsOwner, photo);
                         FeedsActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

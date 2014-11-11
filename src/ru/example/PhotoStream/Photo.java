@@ -201,7 +201,7 @@ public class Photo {
         if (sizes.size() == 0) {
             return null;
         }
-        /*int j = 0;
+        int j = 0;
         long maxPoints = sizes.get(0).getWidth() * sizes.get(0).getHeight();
         for (int i = 1; i < sizes.size(); ++i) {
             long currentPoints = sizes.get(i).getWidth() * sizes.get(i).getHeight();
@@ -209,9 +209,9 @@ public class Photo {
                 j = i;
                 maxPoints = currentPoints;
             }
-        }
-        return sizes.get(j);*/
-        return sizes.get(sizes.size() - 1);
+        }/**/
+        return sizes.get(j);
+        //return sizes.get(sizes.size() - 1);
     }
 
     public boolean hasAnySize() {

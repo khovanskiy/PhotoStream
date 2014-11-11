@@ -53,7 +53,9 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.photocorrectionactivity);
         imageView = (ImageView) findViewById(R.id.photocorrecting_image);
-        generalFilter = new IncMultiFilter(this, image);
+        if (generalFilter == null) {
+            generalFilter = new IncMultiFilter(this, image);
+        }
         generalFilter.setOnImageChangedListener(this);
         generalFilter.setOnImageChangingListener(this);
         generalFilter.getPhotoFilterHandler().discardChanges();
@@ -124,15 +126,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-        ImageButton uploadButton = (ImageButton) findViewById(R.id.photocorrecting_upload);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PhotoUploadActivity.setPicture(generalFilter.getFilteredImage());
-                Intent intent = new Intent(context, PhotoUploadActivity.class);
-                startActivity(intent);
             }
         });
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -305,6 +298,19 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
     @Override
     public void onResume() {
         super.onResume();
+        ImageButton uploadButton = (ImageButton) findViewById(R.id.photocorrecting_upload);
+        uploadButton.setOnClickListener(new View.OnClickListener() {
+            private boolean clicked = false;
+            @Override
+            public synchronized void onClick(View v) {
+                if (!clicked) {
+                    clicked = true;
+                    PhotoUploadActivity.setPicture(generalFilter.getFilteredImage());
+                    Intent intent = new Intent(context, PhotoUploadActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
         if (moveBack) {
             moveBack = false;
             onBackPressed();
@@ -341,7 +347,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
     }
 
     @Override
-    public void onBackPressed() {
+    public synchronized void onBackPressed() {
         if (!rollChangesBack()) {
             imageView.setVisibility(View.GONE);
             imageView.setImageResource(R.drawable._0000_close);

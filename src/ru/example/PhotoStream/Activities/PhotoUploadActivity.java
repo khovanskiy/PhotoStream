@@ -124,7 +124,6 @@ public class PhotoUploadActivity extends ActionBarActivity {
         setContentView(R.layout.photouploadactivity);
         api = Odnoklassniki.getInstance(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        //getSupportActionBar().setTitle(getString(R.string.uploadActivity_title));
         ImageView photo = (ImageView) findViewById(R.id.photoupload_imageview);
         photo.setImageBitmap(pictureTaken);
         uploadButton = (Button) findViewById(R.id.photoupload_upload);

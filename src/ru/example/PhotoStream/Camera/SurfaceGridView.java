@@ -29,8 +29,8 @@ public class SurfaceGridView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         if (visible) {
-            paint.setColor(Color.argb(128, 255, 255, 255));
-            paint.setStrokeWidth(10);
+            paint.setColor(Color.argb(255, 255, 255, 255));
+            paint.setStrokeWidth(2);
             int width = canvas.getWidth();
             int height = canvas.getHeight();
             int rowWidth = height / ROWS;
