@@ -67,12 +67,16 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
         if (state) {
             header.setVisibility(View.VISIBLE);
+            likeButton.setVisibility(View.VISIBLE);
+            likesCount.setVisibility(View.VISIBLE);
             if (photoViewAttacher != null) {
                 photoViewAttacher.setZoomable(true);
                 photoViewAttacher.cleanup();
             }
             onViewPagerLock.setLocked(false);
         } else {
+            likesCount.setVisibility(View.GONE);
+            likeButton.setVisibility(View.GONE);
             header.setVisibility(View.GONE);
             photoViewAttacher = new PhotoViewAttacher(image);
             photoViewAttacher.setZoomable(true);
@@ -154,11 +158,11 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
                 checkState(viewLayout);
             }
         });
-        checkState(viewLayout);
         image.loadFromURL(photo.getMaxSize().getUrl());
         likeButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_like);
         if (photo.user_id.equals(User.currentUID)) {
             likeButton.setEnabled(false);
+            likeButton.setImageResource(R.drawable._0001_big_liked);
         } else {
             likeButton.setOnClickListener(this);
             if (photo.liked_it) {
@@ -166,6 +170,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
                 likeButton.setEnabled(false);
             }
         }
+        checkState(viewLayout);
         ImageButton backButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_back);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

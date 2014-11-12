@@ -252,11 +252,11 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             break;
             case R.id.phototaker_grid_button: {
                 gridOn = !gridOn;
-                if (gridOn) {
-                    gridView.setVisible();
+                if (!gridOn) {
+                    gridView.setInvisible();
                     ((ImageButton)v).setImageResource(R.drawable._0005_camera_grid_off);
                 } else {
-                    gridView.setInvisible();
+                    gridView.setVisible();
                     ((ImageButton)v).setImageResource(R.drawable._0006_camera_grid_on);
                 }
             } break;

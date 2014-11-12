@@ -4,6 +4,7 @@
     <item android:id="@+id/action_upload"
           android:icon="@drawable/_0002_camera"
           android:showAsAction="always"
-          android:title="Camera"
-          ru.example.PhotoStream:showAsAction="always"/>
+          android:title="@string/Camera"
+          ru.example.PhotoStream:showAsAction="always"
+            />
 </menu>

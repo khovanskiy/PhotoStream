@@ -47,7 +47,9 @@
                   android:configChanges="keyboardHidden|orientation|screenSize|screenLayout"/>
         <activity android:name="ru.example.PhotoStream.Activities.PhotoCorrectionActivity"
                   android:label="@string/Editing"/>
-        <activity android:name=".Activities.PhotoUploadActivity"/>
-        <activity android:name=".Activities.VideoUploadActivity"/>
+        <activity android:name=".Activities.PhotoUploadActivity"
+                  android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".Activities.VideoUploadActivity"
+                  android:windowSoftInputMode="adjustResize"/>
     </application>
 </manifest>

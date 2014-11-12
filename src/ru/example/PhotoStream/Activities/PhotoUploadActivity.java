@@ -118,12 +118,12 @@ public class PhotoUploadActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //Line is commented because it prevents view from resizing when keyboard appears
+        //This is Android bug, we can do nothing
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.photouploadactivity);
         api = Odnoklassniki.getInstance(this);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ImageView photo = (ImageView) findViewById(R.id.photoupload_imageview);
         photo.setImageBitmap(pictureTaken);
         uploadButton = (Button) findViewById(R.id.photoupload_upload);

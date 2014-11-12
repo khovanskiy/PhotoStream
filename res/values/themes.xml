@@ -4,8 +4,10 @@
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionMenuTextAppearance">@style/MyActionBarTitleText</item>
         <item name="android:actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>
+        <item name="android:actionButtonStyle">@style/CustomActionBarButton</item>
         <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>
         <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
+        <item name="android:imageButtonStyle">@style/CustomImageButton</item>
     </style>
     <style name="MyActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@android:color/background_dark</item>
@@ -32,6 +34,7 @@
         <item name="android:paddingRight">8dip</item>
         <item name="android:src">@drawable/actionbar_menu</item>
         <item name="android:minWidth">48.0dip</item>
+        <item name="android:background">@drawable/standard_button_background</item>
     </style>
     <style name="LoginButton">
         <item name="android:textSize">16.0sp</item>
@@ -56,5 +59,17 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@drawable/tabtextselector</item>
+    </style>
+    <style name="CustomImageButton"
+           parent="android:Widget.ImageButton">
+        <item name="android:background">@drawable/standard_button_background</item>
+    </style>
+    <style name="CustomActionBarButton"
+           parent="android:Widget.ImageButton">
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:paddingRight">8dip</item>
+        <item name="android:src">@drawable/actionbar_menu</item>
+        <item name="android:minWidth">48.0dip</item>
+        <item name="android:background">@drawable/standard_button_background</item>
     </style>
 </resources>

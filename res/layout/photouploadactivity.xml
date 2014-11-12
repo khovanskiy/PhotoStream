@@ -22,8 +22,9 @@
         <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/photoupload_back" android:layout_gravity="left" android:src="@drawable/_0003_back"
-                android:background="@color/transparent"/>
+                android:id="@+id/photoupload_back"
+                android:layout_gravity="left"
+                android:src="@drawable/_0003_back"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,11 +41,12 @@
             android:layout_below="@+id/photoupload_header"
             android:background="#b3000000" android:visibility="visible"/>
     <EditText
-            android:layout_width="match_parent"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:id="@+id/photoupload_commenttext" android:textColor="@android:color/white" android:hint="@string/AddComment"
-            android:layout_weight="1" android:layout_gravity="center" android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+            android:layout_weight="1" android:layout_gravity="center"
+            android:layout_marginLeft="20dp" android:layout_marginRight="20dp"
+            android:layout_centerInParent="true"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

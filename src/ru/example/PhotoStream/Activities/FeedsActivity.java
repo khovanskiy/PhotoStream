@@ -107,6 +107,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         lockOrientation();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
         api = Odnoklassniki.getInstance(this);
         photos = new ConcurrentHashMap<>();
@@ -297,9 +298,6 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         AlbumsOwner albumsOwner = feedsAdapter.getItem(position);
         try {
             int pos = photoShifters.get(albumsOwner).getPosition();
-            if (pos == -1) {
-                pos = 0;
-            }
             PhotoActivity.setFeed(feeds.get(albumsOwner));
             Intent intent = new Intent(this, PhotoActivity.class);
             intent.putExtra("position", pos);

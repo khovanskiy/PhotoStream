@@ -106,4 +106,7 @@
     <string name="Editing">Редактирование</string>
     <string name="Description">Описание к фото</string>
     <string name="UploadPhoto">Загрузить фото</string>
+    <string name="Camera">Сделать фото</string>
+    <string name="RollChangesBack">Отменить все сделанные изменения?</string>
+    <string name="PhotoIsProcessed">Фото обрабатывается...</string>
 </resources>

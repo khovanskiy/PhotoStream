@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
 import ru.ok.android.sdk.Odnoklassniki;
@@ -47,6 +50,13 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     public void handleEvent(Event e) {
         if (e.type == Event.COMPLETE) {
             photoListAdapter.notifyDataSetChanged();
+            if (initPosition == -1) {
+                initPosition = 0;
+                viewPager.setCurrentItem(initPosition);
+                progressBar.setVisibility(View.GONE);
+                viewPager.setVisibility(View.VISIBLE);
+                frameLayout.bringChildToFront(viewPager);
+            }
         }
     }
 
@@ -79,24 +89,39 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     }
 
     private static Feed feed;
+    private int initPosition;
     protected Odnoklassniki api;
     protected List<Photo> photos;
     protected PageAdapter photoListAdapter;
     protected HackyViewPager viewPager;
+    protected FrameLayout frameLayout;
+    protected ProgressBar progressBar;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photoactivity);
         api = Odnoklassniki.getInstance(this);
+        frameLayout = (FrameLayout) findViewById(R.id.photoactivity_frame);
+        progressBar = (ProgressBar) findViewById(R.id.photoactivity_progress);
+        viewPager = (HackyViewPager) findViewById(R.id.photoactivity_pager);
+
         feed.addEventListener(this);
         photos = feed.getAvailablePhotos();
 
-        int initPosition = getIntent().getIntExtra("position", 0);
-        viewPager = (HackyViewPager) findViewById(R.id.photoactivity_pager);
         photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
+
+
+        initPosition = getIntent().getIntExtra("position", 0);
         viewPager.setOnPageChangeListener(this);
-        viewPager.setCurrentItem(initPosition);
+        if (initPosition != -1) {
+            viewPager.setCurrentItem(initPosition);
+            progressBar.setVisibility(View.GONE);
+            viewPager.setVisibility(View.VISIBLE);
+            frameLayout.bringChildToFront(viewPager);
+        } else {
+            feed.loadMore();
+        }
         getActionBar().hide();
     }
 
@@ -104,4 +129,5 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         feed = newFeed;
         assert (feed != null);
     }
+
 }

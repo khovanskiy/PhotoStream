@@ -271,9 +271,7 @@ public class IncMultiFilter {
 
     public interface OnImageChangedListener {
         public void onImageChanged(RawBitmap rawBitmap, Bitmap toFill);
-    }
-
-    public interface OnImageChangingListener {
+        public void onFullImageReceived(Bitmap fullImage);
         public void onImageChanging();
     }
 
@@ -282,14 +280,17 @@ public class IncMultiFilter {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (onImageChangingListener != null) {
-                onImageChangingListener.onImageChanging();
+            if (onImageChangedListener != null) {
+                onImageChangedListener.onImageChanging();
             }
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             while (continueRefreshing.compareAndSet(true, false)) {
+                if (onImageChangedListener != null) {
+                    onImageChangedListener.onImageChanging();
+                }
                 multiFilter.transformOpaqueRaw(rawSource, rawResult, filterPriority.get());
                 Bitmap toFill;
                 if (rawResult.width == rawSource.width) {
@@ -334,7 +335,6 @@ public class IncMultiFilter {
     private RawBitmap rawResult;
 
     private OnImageChangedListener onImageChangedListener = null;
-    private OnImageChangingListener onImageChangingListener = null;
 
     protected AtomicBoolean continueRefreshing = new AtomicBoolean(false);
     protected AtomicBoolean taskIsRunning = new AtomicBoolean(false);
@@ -398,19 +398,26 @@ public class IncMultiFilter {
         return new RotationHandler();
     }
 
-    public synchronized Bitmap getFilteredImage() {
-        RawBitmap s = new RawBitmap(source), d = new RawBitmap(source.getWidth(), source.getHeight());
-        multiFilter.transformOpaqueRaw(s, d, MAX_UPDATE_PRIORITY);
-        s.recycle();
-        return d.toBitmap();
+    public synchronized void getFilteredImage() {
+        AsyncTask<Void, Void, Bitmap> filterFullImage = new AsyncTask<Void, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+                RawBitmap s = new RawBitmap(source), d = new RawBitmap(source.getWidth(), source.getHeight());
+                multiFilter.transformOpaqueRaw(s, d, MAX_UPDATE_PRIORITY);
+                s.recycle();
+                return d.toBitmap();
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap result) {
+                onImageChangedListener.onFullImageReceived(result);
+            }
+        };
+        filterFullImage.execute();
     }
 
     public void setOnImageChangedListener(OnImageChangedListener listener) {
         this.onImageChangedListener = listener;
-    }
-
-    public void setOnImageChangingListener(OnImageChangingListener listener) {
-        this.onImageChangingListener = listener;
     }
 
     private int findScale(Bitmap image) {

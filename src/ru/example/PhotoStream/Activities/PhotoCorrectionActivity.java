@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class PhotoCorrectionActivity extends ActionBarActivity
-        implements IncMultiFilter.OnImageChangingListener, IncMultiFilter.OnImageChangedListener {
+        implements IncMultiFilter.OnImageChangedListener {
 
     private static Bitmap image = null;
     private static boolean moveBack = false;
@@ -57,7 +57,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             generalFilter = new IncMultiFilter(this, image);
         }
         generalFilter.setOnImageChangedListener(this);
-        generalFilter.setOnImageChangingListener(this);
         generalFilter.getPhotoFilterHandler().discardChanges();
         final TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -132,6 +131,20 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             @Override
             public void onTabChanged(String tabId) {
                 rollChangesBack();
+            }
+        });
+        ImageButton realBack = (ImageButton) findViewById(R.id.photocorrecting_really_back);
+        realBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRealBackClick();
+            }
+        });
+        ImageButton stopBack = (ImageButton) findViewById(R.id.photocorrecting_stop_back);
+        stopBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onStopBackClick();
             }
         });
 
@@ -305,19 +318,18 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             public synchronized void onClick(View v) {
                 if (!clicked) {
                     clicked = true;
-                    PhotoUploadActivity.setPicture(generalFilter.getFilteredImage());
-                    Intent intent = new Intent(context, PhotoUploadActivity.class);
-                    startActivity(intent);
+                    generalFilter.getFilteredImage();
+                    FrameLayout progressFrame = (FrameLayout) findViewById(R.id.photocorrecting_processing);
+                    progressFrame.setVisibility(View.VISIBLE);
                 }
             }
         });
         if (moveBack) {
             moveBack = false;
-            onBackPressed();
+            onRealBackClick();
         }
         if (generalFilter != null) {
             generalFilter.setOnImageChangedListener(this);
-            generalFilter.setOnImageChangingListener(this);
         }
     }
 
@@ -326,7 +338,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         super.onPause();
         if (generalFilter != null) {
             generalFilter.setOnImageChangedListener(null);
-            generalFilter.setOnImageChangingListener(null);
         }
     }
 
@@ -336,27 +347,38 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ProgressBar progressBar = (ProgressBar) findViewById(R.id.photocorrecting_image_processing);
+                progressBar.setVisibility(View.GONE);
                 imageView.setImageBitmap(toFill);
             }
         });
     }
 
     @Override
-    public void onImageChanging() {
+    public void onFullImageReceived(Bitmap fullImage) {
+        PhotoUploadActivity.setPicture(fullImage);
+        Intent intent = new Intent(context, PhotoUploadActivity.class);
+        FrameLayout progressFrame = (FrameLayout) findViewById(R.id.photocorrecting_processing);
+        progressFrame.setVisibility(View.GONE);
+        startActivity(intent);
+    }
 
+    @Override
+    public void onImageChanging() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ProgressBar progressBar = (ProgressBar) findViewById(R.id.photocorrecting_image_processing);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
     public synchronized void onBackPressed() {
         if (!rollChangesBack()) {
-            imageView.setVisibility(View.GONE);
-            imageView.setImageResource(R.drawable._0000_close);
-            clearBitmap();
-            generalFilter.setOnImageChangingListener(null);
-            generalFilter.setOnImageChangingListener(null);
-            generalFilter.recycle();
-            generalFilter = null;
-            super.onBackPressed();
+            FrameLayout backFrame = (FrameLayout) findViewById(R.id.photocorrecting_backframe);
+            backFrame.setVisibility(View.VISIBLE);
         }
     }
 
@@ -388,4 +410,20 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         tv.setText(text);
         return view;
     }
+
+    private void onRealBackClick() {
+        imageView.setVisibility(View.GONE);
+        imageView.setImageResource(R.drawable._0000_close);
+        clearBitmap();
+        generalFilter.setOnImageChangedListener(null);
+        generalFilter.recycle();
+        generalFilter = null;
+        super.onBackPressed();
+    }
+
+    private void onStopBackClick() {
+        FrameLayout backFrame = (FrameLayout) findViewById(R.id.photocorrecting_backframe);
+        backFrame.setVisibility(View.GONE);
+    }
+
 }
