@@ -54,5 +54,6 @@
                   android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".Activities.VideoUploadActivity"
                   android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="net.hockeyapp.android.UpdateActivity" />
     </application>
 </manifest>

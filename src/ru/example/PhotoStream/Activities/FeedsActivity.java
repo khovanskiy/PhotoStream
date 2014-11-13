@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
+import net.hockeyapp.android.CrashManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.example.PhotoStream.*;
@@ -282,6 +283,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     protected void onResume() {
         super.onResume();
+        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
         for (PhotoShifter photoShifter : photoShifters.values()) {
             photoShifter.start();
         }

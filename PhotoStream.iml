@@ -16,6 +16,7 @@
     <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="module" module-name="appcompat" />
     <orderEntry type="module" module-name="photoView" />
+    <orderEntry type="library" name="HockeySDK-3.0.2" level="project" />
   </component>
 </module>
 

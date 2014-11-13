@@ -1,6 +1,8 @@
 package ru.example.PhotoStream.Activities;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -131,20 +133,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             @Override
             public void onTabChanged(String tabId) {
                 rollChangesBack();
-            }
-        });
-        ImageButton realBack = (ImageButton) findViewById(R.id.photocorrecting_really_back);
-        realBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRealBackClick();
-            }
-        });
-        ImageButton stopBack = (ImageButton) findViewById(R.id.photocorrecting_stop_back);
-        stopBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onStopBackClick();
             }
         });
 
@@ -318,9 +306,9 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
             public synchronized void onClick(View v) {
                 if (!clicked) {
                     clicked = true;
-                    generalFilter.getFilteredImage();
                     FrameLayout progressFrame = (FrameLayout) findViewById(R.id.photocorrecting_processing);
                     progressFrame.setVisibility(View.VISIBLE);
+                    generalFilter.getFilteredImage();
                 }
             }
         });
@@ -376,9 +364,25 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
 
     @Override
     public synchronized void onBackPressed() {
-        if (!rollChangesBack()) {
-            FrameLayout backFrame = (FrameLayout) findViewById(R.id.photocorrecting_backframe);
-            backFrame.setVisibility(View.VISIBLE);
+        if (findViewById(R.id.photocorrecting_processing).getVisibility() != View.VISIBLE && !rollChangesBack()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Отменить все изменения?")
+                    .setCancelable(false)
+                    .setNegativeButton("Нет",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            })
+                    .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            onRealBackClick();
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
@@ -419,11 +423,6 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
         generalFilter.recycle();
         generalFilter = null;
         super.onBackPressed();
-    }
-
-    private void onStopBackClick() {
-        FrameLayout backFrame = (FrameLayout) findViewById(R.id.photocorrecting_backframe);
-        backFrame.setVisibility(View.GONE);
     }
 
 }

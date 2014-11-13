@@ -260,52 +260,6 @@
     </LinearLayout>
     <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/photocorrecting_backframe"
-            android:visibility="gone"
-            android:background="@color/grey1" android:clickable="true">
-        <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:layout_gravity="center">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/RollChangesBack"
-                    android:layout_gravity="center_horizontal"
-                    android:fontFamily="sans-serif" android:textColor="@android:color/white"
-                    android:layout_margin="30dp"/>
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="fill_parent" android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp">
-                <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/photocorrecting_stop_back" android:src="@drawable/_0000_close"/>
-                <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2"/>
-                <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/photocorrecting_really_back" android:src="@drawable/_0001_accept"/>
-                <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"/>
-            </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
-    <FrameLayout
-            android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:visibility="gone" android:id="@+id/photocorrecting_processing"
             android:background="@color/grey1" android:clickable="true">
         <LinearLayout
