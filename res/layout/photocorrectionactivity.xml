@@ -10,20 +10,19 @@
 
     <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:id="@+id/photocorrecting_image_frame">
+            android:layout_height="match_parent"
+            android:id="@+id/photocorrecting_image_frame" android:layout_centerInParent="true">
         <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/photocorrecting_image"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true" android:layout_gravity="center"/>
         <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/photocorrecting_image_processing"
-                android:layout_gravity="left|top" android:layout_marginTop="30dp"
+                android:layout_gravity="left|top" android:layout_marginTop="78dp"
                 android:layout_marginLeft="30dp" android:visibility="gone"/>
     </FrameLayout>
     <TabHost

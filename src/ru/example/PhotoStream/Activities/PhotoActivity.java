@@ -7,8 +7,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import net.hockeyapp.android.CrashManager;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
 import ru.ok.android.sdk.Odnoklassniki;
@@ -100,6 +102,8 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photoactivity);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         api = Odnoklassniki.getInstance(this);
         frameLayout = (FrameLayout) findViewById(R.id.photoactivity_frame);
         progressBar = (ProgressBar) findViewById(R.id.photoactivity_progress);
@@ -128,6 +132,12 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     public static void setFeed(Feed newFeed) {
         feed = newFeed;
         assert (feed != null);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
     }
 
     @Override

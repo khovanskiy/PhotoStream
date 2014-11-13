@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.*;
+import net.hockeyapp.android.CrashManager;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
@@ -152,6 +153,12 @@ public class PhotoUploadActivity extends ActionBarActivity {
             pictureTaken.recycle();
             pictureTaken = null;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
     }
 
     @Override

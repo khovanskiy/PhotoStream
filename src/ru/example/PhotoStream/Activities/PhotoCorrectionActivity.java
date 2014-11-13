@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.*;
+import net.hockeyapp.android.CrashManager;
 import ru.example.PhotoStream.Camera.Filters.IncMultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilterFactory;
 import ru.example.PhotoStream.Camera.RawBitmap;
@@ -299,6 +300,7 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
     @Override
     public void onResume() {
         super.onResume();
+        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
         ImageButton uploadButton = (ImageButton) findViewById(R.id.photocorrecting_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             private boolean clicked = false;

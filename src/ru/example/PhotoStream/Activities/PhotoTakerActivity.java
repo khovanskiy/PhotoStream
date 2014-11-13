@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.Toast;
+import net.hockeyapp.android.CrashManager;
 import ru.example.PhotoStream.Camera.SurfaceGridView;
 import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.PortraitLandscapeListener;
@@ -293,6 +294,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onResume() {
         super.onResume();
+        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
         if (moveBack) {
             moveBack = false;
             onBackPressed();

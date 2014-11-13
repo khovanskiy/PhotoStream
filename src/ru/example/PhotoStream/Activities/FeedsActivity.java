@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import ru.example.PhotoStream.*;
@@ -107,6 +108,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //UpdateManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
         lockOrientation();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
