@@ -193,6 +193,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                                         };
                                         photoShifter.addEventListener(handler);
                                         listeners.put(albumsOwner, handler);
+                                        photoShifter.immediateGet();
                                     } catch (Exception e) {
                                         Log.d("M_CONSOLE", e.getMessage(), e);
                                     }

@@ -7,6 +7,9 @@
     <item name="grey2" type="color">#cc000000</item>
     <item name="grey3" type="color">#33FFFFFF</item>
     <item name="grey_text" type="color">#AAA</item>
+    <item name="solid_gray" type="color">#111111</item>
+    <item name="solid_light_gray" type="color">#666</item>
+    <item name="black" type="color">#000</item>
     <drawable name="white_d">#FFF</drawable>
     <drawable name="transparent_d">#00000000</drawable>
     <drawable name="special1_d">#33b5e5</drawable>

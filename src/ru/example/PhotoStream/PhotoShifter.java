@@ -39,7 +39,7 @@ public class PhotoShifter extends EventDispatcher implements IEventHandler {
         }
     }
 
-    private void nextPosition() {
+    private synchronized void nextPosition() {
         if (currentPhotos.size() != 0) {
             currentPosition = (currentPosition + 1) % currentPhotos.size();
             Event event = new Event(PhotoShifter.this, Event.PHOTO_CHANGED);
