@@ -26,6 +26,10 @@ public class SmartImage extends ImageView implements Animation.AnimationListener
         }
     };
 
+    public static void clearCache() {
+        cache.evictAll();
+    }
+
     protected Bitmap tmp;
 
     @Override

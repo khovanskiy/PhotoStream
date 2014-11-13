@@ -130,4 +130,10 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         assert (feed != null);
     }
 
+    @Override
+    public void onBackPressed() {
+        SmartImage.clearCache();
+        super.onBackPressed();
+    }
+
 }

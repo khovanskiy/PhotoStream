@@ -269,6 +269,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_upload: {
+                SmartImage.clearCache();
                 Intent intent = new Intent(this, PhotoTakerActivity.class);
                 startActivity(intent);
             }
@@ -299,6 +300,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         try {
             int pos = photoShifters.get(albumsOwner).getPosition();
             PhotoActivity.setFeed(feeds.get(albumsOwner));
+            SmartImage.clearCache();
             Intent intent = new Intent(this, PhotoActivity.class);
             intent.putExtra("position", pos);
             startActivity(intent);
