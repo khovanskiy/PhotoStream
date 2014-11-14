@@ -115,8 +115,11 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
 
-
-        initPosition = getIntent().getIntExtra("position", 0);
+        if (savedInstanceState != null && savedInstanceState.containsKey("position")) {
+            initPosition = savedInstanceState.getInt("position");
+        } else {
+            initPosition = getIntent().getIntExtra("position", 0);
+        }
         viewPager.setOnPageChangeListener(this);
         if (initPosition != -1) {
             viewPager.setCurrentItem(initPosition);
@@ -144,6 +147,11 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     public void onBackPressed() {
         SmartImage.clearCache();
         super.onBackPressed();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle saveInstance) {
+        saveInstance.putInt("position", viewPager.getCurrentItem());
     }
 
 }

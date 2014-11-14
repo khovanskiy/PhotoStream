@@ -3,6 +3,7 @@ package ru.example.PhotoStream;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.animation.AlphaAnimation;
@@ -264,6 +265,11 @@ public class SmartImage extends ImageView implements Animation.AnimationListener
             loader = new Loader(this.currentPath);
             loader.executeOnExecutor(executor);
         }
+    }
+
+    public synchronized void setAsFirstCalled() {
+        currentPointer = null;
+        setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
     }
 
     private OnSmartViewLoadedListener loadedListener;

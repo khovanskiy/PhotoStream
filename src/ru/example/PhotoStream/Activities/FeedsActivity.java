@@ -119,24 +119,29 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         display.getSize(size);
         targetSize = size.x / 3;
         feedsAdapter = new ArrayAdapter<AlbumsOwner>(this, R.layout.badgeview) {
-            private Map<Integer, View> existingViews = new HashMap<>();
+            private Map<View, Integer> lastPosition = new HashMap<>();
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 AlbumsOwner owner = getItem(position);
-                if (!existingViews.containsKey(position)) {
+                if (convertView == null) {
                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    existingViews.put(position, inflater.inflate(R.layout.badgeview, parent, false));
+                    convertView = inflater.inflate(R.layout.badgeview, parent, false);
                 }
-                View view = existingViews.get(position);
-                SmartImage image = (SmartImage) view.findViewById(R.id.badgeview_image);
+                boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
+                lastPosition.put(convertView, position);
+                SmartImage image = (SmartImage) convertView.findViewById(R.id.badgeview_image);
                 Photo photo = photos.get(owner);
                 if (photo != null && photo.hasAnySize()) {
-                    image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
+                    String url = photo.findBestSize(targetSize, targetSize).getUrl();
+                    if (!sameView) {
+                        image.setAsFirstCalled();
+                    }
+                    image.loadFromURL(url);
                 }
-                TextView title = (TextView) view.findViewById(R.id.badgeview_title);
+                TextView title = (TextView) convertView.findViewById(R.id.badgeview_title);
                 title.setText(owner.getName());
-                return view;
+                return convertView;
             }
         };
 

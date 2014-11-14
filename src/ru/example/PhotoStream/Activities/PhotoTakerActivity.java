@@ -29,7 +29,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private static final int SELECT_PICTURE = 1;
     private static final int TAKE_VIDEO = 2;
     private static final int MEMORY_SCALE_DOWN = 4;
-    private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 22;
+    private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 26;
     private static final int MAX_WIDTH = 1024;
     private static final int MAX_HEIGHT = 1024;
     private static boolean moveBack = false;

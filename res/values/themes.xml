@@ -8,6 +8,7 @@
         <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>
         <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
         <item name="android:imageButtonStyle">@style/CustomImageButton</item>
+        <item name="android:seekBarStyle">@style/CustomSeekBarStyle</item>
     </style>
     <style name="MyActionBar" parent="android:Widget.Holo.ActionBar">
         <item name="android:background">@android:color/background_dark</item>
@@ -71,5 +72,8 @@
         <item name="android:src">@drawable/actionbar_menu</item>
         <item name="android:minWidth">48.0dip</item>
         <item name="android:background">@drawable/standard_button_background</item>
+    </style>
+    <style name="CustomSeekBarStyle" parent="android:Widget.Holo.SeekBar">
+        <item name="android:progressDrawable">@drawable/photocorrecting_seekbar_progress</item>
     </style>
 </resources>

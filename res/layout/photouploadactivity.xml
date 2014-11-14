@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/photoupload_header"
-            android:background="#b3000000" android:visibility="visible"/>
+            android:background="#80000000" android:visibility="visible"/>
     <EditText
             android:layout_width="500dp"
             android:layout_height="wrap_content"
