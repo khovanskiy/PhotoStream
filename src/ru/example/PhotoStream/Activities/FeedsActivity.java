@@ -119,28 +119,42 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         display.getSize(size);
         targetSize = size.x / 3;
         feedsAdapter = new ArrayAdapter<AlbumsOwner>(this, R.layout.badgeview) {
-            private Map<View, Integer> lastPosition = new HashMap<>();
+            private ConcurrentHashMap<View, Integer> lastPosition = new ConcurrentHashMap<>();
+
+            class ViewHolder {
+                TextView title;
+                SmartImage image;
+
+                ViewHolder(TextView title, SmartImage image) {
+                    this.title = title;
+                    this.image = image;
+                }
+            }
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 AlbumsOwner owner = getItem(position);
+                ViewHolder viewHolder;
                 if (convertView == null) {
                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     convertView = inflater.inflate(R.layout.badgeview, parent, false);
+                    viewHolder = new ViewHolder((TextView) convertView.findViewById(R.id.badgeview_title),
+                            (SmartImage)convertView.findViewById(R.id.badgeview_image));
+                    convertView.setTag(viewHolder);
+                } else {
+                    viewHolder = (ViewHolder) convertView.getTag();
                 }
                 boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
                 lastPosition.put(convertView, position);
-                SmartImage image = (SmartImage) convertView.findViewById(R.id.badgeview_image);
                 Photo photo = photos.get(owner);
                 if (photo != null && photo.hasAnySize()) {
                     String url = photo.findBestSize(targetSize, targetSize).getUrl();
                     if (!sameView) {
-                        image.setAsFirstCalled();
+                        viewHolder.image.setAsFirstCalled();
                     }
-                    image.loadFromURL(url);
+                    viewHolder.image.loadFromURL(url);
                 }
-                TextView title = (TextView) convertView.findViewById(R.id.badgeview_title);
-                title.setText(owner.getName());
+                viewHolder.title.setText(owner.getName());
                 return convertView;
             }
         };
@@ -183,6 +197,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                                             feed = new SortedFilteredFeed(api);
                                         }
                                         feeds.put(albumsOwner, feed);
+                                        final int position = feeds.size() - 1;
                                         feed.addAll(albums);
                                         PhotoShifter photoShifter = new PhotoShifter(feed);
                                         photoShifters.put(albumsOwner, photoShifter);
@@ -194,7 +209,10 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                                                 FeedsActivity.this.runOnUiThread(new Runnable() {
                                                     @Override
                                                     public void run() {
-                                                        feedsAdapter.notifyDataSetChanged();
+                                                        if (position >= feedsGrid.getFirstVisiblePosition()
+                                                            && position <= feedsGrid.getLastVisiblePosition()) {
+                                                            feedsAdapter.notifyDataSetChanged();
+                                                        }
                                                     }
                                                 });
                                             }
