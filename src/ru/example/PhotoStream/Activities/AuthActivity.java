@@ -1,15 +1,15 @@
 package ru.example.PhotoStream.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import ru.example.PhotoStream.R;
 import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkTokenRequestListener;
 import ru.ok.android.sdk.util.OkScope;
 
-public class AuthActivity extends ActionBarActivity implements OkTokenRequestListener {
+public class AuthActivity extends Activity implements OkTokenRequestListener {
     private Odnoklassniki api = null;
 
     private final String APP_ID = "409574400";

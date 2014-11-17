@@ -3,9 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PhotoStream.iml" filepath="$PROJECT_DIR$/PhotoStream.iml" />
+      <module fileurl="file://C:/libs/android-sdk/extras/android/support/v7/appcompat/appcompat.iml" filepath="C:/libs/android-sdk/extras/android/support/v7/appcompat/appcompat.iml" />
       <module fileurl="file://D:/android-sdk/sdk/extras/android/support/v7/appcompat/appcompat.iml" filepath="D:/android-sdk/sdk/extras/android/support/v7/appcompat/appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/photoView/photoView.iml" filepath="$PROJECT_DIR$/photoView/photoView.iml" />
       <module fileurl="file://$PROJECT_DIR$/photoView/photoView.iml" filepath="$PROJECT_DIR$/photoView/photoView.iml" />
     </modules>
   </component>
 </project>
-

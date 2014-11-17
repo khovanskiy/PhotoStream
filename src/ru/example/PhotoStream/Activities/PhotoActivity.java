@@ -129,7 +129,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         } else {
             feed.loadMore();
         }
-        getActionBar().hide();
+        getSupportActionBar().hide();
     }
 
     public static void setFeed(Feed newFeed) {

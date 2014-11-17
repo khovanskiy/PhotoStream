@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="OKTheme" parent="Theme.Base.AppCompat.Light">
+    <style name="OKTheme" parent="Theme.AppCompat.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="android:actionMenuTextAppearance">@style/MyActionBarTitleText</item>
         <item name="android:actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>
         <item name="android:actionButtonStyle">@style/CustomActionBarButton</item>
-        <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>
+        <!--<item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>-->
         <item name="android:tabWidgetStyle">@style/CustomTabWidget</item>
         <item name="android:imageButtonStyle">@style/CustomImageButton</item>
         <item name="android:seekBarStyle">@style/CustomSeekBarStyle</item>
@@ -16,7 +16,7 @@
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:icon">@android:color/transparent</item>
         <!-- Support library compatibility -->
-        <item name="windowActionBarOverlay">true</item>
+        <!--<item name="windowActionBarOverlay">true</item>-->
     </style>
     <style name="MyActionBarTitleText" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFF</item>
