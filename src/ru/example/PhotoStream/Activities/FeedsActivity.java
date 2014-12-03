@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import net.hockeyapp.android.CrashManager;
@@ -18,8 +17,10 @@ import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Tasks.GetCurrentUserTask;
 import ru.example.PhotoStream.Tasks.GetGroupsTask;
 import ru.example.PhotoStream.Tasks.GetUsersTask;
+import ru.example.PhotoStream.Updaters.FeedsUpdater;
 import ru.ok.android.sdk.Odnoklassniki;
 
+import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -90,7 +91,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         }
     }
 
-    private class FeedsAdapter extends ArrayAdapter<AlbumsOwner> {
+    private class FeedsAdapter extends ArrayAdapter<FeedPreview> {
         private ConcurrentHashMap<View, Integer> lastPosition = new ConcurrentHashMap<>();
 
         private class ViewHolder {
@@ -109,7 +110,8 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            AlbumsOwner owner = getItem(position);
+            FeedPreview preview = getItem(position);
+
             ViewHolder viewHolder;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -122,7 +124,8 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
             }
             boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
             lastPosition.put(convertView, position);
-            Photo photo = photos.get(owner);
+
+            Photo photo = preview.getPhoto();
             if (photo != null && photo.hasAnySize()) {
                 String url = photo.findBestSize(targetSize, targetSize).getUrl();
                 if (!sameView) {
@@ -130,56 +133,57 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 }
                 viewHolder.image.loadFromURL(url);
             }
-            viewHolder.title.setText(owner.getName());
+            //viewHolder.title.setText(owner.getName());
             return convertView;
         }
     }
 
-    private class FeedsUpdater extends MultiTask<String> {
+    public class FeedsUpdater extends MultiTask<String> {
+
+        private WeakReference<FeedsActivity> activityWeakReference = null;
+        private Odnoklassniki api;
+
+        public FeedsUpdater(Odnoklassniki api, FeedsActivity feedsActivity) {
+            this.activityWeakReference = new WeakReference<>(feedsActivity);
+            this.api = api;
+        }
 
         private class AlbumUpdater extends MultiTask<AlbumsOwner> {
             @Override
-            protected void onPostExecute(Map<AlbumsOwner, Future<?>> data) {
-                for (final AlbumsOwner albumsOwner : data.keySet()) {
-                    Future<List<Album>> future = (Future<List<Album>>) data.get(albumsOwner);
-                    try {
-                        List<Album> albums = future.get();
-                        Feed feed;
-                        if (albumsOwner instanceof Group) {
-                            feed = new LineFeed(api);
-                        } else {
-                            feed = new SortedFilteredFeed(api);
-                        }
-                        feeds.put(albumsOwner, feed);
-                        final int position = feeds.size() - 1;
-                        feed.addAll(albums);
-                        PhotoShifter photoShifter = new PhotoShifter(feed);
-                        photoShifters.put(albumsOwner, photoShifter);
-                        IEventHandler handler = new IEventHandler() {
-                            @Override
-                            public void handleEvent(Event e) {
-                                Photo photo = (Photo) e.data.get("photo");
-                                photos.put(albumsOwner, photo);
-                                FeedsActivity.this.runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (position >= feedsGrid.getFirstVisiblePosition()
-                                                && position <= feedsGrid.getLastVisiblePosition()) {
-                                            feedsAdapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                });
-                            }
-                        };
-                        photoShifter.addEventListener(handler);
-                        listeners.put(albumsOwner, handler);
-                        photoShifter.immediateGet();
-                    } catch (Exception e) {
-                        Log.d("M_CONSOLE", e.getMessage(), e);
-                    }
+            protected void onPostExecute(Map<AlbumsOwner, Object> data) {
+                FeedsActivity feedsActivity = activityWeakReference.get();
+                if (feedsActivity == null) {
+                    return;
                 }
+                for (AlbumsOwner albumsOwner : data.keySet()) {
+                    Feed feed = new LineFeed(api);
+                    feed.addAll(albumsOwner.getAlbums());
+                    FeedPreview feedPreview = new PhotoShifter(feed, albumsOwner.getAvatar());
+                    feedsActivity.feedsAdapter.add(feedPreview);
+                }
+                feedsActivity.feedsAdapter.notifyDataSetChanged();
             }
         }
+
+        /*protected void createFeed(AlbumsOwner albumsOwner) {
+            Feed feed = new LineFeed(api);
+            feed.addAll(albumsOwner.getAlbums());
+
+            PhotoShifter photoShifter = new PhotoShifter(feed, albumsOwner.getAvatar());
+            feedsActivity.feedsAdapter.add(photoShifter);
+
+        /*photoShifter.addEventListener(new IEventHandler() {
+            @Override
+            public void handleEvent(Event e) {
+                FeedsActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        feedsAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+        }*/
 
         @Override
         protected void onPreExecute() {
@@ -189,43 +193,39 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         }
 
         @Override
-        protected void onPostExecute(Map<String, Future<?>> data) {
-            Future<List<User>> futureUsers = (Future<List<User>>) data.get("friends");
-            Future<List<Group>> futureGroups = (Future<List<Group>>) data.get("groups");
-            Future<User> futureCurrentUser = (Future<User>) data.get("current");
-            try {
-                User currentUser = futureCurrentUser.get();
-                User.currentUID = currentUser.getId();
-                List<Group> groups = futureGroups.get();
-                List<User> users = futureUsers.get();
-
-                albumsOwners.add(currentUser);
-                albumsOwners.addAll(groups);
-                albumsOwners.addAll(users);
-
-                MultiTask<AlbumsOwner> albumLoader = new AlbumUpdater();
-                for (AlbumsOwner albumsOwner : albumsOwners) {
-                    photos.put(albumsOwner, Photo.get(albumsOwner.getAvatarId()));
-                    albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
-                }
-                albumLoader.execute();
-
-                feedsAdapter.addAll(albumsOwners);
-            } catch (Exception e) {
-                Log.d("M_CONSOLE", e.getMessage(), e);
+        protected void onPostExecute(Map<String, Object> data) {
+            FeedsActivity feedsActivity = activityWeakReference.get();
+            if (feedsActivity == null) {
+                return;
             }
-            feedsAdapter.notifyDataSetChanged();
-            unlockOrientation();
+
+            User currentUser = (User) data.get("current");
+            User.currentUID = currentUser.getId();
+            List<Group> groups = (List<Group>) data.get("groups");
+            List<User> users = (List<User>) data.get("friends");
+
+            List<AlbumsOwner> albumsOwners = new LinkedList<>();
+            albumsOwners.add(currentUser);
+            albumsOwners.addAll(groups);
+            albumsOwners.addAll(users);
+
+            MultiTask<AlbumsOwner> albumLoader = new AlbumUpdater();
+            for (AlbumsOwner albumsOwner : albumsOwners) {
+                if (User.get(albumsOwner.getId()) == null && Group.get(albumsOwner.getId()) == null) {
+                    albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
+                } else {
+                    makeFeed(albumsOwner);
+                }
+            }
+            albumLoader.execute();
         }
     }
 
     private Odnoklassniki api;
-    private ArrayAdapter<AlbumsOwner> feedsAdapter;
-    private static List<AlbumsOwner> albumsOwners;
-    private ConcurrentHashMap<AlbumsOwner, Photo> photos;
-    private static Map<AlbumsOwner, Feed> feeds;
-    private static Map<AlbumsOwner, PhotoShifter> photoShifters;
-    private static Map<AlbumsOwner, IEventHandler> listeners;
+    private ArrayAdapter<FeedPreview> feedsAdapter;
+    private List<FeedPreview> feedPreviews;
+    private HashSet<AlbumsOwner> cached;
+
     private GridView feedsGrid;
     private int targetSize;
 
@@ -233,14 +233,11 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            Console.print(savedInstanceState.toString());
-        }
-        lockOrientation();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
+
         api = Odnoklassniki.getInstance(this);
-        photos = new ConcurrentHashMap<>();
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -251,15 +248,15 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         feedsGrid.setOnItemClickListener(this);
         feedsGrid.setAdapter(feedsAdapter);
 
-        if (savedInstanceState == null || !savedInstanceState.containsKey("orientationChanged")) {
-            albumsOwners = new ArrayList<>();
-            feeds = new HashMap<>();
-            photoShifters = new HashMap<>();
-            listeners = new HashMap<>();
-
-            new FeedsUpdater().execute();
-        } else {
-            for (final AlbumsOwner albumsOwner : albumsOwners) {
+        //if (savedInstanceState == null || !savedInstanceState.containsKey("orientationChanged")) {
+            //albumsOwners = new ArrayList<>();
+            //feeds = new HashMap<>();
+            //photoShifters = new HashMap<>();
+            //listeners = new HashMap<>();
+            //Console.print("FeedsUpdater.execute()");
+            //new FeedsUpdater(this).execute();
+        //} else {
+            /*for (final AlbumsOwner albumsOwner : albumsOwners) {
                 PhotoShifter photoShifter = photoShifters.get(albumsOwner);
                 photoShifter.removeEventListener(listeners.get(albumsOwner));
                 IEventHandler handler = new IEventHandler() {
@@ -281,8 +278,8 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
             }
             feedsAdapter.addAll(albumsOwners);
             feedsAdapter.notifyDataSetChanged();
-            unlockOrientation();
-        }
+            unlockOrientation();*/
+        //}
     }
 
     @Override
@@ -307,25 +304,24 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
     protected void onResume() {
         super.onResume();
         CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
-        for (PhotoShifter photoShifter : photoShifters.values()) {
-            photoShifter.start();
+        for (FeedPreview feedPreview : feedPreviews) {
+            feedPreview.start();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        for (PhotoShifter photoShifter : photoShifters.values()) {
-            photoShifter.pause();
+        for (FeedPreview feedPreview : feedPreviews) {
+            feedPreview.pause();
         }
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        AlbumsOwner albumsOwner = feedsAdapter.getItem(position);
-        int pos = photoShifters.get(albumsOwner).getPosition();
-        PhotoActivity.setFeed(feeds.get(albumsOwner));
-
+        FeedPreview photoShifter = feedsAdapter.getItem(position);
+        int pos = photoShifter.getPosition();
+        PhotoActivity.setFeed(photoShifter.getFeed());
         Intent intent = new Intent(this, PhotoActivity.class);
         intent.putExtra("position", pos);
         startActivity(intent);

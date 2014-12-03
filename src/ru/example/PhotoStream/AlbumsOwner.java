@@ -18,12 +18,10 @@ public abstract class AlbumsOwner extends OKApiObject implements Serializable {
      */
     public abstract void loadAlbums(Odnoklassniki api);
 
-    public abstract String getName();
-
     /**
      * Gets owner`s avatar URL
      *
      * @return avatar URL
      */
-    public abstract String getAvatarId();
+    public abstract Photo getAvatar();
 }

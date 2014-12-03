@@ -42,7 +42,7 @@ public class GetGroupsTask implements Callable<List<Group>> {
                 JSONArray groupInfoArray = new JSONArray(api.request("group.getInfo", requestParams, "get"));
                 for (int j = 0; j < groupInfoArray.length(); ++j) {
                     Group group = Group.build(groupInfoArray.getJSONObject(j));
-                    Callable<Photo> callable = new GetPhotoTask(api, group.getAvatarId(), group);
+                    Callable<Photo> callable = new GetPhotoTask(api, group.getAvatar().id, group);
                     callable.call();
                     result.add(group);
                 }

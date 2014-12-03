@@ -39,7 +39,7 @@ public class GetUsersTask implements Callable<List<User>> {
                 JSONArray friendInfoArray = new JSONArray(api.request("users.getInfo", requestParams, "get"));
                 for (int j = 0; j < friendInfoArray.length(); ++j) {
                     User user = User.build(friendInfoArray.getJSONObject(j));
-                    Callable<Photo> callable = new GetPhotoTask(api, user.getAvatarId(), user);
+                    Callable<Photo> callable = new GetPhotoTask(api, user.getAvatar().id, user);
                     callable.call();
                     result.add(user);
                 }

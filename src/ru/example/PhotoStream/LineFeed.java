@@ -26,6 +26,7 @@ public class LineFeed extends EventDispatcher implements Feed {
 
         @Override
         protected void onPostExecute(List<Photo> chunk) {
+            Console.print("LineFeed.Loader.onPostExecute");
             for (Photo photo : chunk) {
                 toDisplay.add(photo);
             }

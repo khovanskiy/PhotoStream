@@ -30,7 +30,7 @@ public class Group extends AlbumsOwner {
     /**
      * Title photo's id.
      */
-    public String photo_id = "";
+    public Photo photo_id = null;
     public boolean shop_visible_admin = false;
     public boolean shop_visible_public = false;
 
@@ -106,7 +106,7 @@ public class Group extends AlbumsOwner {
             current.shortname = object.getString("shortname");
         }
         if (object.has("photo_id")) {
-            current.photo_id = object.getString("photo_id");
+            current.photo_id = Photo.get(object.getString("photo_id"));
         }
         return current;
     }
@@ -149,7 +149,7 @@ public class Group extends AlbumsOwner {
     }
 
     @Override
-    public String getAvatarId() {
+    public Photo getAvatar() {
         return photo_id;
     }
 }

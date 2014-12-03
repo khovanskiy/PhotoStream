@@ -73,11 +73,10 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
         Bundle bundle = getArguments();
         MultiTask<String> service = new MultiTask<String>() {
             @Override
-            protected void onPostExecute(Map<String, Future<?>> data) {
-                for (Map.Entry<String, Future<?>> entry : data.entrySet()) {
-                    Future<List<Album>> futureAlbums = (Future<List<Album>>) entry.getValue();
+            protected void onPostExecute(Map<String, Object> data) {
+                for (Map.Entry<String, Object> entry : data.entrySet()) {
                     try {
-                        feed.addAll(futureAlbums.get());
+                        feed.addAll((List<Album>) entry.getValue());
                     } catch (Exception e) {
                     }
                 }

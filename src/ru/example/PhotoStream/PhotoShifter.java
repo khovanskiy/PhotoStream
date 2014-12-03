@@ -2,32 +2,34 @@ package ru.example.PhotoStream;
 
 import java.util.*;
 
-/**
- * Created by Genyaz on 19.10.2014.
- */
-public class PhotoShifter extends EventDispatcher implements IEventHandler {
+public class PhotoShifter extends FeedPreview implements IEventHandler {
     private static Random random = new Random(System.currentTimeMillis());
     private static int MAX_INITIAL_DELAY = 10000;
     private static long REFRESH_DELAY = 10000;
-    private Feed feed;
     private List<Photo> currentPhotos = new ArrayList<>();
     private int currentPosition = -1;
     private int lastSize = 0;
     private boolean hasMore = true;
     private boolean toChange = false;
     private Timer timer;
+    private Photo defaultPhoto;
 
-    public PhotoShifter(Feed feed) {
-        this.feed = feed;
-        this.feed.addEventListener(this);
-        this.feed.loadMore();
-        start();
+    public PhotoShifter(Feed feed, Photo defaultPhoto) {
+        super(feed);
+        currentFeed.addEventListener(this);
+    }
+
+    public Photo getPhoto() {
+        if (currentPosition == -1) {
+            return defaultPhoto;
+        }
+        return currentPhotos.get(currentPosition);
     }
 
     @Override
     public synchronized void handleEvent(Event e) {
         if (e.type == Event.COMPLETE) {
-            currentPhotos = feed.getAvailablePhotos();
+            currentPhotos = currentFeed.getAvailablePhotos();
             if (lastSize == currentPhotos.size()) {
                 hasMore = false;
             }
@@ -42,16 +44,14 @@ public class PhotoShifter extends EventDispatcher implements IEventHandler {
     private synchronized void nextPosition() {
         if (currentPhotos.size() != 0) {
             currentPosition = (currentPosition + 1) % currentPhotos.size();
-            Event event = new Event(PhotoShifter.this, Event.PHOTO_CHANGED);
-            event.data.put("photo", currentPhotos.get(currentPosition));
-            dispatchEvent(event);
+            dispatchEvent(new Event(this, EVENT_UPDATED));
         }
     }
 
     private synchronized void changePhoto() {
         if (hasMore && currentPosition + 1 == currentPhotos.size()) {
             toChange = true;
-            feed.loadMore();
+            currentFeed.loadMore();
         } else {
             nextPosition();
         }

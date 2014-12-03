@@ -60,8 +60,8 @@ public class Selection extends AlbumsOwner {
     }
 
     @Override
-    public String getAvatarId() {
-        return "";
+    public Photo getAvatar() {
+        return null;
     }
 
     public void addAll(Collection<? extends AlbumsOwner> collection) {

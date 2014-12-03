@@ -27,9 +27,9 @@ public class User extends AlbumsOwner {
     public String name = "";
 
     /**
-     * User's title photo's id.
+     * User's title photo's.
      */
-    public String photo_id = "";
+    public Photo photo_id = null;
 
     public static String currentUID = "";
 
@@ -118,7 +118,7 @@ public class User extends AlbumsOwner {
     }
 
     @Override
-    public String getAvatarId() {
+    public Photo getAvatar() {
         return photo_id;
     }
 
@@ -145,7 +145,7 @@ public class User extends AlbumsOwner {
             current.name = object.getString("name");
         }
         if (object.has("photo_id")) {
-            current.photo_id = object.getString("photo_id");
+            current.photo_id = Photo.get(object.getString("photo_id"));
         }
         //Console.print("User " + current.name + " " + current.photo_id);
         return current;

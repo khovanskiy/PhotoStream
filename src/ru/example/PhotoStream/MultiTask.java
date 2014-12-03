@@ -9,25 +9,25 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class MultiTask<Key> extends AsyncTask<Void, Void, Map<Key, Future<?>>> {
+public class MultiTask<Key> extends AsyncTask<Void, Void, Map<Key, Object>> {
 
     private ExecutorService service = Executors.newFixedThreadPool(5);
     private Map<Key, Callable<?>> callables = new HashMap<>();
 
     @Override
-    protected Map<Key, Future<?>> doInBackground(Void... params) {
+    protected Map<Key, Object> doInBackground(Void... params) {
         Map<Key, Future<?>> futures = new HashMap<>();
         for (Map.Entry<Key, Callable<?>> callable : callables.entrySet()) {
             futures.put(callable.getKey(), service.submit(callable.getValue()));
         }
+        Map<Key, Object> result = new HashMap<>();
         for (Map.Entry<Key, Future<?>> future : futures.entrySet()) {
             try {
-                future.getValue().get();
+                result.put(future.getKey(), future.getValue().get());
             } catch (Exception e) {
             }
         }
-        //Console.print("Multi Done");
-        return futures;
+        return result;
     }
 
     public void put(Key key, Callable<?> callable) {

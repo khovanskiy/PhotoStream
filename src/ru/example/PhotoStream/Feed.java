@@ -12,5 +12,4 @@ public interface Feed extends IEventDispatcher {
     public void addAll(List<Album> albums);
 
     public void add(Album album);
-
 }
