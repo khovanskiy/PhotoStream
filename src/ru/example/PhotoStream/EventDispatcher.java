@@ -1,17 +1,35 @@
 package ru.example.PhotoStream;
 
+import java.lang.ref.WeakReference;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Stack;
-import java.util.Vector;
 
 public class EventDispatcher implements IEventDispatcher {
-    private int recuirsion_count;
-    private Vector<Pair<IEventHandler, Boolean>> listeners;
-    private Stack<Pair<IEventHandler, Boolean>> nn;
+    private class HandlerReference extends WeakReference<IEventHandler> {
+        private boolean valid = true;
+
+        public HandlerReference(IEventHandler handler) {
+            super(handler);
+        }
+
+        public boolean isValid() {
+            return this.valid;
+        }
+
+        public void invalidate() {
+            this.valid = false;
+        }
+    }
+
+    private int recuirsionCount;
+    private LinkedList<HandlerReference> listeners;
+    private Stack<HandlerReference> toAdd;
 
     public EventDispatcher() {
-        recuirsion_count = 0;
-        listeners = new Vector<Pair<IEventHandler, Boolean>>();
-        nn = new Stack<Pair<IEventHandler, Boolean>>();
+        recuirsionCount = 0;
+        listeners = new LinkedList<>();
+        toAdd = new Stack<>();
     }
 
     @Override
@@ -19,10 +37,10 @@ public class EventDispatcher implements IEventDispatcher {
         if (listener == null) {
             return;
         }
-        if (recuirsion_count == 0) {
-            listeners.add(new Pair<>(listener, true));
+        if (recuirsionCount == 0) {
+            listeners.add(new HandlerReference(listener));
         } else {
-            nn.push(new Pair<>(listener, true));
+            toAdd.push(new HandlerReference(listener));
         }
     }
 
@@ -31,39 +49,48 @@ public class EventDispatcher implements IEventDispatcher {
         if (listener == null) {
             return;
         }
-        if (recuirsion_count == 0) {
-            listeners.remove(listener);
-        } else {
-            for (int i = 0; i < listeners.size(); ++i) {
-                if (listeners.get(i).first == listener) {
-                    listeners.get(i).second = false;
-                    break;
+        Iterator<HandlerReference> iterator = listeners.iterator();
+        while (iterator.hasNext()) {
+            HandlerReference reference = iterator.next();
+            if (reference.get().equals(listener)) {
+                if (recuirsionCount == 0) {
+                    iterator.remove();
+                } else {
+                    reference.invalidate();
                 }
+                break;
             }
         }
     }
 
     @Override
     public void dispatchEvent(Event event) {
-        if (recuirsion_count == 0) {
-            while (!nn.empty()) {
-                listeners.add(nn.peek());
-                nn.pop();
+        if (recuirsionCount == 0) {
+            while (!toAdd.empty()) {
+                listeners.add(toAdd.peek());
+                toAdd.pop();
             }
         }
 
-        ++recuirsion_count;
-        for (Pair<IEventHandler, Boolean> i : listeners) {
-            if (i.second) {
-                i.first.handleEvent(event);
+        ++recuirsionCount;
+        for (HandlerReference reference : listeners) {
+            if (reference.isValid()) {
+                IEventHandler handler = reference.get();
+                if (handler != null) {
+                    handler.handleEvent(event);
+                } else {
+                    reference.invalidate();
+                }
             }
         }
-        --recuirsion_count;
+        --recuirsionCount;
 
-        if (recuirsion_count == 0) {
-            for (Pair<IEventHandler, Boolean> i : listeners) {
-                if (!i.second) {
-                    listeners.remove(i.first);
+        if (recuirsionCount == 0) {
+            Iterator<HandlerReference> iterator = listeners.iterator();
+            while (iterator.hasNext()) {
+                HandlerReference reference = iterator.next();
+                if (!reference.isValid()) {
+                    iterator.remove();
                 }
             }
         }
