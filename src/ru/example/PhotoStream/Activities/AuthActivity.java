@@ -21,7 +21,7 @@ public class AuthActivity extends Activity implements OkTokenRequestListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authactivity);
 
-        api = Odnoklassniki.createInstance(getApplicationContext(), APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
+        api = Odnoklassniki.createInstance(this, APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
         api.setTokenRequestListener(this);
 
         api.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS, OkScope.PHOTO_CONTENT);

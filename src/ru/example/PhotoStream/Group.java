@@ -143,7 +143,7 @@ public class Group extends AlbumsOwner {
         }
     }
 
-    @Override
+    //@Override
     public String getName() {
         return name;
     }

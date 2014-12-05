@@ -54,7 +54,7 @@ public class Selection extends AlbumsOwner {
         }
     }
 
-    @Override
+    //@Override
     public String getName() {
         return name;
     }

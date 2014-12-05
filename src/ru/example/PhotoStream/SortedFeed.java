@@ -93,7 +93,7 @@ public class SortedFeed extends EventDispatcher implements Feed {
         }
     }
 
-    public void addAll(List<Album> albums) {
+    public void addAll(Collection<? extends Album> albums) {
         for (Album album : albums) {
             add(album);
         }

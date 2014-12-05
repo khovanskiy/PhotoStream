@@ -73,13 +73,13 @@ public class PhotoShifter extends FeedPreview implements IEventHandler {
         }, (long) random.nextInt(MAX_INITIAL_DELAY), REFRESH_DELAY);
     }
 
-    public synchronized void immediateGet() {
+    /*public synchronized void immediateGet() {
         if (currentPosition != -1) {
             Event event = new Event(PhotoShifter.this, Event.PHOTO_CHANGED);
             event.data.put("photo", currentPhotos.get(currentPosition));
             dispatchEvent(event);
         }
-    }
+    }*/
 
     public synchronized int getPosition() {
         return currentPosition;

@@ -112,7 +112,7 @@ public class User extends AlbumsOwner {
         }
     }
 
-    @Override
+    //@Override
     public String getName() {
         return name;
     }

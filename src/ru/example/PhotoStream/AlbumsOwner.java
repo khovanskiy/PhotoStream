@@ -1,5 +1,7 @@
 package ru.example.PhotoStream;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.io.Serializable;

@@ -52,7 +52,7 @@ public class EventDispatcher implements IEventDispatcher {
         Iterator<HandlerReference> iterator = listeners.iterator();
         while (iterator.hasNext()) {
             HandlerReference reference = iterator.next();
-            if (reference.get().equals(listener)) {
+            if (reference.get() == listener) {
                 if (recuirsionCount == 0) {
                     iterator.remove();
                 } else {

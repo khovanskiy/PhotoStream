@@ -2,11 +2,8 @@ package ru.example.PhotoStream.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.*;
 import net.hockeyapp.android.CrashManager;
@@ -17,14 +14,25 @@ import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.example.PhotoStream.Tasks.GetCurrentUserTask;
 import ru.example.PhotoStream.Tasks.GetGroupsTask;
 import ru.example.PhotoStream.Tasks.GetUsersTask;
-import ru.example.PhotoStream.Updaters.FeedsUpdater;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.lang.ref.WeakReference;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class FeedsActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class FeedsActivity extends UIActivity implements AdapterView.OnItemClickListener, IEventHandler {
+
+    @Override
+    public void handleEvent(Event e) {
+        if (e.type == FeedPreview.EVENT_UPDATED) {
+            FeedsActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    feedsAdapter.notifyDataSetChanged();
+                }
+            });
+        }
+    }
 
     private class GroupsLoading implements Callable<List<Group>> {
         protected Odnoklassniki api;
@@ -138,7 +146,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         }
     }
 
-    public class FeedsUpdater extends MultiTask<String> {
+    private class FeedsUpdater extends MultiTask<String> {
 
         private WeakReference<FeedsActivity> activityWeakReference = null;
         private Odnoklassniki api;
@@ -151,39 +159,27 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         private class AlbumUpdater extends MultiTask<AlbumsOwner> {
             @Override
             protected void onPostExecute(Map<AlbumsOwner, Object> data) {
+                Console.print("albums loader onPost");
                 FeedsActivity feedsActivity = activityWeakReference.get();
                 if (feedsActivity == null) {
                     return;
                 }
                 for (AlbumsOwner albumsOwner : data.keySet()) {
-                    Feed feed = new LineFeed(api);
-                    feed.addAll(albumsOwner.getAlbums());
-                    FeedPreview feedPreview = new PhotoShifter(feed, albumsOwner.getAvatar());
-                    feedsActivity.feedsAdapter.add(feedPreview);
+                    createFeed(feedsActivity, albumsOwner);
                 }
                 feedsActivity.feedsAdapter.notifyDataSetChanged();
             }
         }
 
-        /*protected void createFeed(AlbumsOwner albumsOwner) {
+        protected void createFeed(FeedsActivity feedsActivity, AlbumsOwner albumsOwner) {
             Feed feed = new LineFeed(api);
             feed.addAll(albumsOwner.getAlbums());
-
-            PhotoShifter photoShifter = new PhotoShifter(feed, albumsOwner.getAvatar());
-            feedsActivity.feedsAdapter.add(photoShifter);
-
-        /*photoShifter.addEventListener(new IEventHandler() {
-            @Override
-            public void handleEvent(Event e) {
-                FeedsActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        feedsAdapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        });
-        }*/
+            FeedPreview feedPreview = new PhotoShifter(feed, albumsOwner.getAvatar());
+            feedsActivity.feedsAdapter.add(feedPreview);
+            feedsActivity.feedPreviews.add(feedPreview);
+            feedPreview.addEventListener(feedsActivity);
+            feedPreview.start();
+        }
 
         @Override
         protected void onPreExecute() {
@@ -199,44 +195,51 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
                 return;
             }
 
-            User currentUser = (User) data.get("current");
-            User.currentUID = currentUser.getId();
-            List<Group> groups = (List<Group>) data.get("groups");
-            List<User> users = (List<User>) data.get("friends");
+            feedsActivity.currentUser = (User) data.get("current");
+            User.currentUID = feedsActivity.currentUser.getId();
+            feedsActivity.groups = (List<Group>) data.get("groups");
+            feedsActivity.friends = (List<User>) data.get("friends");
 
             List<AlbumsOwner> albumsOwners = new LinkedList<>();
-            albumsOwners.add(currentUser);
-            albumsOwners.addAll(groups);
-            albumsOwners.addAll(users);
-
+            albumsOwners.add(feedsActivity.currentUser);
+            albumsOwners.addAll(feedsActivity.groups);
+            albumsOwners.addAll(feedsActivity.friends);
+            Console.print("Friends = " + feedsActivity.friends.size() + " Groups = " + groups.size());
             MultiTask<AlbumsOwner> albumLoader = new AlbumUpdater();
             for (AlbumsOwner albumsOwner : albumsOwners) {
-                if (User.get(albumsOwner.getId()) == null && Group.get(albumsOwner.getId()) == null) {
+                //if (User.get(albumsOwner.getId()) == null && Group.get(albumsOwner.getId()) == null) {
                     albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
-                } else {
-                    makeFeed(albumsOwner);
-                }
+                //} else {
+                  //  createFeed(feedsActivity, albumsOwner);
+                //}
             }
             albumLoader.execute();
         }
     }
 
-    private Odnoklassniki api;
+    private final static String ARG_CURRENT_USER = "currentUserLabel";
+    private final static String USER_FRIENDS_LABEL = "userFriendsLabel";
+    private final static String USER_GROUPS_LABEL = "userGroupsLabel";
+
+    //private Odnoklassniki api;
     private ArrayAdapter<FeedPreview> feedsAdapter;
-    private List<FeedPreview> feedPreviews;
-    private HashSet<AlbumsOwner> cached;
+    private List<FeedPreview> feedPreviews = new ArrayList<>();
+    private AlbumsOwner currentUser;
+    private List<User> friends;
+    private List<Group> groups;
+
+    //private HashSet<AlbumsOwner> cached;
 
     private GridView feedsGrid;
     private int targetSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Console.print("OnCreate");
         super.onCreate(savedInstanceState);
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
-
-        api = Odnoklassniki.getInstance(this);
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -248,13 +251,21 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         feedsGrid.setOnItemClickListener(this);
         feedsGrid.setAdapter(feedsAdapter);
 
+        groups = (List<Group>) UIActivity.instance(FeedsActivity.class).getParam(USER_GROUPS_LABEL);
+        friends = (List<User>) UIActivity.instance(FeedsActivity.class).getParam(USER_FRIENDS_LABEL);
+        currentUser = (User) UIActivity.instance(FeedsActivity.class).getParam(ARG_CURRENT_USER);
+
+        if (currentUser == null) {
+            Console.print("Execute feeds updater");
+            new FeedsUpdater(Odnoklassniki.getInstance(this), this).execute();
+        }
         //if (savedInstanceState == null || !savedInstanceState.containsKey("orientationChanged")) {
-            //albumsOwners = new ArrayList<>();
-            //feeds = new HashMap<>();
-            //photoShifters = new HashMap<>();
-            //listeners = new HashMap<>();
-            //Console.print("FeedsUpdater.execute()");
-            //new FeedsUpdater(this).execute();
+        //albumsOwners = new ArrayList<>();
+        //feeds = new HashMap<>();
+        //photoShifters = new HashMap<>();
+        //listeners = new HashMap<>();
+        //Console.print("FeedsUpdater.execute()");
+        //new FeedsUpdater(this).execute();
         //} else {
             /*for (final AlbumsOwner albumsOwner : albumsOwners) {
                 PhotoShifter photoShifter = photoShifters.get(albumsOwner);
@@ -302,6 +313,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
 
     @Override
     protected void onResume() {
+        Console.print("onResume");
         super.onResume();
         CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
         for (FeedPreview feedPreview : feedPreviews) {
@@ -311,6 +323,7 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
 
     @Override
     protected void onPause() {
+        Console.print("OnPause");
         super.onPause();
         for (FeedPreview feedPreview : feedPreviews) {
             feedPreview.pause();
@@ -323,11 +336,13 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
         int pos = photoShifter.getPosition();
         PhotoActivity.setFeed(photoShifter.getFeed());
         Intent intent = new Intent(this, PhotoActivity.class);
+        UIActivity.instance(PhotoActivity.class).putParam("position", pos);
+
         intent.putExtra("position", pos);
         startActivity(intent);
     }
 
-    private void lockOrientation() {
+    /*private void lockOrientation() {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         } else {
@@ -337,10 +352,20 @@ public class FeedsActivity extends ActionBarActivity implements AdapterView.OnIt
 
     private void unlockOrientation() {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+    }*/
+
+    @Override
+    protected void onDestroy() {
+        Console.print("onDestroy");
+        super.onDestroy();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle saveState) {
-        saveState.putBoolean("orientationChanged", true);
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        Console.print("Save instance state");
+        UIActivity.instance(FeedsActivity.class).putParam(ARG_CURRENT_USER, currentUser);
+        UIActivity.instance(FeedsActivity.class).putParam(USER_FRIENDS_LABEL, friends);
+        UIActivity.instance(FeedsActivity.class).putParam(USER_GROUPS_LABEL, groups);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }
