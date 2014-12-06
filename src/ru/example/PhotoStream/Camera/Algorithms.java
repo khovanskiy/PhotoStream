@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 public class Algorithms {
+
     private static <T> int partition(T[] array, Comparator<T> comparator, int left, int right, int pivotIndex) {
         T tmp = array[pivotIndex];
         array[pivotIndex] = array[right];
