@@ -40,7 +40,7 @@ public class Selection extends AlbumsOwner {
         return current;
     }
 
-    @Override
+    /*@Override
     public List<Album> getAlbums() {
         return albums;
     }
@@ -52,9 +52,13 @@ public class Selection extends AlbumsOwner {
             owner.loadAlbums(api);
             albums.addAll(owner.getAlbums());
         }
+    }*/
+
+    public List<AlbumsOwner> getOwners() {
+        return owners;
     }
 
-    //@Override
+    @Override
     public String getName() {
         return name;
     }

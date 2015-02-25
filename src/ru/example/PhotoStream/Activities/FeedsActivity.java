@@ -6,98 +6,14 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import net.hockeyapp.android.CrashManager;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import ru.example.PhotoStream.*;
-import ru.example.PhotoStream.Loaders.AlbumsLoader;
-import ru.example.PhotoStream.Tasks.GetCurrentUserTask;
-import ru.example.PhotoStream.Tasks.GetGroupsTask;
-import ru.example.PhotoStream.Tasks.GetUsersTask;
-import ru.ok.android.sdk.Odnoklassniki;
 
-import java.lang.ref.WeakReference;
+
 import java.util.*;
 import java.util.concurrent.*;
 
-public class FeedsActivity extends UIActivity implements AdapterView.OnItemClickListener, IEventHandler {
+import ru.example.PhotoStream.*;
 
-    @Override
-    public void handleEvent(Event e) {
-        if (e.type == FeedPreview.EVENT_UPDATED) {
-            FeedsActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    feedsAdapter.notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
-    private class GroupsLoading implements Callable<List<Group>> {
-        protected Odnoklassniki api;
-
-        public GroupsLoading(Odnoklassniki api) {
-            this.api = api;
-        }
-
-        @Override
-        public List<Group> call() throws Exception {
-            List<String> uids = getGroupIds();
-            List<Group> groups = new GetGroupsTask(api, uids.toArray(new String[uids.size()])).call();
-            return groups;
-        }
-
-        protected List<String> getGroupIds() {
-            Map<String, String> requestParams = new HashMap<>();
-            List<String> result = new ArrayList<>();
-            boolean hasMore = true;
-            while (hasMore) {
-                try {
-                    JSONObject groupsObject = new JSONObject(api.request("group.getUserGroupsV2", requestParams, "get"));
-                    if (groupsObject.isNull("groups")) {
-                        hasMore = false;
-                    } else {
-                        JSONArray groups = groupsObject.getJSONArray("groups");
-                        for (int i = 0; i < groups.length(); ++i) {
-                            result.add(groups.getJSONObject(i).getString("groupId"));
-                        }
-                        requestParams.put("anchor", groupsObject.getString("anchor"));
-                    }
-                } catch (Exception e) {
-                    hasMore = false;
-                }
-            }
-            return result;
-        }
-    }
-
-    private class FriendsLoading implements Callable<List<User>> {
-        protected Odnoklassniki api;
-
-        public FriendsLoading(Odnoklassniki api) {
-            this.api = api;
-        }
-
-        @Override
-        public List<User> call() throws Exception {
-            List<String> uids = getFriendIDs();
-            return new GetUsersTask(api, uids.toArray(new String[uids.size()])).call();
-        }
-
-        protected List<String> getFriendIDs() {
-            List<String> result = new ArrayList<>();
-            try {
-                JSONArray friendIDs = new JSONArray(api.request("friends.get", null, "get"));
-                for (int i = 0; i < friendIDs.length(); i++) {
-                    result.add(friendIDs.getString(i));
-                }
-            } catch (Exception e) {
-                Console.print(e.getMessage());
-            }
-            return result;
-        }
-    }
+public class FeedsActivity extends UIActivity implements AdapterView.OnItemClickListener {
 
     private class FeedsAdapter extends ArrayAdapter<FeedPreview> {
         private ConcurrentHashMap<View, Integer> lastPosition = new ConcurrentHashMap<>();
@@ -141,105 +57,157 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
                 }
                 viewHolder.image.loadFromURL(url);
             }
-            //viewHolder.title.setText(owner.getName());
+            viewHolder.title.setText(preview.getFeed().getName());
             return convertView;
         }
     }
 
-    private class FeedsUpdater extends MultiTask<String> {
-
-        private WeakReference<FeedsActivity> activityWeakReference = null;
-        private Odnoklassniki api;
-
-        public FeedsUpdater(Odnoklassniki api, FeedsActivity feedsActivity) {
-            this.activityWeakReference = new WeakReference<>(feedsActivity);
-            this.api = api;
-        }
-
-        private class AlbumUpdater extends MultiTask<AlbumsOwner> {
-            @Override
-            protected void onPostExecute(Map<AlbumsOwner, Object> data) {
-                Console.print("albums loader onPost");
-                FeedsActivity feedsActivity = activityWeakReference.get();
-                if (feedsActivity == null) {
-                    return;
-                }
-                for (AlbumsOwner albumsOwner : data.keySet()) {
-                    createFeed(feedsActivity, albumsOwner);
-                }
-                feedsActivity.feedsAdapter.notifyDataSetChanged();
-            }
-        }
-
-        protected void createFeed(FeedsActivity feedsActivity, AlbumsOwner albumsOwner) {
-            Feed feed = new LineFeed(api);
-            feed.addAll(albumsOwner.getAlbums());
-            FeedPreview feedPreview = new PhotoShifter(feed, albumsOwner.getAvatar());
-            feedsActivity.feedsAdapter.add(feedPreview);
-            feedsActivity.feedPreviews.add(feedPreview);
-            feedPreview.addEventListener(feedsActivity);
-            feedPreview.start();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            this.put("friends", new FriendsLoading(api));
-            this.put("groups", new GroupsLoading(api));
-            this.put("current", new GetCurrentUserTask(api));
-        }
-
-        @Override
-        protected void onPostExecute(Map<String, Object> data) {
-            FeedsActivity feedsActivity = activityWeakReference.get();
-            if (feedsActivity == null) {
-                return;
-            }
-
-            feedsActivity.currentUser = (User) data.get("current");
-            User.currentUID = feedsActivity.currentUser.getId();
-            feedsActivity.groups = (List<Group>) data.get("groups");
-            feedsActivity.friends = (List<User>) data.get("friends");
-
-            List<AlbumsOwner> albumsOwners = new LinkedList<>();
-            albumsOwners.add(feedsActivity.currentUser);
-            albumsOwners.addAll(feedsActivity.groups);
-            albumsOwners.addAll(feedsActivity.friends);
-            Console.print("Friends = " + feedsActivity.friends.size() + " Groups = " + groups.size());
-            MultiTask<AlbumsOwner> albumLoader = new AlbumUpdater();
-            for (AlbumsOwner albumsOwner : albumsOwners) {
-                //if (User.get(albumsOwner.getId()) == null && Group.get(albumsOwner.getId()) == null) {
-                    albumLoader.put(albumsOwner, new AlbumsLoader(api, albumsOwner));
-                //} else {
-                  //  createFeed(feedsActivity, albumsOwner);
-                //}
-            }
-            albumLoader.execute();
-        }
-    }
-
-    private final static String ARG_CURRENT_USER = "currentUserLabel";
-    private final static String USER_FRIENDS_LABEL = "userFriendsLabel";
-    private final static String USER_GROUPS_LABEL = "userGroupsLabel";
-
-    //private Odnoklassniki api;
     private ArrayAdapter<FeedPreview> feedsAdapter;
     private List<FeedPreview> feedPreviews = new ArrayList<>();
-    private AlbumsOwner currentUser;
-    private List<User> friends;
-    private List<Group> groups;
 
-    //private HashSet<AlbumsOwner> cached;
+    private User mCurrentUser;
+    private List<User> mCurrentFriends;
+    private List<Group> mCurrentGroups;
 
     private GridView feedsGrid;
     private int targetSize;
 
+    private OKRequest friendsRequest;
+    private OKRequest groupsRequest;
+    private OKBatchRequest feedsRequest;
+
+    private final IEventHandler previewUpdatedHandler = new IEventHandler() {
+        @Override
+        public void handleEvent(IEventDispatcher dispatcher, String type, Map<String, Object> data) {
+            feedsAdapter.notifyDataSetChanged();
+        }
+    };
+
+    private final OKBatchRequest.OKBatchRequestListener feedsListener = new OKBatchRequest.OKBatchRequestListener() {
+        @Override
+        public void onComplete(OKResponse[] responses) {
+            List<User> usersDiff = Collections.emptyList();
+            List<Group> groupsDiff = Collections.emptyList();
+            for (OKResponse response : responses) {
+                if (response.request == friendsRequest) {
+                    List<User> users = (List<User>) response.parsedModel;
+                    weakCache(FeedsActivity.class).put("friends", users);
+                    usersDiff = getDifference(users, mCurrentFriends);
+                    mCurrentFriends = users;
+                } else if (response.request == groupsRequest) {
+                    List<Group> groups = (List<Group>) response.parsedModel;
+                    weakCache(FeedsActivity.class).put("groups", groups);
+                    groupsDiff = getDifference(groups, mCurrentGroups);
+                    mCurrentGroups = groups;
+                }
+            }
+            updateOwnerAlbums(usersDiff, groupsDiff);
+        }
+    };
+
+    private final OKRequest.OKRequestListener currentUserListener = new OKRequest.OKRequestListener() {
+        @Override
+        public void onComplete(OKResponse response) {
+            User currentUser = (User) response.parsedModel;
+            weakCache(FeedsActivity.class).put("currentUser", currentUser);
+            mCurrentUser = currentUser;
+            fetchNewFeeds();
+        }
+    };
+
+    private <T> List<T> getDifference(List<T> newItems, List<T> oldItems) {
+        if (oldItems == null) {
+            return newItems;
+        }
+        // Fast but not correct
+        if (newItems.size() == oldItems.size()) {
+            return Collections.emptyList();
+        }
+        List<T> difference = new ArrayList<T>();
+        for (T a : newItems) {
+            boolean found = false;
+            for (T b : oldItems) {
+                if (a.equals(b)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                difference.add(a);
+            }
+        }
+        return null;
+    }
+
+    private void fetchNewFeeds() {
+        if (mCurrentUser == null) {
+            return;
+        }
+        friendsRequest = OKApi.friends().get(OKParameters.from("fid", mCurrentUser.getId(), "fields", "uid, first_name, last_name, name, photo_id"));
+        groupsRequest = OKApi.groups().get(OKParameters.from("fid", mCurrentUser.getId(), "fields", "group.*"));
+        feedsRequest = new OKBatchRequest(friendsRequest, groupsRequest);
+        feedsRequest.executeWithListener(feedsListener);
+    }
+
+    private void updateFeedPreviews() {
+        final User currentUser = mCurrentUser;
+        final List<User> friends = mCurrentFriends;
+        final List<Group> groups = mCurrentGroups;
+        List<AlbumsOwner> albumsOwners = new ArrayList<>(1 + friends.size() + groups.size());
+        albumsOwners.add(currentUser);
+        albumsOwners.addAll(friends);
+        albumsOwners.addAll(groups);
+        for (AlbumsOwner albumsOwner : albumsOwners) {
+            Feed feed = new LineFeed(albumsOwner.getName());
+            feed.addAll(albumsOwner.getAlbums());
+            System.out.println(albumsOwner.getName() + " " + albumsOwner.getAlbums().size());
+            FeedPreview feedPreview = new PhotoShifter(feed, albumsOwner.getAvatar());
+            feedsAdapter.add(feedPreview);
+            feedPreviews.add(feedPreview);
+            feedPreview.addEventListener(previewUpdatedHandler);
+            feedPreview.start();
+        }
+        feedsAdapter.notifyDataSetChanged();
+    }
+
+    private void updateOwnerAlbums(final List<User> usersDiff, final List<Group> groupsDiff) {
+        if (usersDiff.size() == 0 && groupsDiff.size() == 0) {
+            updateFeedPreviews();
+            return;
+        }
+        OKRequest[] requests = new OKRequest[1 + usersDiff.size() + groupsDiff.size()];
+        requests[0] = OKApi.albums().get(mCurrentUser, OKParameters.from("fields", "user_album.*"));
+        for (int i = 0; i < usersDiff.size(); ++i) {
+            User user = mCurrentFriends.get(i);
+            requests[i + 1] = OKApi.albums().get(user, OKParameters.from("fields", "user_album.*"));
+        }
+        for (int i = 0; i < groupsDiff.size(); ++i) {
+            Group group = mCurrentGroups.get(i);
+            requests[usersDiff.size() + i + 1] = OKApi.albums().get(group, OKParameters.from("fields", "group_album.*"));
+        }
+
+        OKBatchRequest albumsRequest = new OKBatchRequest(requests);
+        albumsRequest.executeWithListener(new OKBatchRequest.OKBatchRequestListener() {
+            @Override
+            public void onComplete(OKResponse[] responses) {
+                mCurrentUser.setAlbums((List<Album>) responses[0].parsedModel);
+                for (int i = 0; i < usersDiff.size(); ++i) {
+                    usersDiff.get(i).setAlbums((List<Album>) responses[i + 1].parsedModel);
+                }
+                for (int i = 0; i < groupsDiff.size(); ++i) {
+                    groupsDiff.get(i).setAlbums((List<Album>) responses[usersDiff.size() + i + 1].parsedModel);
+                }
+                updateFeedPreviews();
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Console.print("OnCreate");
         super.onCreate(savedInstanceState);
-
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
+        System.out.println("onCreate");
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -251,46 +219,13 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
         feedsGrid.setOnItemClickListener(this);
         feedsGrid.setAdapter(feedsAdapter);
 
-        groups = (List<Group>) UIActivity.instance(FeedsActivity.class).getParam(USER_GROUPS_LABEL);
-        friends = (List<User>) UIActivity.instance(FeedsActivity.class).getParam(USER_FRIENDS_LABEL);
-        currentUser = (User) UIActivity.instance(FeedsActivity.class).getParam(ARG_CURRENT_USER);
-
-        if (currentUser == null) {
-            Console.print("Execute feeds updater");
-            new FeedsUpdater(Odnoklassniki.getInstance(this), this).execute();
+        mCurrentFriends = (List<User>) weakCache(FeedsActivity.class).get("friends");
+        mCurrentGroups = (List<Group>) weakCache(FeedsActivity.class).get("groups");
+        if (weakCache(FeedsActivity.class).containsKey("currentUser")) {
+            mCurrentUser = (User) weakCache(FeedsActivity.class).get("currentUser");
+        } else {
+            OKApi.users().get().executeWithListener(currentUserListener);
         }
-        //if (savedInstanceState == null || !savedInstanceState.containsKey("orientationChanged")) {
-        //albumsOwners = new ArrayList<>();
-        //feeds = new HashMap<>();
-        //photoShifters = new HashMap<>();
-        //listeners = new HashMap<>();
-        //Console.print("FeedsUpdater.execute()");
-        //new FeedsUpdater(this).execute();
-        //} else {
-            /*for (final AlbumsOwner albumsOwner : albumsOwners) {
-                PhotoShifter photoShifter = photoShifters.get(albumsOwner);
-                photoShifter.removeEventListener(listeners.get(albumsOwner));
-                IEventHandler handler = new IEventHandler() {
-                    @Override
-                    public void handleEvent(Event e) {
-                        Photo photo = (Photo) e.data.get("photo");
-                        photos.put(albumsOwner, photo);
-                        FeedsActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                feedsAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                };
-                listeners.put(albumsOwner, handler);
-                photoShifter.addEventListener(handler);
-                photoShifter.immediateGet();
-            }
-            feedsAdapter.addAll(albumsOwners);
-            feedsAdapter.notifyDataSetChanged();
-            unlockOrientation();*/
-        //}
     }
 
     @Override
@@ -313,9 +248,9 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
 
     @Override
     protected void onResume() {
-        Console.print("onResume");
         super.onResume();
-        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
+        System.out.println("onResume");
+        fetchNewFeeds();
         for (FeedPreview feedPreview : feedPreviews) {
             feedPreview.start();
         }
@@ -323,8 +258,8 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
 
     @Override
     protected void onPause() {
-        Console.print("OnPause");
         super.onPause();
+        System.out.println("onPause");
         for (FeedPreview feedPreview : feedPreviews) {
             feedPreview.pause();
         }
@@ -342,30 +277,9 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
         startActivity(intent);
     }
 
-    /*private void lockOrientation() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-        }
-    }
-
-    private void unlockOrientation() {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
-    }*/
-
     @Override
     protected void onDestroy() {
-        Console.print("onDestroy");
         super.onDestroy();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        Console.print("Save instance state");
-        UIActivity.instance(FeedsActivity.class).putParam(ARG_CURRENT_USER, currentUser);
-        UIActivity.instance(FeedsActivity.class).putParam(USER_FRIENDS_LABEL, friends);
-        UIActivity.instance(FeedsActivity.class).putParam(USER_GROUPS_LABEL, groups);
-        super.onSaveInstanceState(savedInstanceState);
+        System.out.println("onDestroy");
     }
 }

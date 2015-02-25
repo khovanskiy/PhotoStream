@@ -45,7 +45,7 @@ public class AlbumHolder {
     }
 
     public List<Photo> loadNextChunk(Odnoklassniki api, int count) {
-        Map<String, String> requestParams = new HashMap<>();
+        OKParameters requestParams = new OKParameters();
         if (album.albumType == AlbumType.USER) {
             requestParams.put("fid", album.user_id);
             requestParams.put("fields", "photo.id, photo.created_ms, photo.user_id, photo.text, photo.pic50x50, photo.pic128x128, photo.pic190x190, photo.pic640x480, photo.pic1024x768, photo.liked_it, photo.like_count, photo.comments_count");

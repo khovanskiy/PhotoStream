@@ -17,6 +17,7 @@ import ru.ok.android.sdk.Odnoklassniki;
 import uk.co.senab.photoview.HackyViewPager;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, IEventHandler {
@@ -49,8 +50,8 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     }
 
     @Override
-    public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE) {
+    public void handleEvent(IEventDispatcher dispatcher, String type, Map<String, Object> data) {
+        if (type == Event.COMPLETE) {
             photoListAdapter.notifyDataSetChanged();
             if (initPosition == -1) {
                 initPosition = 0;

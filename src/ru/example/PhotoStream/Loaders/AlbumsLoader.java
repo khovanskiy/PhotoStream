@@ -20,7 +20,7 @@ public class AlbumsLoader implements Callable<List<Album>> {
 
     @Override
     public List<Album> call() throws Exception {
-        entry.loadAlbums(api);
+        //entry.loadAlbums(api);
         return entry.getAlbums();
     }
 }

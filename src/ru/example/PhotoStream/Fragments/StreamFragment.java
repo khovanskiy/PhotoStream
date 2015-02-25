@@ -23,6 +23,23 @@ import java.util.concurrent.Future;
 
 public class StreamFragment extends IFragmentSwitcher implements IEventHandler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
+    @Override
+    public void handleEvent(IEventDispatcher dispatcher, String type, Map<String, Object> data) {
+        if (type.equals(Event.COMPLETE)) {
+            swipeLayout.setRefreshing(false);
+            List<Photo> photos = feed.getAvailablePhotos();
+
+            //Console.print("Total photos: " + photos.size() + " " + photoListAdapter.getCount() + " " + updating);
+            if (photos.size() > photoListAdapter.getCount() || updating) {
+                photoListAdapter.clear();
+                photoListAdapter.addAll(photos);
+                photoListAdapter.notifyDataSetChanged();
+            }
+
+            updating = false;
+        }
+    }
+
     private class ViewHolder {
         SmartImage image;
     }
@@ -67,7 +84,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
 
         photosGrid.setAdapter(photoListAdapter);
 
-        feed = new LineFeed(api);
+        feed = new LineFeed("");
         feed.addEventListener(this);
 
         Bundle bundle = getArguments();
@@ -168,22 +185,5 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
     public void onRefresh() {
         feed.clear();
         loadMorePhotos();
-    }
-
-    @Override
-    public void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE) {
-            swipeLayout.setRefreshing(false);
-            List<Photo> photos = feed.getAvailablePhotos();
-
-            //Console.print("Total photos: " + photos.size() + " " + photoListAdapter.getCount() + " " + updating);
-            if (photos.size() > photoListAdapter.getCount() || updating) {
-                photoListAdapter.clear();
-                photoListAdapter.addAll(photos);
-                photoListAdapter.notifyDataSetChanged();
-            }
-
-            updating = false;
-        }
     }
 }

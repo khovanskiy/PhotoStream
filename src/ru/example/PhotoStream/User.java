@@ -34,7 +34,7 @@ public class User extends AlbumsOwner {
     public static String currentUID = "";
 
     private static Map<String, User> cache = new ConcurrentHashMap<>();
-    private List<Album> albums = new ArrayList<>();
+
     private static List<User> friends = new ArrayList<>();
     private static AtomicBoolean actual = new AtomicBoolean(false);
 
@@ -77,12 +77,7 @@ public class User extends AlbumsOwner {
         return current;
     }
 
-    @Override
-    public List<Album> getAlbums() {
-        return albums;
-    }
-
-    @Override
+    /*@Override
     public void loadAlbums(Odnoklassniki api) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("fid", objectId);
@@ -110,9 +105,9 @@ public class User extends AlbumsOwner {
                 hasMore = false;
             }
         }
-    }
+    }*/
 
-    //@Override
+    @Override
     public String getName() {
         return name;
     }

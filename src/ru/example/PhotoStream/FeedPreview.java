@@ -1,24 +1,20 @@
 package ru.example.PhotoStream;
 
+import java.util.Map;
+
 public abstract class FeedPreview implements IEventDispatcher {
 
-    public final static String EVENT_UPDATED = "preview_updated";
+    private IEventDispatcher dispatcher = new EventDispatcher();
 
     protected final Feed currentFeed;
-
-    private final EventDispatcher dispatcher = new EventDispatcher();
 
     protected FeedPreview(Feed currentFeed) {
         this.currentFeed = currentFeed;
     }
 
-    public void start() {
+    public abstract void start();
 
-    }
-
-    public void pause() {
-
-    }
+    public abstract void pause();
 
     public abstract Photo getPhoto();
 
@@ -39,7 +35,7 @@ public abstract class FeedPreview implements IEventDispatcher {
     }
 
     @Override
-    public void dispatchEvent(Event e) {
-        dispatcher.dispatchEvent(e);
+    public void dispatchEvent(String type, Map<String, Object> data) {
+        dispatcher.dispatchEvent(type, data);
     }
 }

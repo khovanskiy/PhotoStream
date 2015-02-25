@@ -118,9 +118,11 @@ public class Album extends OKApiObject {
         }
         if (object.has("user_id")) {
             current.user_id = object.getString("user_id");
+            current.albumType = AlbumType.USER;
         }
         if (object.has("group_id")) {
             current.group_id = object.getString("group_id");
+            current.albumType = AlbumType.GROUP;
         }
         return current;
     }

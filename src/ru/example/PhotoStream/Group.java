@@ -111,12 +111,12 @@ public class Group extends AlbumsOwner {
         return current;
     }
 
-    @Override
+    /*@Override
     public List<Album> getAlbums() {
         return albums;
     }
 
-    @Override
+    /*@Override
     public void loadAlbums(Odnoklassniki api) {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("gid", objectId);
@@ -141,9 +141,9 @@ public class Group extends AlbumsOwner {
                 hasMore = false;
             }
         }
-    }
+    }*/
 
-    //@Override
+    @Override
     public String getName() {
         return name;
     }

@@ -1,12 +1,13 @@
 package ru.example.PhotoStream;
 
 import android.os.AsyncTask;
+import ru.example.PhotoStream.Activities.UIActivity;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class SortedFeed extends EventDispatcher implements Feed {
+public class SortedFeed extends Feed {
 
     private class PhotoByUploadTimeComparator implements Comparator<Photo> {
 
@@ -30,7 +31,7 @@ public class SortedFeed extends EventDispatcher implements Feed {
             for (Map.Entry<String, AlbumHolder> entry : albums.entrySet()) {
                 AlbumHolder album = entry.getValue();
                 if (album.hasMore() && album.getPhotosCount() == 0) {
-                    heap.addAll(album.loadNextChunk(api, 1));
+                    heap.addAll(album.loadNextChunk(UIActivity.getAPI(), 1));
                 }
             }
             for (int i = 0; heap.size() > 0 && i < currentLoadCount; ++i) {
@@ -38,7 +39,7 @@ public class SortedFeed extends EventDispatcher implements Feed {
                 chunk.add(photo);
                 AlbumHolder album = albums.get(photo.album_id);
                 if (album.hasMore() && album.getLastLoadedPhoto() == photo) {
-                    heap.addAll(album.loadNextChunk(api, DEFAULT_CHUNK_SIZE));
+                    heap.addAll(album.loadNextChunk(UIActivity.getAPI(), DEFAULT_CHUNK_SIZE));
                 }
             }
             return chunk;
@@ -49,7 +50,7 @@ public class SortedFeed extends EventDispatcher implements Feed {
             for (Photo photo : chunk) {
                 toDisplay.add(photo);
             }
-            dispatchEvent(new Event(SortedFeed.this, Event.COMPLETE));
+            dispatchEvent(Event.CHANGE, null);
             isRunning.set(false);
         }
 
@@ -61,16 +62,15 @@ public class SortedFeed extends EventDispatcher implements Feed {
     protected Map<String, AlbumHolder> albums = new HashMap<>();
     protected PriorityQueue<Photo> heap = new PriorityQueue<>(1, new PhotoByUploadTimeComparator());
     protected List<Photo> toDisplay = new ArrayList<>();
-    protected Odnoklassniki api;
     protected int currentLoadCount;
     protected AtomicBoolean isRunning = new AtomicBoolean(false);
 
-    public SortedFeed(Odnoklassniki api) {
-        this(api, DEFAULT_LOAD_COUNT);
+    public SortedFeed(String name) {
+        this(name, DEFAULT_LOAD_COUNT);
     }
 
-    public SortedFeed(Odnoklassniki api, int loadCount) {
-        this.api = api;
+    public SortedFeed(String name, int loadCount) {
+        super(name);
         this.currentLoadCount = loadCount;
     }
 

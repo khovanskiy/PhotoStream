@@ -1,12 +1,13 @@
 package ru.example.PhotoStream;
 
 import android.os.AsyncTask;
+import ru.example.PhotoStream.Activities.UIActivity;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class LineFeed extends EventDispatcher implements Feed {
+public class LineFeed extends Feed {
 
     private class Loader extends AsyncTask<Void, Void, List<Photo>> {
         @Override
@@ -16,7 +17,7 @@ public class LineFeed extends EventDispatcher implements Feed {
             for (Map.Entry<String, AlbumHolder> entry : albums.entrySet()) {
                 AlbumHolder album = entry.getValue();
                 while (toLoad > 0 && album.hasMore()) {
-                    List<Photo> photos = album.loadNextChunk(api, DEFAULT_CHUNK_SIZE);
+                    List<Photo> photos = album.loadNextChunk(UIActivity.getAPI(), DEFAULT_CHUNK_SIZE);
                     toLoad -= photos.size();
                     chunk.addAll(photos);
                 }
@@ -29,7 +30,7 @@ public class LineFeed extends EventDispatcher implements Feed {
             for (Photo photo : chunk) {
                 toDisplay.add(photo);
             }
-            dispatchEvent(new Event(LineFeed.this, Event.COMPLETE));
+            dispatchEvent(Event.COMPLETE, null);
             isRunning.set(false);
         }
 
@@ -40,16 +41,15 @@ public class LineFeed extends EventDispatcher implements Feed {
 
     protected Map<String, AlbumHolder> albums = new HashMap<>();
     protected List<Photo> toDisplay = new ArrayList<>();
-    protected Odnoklassniki api;
     protected int currentLoadCount;
     protected AtomicBoolean isRunning = new AtomicBoolean(false);
 
-    public LineFeed(Odnoklassniki api) {
-        this(api, DEFAULT_LOAD_COUNT);
+    public LineFeed(String name) {
+        this(name, DEFAULT_LOAD_COUNT);
     }
 
-    public LineFeed(Odnoklassniki api, int loadCount) {
-        this.api = api;
+    public LineFeed(String name, int loadCount) {
+        super(name);
         this.currentLoadCount = loadCount;
     }
 

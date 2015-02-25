@@ -9,12 +9,12 @@ import java.util.List;
  */
 public class SortedFilteredFeed extends SortedFeed {
 
-    public SortedFilteredFeed(Odnoklassniki api) {
-        super(api);
+    public SortedFilteredFeed(String name) {
+        super(name);
     }
 
-    public SortedFilteredFeed(Odnoklassniki api, int loadCount) {
-        super(api, loadCount);
+    public SortedFilteredFeed(String name, int loadCount) {
+        super(name, loadCount);
     }
 
     @Override

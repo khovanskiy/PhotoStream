@@ -1,5 +1,8 @@
 package ru.example.PhotoStream;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.util.*;
 
 public class PhotoShifter extends FeedPreview implements IEventHandler {
@@ -13,6 +16,14 @@ public class PhotoShifter extends FeedPreview implements IEventHandler {
     private boolean toChange = false;
     private Timer timer;
     private Photo defaultPhoto;
+    private Looper mLooper;
+
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            dispatchEvent(Event.CHANGE, null);
+        }
+    };
 
     public PhotoShifter(Feed feed, Photo defaultPhoto) {
         super(feed);
@@ -26,29 +37,14 @@ public class PhotoShifter extends FeedPreview implements IEventHandler {
         return currentPhotos.get(currentPosition);
     }
 
-    @Override
-    public synchronized void handleEvent(Event e) {
-        if (e.type == Event.COMPLETE) {
-            currentPhotos = currentFeed.getAvailablePhotos();
-            if (lastSize == currentPhotos.size()) {
-                hasMore = false;
-            }
-            lastSize = currentPhotos.size();
-            if (toChange) {
-                toChange = false;
-                nextPosition();
-            }
-        }
-    }
-
-    private synchronized void nextPosition() {
+    private void nextPosition() {
         if (currentPhotos.size() != 0) {
             currentPosition = (currentPosition + 1) % currentPhotos.size();
-            dispatchEvent(new Event(this, EVENT_UPDATED));
+            new Handler(mLooper).post(runnable);
         }
     }
 
-    private synchronized void changePhoto() {
+    private void changePhoto() {
         if (hasMore && currentPosition + 1 == currentPhotos.size()) {
             toChange = true;
             currentFeed.loadMore();
@@ -57,13 +53,14 @@ public class PhotoShifter extends FeedPreview implements IEventHandler {
         }
     }
 
-    public synchronized void pause() {
+    public void pause() {
         if (timer != null) {
             timer.cancel();
         }
     }
 
-    public synchronized void start() {
+    public void start() {
+        mLooper = Looper.myLooper();
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -81,7 +78,24 @@ public class PhotoShifter extends FeedPreview implements IEventHandler {
         }
     }*/
 
-    public synchronized int getPosition() {
-        return currentPosition;
+    public int getPosition() {
+        synchronized (this) {
+            return currentPosition;
+        }
+    }
+
+    @Override
+    public void handleEvent(IEventDispatcher dispatcher, String type, Map<String, Object> data) {
+        if (type.equals(Event.COMPLETE)) {
+            currentPhotos = currentFeed.getAvailablePhotos();
+            if (lastSize == currentPhotos.size()) {
+                hasMore = false;
+            }
+            lastSize = currentPhotos.size();
+            if (toChange) {
+                toChange = false;
+                nextPosition();
+            }
+        }
     }
 }

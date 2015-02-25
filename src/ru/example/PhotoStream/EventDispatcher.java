@@ -3,6 +3,7 @@ package ru.example.PhotoStream;
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Stack;
 
 public class EventDispatcher implements IEventDispatcher {
@@ -64,7 +65,7 @@ public class EventDispatcher implements IEventDispatcher {
     }
 
     @Override
-    public void dispatchEvent(Event event) {
+    public void dispatchEvent(String type, Map<String, Object> data) {
         if (recuirsionCount == 0) {
             while (!toAdd.empty()) {
                 listeners.add(toAdd.peek());
@@ -77,7 +78,7 @@ public class EventDispatcher implements IEventDispatcher {
             if (reference.isValid()) {
                 IEventHandler handler = reference.get();
                 if (handler != null) {
-                    handler.handleEvent(event);
+                    handler.handleEvent(this, type, data);
                 } else {
                     reference.invalidate();
                 }

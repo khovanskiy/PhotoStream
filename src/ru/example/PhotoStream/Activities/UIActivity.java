@@ -1,11 +1,17 @@
 package ru.example.PhotoStream.Activities;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
+import net.hockeyapp.android.CrashManager;
 import ru.ok.android.sdk.Odnoklassniki;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 public abstract class UIActivity extends ActionBarActivity {
     private final static String APP_ID = "409574400";
@@ -39,15 +45,61 @@ public abstract class UIActivity extends ActionBarActivity {
         return holder;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private static Map<Class<? extends UIActivity>, Map<String, Object>> caches = new HashMap<>();
+
+    public static Map<String, Object> weakCache(Class<? extends UIActivity> aClass) {
+        Map<String, Object> cache = caches.get(aClass);
+        if (cache == null) {
+            cache = new WeakHashMap<>();
+            caches.put(aClass, cache);
+        }
+        return cache;
     }
 
-    protected Odnoklassniki getAPI() {
-        if (Odnoklassniki.hasInstance()) {
-            return Odnoklassniki.getInstance(this);
+    /*private String mActivityName = null;
+    public String getActivityName() {
+        if (mActivityName == null) {
+            mActivityName = this.getLocalClassName();
         }
-        return Odnoklassniki.createInstance(this, APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
+        return mActivityName;
+    }*/
+
+    private static Odnoklassniki api;
+    private static Activity sTopActivity;
+
+    public static Activity getTopActivity() {
+        return sTopActivity;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (sTopActivity != this) {
+            sTopActivity = this;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sTopActivity != this) {
+            sTopActivity = this;
+        }
+        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (sTopActivity == this) {
+            sTopActivity = null;
+        }
+    }
+
+    public static Odnoklassniki getAPI() {
+        if (Odnoklassniki.hasInstance()) {
+            return Odnoklassniki.getInstance(sTopActivity);
+        }
+        return Odnoklassniki.createInstance(sTopActivity, APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
     }
 }

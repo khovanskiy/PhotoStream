@@ -20,8 +20,7 @@ public class GetCurrentUserTask implements Callable<User> {
 
     @Override
     public User call() throws Exception {
-        Map<String, String> requestParams = new HashMap<>();
-        String response = api.request("users.getCurrentUser", requestParams, "get");
+        String response = api.request("users.getCurrentUser", null, "get");
         JSONObject userObject = new JSONObject(response);
         String uid = userObject.getString("uid");
         Callable<List<User>> callable = new GetUsersTask(api, uid);
