@@ -76,7 +76,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
                     //holder.image.setImageBitmap(null);
                 }
                 if (photo.hasAnySize()) {
-                    holder.image.loadFromURL(photo.findBestSize(targetSize, targetSize).getUrl());
+                    holder.image.setImageURL(photo.findBestSize(targetSize, targetSize).getUrl());
                 }
                 return convertView;
             }

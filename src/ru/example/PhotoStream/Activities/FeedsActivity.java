@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-
+import java.net.URI;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -53,9 +53,9 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
             if (photo != null && photo.hasAnySize()) {
                 String url = photo.findBestSize(targetSize, targetSize).getUrl();
                 if (!sameView) {
-                    viewHolder.image.setAsFirstCalled();
+                    //viewHolder.image.setAsFirstCalled();
                 }
-                viewHolder.image.loadFromURL(url);
+                viewHolder.image.setImageURL(url);
             }
             viewHolder.title.setText(preview.getFeed().getName());
             return convertView;
@@ -157,6 +157,8 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
         albumsOwners.add(currentUser);
         albumsOwners.addAll(friends);
         albumsOwners.addAll(groups);
+        feedsAdapter.clear();
+        feedPreviews.clear();
         for (AlbumsOwner albumsOwner : albumsOwners) {
             Feed feed = new LineFeed(albumsOwner.getName());
             feed.addAll(albumsOwner.getAlbums());

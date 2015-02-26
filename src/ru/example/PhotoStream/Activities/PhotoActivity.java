@@ -146,7 +146,7 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
 
     @Override
     public void onBackPressed() {
-        SmartImage.clearCache();
+        //SmartImage.clearCache();
         super.onBackPressed();
     }
 

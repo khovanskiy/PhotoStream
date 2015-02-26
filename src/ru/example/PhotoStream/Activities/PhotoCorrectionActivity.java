@@ -19,7 +19,7 @@ import ru.example.PhotoStream.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PhotoCorrectionActivity extends ActionBarActivity
+public final class PhotoCorrectionActivity extends UIActivity
         implements IncMultiFilter.OnImageChangedListener {
 
     private static Bitmap image = null;
@@ -51,9 +51,9 @@ public final class PhotoCorrectionActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = this;
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        context = this;
+
         setContentView(R.layout.photocorrectionactivity);
         imageView = (ImageView) findViewById(R.id.photocorrecting_image);
         if (generalFilter == null) {

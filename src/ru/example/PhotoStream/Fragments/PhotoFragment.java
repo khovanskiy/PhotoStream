@@ -15,7 +15,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 import java.util.*;
 
-public class PhotoFragment extends Fragment implements View.OnClickListener, SmartImage.OnSmartViewLoadedListener {
+public class PhotoFragment extends Fragment implements View.OnClickListener {
 
     private class LikeAdder extends AsyncTask<Void, Void, Boolean> {
 
@@ -149,7 +149,13 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
         progressBar.setVisibility(View.VISIBLE);
 
         image = (SmartImage) viewLayout.findViewById(R.id.photoactivity_page_image);
-        image.setOnSmartViewLoadedListener(this);
+        image.setOnSmartViewLoadedListener(new SmartImage.SmartViewLoadedListener() {
+            @Override
+            public void onUpdated() {
+                image.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
         image.setVisibility(View.GONE);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +164,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
                 checkState(viewLayout);
             }
         });
-        image.loadFromURL(photo.getMaxSize().getUrl());
+        image.setImageURL(photo.getMaxSize().getUrl());
         likeButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_like);
         if (photo.user_id.equals(User.currentUID)) {
             likeButton.setEnabled(false);
@@ -179,13 +185,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, Sma
             }
         });
         return viewLayout;
-    }
-
-
-    @Override
-    public void onSmartViewUpdated() {
-        image.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
     }
 
     @Override
