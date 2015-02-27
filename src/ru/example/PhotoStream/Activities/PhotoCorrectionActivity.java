@@ -6,14 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.*;
-import net.hockeyapp.android.CrashManager;
 import ru.example.PhotoStream.Camera.Filters.IncMultiFilter;
 import ru.example.PhotoStream.Camera.Filters.TunablePhotoFilterFactory;
 import ru.example.PhotoStream.Camera.RawBitmap;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
 
 import java.util.ArrayList;
@@ -42,7 +39,6 @@ public final class PhotoCorrectionActivity extends UIActivity
 
     private ImageView imageView;
     private FrameLayout filtersFrame, settingsFrame;
-    private Context context;
 
     private List<View> filterBadges = new ArrayList<>();
 
@@ -51,10 +47,9 @@ public final class PhotoCorrectionActivity extends UIActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        context = this;
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.photocorrectionactivity);
+
         imageView = (ImageView) findViewById(R.id.photocorrecting_image);
         if (generalFilter == null) {
             generalFilter = new IncMultiFilter(this, image);
@@ -123,13 +118,13 @@ public final class PhotoCorrectionActivity extends UIActivity
                 }
             });
         }
-        ImageButton backButton = (ImageButton) findViewById(R.id.photocorrecting_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        //ImageButton backButton = (ImageButton) findViewById(R.id.photocorrecting_back);
+        /*backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
-        });
+        });*/
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
@@ -137,6 +132,25 @@ public final class PhotoCorrectionActivity extends UIActivity
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.photo_correction_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_next: {
+                FrameLayout progressFrame = (FrameLayout) findViewById(R.id.photocorrecting_processing);
+                progressFrame.setVisibility(View.VISIBLE);
+                generalFilter.getFilteredImage();
+            }
+            break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void switchFilterFrame(View v) {
@@ -300,20 +314,7 @@ public final class PhotoCorrectionActivity extends UIActivity
     @Override
     public void onResume() {
         super.onResume();
-        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
-        ImageButton uploadButton = (ImageButton) findViewById(R.id.photocorrecting_upload);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            private boolean clicked = false;
-            @Override
-            public synchronized void onClick(View v) {
-                if (!clicked) {
-                    clicked = true;
-                    FrameLayout progressFrame = (FrameLayout) findViewById(R.id.photocorrecting_processing);
-                    progressFrame.setVisibility(View.VISIBLE);
-                    generalFilter.getFilteredImage();
-                }
-            }
-        });
+
         if (moveBack) {
             moveBack = false;
             onRealBackClick();
@@ -346,8 +347,8 @@ public final class PhotoCorrectionActivity extends UIActivity
 
     @Override
     public void onFullImageReceived(Bitmap fullImage) {
-        PhotoUploadActivity.setPicture(fullImage);
-        Intent intent = new Intent(context, PhotoUploadActivity.class);
+        Intent intent = new Intent(this, PhotoUploadActivity.class);
+        weakCache(PhotoUploadActivity.class).put("pictureTaken", fullImage);
         FrameLayout progressFrame = (FrameLayout) findViewById(R.id.photocorrecting_processing);
         progressFrame.setVisibility(View.GONE);
         startActivity(intent);

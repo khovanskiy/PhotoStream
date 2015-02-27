@@ -1,6 +1,5 @@
 package ru.example.PhotoStream.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,19 +8,15 @@ import ru.ok.android.sdk.Odnoklassniki;
 import ru.ok.android.sdk.OkTokenRequestListener;
 import ru.ok.android.sdk.util.OkScope;
 
-public class AuthActivity extends Activity implements OkTokenRequestListener {
+public class AuthActivity extends UIActivity implements OkTokenRequestListener {
     private Odnoklassniki api = null;
-
-    private final String APP_ID = "409574400";
-    private final String APP_SECRET_KEY = "9C9616F58E44F35643492983";
-    private final String APP_PUBLIC_KEY = "CBANJKGJBBABABABA";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.authactivity);
 
-        api = Odnoklassniki.createInstance(this, APP_ID, APP_SECRET_KEY, APP_PUBLIC_KEY);
+        api = getAPI();
         api.setTokenRequestListener(this);
 
         api.requestAuthorization(this, false, OkScope.VALUABLE_ACCESS, OkScope.PHOTO_CONTENT);

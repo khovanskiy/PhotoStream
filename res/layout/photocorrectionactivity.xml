@@ -221,7 +221,7 @@
             </FrameLayout>
         </LinearLayout>
     </TabHost>
-    <LinearLayout
+    <!--<LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -256,7 +256,7 @@
                 android:layout_gravity="center_vertical|right"
                 android:src="@drawable/_0001_accept"
                 android:layout_marginRight="8dp"/>
-    </LinearLayout>
+    </LinearLayout>-->
     <FrameLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" android:visibility="gone" android:id="@+id/photocorrecting_processing"

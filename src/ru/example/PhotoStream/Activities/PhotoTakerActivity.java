@@ -38,11 +38,10 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         moveBack = b;
     }
 
-    private Camera camera = null;
+    private Camera camera;
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private int currentCameraId;
-    private Context context;
     private OrientationEventListener orientationEventListener;
     private SurfaceGridView gridView;
     private ImageButton flashButton;
@@ -53,7 +52,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     private void stopCamera() {
         if (camera != null) {
-            //Console.print("Release camera");
+            //System.out.println("Release camera");
             camera.stopPreview();
             camera.release();
             camera = null;
@@ -62,7 +61,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     private void startCamera(int cameraId) {
         try {
-            //Console.print("Open camera");
+            //System.out.println("Open camera");
             camera = Camera.open(cameraId);
             camera.setPreviewDisplay(surfaceHolder);
             Camera.Size size = camera.getParameters().getPreviewSize();
@@ -84,7 +83,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             currentCameraId = cameraId;
             updateCameraButton();
         } catch (Exception e) {
-            Toast.makeText(context, "Failed to open camera", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Failed to open camera", Toast.LENGTH_SHORT).show();
             Log.i("M_CONSOLE", e.getMessage(), e);
         }
     }
@@ -105,10 +104,9 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.phototakeractivity);
-        context = this;
 
         ImageButton galleryButton = (ImageButton) findViewById(R.id.phototaker_gallery);
         galleryButton.setOnClickListener(this);
@@ -151,9 +149,9 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
                 PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                Intent intent = new Intent(context, PhotoCorrectionActivity.class);
+                Intent intent = new Intent(this, PhotoCorrectionActivity.class);
                 //Console.printAvailableMemory();
-                context.startActivity(intent);
+                startActivity(intent);
             } else if (requestCode == TAKE_VIDEO) {
                 Uri videoUri = data.getData();
                 VideoUploadActivity.setVideoUri(videoUri);
@@ -193,6 +191,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        //System.out.println("Surface Created");
         if (isFrontCamera) {
             setCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
         } else {
@@ -202,6 +201,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        //System.out.println("Surface Changed");
         if (isPreviewRunning) {
             camera.stopPreview();
         }
@@ -214,6 +214,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        //System.out.println("Surface Destroyed");
         if (isPreviewRunning) {
             stopCamera();
             isPreviewRunning = false;
@@ -284,9 +285,9 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
                 PhotoCorrectionActivity.setBitmap(bitmap);
-                Intent intent = new Intent(context, PhotoCorrectionActivity.class);
+                Intent intent = new Intent(PhotoTakerActivity.this, PhotoCorrectionActivity.class);
                 //Console.printAvailableMemory();
-                context.startActivity(intent);
+                startActivity(intent);
             }
         });
     }
@@ -294,7 +295,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onResume() {
         super.onResume();
-        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
         if (moveBack) {
             moveBack = false;
             onBackPressed();
@@ -320,9 +320,9 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private void rotate(int id, boolean landscape) {
         Animation animation;
         if (landscape) {
-            animation = AnimationUtils.loadAnimation(context, R.anim.rotateright);
+            animation = AnimationUtils.loadAnimation(this, R.anim.rotateright);
         } else {
-            animation = AnimationUtils.loadAnimation(context, R.anim.rotateleft);
+            animation = AnimationUtils.loadAnimation(this, R.anim.rotateleft);
         }
         findViewById(id).startAnimation(animation);
     }

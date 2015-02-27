@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPageChangeListener, IEventHandler {
+public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeListener, IEventHandler {
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -93,7 +93,6 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
 
     private static Feed feed;
     private int initPosition;
-    protected Odnoklassniki api;
     protected List<Photo> photos;
     protected PageAdapter photoListAdapter;
     protected HackyViewPager viewPager;
@@ -103,9 +102,8 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.photoactivity);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        api = Odnoklassniki.getInstance(this);
         frameLayout = (FrameLayout) findViewById(R.id.photoactivity_frame);
         progressBar = (ProgressBar) findViewById(R.id.photoactivity_progress);
         viewPager = (HackyViewPager) findViewById(R.id.photoactivity_pager);
@@ -130,18 +128,12 @@ public class PhotoActivity extends ActionBarActivity implements ViewPager.OnPage
         } else {
             feed.loadMore();
         }
-        getSupportActionBar().hide();
+        //getSupportActionBar().hide();
     }
 
     public static void setFeed(Feed newFeed) {
         feed = newFeed;
         assert (feed != null);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
     }
 
     @Override

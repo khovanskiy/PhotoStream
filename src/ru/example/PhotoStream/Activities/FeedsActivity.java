@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 
-import java.net.URI;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -162,7 +161,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
         for (AlbumsOwner albumsOwner : albumsOwners) {
             Feed feed = new LineFeed(albumsOwner.getName());
             feed.addAll(albumsOwner.getAlbums());
-            System.out.println(albumsOwner.getName() + " " + albumsOwner.getAlbums().size());
+            //System.out.println(albumsOwner.getName() + " " + albumsOwner.getAlbums().size());
             FeedPreview feedPreview = new PhotoShifter(feed, albumsOwner.getAvatar());
             feedsAdapter.add(feedPreview);
             feedPreviews.add(feedPreview);

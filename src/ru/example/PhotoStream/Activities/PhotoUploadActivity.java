@@ -1,16 +1,12 @@
 package ru.example.PhotoStream.Activities;
 
-import android.content.pm.ActivityInfo;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.*;
-import net.hockeyapp.android.CrashManager;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.HttpClient;
@@ -21,9 +17,7 @@ import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.json.JSONObject;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.R;
-import ru.ok.android.sdk.Odnoklassniki;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -32,7 +26,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PhotoUploadActivity extends ActionBarActivity {
+public class PhotoUploadActivity extends UIActivity {
 
     private class Loader extends AsyncTask<Void, Void, Boolean> {
 
@@ -47,7 +41,7 @@ public class PhotoUploadActivity extends ActionBarActivity {
 
             Map<String, String> requestParameters = new HashMap<>();
             try {
-                JSONObject response = new JSONObject(api.request("photosV2.getUploadUrl", requestParameters, "get"));
+                JSONObject response = new JSONObject(getAPI().request("photosV2.getUploadUrl", requestParameters, "get"));
                 //Console.print("Photo response: " + response);
                 String photoId = response.getJSONArray("photo_ids").getString(0);
                 URL url = new URL(response.getString("upload_url"));
@@ -80,7 +74,7 @@ public class PhotoUploadActivity extends ActionBarActivity {
                 if (!comment.isEmpty()) {
                     requestParameters.put("comment", comment);
                 }
-                response = new JSONObject(api.request("photosV2.commit", requestParameters, "get"));
+                response = new JSONObject(getAPI().request("photosV2.commit", requestParameters, "get"));
                 if (response.getJSONArray("photos").getJSONObject(0).getString("status").equals("SUCCESS")) {
                     return true;
                 }
@@ -97,9 +91,9 @@ public class PhotoUploadActivity extends ActionBarActivity {
             if (aBoolean) {
                 Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadSuccess), Toast.LENGTH_SHORT).show();
                 uploadButton.setVisibility(View.GONE);
-                PhotoCorrectionActivity.setMoveBack(true);
-                PhotoTakerActivity.setMoveBack(true);
-                onBackPressed();
+                Intent intent = new Intent(getApplicationContext(), FeedsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             } else {
                 Toast.makeText(PhotoUploadActivity.this, getString(R.string.uploadFailure), Toast.LENGTH_SHORT).show();
                 uploadButton.setEnabled(true);
@@ -107,26 +101,31 @@ public class PhotoUploadActivity extends ActionBarActivity {
         }
     }
 
-    private Odnoklassniki api;
-    private static Bitmap pictureTaken = null;
+    private Bitmap pictureTaken;
     protected Button uploadButton;
     private EditText photoComment;
-
-    public static void setPicture(Bitmap bitmap) {
-         pictureTaken = bitmap;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        pictureTaken = (Bitmap) weakCache(PhotoUploadActivity.class).get("pictureTaken");
+        if (pictureTaken == null) {
+            finish();
+        }
+        weakCache(PhotoUploadActivity.class).remove("pictureTaken");
+
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //Line is commented because it prevents view from resizing when keyboard appears
         //This is Android bug, we can do nothing
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.photouploadactivity);
-        api = Odnoklassniki.getInstance(this);
+
         ImageView photo = (ImageView) findViewById(R.id.photoupload_imageview);
         photo.setImageBitmap(pictureTaken);
+
+        photoComment = (EditText) findViewById(R.id.photoupload_commenttext);
+
         uploadButton = (Button) findViewById(R.id.photoupload_upload);
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,32 +137,6 @@ public class PhotoUploadActivity extends ActionBarActivity {
                 loader.execute();
             }
         });
-        photoComment = (EditText) findViewById(R.id.photoupload_commenttext);
-        ImageButton backButton = (ImageButton) findViewById(R.id.photoupload_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
 
-    public static void clearBitmap() {
-        if (pictureTaken != null) {
-            pictureTaken.recycle();
-            pictureTaken = null;
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        CrashManager.register(this, "5adb6faead01ccaa24e6865215ddcb59");
-    }
-
-    @Override
-    public void onBackPressed() {
-        clearBitmap();
-        super.onBackPressed();
     }
 }
