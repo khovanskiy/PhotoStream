@@ -104,8 +104,8 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.phototakeractivity);
 
         ImageButton galleryButton = (ImageButton) findViewById(R.id.phototaker_gallery);

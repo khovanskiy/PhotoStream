@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.*;
 import android.widget.*;
 import ru.example.PhotoStream.Camera.Filters.IncMultiFilter;
@@ -75,7 +76,7 @@ public final class PhotoCorrectionActivity extends UIActivity
         LinearLayout layout = (LinearLayout) findViewById(R.id.photocorrecting_filters_layout);
         LayoutInflater inflater = getLayoutInflater();
         TunablePhotoFilterFactory.FilterType initFilterType = generalFilter.getPhotoFilterType();
-        for (final TunablePhotoFilterFactory.FilterType filterType: TunablePhotoFilterFactory.FilterType.values()) {
+        for (final TunablePhotoFilterFactory.FilterType filterType : TunablePhotoFilterFactory.FilterType.values()) {
             View view = inflater.inflate(R.layout.filterbadgeview, layout, false);
             view.setSelected(filterType == initFilterType);
             ImageView badgeImage = (ImageView) view.findViewById(R.id.filterbadgeview_image);
@@ -104,7 +105,7 @@ public final class PhotoCorrectionActivity extends UIActivity
                 onRotationClick(v);
             }
         });
-        for (final TunablePhotoFilterFactory.SettingsFilterType filterType: TunablePhotoFilterFactory.SettingsFilterType.values()) {
+        for (final TunablePhotoFilterFactory.SettingsFilterType filterType : TunablePhotoFilterFactory.SettingsFilterType.values()) {
             View view = inflater.inflate(R.layout.settingbagdeview, layout, false);
             ImageView badgeImage = (ImageView) view.findViewById(R.id.settingbadgeview_image);
             badgeImage.setImageResource(filterType.getIconResource());
@@ -149,6 +150,10 @@ public final class PhotoCorrectionActivity extends UIActivity
                 generalFilter.getFilteredImage();
             }
             break;
+            case android.R.id.home: {
+                finish();
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -170,7 +175,7 @@ public final class PhotoCorrectionActivity extends UIActivity
 
     private synchronized void onFilterClick(View v, TunablePhotoFilterFactory.FilterType filterType) {
         if (!v.isSelected()) {
-            for (View view: filterBadges) {
+            for (View view : filterBadges) {
                 view.setSelected(false);
             }
             v.setSelected(true);
@@ -197,7 +202,7 @@ public final class PhotoCorrectionActivity extends UIActivity
 
                 }
             });
-            filterBar.setProgress((int)(filterHandler.getStrength() * 100));
+            filterBar.setProgress((int) (filterHandler.getStrength() * 100));
             ImageButton applyButton = (ImageButton) findViewById(R.id.photocorrecting_filters_apply);
             applyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -241,7 +246,7 @@ public final class PhotoCorrectionActivity extends UIActivity
 
             }
         });
-        filterBar.setProgress((int)((filterHandler.getStrength() - minStrength) * 100 / (maxStrength - minStrength)));
+        filterBar.setProgress((int) ((filterHandler.getStrength() - minStrength) * 100 / (maxStrength - minStrength)));
         ImageButton applyButton = (ImageButton) findViewById(R.id.photocorrecting_settings_apply);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
