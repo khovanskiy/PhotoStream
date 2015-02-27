@@ -64,9 +64,9 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
     protected OnViewPagerLock onViewPagerLock;
 
     private synchronized void checkState(final View viewLayout) {
-        LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
+        //LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
         if (state) {
-            header.setVisibility(View.VISIBLE);
+            //header.setVisibility(View.VISIBLE);
             likeButton.setVisibility(View.VISIBLE);
             likesCount.setVisibility(View.VISIBLE);
             if (photoViewAttacher != null) {
@@ -77,7 +77,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
         } else {
             likesCount.setVisibility(View.GONE);
             likeButton.setVisibility(View.GONE);
-            header.setVisibility(View.GONE);
+            //header.setVisibility(View.GONE);
             photoViewAttacher = new PhotoViewAttacher(image);
             photoViewAttacher.setZoomable(true);
             onViewPagerLock.setLocked(true);
@@ -106,17 +106,17 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
         Bundle args = getArguments();
         photo = Photo.get(args.getString("photoId"));
         final View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
-        TextView userName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_user);
-        TextView albumName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_album);
+        //TextView userName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_user);
+        //TextView albumName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_album);
         Album album = Album.get(photo.album_id);
         if (album.albumType == AlbumType.USER) {
             User user = User.get(album.user_id);
-            userName.setText(user.name);
+            //userName.setText(user.name);
         } else {
             Group group = Group.get(album.group_id);
-            userName.setText(group.name);
+            //userName.setText(group.name);
         }
-        albumName.setText(album.title);
+        //albumName.setText(album.title);
 
         /*Date now = new Date();
         long diff = (now.getTime() - photo.created_ms) / 1000;
@@ -177,13 +177,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
             }
         }
         checkState(viewLayout);
-        ImageButton backButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_back);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
         return viewLayout;
     }
 

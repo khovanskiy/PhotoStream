@@ -5,20 +5,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
-import net.hockeyapp.android.CrashManager;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
-import ru.ok.android.sdk.Odnoklassniki;
 import uk.co.senab.photoview.HackyViewPager;
 
 import java.util.List;
 import java.util.Map;
-
 
 public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeListener, IEventHandler {
 
@@ -51,7 +46,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
 
     @Override
     public void handleEvent(IEventDispatcher dispatcher, String type, Map<String, Object> data) {
-        if (type == Event.COMPLETE) {
+        if (type.equals(Event.COMPLETE)) {
             photoListAdapter.notifyDataSetChanged();
             if (initPosition == -1) {
                 initPosition = 0;
@@ -101,8 +96,8 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.photoactivity);
-        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         frameLayout = (FrameLayout) findViewById(R.id.photoactivity_frame);
         progressBar = (ProgressBar) findViewById(R.id.photoactivity_progress);
@@ -128,18 +123,11 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         } else {
             feed.loadMore();
         }
-        //getSupportActionBar().hide();
     }
 
     public static void setFeed(Feed newFeed) {
         feed = newFeed;
         assert (feed != null);
-    }
-
-    @Override
-    public void onBackPressed() {
-        //SmartImage.clearCache();
-        super.onBackPressed();
     }
 
     @Override

@@ -206,7 +206,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
         System.out.println("onCreate");
 

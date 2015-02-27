@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SmartImage extends ImageView {
     // Get max available VM memory, exceeding this amount will throw an
