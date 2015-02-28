@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import ru.example.PhotoStream.*;
 import ru.example.PhotoStream.Fragments.PhotoFragment;
 
@@ -23,18 +26,20 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
 
     @Override
     public void onPageSelected(int position) {
+        mPreviousPosition = mCurrentPosition;
+        if (mPreviousPosition != -1) {
+            PhotoFragment fragment = (PhotoFragment) photoListAdapter.getRegisteredFragment(mPreviousPosition);
+            if (fragment != null) {
+                System.out.println("Restore zoom #" + mPreviousPosition);
+                fragment.restoreZoom();
+            }
+        }
+        mCurrentPosition = position;
         if (photos.size() == position + 1) {
             feed.loadMore();
+            return;
         }
-        Photo photo = photos.get(position);
-        Album album = Album.get(photo.album_id);
-        if (album.albumType == AlbumType.USER) {
-            User user = User.get(album.user_id);
-            this.setTitle(user.name + " " + album.title);
-        } else {
-            Group group = Group.get(album.group_id);
-            this.setTitle(group.name + " " + album.title);
-        }
+        updateActionBarTitle(position);
     }
 
     @Override
@@ -42,18 +47,35 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
 
     }
 
+    private void updateActionBarTitle(int position) {
+        Photo photo = photos.get(position);
+        TextView actionBarTitle = (TextView) findViewById(R.id.photoactivity_actionbar_title);
+        TextView actionBarSubtitle = (TextView) findViewById(R.id.photoactivity_actionbar_subtitle);
+        Album album = Album.get(photo.album_id);
+        if (album.albumType == AlbumType.USER) {
+            User user = User.get(album.user_id);
+            actionBarTitle.setText(user.name);
+        } else {
+            Group group = Group.get(album.group_id);
+            actionBarTitle.setText(group.name);
+        }
+        actionBarSubtitle.setText(album.title);
+    }
+
     @Override
     public void handleEvent(IEventDispatcher dispatcher, String type, Map<String, Object> data) {
         if (type.equals(Event.COMPLETE)) {
             photoListAdapter.notifyDataSetChanged();
-            if (initPosition == -1) {
-                initPosition = 0;
-                viewPager.setCurrentItem(initPosition);
+            if (mCurrentPosition == -1) {
+                mCurrentPosition = 0;
+                viewPager.setCurrentItem(mCurrentPosition);
             }
+            updateActionBarTitle(mCurrentPosition);
         }
     }
 
     private class PageAdapter extends FragmentStatePagerAdapter {
+        private final SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
         private final IEventHandler photoLoadedHandler = new IEventHandler() {
             @Override
@@ -88,10 +110,28 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         public int getCount() {
             return photos.size();
         }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
+        }
     }
 
     private static Feed feed;
-    private int initPosition;
+    private int mCurrentPosition;
+    private int mPreviousPosition;
     protected List<Photo> photos;
     protected PageAdapter photoListAdapter;
     protected ViewPager viewPager;
@@ -99,12 +139,17 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.photo_activity_actionbar, null));
         setContentView(R.layout.photoactivity);
-        System.out.println("OnCreate");
 
         progressBar = (ProgressBar) findViewById(R.id.photoactivity_progress);
         viewPager = (ViewPager) findViewById(R.id.photoactivity_pager);
+
+        TextView actionBarTitle = (TextView) findViewById(R.id.photoactivity_actionbar_title);
+        actionBarTitle.setText(feed.getName());
 
         feed.addEventListener(this);
         photos = feed.getAvailablePhotos();
@@ -112,14 +157,15 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
 
+        mPreviousPosition = -1;
         if (savedInstanceState != null && savedInstanceState.containsKey("position")) {
-            initPosition = savedInstanceState.getInt("position");
+            mCurrentPosition = savedInstanceState.getInt("position");
         } else {
-            initPosition = getIntent().getIntExtra("position", 0);
+            mCurrentPosition = getIntent().getIntExtra("position", 0);
         }
         viewPager.setOnPageChangeListener(this);
-        if (initPosition != -1) {
-            viewPager.setCurrentItem(initPosition);
+        if (mCurrentPosition != -1) {
+            viewPager.setCurrentItem(mCurrentPosition);
         } else {
             feed.loadMore();
         }

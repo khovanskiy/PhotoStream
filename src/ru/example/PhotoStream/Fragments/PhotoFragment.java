@@ -72,6 +72,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
     protected Photo photo;
     protected ImageButton likeButton;
     protected TextView likesCount;
+    protected ZoomView zoomView;
     protected SmartImage image;
     protected boolean hiddenUI;
 
@@ -127,6 +128,8 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
             TextView description = (TextView) viewLayout.findViewById(R.id.photoactivity_page_description);
             description.setText(photo.text);
         }/**/
+        zoomView = (ZoomView) viewLayout.findViewById(R.id.photoactivity_zoom_view);
+
         likesCount = (TextView) viewLayout.findViewById(R.id.photoactivity_page_likescount);
         likesCount.setText(photo.like_count + "");
 
@@ -162,6 +165,11 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
 
         toggleUI(hiddenUI);
         return viewLayout;
+    }
+
+    public void restoreZoom() {
+        zoomView.smoothZoomTo(1, 0, 0);
+        zoomView.invalidate();
     }
 
     @Override
