@@ -10,12 +10,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import ru.example.PhotoStream.*;
-import ru.ok.android.sdk.Odnoklassniki;
-import uk.co.senab.photoview.PhotoViewAttacher;
+import ru.example.PhotoStream.Activities.UIActivity;
 
 import java.util.*;
 
-public class PhotoFragment extends Fragment implements View.OnClickListener {
+public class PhotoFragment extends Fragment implements View.OnClickListener, IEventDispatcher {
+
+    private final EventDispatcher dispatcher = new EventDispatcher();
+
+    @Override
+    public void addEventListener(IEventHandler listener) {
+        dispatcher.addEventListener(listener);
+    }
+
+    @Override
+    public void removeEventListener(IEventHandler listener) {
+        dispatcher.removeEventListener(listener);
+    }
+
+    @Override
+    public void dispatchEvent(String type, Map<String, Object> data) {
+        dispatcher.dispatchEvent(type, data);
+    }
 
     private class LikeAdder extends AsyncTask<Void, Void, Boolean> {
 
@@ -28,7 +44,7 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
                 if (album.albumType == AlbumType.GROUP) {
                     requestParams.put("gid", album.group_id);
                 }
-                String responseString = api.request("photos.addPhotoLike", requestParams, "get");
+                String responseString = UIActivity.getAPI().request("photos.addPhotoLike", requestParams, "get");
                 //Console.print("Like response: " + responseString);
                 if (responseString.equals("true")) {
                     return true;
@@ -53,41 +69,22 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    protected Odnoklassniki api;
     protected Photo photo;
     protected ImageButton likeButton;
     protected TextView likesCount;
-    protected ProgressBar progressBar;
     protected SmartImage image;
-    protected boolean state = true;
-    protected PhotoViewAttacher photoViewAttacher;
-    protected OnViewPagerLock onViewPagerLock;
+    protected boolean hiddenUI;
 
-    private synchronized void checkState(final View viewLayout) {
-        //LinearLayout header = (LinearLayout) viewLayout.findViewById(R.id.photoactivity_page_full_header);
-        if (state) {
-            //header.setVisibility(View.VISIBLE);
+    private void toggleUI(boolean hidden) {
+        hiddenUI = hidden;
+        if (!hiddenUI) {
             likeButton.setVisibility(View.VISIBLE);
             likesCount.setVisibility(View.VISIBLE);
-            if (photoViewAttacher != null) {
-                photoViewAttacher.setZoomable(true);
-                photoViewAttacher.cleanup();
-            }
-            onViewPagerLock.setLocked(false);
+            dispatchEvent("showUI", null);
         } else {
             likesCount.setVisibility(View.GONE);
             likeButton.setVisibility(View.GONE);
-            //header.setVisibility(View.GONE);
-            photoViewAttacher = new PhotoViewAttacher(image);
-            photoViewAttacher.setZoomable(true);
-            onViewPagerLock.setLocked(true);
-            photoViewAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
-                @Override
-                public void onPhotoTap(View view, float x, float y) {
-                    state = true;
-                    checkState(viewLayout);
-                }
-            });
+            dispatchEvent("hideUI", null);
         }
     }
 
@@ -95,28 +92,16 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);
-        api = Odnoklassniki.getInstance(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey("state")) {
-            state = savedInstanceState.getBoolean("state");
+        if (savedInstanceState != null && savedInstanceState.containsKey("hiddenUI")) {
+            hiddenUI = savedInstanceState.getBoolean("hiddenUI");
         }
         Bundle args = getArguments();
         photo = Photo.get(args.getString("photoId"));
         final View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
-        //TextView userName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_user);
-        //TextView albumName = (TextView) viewLayout.findViewById(R.id.photoactivity_page_album);
-        Album album = Album.get(photo.album_id);
-        if (album.albumType == AlbumType.USER) {
-            User user = User.get(album.user_id);
-            //userName.setText(user.name);
-        } else {
-            Group group = Group.get(album.group_id);
-            //userName.setText(group.name);
-        }
-        //albumName.setText(album.title);
 
         /*Date now = new Date();
         long diff = (now.getTime() - photo.created_ms) / 1000;
@@ -145,26 +130,24 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
         likesCount = (TextView) viewLayout.findViewById(R.id.photoactivity_page_likescount);
         likesCount.setText(photo.like_count + "");
 
-        progressBar = (ProgressBar) viewLayout.findViewById(R.id.photoactivity_page_progress);
-        progressBar.setVisibility(View.VISIBLE);
-
         image = (SmartImage) viewLayout.findViewById(R.id.photoactivity_page_image);
         image.setOnSmartViewLoadedListener(new SmartImage.SmartViewLoadedListener() {
             @Override
             public void onUpdated() {
                 image.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
+                dispatchEvent(Event.COMPLETE, null);
             }
         });
         image.setVisibility(View.GONE);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                state = false;
-                checkState(viewLayout);
+                toggleUI(!hiddenUI);
             }
         });
+        dispatchEvent(Event.CREATE, null);
         image.setImageURL(photo.getMaxSize().getUrl());
+
         likeButton = (ImageButton) viewLayout.findViewById(R.id.photoactivity_page_like);
         if (photo.user_id.equals(User.currentUID)) {
             likeButton.setEnabled(false);
@@ -176,7 +159,8 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
                 likeButton.setEnabled(false);
             }
         }
-        checkState(viewLayout);
+
+        toggleUI(hiddenUI);
         return viewLayout;
     }
 
@@ -191,14 +175,6 @@ public class PhotoFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean("state", state);
-    }
-
-    public interface OnViewPagerLock {
-        public void setLocked(boolean isLocked);
-    }
-
-    public void setViewPagerLockListener(OnViewPagerLock onViewPagerLock) {
-        this.onViewPagerLock = onViewPagerLock;
+        outState.putBoolean("hiddenUI", hiddenUI);
     }
 }

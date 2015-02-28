@@ -208,7 +208,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
         super.onCreate(savedInstanceState);
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.feedsactivity);
-        System.out.println("onCreate");
+        //System.out.println("onCreate");
 
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -250,7 +250,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("onResume");
+        //System.out.println("onResume");
         fetchNewFeeds();
         for (FeedPreview feedPreview : feedPreviews) {
             feedPreview.start();
@@ -260,7 +260,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
     @Override
     protected void onPause() {
         super.onPause();
-        System.out.println("onPause");
+        //System.out.println("onPause");
         for (FeedPreview feedPreview : feedPreviews) {
             feedPreview.pause();
         }
@@ -281,6 +281,6 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("onDestroy");
+        //System.out.println("onDestroy");
     }
 }
