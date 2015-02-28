@@ -2,22 +2,21 @@ package ru.example.PhotoStream.Activities;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.*;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import net.hockeyapp.android.CrashManager;
 import ru.example.PhotoStream.Camera.SurfaceGridView;
-import ru.example.PhotoStream.Console;
 import ru.example.PhotoStream.PortraitLandscapeListener;
 import ru.example.PhotoStream.R;
 
@@ -64,7 +63,8 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             //System.out.println("Open camera");
             camera = Camera.open(cameraId);
             camera.setPreviewDisplay(surfaceHolder);
-            Camera.Size size = camera.getParameters().getPreviewSize();
+            camera.setDisplayOrientation(90);
+            /*Camera.Size size = camera.getParameters().getPreviewSize();
             float aspectRatio = (float) size.width / size.height;
             int newWidth;
             int newHeight;
@@ -74,10 +74,10 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
             } else {
                 newWidth = surfaceView.getWidth();
                 newHeight = Math.round(surfaceView.getWidth() / aspectRatio);
-            }
+            }*/
             ViewGroup.LayoutParams layoutParams = surfaceView.getLayoutParams();
-            layoutParams.width = newWidth;
-            layoutParams.height = newHeight;
+            layoutParams.width = surfaceView.getWidth();
+            layoutParams.height = surfaceView.getHeight();
             surfaceView.setLayoutParams(layoutParams);
             camera.startPreview();
             currentCameraId = cameraId;
@@ -105,7 +105,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.phototakeractivity);
 
         ImageButton galleryButton = (ImageButton) findViewById(R.id.phototaker_gallery);
@@ -136,8 +135,8 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
 
         orientationEventListener = new PortraitLandscapeListener(this) {
             @Override
-            public void onOrientationChange(boolean landscape) {
-                rotateAll(landscape);
+            public void onOrientationTypeChanged(int orientation) {
+                rotateUI(orientation);
             }
         };
         gridView = (SurfaceGridView) findViewById(R.id.phototaker_grid);
@@ -295,10 +294,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     @Override
     public void onResume() {
         super.onResume();
-        if (moveBack) {
-            moveBack = false;
-            onBackPressed();
-        }
         orientationEventListener.enable();
     }
 
@@ -308,23 +303,38 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         orientationEventListener.disable();
     }
 
-    private synchronized void rotateAll(boolean landscape) {
-        rotate(R.id.phototaker_camera_change, landscape);
-        rotate(R.id.phototaker_take_photo, landscape);
-        rotate(R.id.phototaker_gallery, landscape);
-        rotate(R.id.phototaker_back, landscape);
-        rotate(R.id.phototaker_flash_type_change, landscape);
-        rotate(R.id.phototaker_grid_button, landscape);
+    private synchronized void rotateUI(int orientation) {
+        System.out.println("Landscape: " + orientation);
+        rotate(R.id.phototaker_camera_change, orientation);
+        rotate(R.id.phototaker_take_photo, orientation);
+        rotate(R.id.phototaker_gallery, orientation);
+        rotate(R.id.phototaker_back, orientation);
+        rotate(R.id.phototaker_flash_type_change, orientation);
+        rotate(R.id.phototaker_grid_button, orientation);
     }
 
-    private void rotate(int id, boolean landscape) {
-        Animation animation;
-        if (landscape) {
-            animation = AnimationUtils.loadAnimation(this, R.anim.rotateright);
-        } else {
-            animation = AnimationUtils.loadAnimation(this, R.anim.rotateleft);
+    private void rotate(int id, int orientation) {
+        View view = findViewById(id);
+        float toDegree = 0;
+        switch (orientation) {
+            case PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL:
+            {
+                toDegree = 0;
+            } break;
+            case PortraitLandscapeListener.ORIENTATION_PORTRAIT_INVERTED:
+            {
+                toDegree = 180;
+            } break;
+            case PortraitLandscapeListener.ORIENTATION_LANDSCAPE_NORMAL:
+            {
+                toDegree = 90;
+            } break;
+            case PortraitLandscapeListener.ORIENTATION_LANDSCAPE_INVERTED:
+            {
+                toDegree = 270;
+            } break;
         }
-        findViewById(id).startAnimation(animation);
+        view.animate().rotation(toDegree);
     }
 
     private boolean canToggleCamera() {

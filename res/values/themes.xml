@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="OKTheme" parent="Theme.AppCompat">
+    <style name="OKTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/UIActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
         <item name="android:actionMenuTextAppearance">@style/UIActionBarTitle</item>
         <item name="android:homeAsUpIndicator">@drawable/_0003_back</item>
         <!--<item name="android:actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>-->
@@ -12,19 +13,18 @@
         <!--<item name="android:seekBarStyle">@style/CustomSeekBarStyle</item>-->
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/UIActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
         <item name="actionMenuTextAppearance">@style/UIActionBarTitle</item>
         <item name="homeAsUpIndicator">@drawable/_0003_back</item>
         <!--<item name="actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>-->
     </style>
 
     <style name="UIActionBar" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:background">@android:color/background_dark</item>
+        <item name="android:background">@color/actionbar_background</item>
         <item name="android:icon">@android:color/transparent</item>
         <item name="android:titleTextStyle">@style/UIActionBarTitle</item>
         <!-- Support library compatibility -->
-        <item name="windowActionBarOverlay">true</item>
-        <item name="background">@android:color/background_dark</item>
+        <item name="background">@color/actionbar_background</item>
         <item name="icon">@android:color/transparent</item>
         <item name="titleTextStyle">@style/UIActionBarTitle</item>
     </style>
@@ -36,7 +36,7 @@
         <!-- The textColor property is backward compatible with the Support Library -->
     </style>
 
-    <style name="Widget.Sherlock.ActionButton" parent="@android:style/Widget.Holo.ActionButton"/>
+    <!--<style name="Widget.Sherlock.ActionButton" parent="@android:style/Widget.Holo.ActionButton"/>
 
     <style name="Widget.Styled.ActionButton" parent="@style/Widget.Sherlock.ActionButton">
         <item name="android:paddingTop">8dip</item>
@@ -51,9 +51,9 @@
         <item name="android:src">@drawable/actionbar_menu</item>
         <item name="android:minWidth">48.0dip</item>
         <item name="android:background">@drawable/standard_button_background</item>
-    </style>
+    </style>-->
 
-    <style name="LoginButton">
+    <!--<style name="LoginButton">
         <item name="android:textSize">16.0sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#ffffff</item>
@@ -64,7 +64,7 @@
         <item name="android:shadowDx">1.0</item>
         <item name="android:shadowDy">1.0</item>
         <item name="android:shadowRadius">2.0</item>
-    </style>
+    </style>-->
 
     <!--<style name="CustomTabWidget" parent="@android:style/Widget.TabWidget">
         <item name="android:ellipsize">marquee</item>

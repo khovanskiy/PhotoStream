@@ -1,31 +1,24 @@
 package ru.example.PhotoStream;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Configuration;
 import android.view.OrientationEventListener;
-import android.view.Surface;
-import android.view.WindowManager;
 
-/**
- * Created by Genyaz on 07.11.2014.
- */
 public abstract class PortraitLandscapeListener extends OrientationEventListener {
-    private final int deviceDefaultOrientation;
+    //private final int deviceDefaultOrientation;
 
-    private static final int ORIENTATION_PORTRAIT_NORMAL =  1;
-    private static final int ORIENTATION_PORTRAIT_INVERTED =  2;
-    private static final int ORIENTATION_LANDSCAPE_NORMAL =  3;
-    private static final int ORIENTATION_LANDSCAPE_INVERTED =  4;
+    public static final int ORIENTATION_PORTRAIT_NORMAL =  1;
+    public static final int ORIENTATION_PORTRAIT_INVERTED =  2;
+    public static final int ORIENTATION_LANDSCAPE_NORMAL =  3;
+    public static final int ORIENTATION_LANDSCAPE_INVERTED =  4;
 
-    private int lastOrientation = -1;
+    private int mPreviousOrientation = ORIENTATION_UNKNOWN;
 
     public PortraitLandscapeListener(Activity activity) {
         super(activity);
-        deviceDefaultOrientation = getDeviceDefaultOrientation(activity);
+        //deviceDefaultOrientation = getDeviceDefaultOrientation(activity);
     }
 
-    private static int getDeviceDefaultOrientation(Activity activity) {
+    /*private static int getDeviceDefaultOrientation(Activity activity) {
 
         WindowManager windowManager =  (WindowManager) activity.getSystemService(activity.WINDOW_SERVICE);
 
@@ -41,30 +34,34 @@ public abstract class PortraitLandscapeListener extends OrientationEventListener
         } else {
             return Configuration.ORIENTATION_PORTRAIT;
         }
-    }
+    }*/
 
     @Override
     public void onOrientationChanged(int orientation) {
-        int currentOrientation;
+        int mCurrentOrientation;
         if (orientation >= 315 || orientation < 45) {
-            currentOrientation = ORIENTATION_PORTRAIT_NORMAL;
+            mCurrentOrientation = ORIENTATION_PORTRAIT_NORMAL;
         }
         else if (orientation < 315 && orientation >= 225) {
-            currentOrientation = ORIENTATION_LANDSCAPE_NORMAL;
+            mCurrentOrientation = ORIENTATION_LANDSCAPE_NORMAL;
         }
         else if (orientation < 225 && orientation >= 135) {
-            currentOrientation = ORIENTATION_PORTRAIT_INVERTED;
+            mCurrentOrientation = ORIENTATION_PORTRAIT_INVERTED;
         }
         else { // orientation <135 || orientation > 45
-            currentOrientation = ORIENTATION_LANDSCAPE_INVERTED;
+            mCurrentOrientation = ORIENTATION_LANDSCAPE_INVERTED;
         }
-        if (lastOrientation == -1 || (lastOrientation % 2 != currentOrientation % 2)) {
-            onOrientationChange((deviceDefaultOrientation == Configuration.ORIENTATION_LANDSCAPE)
-                    ^ (currentOrientation == ORIENTATION_LANDSCAPE_INVERTED
-                        || currentOrientation == ORIENTATION_LANDSCAPE_NORMAL));
+        /*if (mPreviousOrientation == -1 || (mPreviousOrientation % 2 != mCurrentOrientation % 2)) {
+            //onOrientationChange((deviceDefaultOrientation == Configuration.ORIENTATION_LANDSCAPE)
+                    ^ (mCurrentOrientation == ORIENTATION_LANDSCAPE_INVERTED
+                        || mCurrentOrientation == ORIENTATION_LANDSCAPE_NORMAL));
+        }*/
+        if (mPreviousOrientation == ORIENTATION_UNKNOWN || mPreviousOrientation != mCurrentOrientation) {
+            System.out.println("OrientationChanged " + orientation);
+            onOrientationTypeChanged(mCurrentOrientation);
         }
-        lastOrientation = currentOrientation;
+        mPreviousOrientation = mCurrentOrientation;
     }
 
-    public abstract void onOrientationChange(boolean landscape);
+    public abstract void onOrientationTypeChanged(int orientation);
 }

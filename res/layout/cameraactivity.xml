@@ -28,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/takeCameraPicture"
                     android:id="@+id/cameraactivity_takepicture_button" android:layout_gravity="center"
-                    style="@style/LoginButton"/>
+                    />
         </FrameLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,120 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent" android:orientation="horizontal" android:baselineAligned="false"
-              android:background="@android:color/white" android:id="@+id/phototaker_main">
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:background="@android:color/white"
+                android:id="@+id/phototaker_main">
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_weight="1" android:background="@android:color/black"
-            android:layout_gravity="center" android:layout_alignParentLeft="true" android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="true" android:layout_marginTop="0dp" android:layout_alignParentBottom="false"
+            android:layout_height="fill_parent"
+            android:background="@android:color/black"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_alignParentBottom="false"
             android:layout_alignParentRight="false">
+
         <SurfaceView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/phototakeractivity_surfaceview" android:layout_gravity="center"/>
+                android:id="@+id/phototakeractivity_surfaceview"
+                android:layout_gravity="center"/>
     </LinearLayout>
+
     <ru.example.PhotoStream.Camera.SurfaceGridView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:id="@+id/phototaker_grid"
-          android:background="@color/transparent" android:layout_alignParentTop="true"
-          android:layout_alignParentLeft="true"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/phototaker_grid"
+            android:background="@color/transparent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"/>
+
     <RelativeLayout
             android:orientation="vertical"
-            android:layout_width="48dp"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:background="#b3000000"
             android:minWidth="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/phototaker_right_panel"
-            android:id="@+id/phototaker_left_panel">
+            android:layout_alignParentTop="false"
+            android:id="@+id/phototaker_left_panel"
+            android:layout_above="@+id/phototaker_right_panel"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="false">
+
         <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/phototaker_aux_frame"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true">
-            <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/phototaker_grid_button"
-                    android:src="@drawable/_0005_camera_grid_off"
-                    android:layout_centerInParent="true"/>
-        </RelativeLayout>
-        <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/phototaker_aux_frame"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true">
+                android:layout_alignParentLeft="false"
+                android:layout_toRightOf="@+id/phototaker_aux_frame"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true">
+
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/phototaker_flash_type_change"
+                    android:background="@color/transparent"
                     android:src="@drawable/_0009_camera_flash_disable"
-                    android:clickable="false" android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:clickable="false"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    />
         </RelativeLayout>
+
         <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:id="@+id/phototaker_aux_frame">
+
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/phototaker_camera_change" android:layout_centerVertical="true"
+                    android:id="@+id/phototaker_camera_change"
+                    android:background="@color/transparent"
+                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="false"
-                    android:src="@drawable/_0007_camera_rotate_camera_disable" android:layout_gravity="center"/>
+                    android:src="@drawable/_0007_camera_rotate_camera_disable"
+                    android:layout_gravity="center"/>
+        </FrameLayout>
+
+        <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_toLeftOf="@+id/phototaker_aux_frame">
+
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:src="@drawable/_0000_big_photo"/>
-        </FrameLayout>
+                    android:id="@+id/phototaker_grid_button"
+                    android:background="@color/transparent"
+                    android:src="@drawable/_0005_camera_grid_off"
+                    android:layout_centerInParent="true"
+                    />
+        </RelativeLayout>
+
     </RelativeLayout>
+
     <RelativeLayout
             android:orientation="vertical"
-            android:layout_width="80dp"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="false"
             android:layout_marginTop="0dp"
             android:layout_alignParentRight="true"
-            android:focusableInTouchMode="false" android:id="@+id/phototaker_right_panel"
-            android:background="#cc000000">
+            android:focusableInTouchMode="false"
+            android:id="@+id/phototaker_right_panel"
+            android:background="#cc000000"
+            android:layout_alignParentBottom="true">
+
         <ImageButton
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/phototaker_take_photo" android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/phototaker_take_photo"
+                android:background="@color/transparent"
                 android:src="@drawable/_0000_big_photo"
-                android:paddingLeft="8dp"/>
+                android:paddingTop="8dp"
+                android:layout_centerInParent="true"
+                />
+
         <RelativeLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/phototaker_take_photo"
-                android:layout_alignParentTop="true" android:layout_alignParentLeft="true">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentLeft="false"
+                android:layout_toRightOf="@+id/phototaker_take_photo"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="false">
+
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/phototaker_gallery"
+                    android:background="@color/transparent"
                     android:src="@drawable/_0013_camera_photo_from_album"
                     android:layout_gravity="center"
-                    android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    />
         </RelativeLayout>
+
         <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/phototaker_take_photo">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="false"
+                android:layout_toLeftOf="@+id/phototaker_take_photo"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="false">
+
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/phototaker_back"
+                    android:background="@color/transparent"
                     android:src="@drawable/_0003_back"
-                    android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

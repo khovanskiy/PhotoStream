@@ -119,13 +119,6 @@ public final class PhotoCorrectionActivity extends UIActivity
                 }
             });
         }
-        //ImageButton backButton = (ImageButton) findViewById(R.id.photocorrecting_back);
-        /*backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });*/
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {

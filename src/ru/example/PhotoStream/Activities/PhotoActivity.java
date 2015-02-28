@@ -1,14 +1,19 @@
 package ru.example.PhotoStream.Activities;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.WindowCompat;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import ru.example.PhotoStream.*;
@@ -30,7 +35,6 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         if (mPreviousPosition != -1) {
             PhotoFragment fragment = (PhotoFragment) photoListAdapter.getRegisteredFragment(mPreviousPosition);
             if (fragment != null) {
-                System.out.println("Restore zoom #" + mPreviousPosition);
                 fragment.restoreZoom();
             }
         }
