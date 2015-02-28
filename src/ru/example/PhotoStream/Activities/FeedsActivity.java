@@ -269,12 +269,9 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         FeedPreview photoShifter = feedsAdapter.getItem(position);
-        int pos = photoShifter.getPosition();
-        PhotoActivity.setFeed(photoShifter.getFeed());
         Intent intent = new Intent(this, PhotoActivity.class);
-        UIActivity.instance(PhotoActivity.class).putParam("position", pos);
-
-        intent.putExtra("position", pos);
+        weakCache(PhotoActivity.class).put("feed", photoShifter.getFeed());
+        intent.putExtra("position", photoShifter.getPosition());
         startActivity(intent);
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -76,16 +77,14 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
     protected SmartImage image;
     protected boolean hiddenUI;
 
-    private void toggleUI(boolean hidden) {
+    public void toggleUI(boolean hidden) {
         hiddenUI = hidden;
         if (!hiddenUI) {
             likeButton.setVisibility(View.VISIBLE);
             likesCount.setVisibility(View.VISIBLE);
-            dispatchEvent("showUI", null);
         } else {
             likesCount.setVisibility(View.GONE);
             likeButton.setVisibility(View.GONE);
-            dispatchEvent("hideUI", null);
         }
     }
 
@@ -97,13 +96,14 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (savedInstanceState != null && savedInstanceState.containsKey("hiddenUI")) {
+        /*if (savedInstanceState != null && savedInstanceState.containsKey("hiddenUI")) {
             hiddenUI = savedInstanceState.getBoolean("hiddenUI");
-        }
+        }*/
         Bundle args = getArguments();
         photo = Photo.get(args.getString("photoId"));
-        final View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
+        hiddenUI = args.getBoolean("hiddenUI");
 
+        View viewLayout = inflater.inflate(R.layout.photoactivity_page, container, false);
         /*Date now = new Date();
         long diff = (now.getTime() - photo.created_ms) / 1000;
 
@@ -130,6 +130,19 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
         }/**/
         zoomView = (ZoomView) viewLayout.findViewById(R.id.photoactivity_zoom_view);
 
+        /*View hoverArea = viewLayout.findViewById(R.id.photoactivity_area);
+        hoverArea.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                }
+                return true;
+            }
+        });*/
+
+
+
         likesCount = (TextView) viewLayout.findViewById(R.id.photoactivity_page_likescount);
         likesCount.setText(photo.like_count + "");
 
@@ -141,13 +154,18 @@ public class PhotoFragment extends Fragment implements View.OnClickListener, IEv
                 dispatchEvent(Event.COMPLETE, null);
             }
         });
-        image.setVisibility(View.GONE);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleUI(!hiddenUI);
+                if (!hiddenUI) {
+                    dispatchEvent("showUI", null);
+                } else {
+                    dispatchEvent("hideUI", null);
+                }
             }
         });
+        image.setVisibility(View.GONE);
         dispatchEvent(Event.CREATE, null);
         image.setImageURL(photo.getMaxSize().getUrl());
 

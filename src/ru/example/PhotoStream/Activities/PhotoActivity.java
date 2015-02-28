@@ -1,19 +1,14 @@
 package ru.example.PhotoStream.Activities;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.WindowCompat;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import ru.example.PhotoStream.*;
@@ -43,7 +38,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
             feed.loadMore();
             return;
         }
-        updateActionBarTitle(position);
+        updateUI(position);
     }
 
     @Override
@@ -51,7 +46,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
 
     }
 
-    private void updateActionBarTitle(int position) {
+    private void updateUI(int position) {
         Photo photo = photos.get(position);
         TextView actionBarTitle = (TextView) findViewById(R.id.photoactivity_actionbar_title);
         TextView actionBarSubtitle = (TextView) findViewById(R.id.photoactivity_actionbar_subtitle);
@@ -64,6 +59,10 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
             actionBarTitle.setText(group.name);
         }
         actionBarSubtitle.setText(album.title);
+        PhotoFragment photoFragment = (PhotoFragment) photoListAdapter.getRegisteredFragment(position);
+        if (photoFragment != null) {
+            photoFragment.toggleUI(hiddenUI);
+        }
     }
 
     @Override
@@ -74,7 +73,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
                 mCurrentPosition = 0;
                 viewPager.setCurrentItem(mCurrentPosition);
             }
-            updateActionBarTitle(mCurrentPosition);
+            updateUI(mCurrentPosition);
         }
     }
 
@@ -89,8 +88,10 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
                 } else if (type.equals(Event.COMPLETE)) {
                     progressBar.setVisibility(View.GONE);
                 } else if (type.equals("hideUI")) {
+                    hiddenUI = true;
                     getSupportActionBar().hide();
                 } else if (type.equals("showUI")) {
+                    hiddenUI = false;
                     getSupportActionBar().show();
                 }
             }
@@ -104,6 +105,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
             Photo photo = photos.get(position);
             Bundle bundle = new Bundle();
             bundle.putString("photoId", photo.id);
+            bundle.putBoolean("hiddenUI", hiddenUI);
             PhotoFragment photoFragment = new PhotoFragment();
             photoFragment.addEventListener(photoLoadedHandler);
             photoFragment.setArguments(bundle);
@@ -133,13 +135,14 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         }
     }
 
-    private static Feed feed;
+    private Feed feed;
     private int mCurrentPosition;
     private int mPreviousPosition;
     protected List<Photo> photos;
     protected PageAdapter photoListAdapter;
     protected ViewPager viewPager;
     protected ProgressBar progressBar;
+    protected boolean hiddenUI;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +151,19 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setCustomView(getLayoutInflater().inflate(R.layout.photo_activity_actionbar, null));
         setContentView(R.layout.photoactivity);
+
+        feed = (Feed) weakCache(PhotoActivity.class).get("feed");
+        if (feed == null) {
+            finish();
+            return;
+        }
+
+        mPreviousPosition = -1;
+        if (savedInstanceState != null && savedInstanceState.containsKey("position")) {
+            mCurrentPosition = savedInstanceState.getInt("position");
+        } else {
+            mCurrentPosition = getIntent().getIntExtra("position", 0);
+        }
 
         progressBar = (ProgressBar) findViewById(R.id.photoactivity_progress);
         viewPager = (ViewPager) findViewById(R.id.photoactivity_pager);
@@ -161,12 +177,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         photoListAdapter = new PageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(photoListAdapter);
 
-        mPreviousPosition = -1;
-        if (savedInstanceState != null && savedInstanceState.containsKey("position")) {
-            mCurrentPosition = savedInstanceState.getInt("position");
-        } else {
-            mCurrentPosition = getIntent().getIntExtra("position", 0);
-        }
+
         viewPager.setOnPageChangeListener(this);
         if (mCurrentPosition != -1) {
             viewPager.setCurrentItem(mCurrentPosition);
@@ -186,14 +197,14 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         return super.onOptionsItemSelected(item);
     }
 
-    public static void setFeed(Feed newFeed) {
-        feed = newFeed;
-        assert (feed != null);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle saveInstance) {
         saveInstance.putInt("position", viewPager.getCurrentItem());
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        weakCache(PhotoActivity.class).remove("feed");
+    }
 }

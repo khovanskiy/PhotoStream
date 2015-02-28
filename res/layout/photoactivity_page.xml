@@ -12,42 +12,19 @@
             android:id="@+id/photoactivity_zoom_view"
             >
 
-        <LinearLayout
-                android:orientation="vertical"
+        <FrameLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_height="fill_parent"
+                >
 
-            <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    >
-
-                <!--<ProgressBar
-                        android:id="@+id/photoactivity_page_progress"
-                        style="?android:attr/progressBarStyleLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:indeterminate="true"/>-->
-
-                <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center">
-
-                    <ru.example.PhotoStream.SmartImage
-                            android:layout_width="fill_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/photoactivity_page_image"
-                            android:scaleType="centerCrop"
-                            android:adjustViewBounds="true"
-                            android:layout_gravity="center_vertical"/>
-                </LinearLayout>
-            </FrameLayout>
-        </LinearLayout>
+            <ru.example.PhotoStream.SmartImage
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/photoactivity_page_image"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="center_vertical"/>
+        </FrameLayout>
     </ru.example.PhotoStream.ZoomView>
     <!--<LinearLayout
             android:orientation="horizontal"

@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import ru.example.PhotoStream.Activities.PhotoActivity;
 import ru.example.PhotoStream.*;
+import ru.example.PhotoStream.Activities.UIActivity;
 import ru.example.PhotoStream.Loaders.AlbumsLoader;
 import ru.ok.android.sdk.Odnoklassniki;
 
@@ -127,7 +128,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), PhotoActivity.class);
-        PhotoActivity.setFeed(feed);
+        UIActivity.weakCache(PhotoActivity.class).put("feed", feed);
         intent.putExtra("position", position);
         startActivity(intent);
     }
