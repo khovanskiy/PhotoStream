@@ -23,7 +23,7 @@ import ru.example.PhotoStream.R;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-public final class PhotoTakerActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
+public final class PhotoTakerActivity extends UIActivity implements SurfaceHolder.Callback, View.OnClickListener, Camera.AutoFocusCallback {
     private static final int NO_CAMERA = -1;
     private static final int SELECT_PICTURE = 1;
     private static final int TAKE_VIDEO = 2;
@@ -31,11 +31,6 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private static final int PIXEL_TOTAL_OVERHEAD_IN_BYTES = 26;
     private static final int MAX_WIDTH = 1024;
     private static final int MAX_HEIGHT = 1024;
-    private static boolean moveBack = false;
-
-    public static void setMoveBack(boolean b) {
-        moveBack = b;
-    }
 
     private Camera camera;
     private SurfaceView surfaceView;
@@ -44,6 +39,8 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     private OrientationEventListener orientationEventListener;
     private SurfaceGridView gridView;
     private ImageButton flashButton;
+
+    private int mCurrentOrientation;
 
     private boolean isFrontCamera = false;
     private boolean isPreviewRunning = false;
@@ -147,9 +144,9 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_PICTURE) {
                 Uri selectedImageUri = data.getData();
-                PhotoCorrectionActivity.setBitmap(decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
                 Intent intent = new Intent(this, PhotoCorrectionActivity.class);
-                //Console.printAvailableMemory();
+                weakCache(PhotoCorrectionActivity.class).put("pictureTaken", decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
+                intent.putExtra("pictureOrientation", PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL);
                 startActivity(intent);
             } else if (requestCode == TAKE_VIDEO) {
                 Uri videoUri = data.getData();
@@ -283,8 +280,9 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
                 options.inJustDecodeBounds = false;
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, options);
 
-                PhotoCorrectionActivity.setBitmap(bitmap);
                 Intent intent = new Intent(PhotoTakerActivity.this, PhotoCorrectionActivity.class);
+                weakCache(PhotoCorrectionActivity.class).put("pictureTaken", bitmap);
+                intent.putExtra("pictureOrientation", mCurrentOrientation);
                 //Console.printAvailableMemory();
                 startActivity(intent);
             }
@@ -314,6 +312,7 @@ public final class PhotoTakerActivity extends Activity implements SurfaceHolder.
     }
 
     private void rotate(int id, int orientation) {
+        mCurrentOrientation = orientation;
         View view = findViewById(id);
         float toDegree = 0;
         switch (orientation) {

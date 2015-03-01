@@ -20,6 +20,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
         private class ViewHolder {
             public final TextView title;
             public final SmartImage image;
+            public int position = -1;
 
             public ViewHolder(TextView title, SmartImage image) {
                 this.title = title;
@@ -42,17 +43,22 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
                 viewHolder = new ViewHolder((TextView) convertView.findViewById(R.id.badgeview_title),
                         (SmartImage) convertView.findViewById(R.id.badgeview_image));
                 convertView.setTag(viewHolder);
+                viewHolder.position = position;
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
-            boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
-            lastPosition.put(convertView, position);
+            //boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
+            //lastPosition.put(convertView, position);
 
             Photo photo = preview.getPhoto();
             if (photo != null && photo.hasAnySize()) {
                 String url = photo.findBestSize(targetSize, targetSize).getUrl();
-                if (!sameView) {
+                /*if (!sameView) {
                     //viewHolder.image.setAsFirstCalled();
+                }*/
+                if (viewHolder.position != position) {
+                    viewHolder.image.setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
+                    viewHolder.position = position;
                 }
                 viewHolder.image.setImageURL(url);
             }

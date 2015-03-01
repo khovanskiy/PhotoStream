@@ -1,62 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:orientation="vertical"
-                                        android:baselineAligned="false"
-                                        android:background="@android:color/black"
-                                        android:id="@+id/photocorrecting_relative">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:baselineAligned="false"
+                android:background="@android:color/black"
+                android:id="@+id/photocorrecting_relative">
 
     <FrameLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/photocorrecting_image_frame" android:layout_centerInParent="true">
+            android:id="@+id/photocorrecting_image_frame"
+            android:layout_centerInParent="true"
+            android:visibility="visible">
+
         <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/photocorrecting_image"
-                android:layout_centerVertical="true" android:layout_gravity="center"/>
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_vertical"
+                />
+
         <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/photocorrecting_image_processing"
-                android:layout_gravity="left|top" android:layout_marginTop="78dp"
-                android:layout_marginLeft="30dp" android:visibility="gone"/>
+                android:layout_gravity="left|top"
+                android:layout_marginTop="78dp"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone"/>
     </FrameLayout>
+
     <TabHost
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tabHost"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            >
+
         <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
+
             <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     >
             </TabWidget>
+
             <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="80dp"
                     android:background="#cc000000">
+
                 <FrameLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:id="@+id/photocorrecting_filters_tab"
                         android:layout_gravity="center_horizontal">
+
                     <HorizontalScrollView
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:id="@+id/photocorrecting_filters_scrollview"
                             android:scrollbarSize="2dp"
                             android:fillViewport="true">
+
                         <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="fill_parent"
@@ -65,17 +82,22 @@
                                 android:gravity="center">
                         </LinearLayout>
                     </HorizontalScrollView>
+
                     <LinearLayout
                             android:orientation="horizontal"
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:id="@+id/photocorrecting_filters_editing">
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/photocorrecting_filters_editing"
+                            >
+
                         <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/photocorrecting_filters_discard"
+                                android:background="@color/transparent"
                                 android:src="@drawable/_0000_close"
                                 android:layout_margin="20dp"/>
+
                         <RelativeLayout
                                 android:orientation="vertical"
                                 android:layout_width="0dp"
@@ -83,14 +105,17 @@
                                 android:layout_weight="1"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp">
+
                             <SeekBar
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/photocorrecting_filters_seekbar"
-                                    android:layout_weight="1" android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center"
                                     android:layout_centerVertical="true"
                                     android:layout_alignParentLeft="true"
                                     android:max="100"/>
+
                             <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -103,119 +128,210 @@
                                     android:textColor="@android:color/white"
                                     android:layout_marginBottom="10dp"/>
                         </RelativeLayout>
+
                         <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/photocorrecting_filters_apply"
+                                android:background="@color/transparent"
                                 android:src="@drawable/_0001_accept"
                                 android:layout_margin="20dp"/>
                     </LinearLayout>
                 </FrameLayout>
+
                 <FrameLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:id="@+id/photocorrecting_settings_tab"
                         android:layout_gravity="center_horizontal">
+
                     <HorizontalScrollView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
                             android:id="@+id/photocorrecting_settings_scrollview"
                             android:scrollbarSize="2dp"
-                            android:fillViewport="true">
+                            android:fillViewport="true"
+                            >
+
                         <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:id="@+id/photocorrecting_settings_layout"
                                 android:gravity="center">
                         </LinearLayout>
                     </HorizontalScrollView>
-                    <LinearLayout android:orientation="horizontal"
-                                  android:layout_width="fill_parent"
-                                  android:layout_height="fill_parent"
-                                  android:id="@+id/photocorrecting_settings_editing">
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_settings_discard"
-                                     android:src="@drawable/_0000_close"
-                                     android:layout_margin="20dp"/>
-                        <RelativeLayout android:orientation="vertical"
-                                        android:layout_width="0dp"
-                                        android:layout_height="fill_parent"
-                                        android:layout_weight="1"
-                                        android:layout_marginLeft="20dp"
-                                        android:layout_marginRight="20dp">
-                            <SeekBar android:layout_width="fill_parent"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_settings_seekbar"
-                                     android:layout_weight="1"
-                                     android:layout_gravity="center"
-                                     android:layout_centerVertical="true"
-                                     android:layout_alignParentLeft="true"
-                                     android:max="100"/>
-                            <TextView android:layout_width="wrap_content"
-                                      android:layout_height="wrap_content"
-                                      android:textAppearance="?android:attr/textAppearanceMedium"
-                                      android:text="Medium Text"
-                                      android:textAllCaps="true"
-                                      android:id="@+id/photocorrecting_settings_label"
-                                      android:layout_alignParentBottom="true"
-                                      android:layout_centerHorizontal="true"
-                                      android:textColor="@android:color/white"
-                                      android:layout_marginBottom="10dp"/>
-                        </RelativeLayout>
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_settings_apply"
-                                     android:src="@drawable/_0001_accept"
-                                     android:background="@android:color/transparent"
-                                     android:layout_margin="20dp"/>
-                    </LinearLayout>
-                    <LinearLayout android:orientation="horizontal"
-                                  android:layout_width="fill_parent"
-                                  android:layout_height="fill_parent"
-                                  android:id="@+id/photocorrecting_rotation_editing">
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_rotation_discard"
-                                     android:src="@drawable/_0000_close"
-                                     android:layout_margin="20dp"/>
+
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/photocorrecting_settings_editing"
+                            >
+
                         <Space
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:layout_weight="0.2"/>
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_rotation_left"
-                                     android:focusableInTouchMode="false"
-                                     android:src="@drawable/_0011_f_rotate_left"
-                                     android:layout_gravity="center_vertical"/>
-                        <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.2"/>
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_flip_vertical"
-                                     android:src="@drawable/_0013_f_flip_vertical"
-                                     android:layout_gravity="center_vertical"/>
-                        <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.2"/>
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_flip_horizontal"
-                                     android:src="@drawable/_0012_f_flip_horizontal"
-                                     android:layout_gravity="center_vertical"/>
-                        <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.2"/>
+                                android:layout_width="8dp"
+                                android:layout_height="match_parent"
+                                />
+
                         <ImageButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/photocorrecting_settings_discard"
+                                android:background="@color/transparent"
+                                android:src="@drawable/_0000_close"
+                                android:layout_gravity="center_vertical"
+                                />
+
+                        <Space
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                />
+
+                        <RelativeLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp">
+
+                            <SeekBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/photocorrecting_settings_seekbar"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="center"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentLeft="true"
+                                    android:max="100"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="Medium Text"
+                                    android:textAllCaps="true"
+                                    android:id="@+id/photocorrecting_settings_label"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_centerHorizontal="true"
+                                    android:textColor="@android:color/white"
+                                    android:layout_marginBottom="10dp"/>
+                        </RelativeLayout>
+
+                        <Space
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                />
+
+                        <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/photocorrecting_settings_apply"
+                                android:src="@drawable/_0001_accept"
+                                android:background="@android:color/transparent"
+                                android:layout_gravity="center_vertical"
+                                />
+
+                        <Space
+                                android:layout_width="8dp"
+                                android:layout_height="match_parent"
+                                />
+                    </LinearLayout>
+
+                    <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/photocorrecting_rotation_editing">
+
+                        <Space
+                                android:layout_width="8dp"
+                                android:layout_height="match_parent"
+                                />
+
+                        <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/photocorrecting_rotation_discard"
+                                android:background="@color/transparent"
+                                android:src="@drawable/_0000_close"
+                                android:layout_gravity="center_vertical"
+                                />
+
+                        <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                />
+
+                        <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:id="@+id/photocorrecting_rotation_left"
+                                android:background="@color/transparent"
+                                android:src="@drawable/_0011_f_rotate_left"
+                                android:layout_gravity="center_vertical"/>
+
+                        <Space
+                                android:layout_width="6dp"
+                                android:layout_height="match_parent"
+                                />
+
+                        <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:id="@+id/photocorrecting_flip_vertical"
+                                android:background="@color/transparent"
+                                android:src="@drawable/_0013_f_flip_vertical"
+                                android:layout_gravity="center_vertical"/>
+
+                        <Space
+                                android:layout_width="6dp"
+                                android:layout_height="match_parent"
+                                />
+
+                        <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:id="@+id/photocorrecting_flip_horizontal"
+                                android:background="@color/transparent"
+                                android:src="@drawable/_0012_f_flip_horizontal"
+                                android:layout_gravity="center_vertical"/>
+
+                        <Space
+                                android:layout_width="6dp"
+                                android:layout_height="match_parent"
+                                />
+
+                        <ImageButton
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
                                 android:id="@+id/photocorrecting_rotation_right"
+                                android:background="@color/transparent"
                                 android:src="@drawable/_0010_f_rotate_right"
                                 android:layout_gravity="center_vertical"/>
-                        <Space android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="0.2"/>
-                        <ImageButton android:layout_width="wrap_content"
-                                     android:layout_height="wrap_content"
-                                     android:id="@+id/photocorrecting_rotation_apply"
-                                     android:src="@drawable/_0001_accept"
-                                     android:layout_margin="20dp"/>
+
+                        <Space
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                />
+
+                        <ImageButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/photocorrecting_rotation_apply"
+                                android:background="@color/transparent"
+                                android:src="@drawable/_0001_accept"
+                                android:layout_gravity="center_vertical"
+                                />
+
+                        <Space
+                                android:layout_width="8dp"
+                                android:layout_height="match_parent"
+                                />
                     </LinearLayout>
                 </FrameLayout>
             </FrameLayout>
@@ -259,23 +375,32 @@
     </LinearLayout>-->
     <FrameLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:visibility="gone" android:id="@+id/photocorrecting_processing"
-            android:background="@color/grey1" android:clickable="true">
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:id="@+id/photocorrecting_processing"
+            android:background="@color/grey1"
+            android:clickable="true">
+
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:layout_gravity="center">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
             <ProgressBar
                     style="?android:attr/progressBarStyleLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"/>
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Фото обрабатывается..."
-                    android:layout_gravity="center" android:layout_marginTop="20dp" android:textColor="@color/white"/>
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/white"/>
         </LinearLayout>
     </FrameLayout>
 

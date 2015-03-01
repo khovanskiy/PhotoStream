@@ -1,214 +1,21 @@
 package ru.example.PhotoStream.Camera.Filters;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import ru.example.PhotoStream.Camera.RawBitmap;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IncMultiFilter {
+import android.os.Handler;
+import android.os.Looper;
+import ru.example.PhotoStream.Camera.RawBitmap;
 
-    public static enum OrientationChange {
-        RotateClockwise,
-        RotateCounterClockWise,
-        MirrorVertically,
-        MirrorHorizontally,
-    }
+public class IncMultiFilter extends MultiFilter {
 
-    private static class MultiFilter implements PhotoFilter {
-
-        @Override
-        public void transformOpaqueRaw(RawBitmap source, RawBitmap destination) {
-            transformOpaqueRaw(source, destination, Integer.MAX_VALUE - 1);
-        }
-
-        public static enum ImageOrientation {
-            Top,
-            Left,
-            Bottom,
-            Right,
-        }
-
-        private SortedMap<Integer, TunablePhotoFilter> filters = new TreeMap<Integer, TunablePhotoFilter>();
-        private ImageOrientation orientation = ImageOrientation.Top;
-        private boolean mirrored = false;
-
-        public synchronized void attachFilter(int filterPriority, TunablePhotoFilter photoFilter) {
-            filters.put(filterPriority, photoFilter);
-        }
-
-        public synchronized Collection<TunablePhotoFilter> getAllFilters(int maxPriority) {
-            return filters.headMap(maxPriority + 1).values();
-        }
-
-        public synchronized void changeOrientation(OrientationChange change) {
-            switch (change) {
-                case RotateClockwise:
-                    switch (orientation) {
-                        case Top:
-                            orientation = ImageOrientation.Right;
-                            break;
-                        case Left:
-                            orientation = ImageOrientation.Top;
-                            break;
-                        case Bottom:
-                            orientation = ImageOrientation.Left;
-                            break;
-                        case Right:
-                            orientation = ImageOrientation.Bottom;
-                            break;
-                    }
-                    break;
-                case RotateCounterClockWise:
-                    switch (orientation) {
-                        case Top:
-                            orientation = ImageOrientation.Left;
-                            break;
-                        case Left:
-                            orientation = ImageOrientation.Bottom;
-                            break;
-                        case Bottom:
-                            orientation = ImageOrientation.Right;
-                            break;
-                        case Right:
-                            orientation = ImageOrientation.Top;
-                            break;
-                    }
-                    break;
-                case MirrorVertically:
-                    mirrored = !mirrored;
-                    switch (orientation) {
-                        case Top:
-                            orientation = ImageOrientation.Bottom;
-                            break;
-                        case Bottom:
-                            orientation = ImageOrientation.Top;
-                            break;
-                    }
-                    break;
-                case MirrorHorizontally:
-                    mirrored = !mirrored;
-                    switch (orientation) {
-                        case Left:
-                            orientation = ImageOrientation.Right;
-                            break;
-                        case Right:
-                            orientation = ImageOrientation.Left;
-                            break;
-                    }
-                    break;
-            }
-        }
-
-        public synchronized void setOrientation(ImageOrientation orientation) {
-            this.orientation = orientation;
-        }
-
-        private synchronized void copyWithOrientation(RawBitmap source, RawBitmap destination) {
-            int[] s = source.colors, d = destination.colors;
-            switch (orientation) {
-                case Top:
-                    destination.width = source.width;
-                    destination.height = source.height;
-                    if (mirrored) {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * i + destination.width - 1 - j] = s[source.width * i + j];
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * i + j] = s[destination.width * i + j];
-                            }
-                        }
-                    }
-                    break;
-                case Right:
-                    destination.width = source.height;
-                    destination.height = source.width;
-                    if (mirrored) {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * (destination.height - 1 - j) + destination.width - 1 - i] = s[i * source.width + j];
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * j + destination.width - 1 - i] = s[i * source.width + j];
-                            }
-                        }
-                    }
-                    break;
-                case Bottom:
-                    destination.width = source.width;
-                    destination.height = source.height;
-                    if (mirrored) {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * (destination.height - 1 - i) + j] = s[i * source.width + j];
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * (destination.height - 1 - i) + destination.width - 1 - j] = s[i * source.width + j];
-                            }
-                        }
-                    }
-                    break;
-                case Left:
-                    destination.width = source.height;
-                    destination.height = source.width;
-                    if (mirrored) {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * j + i] = s[i * source.width + j];
-                            }
-                        }
-                    } else {
-                        for (int i = 0; i < source.height; i++) {
-                            for (int j = 0; j < source.width; j++) {
-                                d[destination.width * (destination.height - 1 - j) + i] = s[i * source.width + j];
-                            }
-                        }
-                    }
-                    break;
-            }
-        }
-
-        public void transformOpaqueRaw(RawBitmap source, RawBitmap destination, int maxPriority) {
-            copyWithOrientation(source, destination);
-            ColorCurveFilter colorCurveFilter = null;
-            for (TunablePhotoFilter filter: getAllFilters(maxPriority)) {
-                if (filter.getType() == TunablePhotoFilter.TunableType.ColorCurve) {
-                    if (colorCurveFilter == null) {
-                        colorCurveFilter = (ColorCurveFilter) filter;
-                    } else {
-                        colorCurveFilter = new ColorCurveFilter(colorCurveFilter, (ColorCurveFilter) filter);
-                    }
-                } else {
-                    if (colorCurveFilter != null) {
-                        colorCurveFilter.transformOpaqueRaw(destination, destination);
-                        colorCurveFilter = null;
-                    }
-                    filter.transformOpaqueRaw(destination, destination);
-                }
-            }
-            if (colorCurveFilter != null) {
-                colorCurveFilter.transformOpaqueRaw(destination, destination);
-            }
-        }
-    }
-
-    public class FilterHandler {
+    /*public class FilterHandler {
         private final TunablePhotoFilter photoFilter;
         private final double initialStrength;
         private final int maxUpdatePriority;
@@ -241,19 +48,19 @@ public class IncMultiFilter {
             refreshImage(MAX_UPDATE_PRIORITY);
             locked = true;
         }
-    }
+    }*/
 
-    public class RotationHandler {
+    /*public class RotationHandler {
         private MultiFilter.ImageOrientation initOrientation;
         private boolean locked = false;
 
         private RotationHandler() {
-            initOrientation = multiFilter.orientation;
+            initOrientation = orientation;
         }
 
         public synchronized void changeOrientation(OrientationChange orientationChange) {
             if (!locked) {
-                multiFilter.changeOrientation(orientationChange);
+                changeOrientation(orientationChange);
                 refreshImage(MAX_UPDATE_PRIORITY);
             }
         }
@@ -264,32 +71,36 @@ public class IncMultiFilter {
 
         public synchronized void discardChanges() {
             locked = true;
-            multiFilter.setOrientation(initOrientation);
+            setImageOrientation(initOrientation);
             refreshImage(MAX_UPDATE_PRIORITY);
         }
-    }
+    }*/
 
-    public interface OnImageChangedListener {
+    /*public interface OnImageChangedListener {
         public void onImageChanged(RawBitmap rawBitmap, Bitmap toFill);
-        public void onFullImageReceived(Bitmap fullImage);
+
+        public void onFullBitmapComputed(Bitmap fullImage);
+
         public void onImageChanging();
-    }
+    }*/
+
+    private static final Executor mPreviewExecutor = Executors.newSingleThreadExecutor();
 
     private class ImageRefreshTask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (onImageChangedListener != null) {
-                onImageChangedListener.onImageChanging();
-            }
+            /*if (processListener != null) {
+                processListener.onImageChanging();
+            }*/
         }
 
         @Override
         protected Void doInBackground(Void... params) {
             while (continueRefreshing.compareAndSet(true, false)) {
-                if (onImageChangedListener != null) {
-                    onImageChangedListener.onImageChanging();
+                /*if (processListener != null) {
+                    processListener.onImageChanging();
                 }
                 multiFilter.transformOpaqueRaw(rawSource, rawResult, filterPriority.get());
                 Bitmap toFill;
@@ -300,15 +111,15 @@ public class IncMultiFilter {
                     rawResult.fillBitmap(nextBitmapRotated);
                     toFill = nextBitmapRotated;
                 }
-                if (onImageChangedListener != null) {
-                    onImageChangedListener.onImageChanged(rawResult, toFill);
+                if (processListener != null) {
+                    processListener.onImageChanged(rawResult, toFill);
                 }
                 Bitmap tmp = currentBitmap;
                 currentBitmap = nextBitmap;
                 nextBitmap = tmp;
                 tmp = currentBitmapRotated;
                 currentBitmapRotated = nextBitmapRotated;
-                nextBitmapRotated = tmp;
+                nextBitmapRotated = tmp;*/
             }
             taskIsRunning.set(false);
             return null;
@@ -317,13 +128,15 @@ public class IncMultiFilter {
 
     private static final int MAX_UPDATE_PRIORITY = 1000;
 
-    private MultiFilter multiFilter = new MultiFilter();
-    private HashMap<TunablePhotoFilterFactory.SettingsFilterType, TunablePhotoFilter> filters = new HashMap<>();
-    private TunablePhotoFilter photoFilter, whiteBalanceFilter;
-    private TunablePhotoFilterFactory.FilterType photoFilterType;
-    private WhiteBalanceFactory.WhiteBalanceType whiteBalanceType;
+    private Looper mLooper;
 
-    private Context context;
+    //private MultiFilter multiFilter = new MultiFilter();
+    //private HashMap<TunablePhotoFilterFactory.SettingsFilterType, TunablePhotoFilter> filters = new HashMap<>();
+    //private TunablePhotoFilter photoFilter;
+    //private TunablePhotoFilter whiteBalanceFilter;
+    //private TunablePhotoFilterFactory.FilterType photoFilterType;
+    //private WhiteBalanceFactory.WhiteBalanceType whiteBalanceType;
+
     private Bitmap source;
 
     private Bitmap currentBitmap;
@@ -334,14 +147,13 @@ public class IncMultiFilter {
     private RawBitmap rawSource;
     private RawBitmap rawResult;
 
-    private OnImageChangedListener onImageChangedListener = null;
+    private ProcessListener processListener = null;
 
     protected AtomicBoolean continueRefreshing = new AtomicBoolean(false);
     protected AtomicBoolean taskIsRunning = new AtomicBoolean(false);
     protected AtomicInteger filterPriority = new AtomicInteger(0);
 
-    public IncMultiFilter(Context context, Bitmap source) {
-        this.context = context;
+    public IncMultiFilter(Bitmap source) {
         this.source = source;
 
         int scale = findScale(source);
@@ -351,39 +163,39 @@ public class IncMultiFilter {
         nextBitmapRotated = Bitmap.createBitmap(source.getHeight() / scale, source.getWidth() / scale, Bitmap.Config.ARGB_8888);
         rawSource = new RawBitmap(currentBitmap);
         rawResult = new RawBitmap(currentBitmap.getWidth(), currentBitmap.getHeight());
-        TunablePhotoFilterFactory.SettingsFilterType[] settingsFilterTypes = TunablePhotoFilterFactory.SettingsFilterType.values();
-        for (TunablePhotoFilterFactory.SettingsFilterType filterType: settingsFilterTypes) {
-            TunablePhotoFilter photoFilter = filterType.getFilter(context);
-            multiFilter.attachFilter(filterType.getPriority(), photoFilter);
+
+        /*TunablePhotoFilterFactory.SettingsFilterType[] settingsFilterTypes = TunablePhotoFilterFactory.SettingsFilterType.values();
+        for (TunablePhotoFilterFactory.SettingsFilterType filterType : settingsFilterTypes) {
             filters.put(filterType, photoFilter);
-        }
-        setPhotoFilter(TunablePhotoFilterFactory.FilterType.NoFilter);
-        setWhiteBalance(WhiteBalanceFactory.WhiteBalanceType.NoWhiteBalance);
+        }*/
+
+        //setPhotoFilter(TunablePhotoFilterFactory.FilterType.NoFilter);
+        //setWhiteBalance(WhiteBalanceFactory.WhiteBalanceType.NoWhiteBalance);
     }
 
-    public synchronized FilterHandler getSettingsFilterHandler(TunablePhotoFilterFactory.SettingsFilterType settingsFilterType) {
+    /*public synchronized FilterHandler getSettingsFilterHandler(TunablePhotoFilterFactory.SettingsFilterType settingsFilterType) {
         return new FilterHandler(filters.get(settingsFilterType), settingsFilterType.getMaxUpdatePriority());
-    }
+    }*/
 
-    public synchronized void setPhotoFilter(TunablePhotoFilterFactory.FilterType photoFilterType) {
+    /*public synchronized void setPhotoFilter(TunablePhotoFilterFactory.FilterType photoFilterType) {
         this.photoFilterType = photoFilterType;
-        photoFilter = this.photoFilterType.getFilter(context);
+        //photoFilter = this.photoFilterType.getFilter(context);
         photoFilter.setStrength(0.5);
-        multiFilter.attachFilter(this.photoFilterType.getPriority(), photoFilter);
-    }
+        //multiFilter.attachFilter(this.photoFilterType.getPriority(), photoFilter);
+    }*/
 
-    public synchronized TunablePhotoFilterFactory.FilterType getPhotoFilterType() {
+    /*public synchronized TunablePhotoFilterFactory.FilterType getPhotoFilterType() {
         return photoFilterType;
-    }
+    }*/
 
-    public synchronized FilterHandler getPhotoFilterHandler() {
+    /*public synchronized FilterHandler getPhotoFilterHandler() {
         return new FilterHandler(photoFilter, photoFilterType.getMaxUpdatePriority());
-    }
+    }*/
 
-    public synchronized void setWhiteBalance(WhiteBalanceFactory.WhiteBalanceType whiteBalanceType) {
+    /*public synchronized void setWhiteBalance(WhiteBalanceFactory.WhiteBalanceType whiteBalanceType) {
         this.whiteBalanceType = whiteBalanceType;
         whiteBalanceFilter = this.whiteBalanceType.getFilter(rawSource);
-        multiFilter.attachFilter(whiteBalanceType.getPriority(), whiteBalanceFilter);
+        //multiFilter.attachFilter(whiteBalanceType.getPriority(), whiteBalanceFilter);
     }
 
     public synchronized WhiteBalanceFactory.WhiteBalanceType getWhiteBalanceType() {
@@ -392,57 +204,102 @@ public class IncMultiFilter {
 
     public synchronized FilterHandler getWhiteBalanceHandler() {
         return new FilterHandler(whiteBalanceFilter, whiteBalanceType.getMaxUpdatePriority());
-    }
+    }*/
 
-    public synchronized RotationHandler getRotationHandler() {
-        return new RotationHandler();
-    }
-
-    public synchronized void getFilteredImage() {
-        AsyncTask<Void, Void, Bitmap> filterFullImage = new AsyncTask<Void, Void, Bitmap>() {
+    public void takePicture() {
+        mLooper = Looper.myLooper();
+        mPreviewExecutor.execute(new Runnable() {
             @Override
-            protected Bitmap doInBackground(Void... params) {
-                RawBitmap s = new RawBitmap(source), d = new RawBitmap(source.getWidth(), source.getHeight());
-                multiFilter.transformOpaqueRaw(s, d, MAX_UPDATE_PRIORITY);
+            public void run() {
+                RawBitmap s = new RawBitmap(source);
+                RawBitmap d = new RawBitmap(source.getWidth(), source.getHeight());
+                transformOpaqueRaw(s, d, MAX_UPDATE_PRIORITY);
                 s.recycle();
-                return d.toBitmap();
-            }
 
-            @Override
-            protected void onPostExecute(Bitmap result) {
-                onImageChangedListener.onFullImageReceived(result);
+                final Bitmap picture = d.toBitmap();
+                new Handler(mLooper).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        processListener.onPictureTaken(picture);
+                    }
+                });
             }
-        };
-        filterFullImage.execute();
+        });
     }
 
-    public void setOnImageChangedListener(OnImageChangedListener listener) {
-        this.onImageChangedListener = listener;
+    public void takePreview() {
+        mLooper = Looper.myLooper();
+        mPreviewExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                transformOpaqueRaw(rawSource, rawResult, MAX_UPDATE_PRIORITY);
+                final Bitmap preview;
+                if (rawResult.width == rawSource.width) {
+                    rawResult.fillBitmap(nextBitmap);
+                    preview = nextBitmap;
+                } else {
+                    rawResult.fillBitmap(nextBitmapRotated);
+                    preview = nextBitmapRotated;
+                }
+                new Handler(mLooper).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (processListener != null) {
+                            rawResult.fillBitmap(preview);
+                            processListener.onPreviewTaken(preview);
+                        }
+                    }
+                });
+                Bitmap tmp = currentBitmap;
+                currentBitmap = nextBitmap;
+                nextBitmap = tmp;
+                tmp = currentBitmapRotated;
+                currentBitmapRotated = nextBitmapRotated;
+                nextBitmapRotated = tmp;
+            }
+        });
     }
 
     private int findScale(Bitmap image) {
         return 2;
     }
 
-    private void refreshImage(int priority) {
+    /*private void refreshImage(int priority) {
         filterPriority.set(priority);
         continueRefreshing.set(true);
         if (taskIsRunning.compareAndSet(false, true)) {
             new ImageRefreshTask().execute();
         }
-    }
+    }*/
 
-    public boolean sameBitmap(Bitmap bitmap) {
-        return bitmap == source;
-    }
-
-    public void recycle() {
-        while (taskIsRunning.get());
+    /*public void recycle() {
+        while (taskIsRunning.get()) ;
         currentBitmap.recycle();
         currentBitmapRotated.recycle();
         nextBitmap.recycle();
         nextBitmapRotated.recycle();
         rawResult.recycle();
         rawSource.recycle();
+    }*/
+
+    public void setProcessListener(ProcessListener listener) {
+        this.processListener = listener;
+    }
+
+    public static abstract class ProcessListener {
+
+        public void onPreviewTaken(Bitmap preview) {
+
+        }
+
+        public void onPictureTaken(Bitmap picture) {
+
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("IncMultiFilter deleted");
+        super.finalize();
     }
 }

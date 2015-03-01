@@ -156,7 +156,7 @@ public class SmartImage extends ImageView {
         if (mCurrentUrl.equals(url)) {
             return;
         }
-        setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
+        //setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
         mCurrentUrl = url;
         Bitmap cachedBitmap = mMemoryCache.get(url);
         if (cachedBitmap == null) {

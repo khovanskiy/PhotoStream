@@ -178,7 +178,7 @@ public class TunablePhotoFilterFactory {
 
             @Override
             public int getIconResource() {
-                return R.drawable.filter_1977;
+                return R.drawable.filter_y1977;
             }
 
             @Override
@@ -586,31 +586,31 @@ public class TunablePhotoFilterFactory {
         }
     }
 
-    private static TunablePhotoFilter EightBit() {
+    public static TunablePhotoFilter EightBit() {
         return new ColorCurveFilter(ColorCurveFactory.createEightBit());
     }
 
-    private static TunablePhotoFilter Contrast() {
+    public static TunablePhotoFilter Contrast() {
         return new ColorCurveFilter(ColorCurveProviderFactory.contrastProvider());
     }
 
-    private static TunablePhotoFilter Brightness() {
+    public static TunablePhotoFilter Brightness() {
         return new ColorCurveFilter(ColorCurveProviderFactory.brightnessProvider());
     }
 
-    private static TunablePhotoFilter Saturation() {
+    public static TunablePhotoFilter Saturation() {
         return new SaturationFilter();
     }
 
-    private static TunablePhotoFilter LightRegions() {
+    public static TunablePhotoFilter LightRegions() {
         return new ColorCurveFilter(ColorCurveProviderFactory.lightRegionsProvider());
     }
 
-    private static TunablePhotoFilter DarkRegions() {
+    public static TunablePhotoFilter DarkRegions() {
         return new ColorCurveFilter(ColorCurveProviderFactory.darkRegionsProvider());
     }
 
-    private static TunablePhotoFilter ColorReduction() {
+    public static TunablePhotoFilter ColorReduction() {
         return new ColorCurveFilter(ColorCurveFactory.createColorReduction());
     }
 
@@ -619,7 +619,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter NoFilter() {
+    public static TunablePhotoFilter NoFilter() {
         return new IdentityFilter();
     }
 
@@ -628,7 +628,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter Emboss() {
+    public static TunablePhotoFilter Emboss() {
         return new Convolution3Filter(new float[][]{{-2, -1, 0}, {-1, 1, 1}, {0, 1, 2}}, 0);
     }
 
@@ -637,7 +637,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter Blur() {
+    public static TunablePhotoFilter Blur() {
         return new Convolution3Filter(new float[][]{{1f / 16, 1f / 8, 1f / 16}, {1f / 8, 1f / 4, 1f / 8}, {1f / 16, 1f / 8, 1f / 16}}, 0);
     }
 
@@ -646,7 +646,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter Glow() {
+    public static TunablePhotoFilter Glow() {
         return new Convolution3Filter(new float[][]{{1f / 16, 1f / 8, 1f / 16}, {1f / 8, 5f / 4, 1f / 8}, {1f / 16, 1f / 8, 1f / 16}}, 0);
     }
 
@@ -655,7 +655,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter Sharpness() {
+    public static TunablePhotoFilter Sharpness() {
         return new Convolution3Filter(new float[][]{{-1f/16, -1f/8, -1f/16}, {-1f/8, 7f/4, -1f/8}, {-1f/16, -1f/8, -1f/16}}, 0);
     }
 
@@ -664,7 +664,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter EdgesNegative() {
+    public static TunablePhotoFilter EdgesNegative() {
         return new Convolution3Filter(new float[][]{{-1, -1, -1}, {-1, 8, -1}, {-1, -1, -1}}, 0);
     }
 
@@ -673,7 +673,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter EdgesPositive() {
+    public static TunablePhotoFilter EdgesPositive() {
         return new Convolution3Filter(new float[][]{{1, 1, 1}, {1, -7, 1}, {1, 1, 1}}, 0);
     }
 
@@ -682,7 +682,7 @@ public class TunablePhotoFilterFactory {
      *
      * @return photo filter
      */
-    private static TunablePhotoFilter Negative() {
+    public static TunablePhotoFilter Negative() {
         float[] matrix = new float[] {
                 -1f, 0f, 0f, 0, 255,
                 0f, -1f, 0f, 0, 255,
@@ -692,7 +692,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Sepia() {
+    public static TunablePhotoFilter Sepia() {
         float[] matrix = new float[] {
                 0.393f, 0.769f, 0.180f, 0, 0,
                 0.349f, 0.686f, 0.168f, 0, 0,
@@ -702,7 +702,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Polaroid() {
+    public static TunablePhotoFilter Polaroid() {
         float[] matrix = new float[] {
                 1.438f, -0.062f, -0.062f, 0, 0,
                 -0.122f, 1.378f, -0.122f, 0, 0,
@@ -712,7 +712,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter VintageBlackAndWhite() {
+    public static TunablePhotoFilter VintageBlackAndWhite() {
         float[] matrix = new float[] {
                 0.75f, 0.75f, 0.75f, 0, 0,
                 0.75f, 0.75f, 0.75f, 0, 0,
@@ -722,7 +722,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Grayscale() {
+    public static TunablePhotoFilter Grayscale() {
         float[] matrix = new float[] {
                 0.33f, 0.59f, 0.11f, 0, 0,
                 0.33f, 0.59f, 0.11f, 0, 0,
@@ -732,7 +732,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Hudson() {
+    public static TunablePhotoFilter Hudson() {
         float[] matrix = new float[] {
                 0.859f, 0f, 0f, 0, 36,
                 0f, 1f, 0f, 0, 0,
@@ -742,7 +742,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Amaro() {
+    public static TunablePhotoFilter Amaro() {
         float[] matrix = new float[] {
                 0.898f, 0f, 0f, 0, 26,
                 0f, 1f, 0f, 0, 0,
@@ -752,7 +752,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Nashville() {
+    public static TunablePhotoFilter Nashville() {
         float[] matrix = new float[] {
                 1f, 0f, 0f, 0, 0,
                 0f, 0.906f, 0f, 0, 0,
@@ -762,7 +762,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Rise() {
+    public static TunablePhotoFilter Rise() {
         float[] matrix = new float[] {
                 0.914f, 0f, 0f, 0, 22,
                 0f, 0.914f, 0f, 0, 22,
@@ -772,7 +772,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Valencia() {
+    public static TunablePhotoFilter Valencia() {
         float[] matrix = new float[] {
                 0.824f, 0f, 0f, 0, 30,
                 0f, 1f, 0f, 0, 0,
@@ -782,7 +782,7 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Walden() {
+    public static TunablePhotoFilter Walden() {
         float[] matrix = new float[] {
                 0.949f, 0f, 0f, 0, 11,
                 0f, 0.812f, 0f, 0, 39,
@@ -792,35 +792,35 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter Sierra(Context context) {
+    public static TunablePhotoFilter Sierra(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.sierra_map));
     }
 
-    private static TunablePhotoFilter Y1977(Context context) {
+    public static TunablePhotoFilter Y1977(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.y1977map));
     }
 
-    private static TunablePhotoFilter TealAndOrange() {
+    public static TunablePhotoFilter TealAndOrange() {
         return new ColorCurveFilter(ColorCurveFactory.createTealAndOrange());
     }
 
-    private static TunablePhotoFilter Smooth() {
+    public static TunablePhotoFilter Smooth() {
         return new ColorCurveFilter(ColorCurveFactory.createSmooth());
     }
 
-    private static TunablePhotoFilter Kelvin(Context context) {
+    public static TunablePhotoFilter Kelvin(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
     }
 
-    private static TunablePhotoFilter Xpro(Context context) {
+    public static TunablePhotoFilter Xpro(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.xpro_map));
     }
 
-    private static TunablePhotoFilter Toaster(Context context) {
+    public static TunablePhotoFilter Toaster(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.toaster_map));
     }
 
-    private static TunablePhotoFilter Random() {
+    public static TunablePhotoFilter Random() {
         Random rand = new Random();
         float[] matrix = new float[] {
                 rand.nextFloat(), rand.nextFloat() / 2, rand.nextFloat() / 2, 0, rand.nextInt(100) - 50,
@@ -831,15 +831,15 @@ public class TunablePhotoFilterFactory {
         return new ColorMatrixPhotoFilter(matrix);
     }
 
-    private static TunablePhotoFilter ColorTemperature(Context context) {
+    public static TunablePhotoFilter ColorTemperature(Context context) {
         return new ColorCurveFilter(ColorCurveFactory.createFromImage(context, R.drawable.kelvin_map));
     }
 
-    private static TunablePhotoFilter Exposure() {
+    public static TunablePhotoFilter Exposure() {
         return new ColorCurveFilter(ColorCurveProviderFactory.exposureProvider());
     }
 
-    private static TunablePhotoFilter Vignette() {
+    public static TunablePhotoFilter Vignette() {
         return new VignetteFilter();
     }
 }
