@@ -146,7 +146,7 @@ public final class PhotoTakerActivity extends UIActivity implements SurfaceHolde
                 Uri selectedImageUri = data.getData();
                 Intent intent = new Intent(this, PhotoCorrectionActivity.class);
                 weakCache(PhotoCorrectionActivity.class).put("pictureTaken", decodeFile(getContentResolver(), selectedImageUri, getMaxImageSize(), MAX_WIDTH, MAX_HEIGHT));
-                intent.putExtra("pictureOrientation", PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL);
+                intent.putExtra("pictureOrientation", PortraitLandscapeListener.ORIENTATION_LANDSCAPE_NORMAL);
                 startActivity(intent);
             } else if (requestCode == TAKE_VIDEO) {
                 Uri videoUri = data.getData();

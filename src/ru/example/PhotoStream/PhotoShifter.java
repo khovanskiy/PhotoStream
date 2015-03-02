@@ -47,7 +47,7 @@ public class PhotoShifter extends FeedPreview implements IEventHandler {
     private void changePhoto() {
         if (hasMore && currentPosition + 1 == currentPhotos.size()) {
             toChange = true;
-            currentFeed.loadMore();
+            currentFeed.fetch();
         } else {
             nextPosition();
         }

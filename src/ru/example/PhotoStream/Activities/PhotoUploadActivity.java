@@ -115,7 +115,7 @@ public class PhotoUploadActivity extends UIActivity {
         if (pictureTaken == null) {
             finish();
         }
-        weakCache(PhotoUploadActivity.class).remove("pictureTaken");
+        //weakCache(PhotoUploadActivity.class).remove("pictureTaken");
 
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //Line is commented because it prevents view from resizing when keyboard appears

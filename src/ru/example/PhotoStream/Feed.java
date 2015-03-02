@@ -17,7 +17,7 @@ public abstract class Feed implements IEventDispatcher {
 
     public abstract List<Photo> getAvailablePhotos();
 
-    public abstract void loadMore();
+    public abstract void fetch();
 
     public abstract void addAll(Collection<? extends Album> albums);
 

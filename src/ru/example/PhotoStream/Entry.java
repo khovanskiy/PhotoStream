@@ -9,7 +9,7 @@ public abstract class Entry extends OKApiObject {
     private final static int DEFAULT_CHUNK_SIZE = 10;
 
     /**
-     * Can entry loadMore more photos
+     * Can entry fetch more photos
      */
     public abstract boolean hasMore();
 

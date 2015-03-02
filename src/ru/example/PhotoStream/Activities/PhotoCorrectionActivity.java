@@ -71,6 +71,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
         IncMultiFilter generalFilter;
         List<FilterHolder> settingsFilters;
         List<FilterHolder> coloursFilters;
+        int orientation;
     }
 
     private final TabHost.OnTabChangeListener tabChangeListener = new TabHost.OnTabChangeListener() {
@@ -84,8 +85,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
         @Override
         public void onPreviewTaken(final Bitmap preview) {
             System.out.println("onPreviewTaken");
-            ProgressBar progressBar = (ProgressBar) findViewById(R.id.photocorrecting_image_processing);
-            progressBar.setVisibility(View.GONE);
+            findViewById(R.id.photocorrecting_image_processing).setVisibility(View.GONE);
             imageView.setImageBitmap(preview);
         }
 
@@ -105,6 +105,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
                 mCurrentHolder.getFilter().setStrength(mCurrentHolder.getMinStrength() + progress * (mCurrentHolder.getMaxStrength() - mCurrentHolder.getMinStrength()) / 100);
+                refreshPreview();
             }
         }
 
@@ -124,6 +125,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if (fromUser) {
                 mCurrentHolder.getFilter().setStrength(progress * 0.01);
+                refreshPreview();
             }
         }
 
@@ -160,11 +162,34 @@ public final class PhotoCorrectionActivity extends UIActivity {
 
             generalFilter = mCurrentState.generalFilter = new IncMultiFilter(image);
 
+            mCurrentState.orientation = getIntent().getIntExtra("pictureOrientation", PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL);
+
+            switch (mCurrentState.orientation) {
+                case PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL: {
+                    generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
+                } break;
+                case PortraitLandscapeListener.ORIENTATION_PORTRAIT_INVERTED: {
+                    generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
+                } break;
+                case PortraitLandscapeListener.ORIENTATION_LANDSCAPE_NORMAL: {
+                    //nothing to do
+                } break;
+                case PortraitLandscapeListener.ORIENTATION_LANDSCAPE_INVERTED: {
+                    generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
+                    generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
+                } break;
+            }
+
             List<FilterHolder> settingsFilters = mCurrentState.settingsFilters = new ArrayList<>();
             settingsFilters.add(new FilterHolder(0, TunablePhotoFilterFactory.ColorTemperature(this), R.drawable._0004_f_temperature, R.string.Temperature));
             settingsFilters.add(new FilterHolder(1, TunablePhotoFilterFactory.Exposure(), R.drawable._0003_f_exposure, R.string.Exposure));
             settingsFilters.add(new FilterHolder(2, TunablePhotoFilterFactory.Brightness(), R.drawable._0007_f_brightness, R.string.Brightness));
             settingsFilters.add(new FilterHolder(3, TunablePhotoFilterFactory.Contrast(), R.drawable._0005_f_contrast, R.string.Contrast));
+            settingsFilters.add(new FilterHolder(4, TunablePhotoFilterFactory.LightRegions(), R.drawable._0001_f_lights, R.string.LightRegions));
+            settingsFilters.add(new FilterHolder(5, TunablePhotoFilterFactory.DarkRegions(), R.drawable._0002_f_shadows, R.string.DarkRegions));
+            settingsFilters.add(new FilterHolder(6, TunablePhotoFilterFactory.Saturation(), R.drawable._0000_f_saturation, R.string.Saturation));
+            settingsFilters.add(new FilterHolder(7, TunablePhotoFilterFactory.Sharpness(), R.drawable._0008_f_sharpen, R.string.Sharpness));
+            settingsFilters.add(new FilterHolder(8, TunablePhotoFilterFactory.Vignette(), R.drawable._0006_f_vignette, R.string.Vignette));
 
             List<FilterHolder> colourFilters = mCurrentState.coloursFilters = new ArrayList<>();
             colourFilters.add(new FilterHolder(settingsFilters.size(), TunablePhotoFilterFactory.NoFilter(), R.drawable.filter_normal, R.string.NoFilter));
@@ -193,23 +218,6 @@ public final class PhotoCorrectionActivity extends UIActivity {
         }
         generalFilter = mCurrentState.generalFilter;
         generalFilter.setProcessListener(processListener);
-
-        int pictureOrientation = getIntent().getIntExtra("pictureOrientation", PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL);
-        switch (pictureOrientation) {
-            case PortraitLandscapeListener.ORIENTATION_PORTRAIT_NORMAL: {
-                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
-            } break;
-            case PortraitLandscapeListener.ORIENTATION_PORTRAIT_INVERTED: {
-                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateCounterClockWise);
-            } break;
-            case PortraitLandscapeListener.ORIENTATION_LANDSCAPE_NORMAL: {
-                //nothing to do
-            } break;
-            case PortraitLandscapeListener.ORIENTATION_LANDSCAPE_INVERTED: {
-                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
-                generalFilter.changeOrientation(MultiFilter.OrientationChange.RotateClockwise);
-            } break;
-        }
 
         final TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
@@ -259,6 +267,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
             filterBadges.add(view);
             layout.addView(view);
         }
+        layout.invalidate();
     }
 
     private void createSettingsFilterViews(final List<FilterHolder> holders) {
@@ -273,7 +282,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
                 applyChanges.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        generalFilter.takePreview();
+                        refreshPreview();
                         switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
                     }
                 });
@@ -282,7 +291,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
                     @Override
                     public void onClick(View v) {
                         generalFilter.setImageOrientation(previousImageOrientation);
-                        generalFilter.takePreview();
+                        refreshPreview();
                         switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
                     }
                 });
@@ -302,6 +311,13 @@ public final class PhotoCorrectionActivity extends UIActivity {
             });
             layout.addView(view);
         }
+
+        layout.invalidate();
+    }
+
+    private void refreshPreview() {
+        findViewById(R.id.photocorrecting_image_processing).setVisibility(View.VISIBLE);
+        generalFilter.takePreview();
     }
 
     private View createBadgeView(int iconResourse, String label) {
@@ -393,7 +409,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
             v.setSelected(true);
             holder.getFilter().setStrength(0.5f);
             generalFilter.attachFilter(holder.getPriority(), holder.getFilter());
-            generalFilter.takePreview();
+            refreshPreview();
         } else {
             mCurrentHolder = holder;
 
@@ -410,7 +426,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
             applyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    generalFilter.takePreview();
+                    refreshPreview();
                     switchFilterFrame(findViewById(R.id.photocorrecting_filters_scrollview));
                 }
             });
@@ -419,7 +435,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
                 @Override
                 public void onClick(View v) {
                     mCurrentHolder.getFilter().setStrength(previousStrength);
-                    generalFilter.takePreview();
+                    refreshPreview();
                     switchFilterFrame(findViewById(R.id.photocorrecting_filters_scrollview));
                 }
             });
@@ -444,7 +460,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                generalFilter.takePreview();
+                refreshPreview();
                 switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
             }
         });
@@ -453,7 +469,7 @@ public final class PhotoCorrectionActivity extends UIActivity {
             @Override
             public void onClick(View v) {
                 mCurrentHolder.getFilter().setStrength(previousStrength);
-                generalFilter.takePreview();
+                refreshPreview();
                 switchSettingsFrame(findViewById(R.id.photocorrecting_settings_scrollview));
             }
         });

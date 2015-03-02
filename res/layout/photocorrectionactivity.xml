@@ -15,14 +15,21 @@
             android:layout_centerInParent="true"
             android:visibility="visible">
 
-        <ImageView
+        <ru.example.PhotoStream.ZoomView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/photocorrecting_image"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:layout_gravity="center_vertical"
-                />
+                android:id="@+id/photoactivity_zoom_view"
+                >
+
+            <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/photocorrecting_image"
+                    android:scaleType="fitCenter"
+                    android:adjustViewBounds="true"
+                    android:layout_gravity="center_vertical"
+                    />
+        </ru.example.PhotoStream.ZoomView>
 
         <ProgressBar
                 style="?android:attr/progressBarStyleLarge"
@@ -67,19 +74,18 @@
                         android:layout_gravity="center_horizontal">
 
                     <HorizontalScrollView
-                            android:layout_width="fill_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
                             android:id="@+id/photocorrecting_filters_scrollview"
                             android:scrollbarSize="2dp"
                             android:fillViewport="true">
 
                         <LinearLayout
                                 android:orientation="horizontal"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:id="@+id/photocorrecting_filters_layout"
-                                android:gravity="center">
+                                >
                         </LinearLayout>
                     </HorizontalScrollView>
 
@@ -101,7 +107,7 @@
                         <RelativeLayout
                                 android:orientation="vertical"
                                 android:layout_width="0dp"
-                                android:layout_height="fill_parent"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="20dp">
@@ -148,7 +154,6 @@
                     <HorizontalScrollView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center_horizontal"
                             android:id="@+id/photocorrecting_settings_scrollview"
                             android:scrollbarSize="2dp"
                             android:fillViewport="true"
@@ -159,7 +164,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:id="@+id/photocorrecting_settings_layout"
-                                android:gravity="center">
+                                >
                         </LinearLayout>
                     </HorizontalScrollView>
 

@@ -1,10 +1,14 @@
 package ru.example.PhotoStream;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import ru.example.PhotoStream.Activities.UIActivity;
 import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LineFeed extends Feed {
@@ -39,6 +43,7 @@ public class LineFeed extends Feed {
     public final static int DEFAULT_LOAD_COUNT = 100;
     private final static int DEFAULT_CHUNK_SIZE = 10;
 
+    //protected Executor mBackgroundExecutor = Executors.newSingleThreadExecutor();
     protected Map<String, AlbumHolder> albums = new HashMap<>();
     protected List<Photo> toDisplay = new ArrayList<>();
     protected int currentLoadCount;
@@ -64,10 +69,14 @@ public class LineFeed extends Feed {
         return toDisplay;
     }
 
-    public void loadMore() {
+    public void fetch() {
         if (isRunning.compareAndSet(false, true)) {
-            Loader loader = new Loader();
-            loader.execute();
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    new Loader().execute();
+                }
+            });
         }
     }
 

@@ -62,7 +62,7 @@ public class OKApiGroups extends OKApiBase {
                 builder.append(",").append(uids[j]);
             }
             OKParameters requestParams = new OKParameters();
-            requestParams.put("uids", builder.substring(1));
+            requestParams.put("uids", builder.substring(1));//java.lang.StringIndexOutOfBoundsException: length=0; index=1
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (!entry.getKey().equals("uids")) {
                     requestParams.put(entry.getKey(), entry.getValue());

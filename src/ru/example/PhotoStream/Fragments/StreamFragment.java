@@ -20,7 +20,6 @@ import ru.ok.android.sdk.Odnoklassniki;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 public class StreamFragment extends IFragmentSwitcher implements IEventHandler, SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, View.OnLayoutChangeListener, AdapterView.OnItemClickListener {
 
@@ -139,7 +138,7 @@ public class StreamFragment extends IFragmentSwitcher implements IEventHandler, 
         }
         swipeLayout.setRefreshing(true);
         updating = true;
-        feed.loadMore();
+        feed.fetch();
     }
 
     @Override

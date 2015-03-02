@@ -86,7 +86,7 @@ public class SortedFeed extends Feed {
         return toDisplay;
     }
 
-    public void loadMore() {
+    public void fetch() {
         if (isRunning.compareAndSet(false, true)) {
             Loader loader = new Loader();
             loader.execute();

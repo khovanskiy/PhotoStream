@@ -18,6 +18,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:id="@+id/photocorrecting_tab_text"
-            android:layout_gravity="center"/>
-    <!--android:textAppearance="@style/CustomTabWidgetText"-->
+            android:layout_gravity="center"
+            android:textAppearance="@style/UIWidgetText"
+            />
 </LinearLayout>

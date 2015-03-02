@@ -9,6 +9,7 @@ import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import ru.example.PhotoStream.*;
@@ -35,7 +36,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         }
         mCurrentPosition = position;
         if (photos.size() == position + 1) {
-            feed.loadMore();
+            feed.fetch();
             return;
         }
         updateUI(position);
@@ -182,7 +183,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         if (mCurrentPosition != -1) {
             viewPager.setCurrentItem(mCurrentPosition);
         } else {
-            feed.loadMore();
+            feed.fetch();
         }
     }
 

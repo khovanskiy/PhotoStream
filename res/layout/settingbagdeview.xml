@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="60dp"
-              android:layout_height="match_parent"
-              android:layout_marginLeft="6dp"
-              android:layout_marginTop="5dp"
-              android:layout_marginRight="6dp"
-              android:layout_marginBottom="6dp"
-              android:background="@drawable/standard_button_background">
-    <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/settingbadgeview_image"
-            android:clickable="false"/>
-    <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/settingbadgeview_label"
-            android:clickable="false"
-            android:textColor="@android:color/white"
-            android:singleLine="true"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textSize="9dp"
-            android:fontFamily="sans-serif"/>
-</LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:orientation="vertical"
+             android:layout_width="76dp"
+             android:layout_height="match_parent"
+             android:background="@drawable/standard_button_background"
+        >
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            >
+
+        <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:id="@+id/settingbadgeview_image"
+                android:clickable="false"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/settingbadgeview_label"
+                android:clickable="false"
+                android:textColor="@android:color/white"
+                android:singleLine="true"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textSize="9sp"
+                />
+    </LinearLayout>
+</FrameLayout>

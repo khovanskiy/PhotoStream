@@ -2,21 +2,25 @@
 <resources>
 
     <style name="OKTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:tabWidgetStyle">@style/UITabWidget</item>
+
         <item name="android:actionBarStyle">@style/UIActionBar</item>
+        <item name="android:actionButtonStyle">@style/UIActionButton</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:actionMenuTextAppearance">@style/UIActionBarTitle</item>
         <item name="android:homeAsUpIndicator">@drawable/_0003_back</item>
-        <!--<item name="android:actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>-->
-        <!--<item name="android:actionButtonStyle">@style/CustomActionBarButton</item>-->
-        <!--<item name="android:tabWidgetStyle">@style/CustomTabWidget</item>-->
-        <!--<item name="android:imageButtonStyle">@style/CustomImageButton</item>-->
-        <!--<item name="android:seekBarStyle">@style/CustomSeekBarStyle</item>-->
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/UIActionBar</item>
+        <item name="actionButtonStyle">@style/UIActionButton</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="actionMenuTextAppearance">@style/UIActionBarTitle</item>
         <item name="homeAsUpIndicator">@drawable/_0003_back</item>
-        <!--<item name="actionOverflowButtonStyle">@style/Widget.Styled.ActionButton.Overflow</item>-->
+    </style>
+
+    <style name="OKTheme.NoActionBar" parent="OKTheme">
+        <item name="android:windowActionBar">false</item>
+        <!-- Support library compatibility -->
+        <item name="windowActionBar">false</item>
     </style>
 
     <style name="UIActionBar" parent="Widget.AppCompat.ActionBar.Solid">
@@ -29,11 +33,32 @@
         <item name="titleTextStyle">@style/UIActionBarTitle</item>
     </style>
 
+    <style name="UIActionButton" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="android:paddingLeft">8dip</item>
+        <item name="android:paddingRight">8dip</item>
+        <item name="android:src">@drawable/actionbar_menu</item>
+        <item name="android:minWidth">48.0dip</item>
+    </style>
+
     <style name="UIActionBarTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">#FFF</item>
         <item name="android:textSize">20dp</item>
         <item name="android:textAllCaps">true</item>
         <!-- The textColor property is backward compatible with the Support Library -->
+    </style>
+
+    <style name="UITabWidget" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textAppearance">@style/UIWidgetText</item>
+    </style>
+
+    <style name="UIWidgetText"
+           parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@drawable/tabtextselector</item>
     </style>
 
     <!--<style name="Widget.Sherlock.ActionButton" parent="@android:style/Widget.Holo.ActionButton"/>
@@ -45,13 +70,7 @@
         <item name="android:minWidth">48.0dip</item>
     </style>
 
-    <style name="Widget.Styled.ActionButton.Overflow" parent="@style/Widget.Styled.ActionButton">
-        <item name="android:paddingLeft">8dip</item>
-        <item name="android:paddingRight">8dip</item>
-        <item name="android:src">@drawable/actionbar_menu</item>
-        <item name="android:minWidth">48.0dip</item>
-        <item name="android:background">@drawable/standard_button_background</item>
-    </style>-->
+    -->
 
     <!--<style name="LoginButton">
         <item name="android:textSize">16.0sp</item>
@@ -66,19 +85,9 @@
         <item name="android:shadowRadius">2.0</item>
     </style>-->
 
-    <!--<style name="CustomTabWidget" parent="@android:style/Widget.TabWidget">
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textAppearance">@style/CustomTabWidgetText</item>
-    </style>
+    <!--
 
-    <style name="CustomTabWidgetText"
-           parent="@android:style/TextAppearance.Widget.TabWidget">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@drawable/tabtextselector</item>
-    </style>
+
 
     <style name="CustomImageButton"
            parent="android:Widget.ImageButton">
