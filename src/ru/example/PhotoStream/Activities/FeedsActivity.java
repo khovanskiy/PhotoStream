@@ -57,10 +57,6 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
             Photo photo = preview.getPhoto();
             if (photo != null && photo.hasAnySize()) {
                 String url = photo.findBestSize(targetSize, targetSize).getUrl();
-                /*if (!sameView) {
-                    //viewHolder.image.setAsFirstCalled();
-                }*/
-
                 viewHolder.image.setImageURL(url);
             }
             viewHolder.title.setText(preview.getFeed().getName());
@@ -142,7 +138,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
                 difference.add(a);
             }
         }
-        return null;
+        return Collections.emptyList();
     }
 
     private void fetchNewFeeds() {

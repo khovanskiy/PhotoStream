@@ -183,6 +183,7 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
         viewPager.setAdapter(photoListAdapter);
 
 
+
         viewPager.setOnPageChangeListener(this);
         if (mCurrentPosition != -1) {
             viewPager.setCurrentItem(mCurrentPosition);
