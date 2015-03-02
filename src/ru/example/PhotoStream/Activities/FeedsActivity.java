@@ -49,6 +49,10 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
             }
             //boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
             //lastPosition.put(convertView, position);
+            if (viewHolder.position != position) {
+                viewHolder.image.setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
+            }
+            viewHolder.position = position;
 
             Photo photo = preview.getPhoto();
             if (photo != null && photo.hasAnySize()) {
@@ -56,10 +60,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
                 /*if (!sameView) {
                     //viewHolder.image.setAsFirstCalled();
                 }*/
-                if (viewHolder.position != position) {
-                    viewHolder.image.setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
-                    viewHolder.position = position;
-                }
+
                 viewHolder.image.setImageURL(url);
             }
             viewHolder.title.setText(preview.getFeed().getName());

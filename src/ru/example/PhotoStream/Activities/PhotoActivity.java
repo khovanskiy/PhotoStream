@@ -74,7 +74,11 @@ public class PhotoActivity extends UIActivity implements ViewPager.OnPageChangeL
                 mCurrentPosition = 0;
                 viewPager.setCurrentItem(mCurrentPosition);
             }
-            updateUI(mCurrentPosition);
+            if (photos.size() == 0) {
+                finish();
+            } else {
+                updateUI(mCurrentPosition);
+            }
         }
     }
 
