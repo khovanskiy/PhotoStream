@@ -50,7 +50,7 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
             //boolean sameView = lastPosition.containsKey(convertView) && (lastPosition.get(convertView) == position);
             //lastPosition.put(convertView, position);
             if (viewHolder.position != position) {
-                viewHolder.image.setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
+                viewHolder.image.cancel();
             }
             viewHolder.position = position;
 
@@ -152,13 +152,10 @@ public class FeedsActivity extends UIActivity implements AdapterView.OnItemClick
     }
 
     private void updateFeedPreviews() {
-        final User currentUser = mCurrentUser;
-        final List<User> friends = mCurrentFriends;
-        final List<Group> groups = mCurrentGroups;
-        List<AlbumsOwner> albumsOwners = new ArrayList<>(1 + friends.size() + groups.size());
-        albumsOwners.add(currentUser);
-        albumsOwners.addAll(friends);
-        albumsOwners.addAll(groups);
+        List<AlbumsOwner> albumsOwners = new ArrayList<>(1 + mCurrentFriends.size() + mCurrentGroups.size());
+        albumsOwners.add(mCurrentUser);
+        albumsOwners.addAll(mCurrentFriends);
+        albumsOwners.addAll(mCurrentGroups);
         feedsAdapter.clear();
         feedPreviews.clear();
         for (AlbumsOwner albumsOwner : albumsOwners) {

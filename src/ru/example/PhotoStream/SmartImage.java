@@ -194,6 +194,12 @@ public class SmartImage extends ImageView {
         }
     }
 
+    public void cancel() {
+        clearAnimation();
+        mNextBitmap = null;
+        setImageDrawable(getResources().getDrawable(R.drawable.transparent_d));
+    }
+
     public void setOnSmartViewLoadedListener(SmartViewLoadedListener loadedListener) {
         this.viewLoadedListener = loadedListener;
     }

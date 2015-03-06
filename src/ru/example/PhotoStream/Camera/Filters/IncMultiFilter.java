@@ -228,36 +228,42 @@ public class IncMultiFilter extends MultiFilter {
     }
 
     public void takePreview() {
-        mLooper = Looper.myLooper();
-        mPreviewExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                transformOpaqueRaw(rawSource, rawResult, MAX_UPDATE_PRIORITY);
-                final Bitmap preview;
-                if (rawResult.width == rawSource.width) {
-                    rawResult.fillBitmap(nextBitmap);
-                    preview = nextBitmap;
-                } else {
-                    rawResult.fillBitmap(nextBitmapRotated);
-                    preview = nextBitmapRotated;
-                }
-                new Handler(mLooper).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (processListener != null) {
-                            rawResult.fillBitmap(preview);
-                            processListener.onPreviewTaken(preview);
+        continueRefreshing.set(true);
+        if (taskIsRunning.compareAndSet(false, true)) {
+            mLooper = Looper.myLooper();
+            mPreviewExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    while (continueRefreshing.compareAndSet(true, false)) {
+                        transformOpaqueRaw(rawSource, rawResult, MAX_UPDATE_PRIORITY);
+                        final Bitmap preview;
+                        if (rawResult.width == rawSource.width) {
+                            rawResult.fillBitmap(nextBitmap);
+                            preview = nextBitmap;
+                        } else {
+                            rawResult.fillBitmap(nextBitmapRotated);
+                            preview = nextBitmapRotated;
                         }
+                        new Handler(mLooper).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (processListener != null) {
+                                    rawResult.fillBitmap(preview);
+                                    processListener.onPreviewTaken(preview);
+                                }
+                            }
+                        });
+                        Bitmap tmp = currentBitmap;
+                        currentBitmap = nextBitmap;
+                        nextBitmap = tmp;
+                        tmp = currentBitmapRotated;
+                        currentBitmapRotated = nextBitmapRotated;
+                        nextBitmapRotated = tmp;
                     }
-                });
-                Bitmap tmp = currentBitmap;
-                currentBitmap = nextBitmap;
-                nextBitmap = tmp;
-                tmp = currentBitmapRotated;
-                currentBitmapRotated = nextBitmapRotated;
-                nextBitmapRotated = tmp;
-            }
-        });
+                    taskIsRunning.set(false);
+                }
+            });
+        }
     }
 
     private int findScale(Bitmap image) {
